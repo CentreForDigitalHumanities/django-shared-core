@@ -1,0 +1,232 @@
+/* UU  */
+body {
+    background: rgb(246, 246, 246);
+    font-family: "Open Sans","Frutiger",Helvetica,Arial,sans-serif;
+}
+
+p {
+    line-height: 1.7; /* Override paragraph for better readability */
+}
+
+#container {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.uu-container {
+    padding-top: 10px;
+    padding-bottom: 5px;
+    background: #fff;
+}
+
+.uu-inner-container {
+    max-width: 1170px;
+    margin: 0 auto;
+    display: flex;
+}
+
+.uu-container.toppanel
+{
+    padding: 0;
+    border-bottom: 1px solid #efefef;
+}
+
+
+@media (max-width: 870px) {
+    .titletext
+    {
+        display: none;
+    }
+}
+
+.language {
+    border-left: 1px solid #efefef;
+    line-height: 68px;
+}
+
+.uu-logo {
+    padding: 10px 0;
+}
+
+.uu-logo img
+{
+    height: 48px;
+}
+
+.titletext {
+    font-size: 30px;
+    line-height: 44px;
+    box-sizing: content-box;
+    color: #094D8E;
+    text-decoration: none;
+    font-family: "Open Sans","Frutiger",Helvetica,Arial,sans-serif;
+    font-weight: 100;
+    padding-bottom: 10px;
+}
+
+.titletext a, .titletext a:hover {
+    color: #094D8E;
+    text-decoration: none;
+}
+
+.loginheader {
+    line-height: 54px;
+    font-size: 14px;
+}
+
+.uu-navigation-bar {
+    text-align: left;
+    min-height: 56px;
+    display: block;
+    width: 100%;
+    background-color: #000000;
+}
+
+.uu-navigation-bar .nav-item a {
+    color: #fff;
+}
+
+.uu-navigation-bar .active a {
+    color: #FFCD00;
+}
+
+.home-text {
+    display: none;
+}
+
+.hide-xs {
+    display: inherit;
+}
+
+.show-xs {
+    display: none;
+}
+
+@media (max-width: 992px) {
+    .home-text {
+        display: inline;
+    }
+}
+
+.navbar {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+}
+
+footer.container-fluid {
+    background: #000;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+footer.container-fluid .col-12 img {
+    height: 73px;
+}
+
+footer a {
+    color: #aeaeae;
+}
+
+.icon-home:before {
+    content: "\e902";
+}
+
+.nav-container {
+    max-width: 1200px;
+    width: 100%;
+    padding: 0 30px;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .hide-xs {
+        display: none;
+    }
+
+    .show-xs {
+        display: inline;
+    }
+
+    .uu-logo img {
+        height: 30px;
+    }
+
+    footer.container-fluid .col-12 img {
+        height: 50px;
+    }
+
+    .nav-container {
+        padding: 0;
+    }
+
+    .uu-navigation-bar {
+        text-align: left;
+        min-height: 56px;
+        display: block;
+        width: 100%;
+        background-color: #fff;
+        border-bottom: 1px solid #bbb;
+    }
+
+    .uu-navigation-bar .nav-item {
+        background: #000;
+        padding: 5px 10px;
+        border-top: 1px solid #bbb;
+    }
+
+    .uu-navigation-bar .active {
+        color: #FFCD00;
+    }
+}
+
+input {
+    border-radius: 0;
+    border: 1px solid #d7d7d7;
+    padding: 10px 20px;
+    line-height: 20px;
+    font-size: 16px;
+    min-width: 400px;
+}
+
+input[type=submit], input[type=button], button, .button {
+    background: #000;
+    color: #fff;
+    border: none;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 0 20px;
+    line-height: 42px;
+    width: auto;
+    cursor: pointer;
+}
+
+button[type=submit], input[type=submit] {
+    background: #ffcd00;
+    color: #000000;
+}
+
+button.language-button {
+    color: #787878;
+    text-transform: uppercase;
+    font-weight: 400;
+    padding: 0;
+    font-size: 12px;
+    background: transparent;
+}
+
+
+form label {
+    display: block;
+}
+
+.navbar-toggler {
+    background: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") no-repeat center center;
+}
+
+@media (max-width: 768px) {
+    .navbar-toggler {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    }
+}

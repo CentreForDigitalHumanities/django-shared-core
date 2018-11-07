@@ -1,0 +1,9 @@
+{% load i18n %}
+
+<div class="col-2 hide-xs">
+    {% for item in menus.footer %}
+        <a href="{{ item.url }}">
+            {{ item.title }}
+        </a><br/>
+    {% endfor %}
+</div>
