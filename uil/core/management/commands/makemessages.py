@@ -11,7 +11,6 @@ def templatize(src, **kwargs):
     :param kwargs:
     :return:
     """
-    print("patching patching patching")
     import django.utils.translation.template as template
 
     template.inline_re = re.compile(
