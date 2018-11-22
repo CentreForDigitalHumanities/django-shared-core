@@ -202,7 +202,7 @@ input[type=submit], input[type=button], button, .button {
     cursor: pointer;
 }
 
-button[type=submit], input[type=submit] {
+button[type=submit], input[type=submit], .button-colored {
     background: #ffcd00;
     color: #000000;
 }
