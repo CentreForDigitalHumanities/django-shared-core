@@ -91,6 +91,7 @@ p {
 
 .uu-navigation-bar .nav-item a {
     color: #fff;
+    text-decoration: none;
 }
 
 .uu-navigation-bar .active a {
