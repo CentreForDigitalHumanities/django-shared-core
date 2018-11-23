@@ -1,6 +1,5 @@
 from django import template
 from django.template.loader_tags import do_include
-from django.template.defaulttags import CommentNode
 register = template.Library()
 
 
@@ -17,13 +16,14 @@ def do_include_if_exists(parser, token):
         silent_node = do_include(parser, token)
     except template.TemplateDoesNotExist:
         # Django < 1.7
-        return CommentNode()
+        return ''
 
     _orig_render = silent_node.render
+
     def wrapped_render(*args, **kwargs):
         try:
             return _orig_render(*args, **kwargs)
         except template.TemplateDoesNotExist:
-            return CommentNode()
+            return ''
     silent_node.render = wrapped_render
     return silent_node
