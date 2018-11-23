@@ -238,12 +238,14 @@ button[type=submit], input[type=submit], .button-colored {
     color: #000000;
 }
 
-button a, .button a {
+button a, .button a,
+button a:hover, .button a:hover {
     color: #fff;
     text-decoration: none;
 }
 
-.button-colored a {
+.button-colored a,
+.button-colored a:hover {
     color: #000;
 }
 
@@ -283,11 +285,11 @@ table tbody td, table thead th {
 a {
     color: rgb(33, 37, 41);
     text-decoration: underline;
-    transition: 0.5s ease color;
+    transition: 0.2s ease color;
 }
 
 a:hover {
-    transition: 0.5s ease color;
+    transition: 0.2s ease color;
     color: rgb(85, 85, 95);
 }
 
