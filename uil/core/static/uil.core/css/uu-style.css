@@ -328,7 +328,45 @@ div.dataTables_wrapper div.dataTables_length select {
 }
 
 .pagination .page-item.active .page-link {
-    background: #ffcd00;
-    color: #000;
-    border-color: #ffcd00;
+    background: #000;
+    color: #fff;
+    border-color: #000;
+}
+
+.dt-buttons {
+    display: inline-block;
+    float: left;
+}
+
+.dataTables_wrapper .btn {
+    border-radius: 0;
+    background: #000;
+    color: #fff;
+    border: none;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 0 10px;
+    line-height: 32px;
+    width: auto;
+    cursor: pointer;
+}
+
+.dataTables_wrapper .dropdown-menu {
+    padding: 0;
+    border-radius: 0;
+    min-width: 134px;
+}
+
+.dataTables_wrapper .dropdown-menu .dropdown-item {
+    text-decoration: none;
+}
+
+.dataTables_wrapper .dropdown-menu .dropdown-item.active,
+.dataTables_wrapper .dropdown-menu .dropdown-item:active {
+    background: #000;
+    color: #fff;
+}
+
+.dataTables_wrapper .dropdown-menu .dt-button-collection-title {
+    padding: 0;
 }
