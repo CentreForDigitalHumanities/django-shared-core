@@ -94,9 +94,11 @@ p {
     text-decoration: none;
 }
 
-.uu-navigation-bar .active a {
+.uu-navigation-bar .active a,
+.uu-navigation-bar .nav-item a:hover {
     color: #FFCD00;
 }
+
 
 .home-text {
     display: none;
