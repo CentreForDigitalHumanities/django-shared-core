@@ -288,3 +288,25 @@ a:hover {
     transition: 0.5s ease color;
     color: rgb(85, 85, 95);
 }
+
+/* Bootstrap/DataTables overrides */
+.form-control {
+    border-radius: 0;
+    border: 1px solid #d7d7d7;
+    padding: 5px 10px;
+    line-height: 20px;
+    font-size: 12px;
+    min-width: 400px;
+}
+
+.form-control:focus {
+    outline: none;
+    box-shadow: none;
+    border: 1px solid #d7d7d7;
+}
+
+/* This makes sure the x items per page dropdown displays correctly */
+div.dataTables_wrapper div.dataTables_length select {
+    min-width: auto;
+    padding: 0 15px 0 10px;
+}
