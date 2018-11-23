@@ -14,12 +14,5 @@ $(function() {
         ],
         responsive: true,
         paginationType: "full_numbers",
-        language: {
-            {% if LANGUAGE_CODE == 'nl' %}
-                url: "{% static 'uil.core/js/datatables/lang/dutch.json' %}"
-            {% else %}
-                url: "{% static 'uil.core/js/datatables/lang/english.json' %}"
-            {% endif %}
-        }
     } );
 });
