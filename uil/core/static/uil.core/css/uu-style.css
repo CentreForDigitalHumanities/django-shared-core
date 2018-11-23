@@ -310,3 +310,25 @@ div.dataTables_wrapper div.dataTables_length select {
     min-width: auto;
     padding: 0 15px 0 10px;
 }
+
+.pagination .page-item {
+    color: inherit;
+    border-radius: 0;
+}
+
+.pagination .page-link {
+    color: inherit;
+    border-radius: 0;
+    text-decoration: none;
+}
+
+.pagination .page-item:first-child .page-link,
+.pagination .page-item:last-child .page-link {
+    border-radius: 0;
+}
+
+.pagination .page-item.active .page-link {
+    background: #ffcd00;
+    color: #000;
+    border-color: #ffcd00;
+}
