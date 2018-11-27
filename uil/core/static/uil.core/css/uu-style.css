@@ -222,7 +222,7 @@ form > table th {
     vertical-align: middle;
 }
 
-input, textarea {
+input, textarea, select {
     border-radius: 0;
     border: 1px solid #d7d7d7;
     padding: 10px 20px;
