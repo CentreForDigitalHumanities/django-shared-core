@@ -268,9 +268,16 @@ button.language-button {
     background: transparent;
 }
 
-
 form label {
     display: block;
+}
+
+form .select2-container {
+    min-width: 400px;
+}
+
+.select2-search input {
+    min-width: auto;
 }
 
 /* Table styles */
