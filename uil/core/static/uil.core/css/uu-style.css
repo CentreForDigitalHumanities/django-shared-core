@@ -212,7 +212,7 @@ footer a {
 
 /* Input styles */
 
-input {
+input, textarea {
     border-radius: 0;
     border: 1px solid #d7d7d7;
     padding: 10px 20px;
