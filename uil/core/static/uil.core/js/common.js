@@ -16,3 +16,7 @@ $(function() {
         paginationType: "full_numbers",
     } );
 });
+
+$(document).ready(function() {
+    $('form table select').select2();
+});

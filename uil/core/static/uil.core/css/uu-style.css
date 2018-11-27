@@ -212,6 +212,10 @@ footer a {
 
 /* Input styles */
 
+form > table th {
+    padding-left: 10px
+}
+
 input, textarea {
     border-radius: 0;
     border: 1px solid #d7d7d7;
@@ -231,6 +235,11 @@ input[type=submit], input[type=button], button, .button {
     line-height: 42px;
     width: auto;
     cursor: pointer;
+}
+
+input[type="checkbox"], input[type="checkbox"]
+{
+     min-width: auto;
 }
 
 button[type=submit], input[type=submit], .button-colored {
