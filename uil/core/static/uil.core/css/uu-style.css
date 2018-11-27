@@ -282,6 +282,12 @@ form .select2-container {
     min-width: 400px;
 }
 
+form td ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
 .select2-search input {
     min-width: auto;
 }
