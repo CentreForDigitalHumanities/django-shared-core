@@ -9,6 +9,11 @@ p {
     line-height: 1.7; /* Override paragraph for better readability */
 }
 
+
+label {
+    margin-bottom: 0;
+}
+
 /* Structural */
 #container {
     width: 100%;
@@ -213,7 +218,8 @@ footer a {
 /* Input styles */
 
 form > table th {
-    padding-left: 10px
+    padding-left: 10px;
+    vertical-align: middle;
 }
 
 input, textarea {
