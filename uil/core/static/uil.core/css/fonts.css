@@ -76,3 +76,7 @@
     -moz-osx-font-smoothing: grayscale;
     text-decoration: none;
 }
+
+[class^="icon-"]:hover, [class*=" icon-"]:hover {
+    text-decoration: none;
+}
