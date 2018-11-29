@@ -91,6 +91,19 @@
             {% include 'base/mainmenu.html' %}
         </nav>
         <div class="container-fluid uu-container">
+            {% if messages %}
+                <div class="uu-inner-container">
+                    <div class="col-12">
+                        <div id="messages">
+                            <ul class="messages">
+                            {% for message in messages %}
+                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
             {% block content %}
             {% endblock %}
         </div>

@@ -402,3 +402,19 @@ div.dataTables_wrapper div.dataTables_length select {
 .dataTables_wrapper .dropdown-menu .dt-button-collection-title {
     padding: 0;
 }
+
+/* Messages */
+
+ul.messages {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+div.messages {
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    background: #094D8E;
+    color: #ffffff;
+}
