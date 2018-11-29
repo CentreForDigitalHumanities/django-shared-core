@@ -292,6 +292,10 @@ form td ul {
     min-width: auto;
 }
 
+.errorlist {
+    color: red;
+}
+
 /* Table styles */
 table thead th {
     border-bottom: 1px solid #ccc;
