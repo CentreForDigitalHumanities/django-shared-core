@@ -415,7 +415,7 @@ ul.messages {
     margin: 0;
 }
 
-div.messages {
+div#messages {
     padding: 10px;
     margin-bottom: 10px;
     text-align: center;
