@@ -53,14 +53,10 @@
        url('../fonts/open-sans-v15-latin-700italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
-/* Home icon, maybe we should use a SVG instead... */
+/* Icomoon icons */
 @font-face {
     font-family: 'icomoon';
-    src:  url('../fonts/icomoon.eot?rabohb');
-    src:  url('../fonts/icomoon.eot?rabohb#iefix') format('embedded-opentype'),
-    url('../fonts/icomoon.ttf?rabohb') format('truetype'),
-    url('../fonts/icomoon.woff?rabohb') format('woff'),
-    url('../fonts/icomoon.svg?rabohb#icomoon') format('svg');
+    src: url('../fonts/IcoMoon-Free.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
