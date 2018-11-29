@@ -418,3 +418,11 @@ div.messages {
     background: #094D8E;
     color: #ffffff;
 }
+
+/* qTip */
+.qtip-default{
+	border: 1px solid #d7d7d7;
+
+	background-color: #fff;
+	color: #333;
+}
