@@ -9,6 +9,7 @@ $(function() {
             'print',
             'pageLength'
         ],
+        order: [[0, 'desc']],
         lengthMenu: [
             [10, 20, 50, -1],
             ["10", "20", "50", "\u221e"]
