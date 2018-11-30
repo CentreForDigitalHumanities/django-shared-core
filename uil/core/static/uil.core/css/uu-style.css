@@ -240,7 +240,9 @@ input[type=submit], input[type=button], button, .button {
     padding: 0 20px;
     line-height: 42px;
     width: auto;
+    min-width: auto;
     cursor: pointer;
+    display: inline-block;
 }
 
 input[type="checkbox"], input[type="radio"]
