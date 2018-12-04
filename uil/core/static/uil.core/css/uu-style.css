@@ -299,6 +299,11 @@ form td ul {
     color: red;
 }
 
+.small-form input, textarea, select {
+    min-width: 300px;
+    width: 300px;
+}
+
 /* Table styles */
 table thead th {
     border-bottom: 1px solid #ccc;
