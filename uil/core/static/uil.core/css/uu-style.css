@@ -438,3 +438,10 @@ div#messages {
 	background-color: #fff;
 	color: #333;
 }
+
+
+/* Bootstrap DateTime picker */
+/* Fixes the fact that our table styles apply to the picker. */
+.datetimepicker tr, .datetimepicker tr:nth-of-type(odd), .datetimepicker tr:hover {
+    background: #fff;
+}
