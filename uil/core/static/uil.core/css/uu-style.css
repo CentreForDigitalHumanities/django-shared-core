@@ -299,7 +299,7 @@ form td ul {
     color: red;
 }
 
-.small-form input, textarea, select {
+.small-form input, .small-form textarea, .small-form select {
     min-width: 300px;
     width: 300px;
 }
