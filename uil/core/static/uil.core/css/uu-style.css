@@ -415,6 +415,12 @@ div.dataTables_wrapper div.dataTables_length select {
     padding: 0;
 }
 
+/* Fix for search bar not display properly when the table is wrapped in a form*/
+form .dataTables_filter > label {
+    display: inline-block;
+}
+
+
 /* Messages */
 
 ul.messages {
