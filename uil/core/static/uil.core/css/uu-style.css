@@ -229,7 +229,7 @@ input, textarea, select {
     padding: 10px 20px;
     line-height: 20px;
     font-size: 16px;
-    min-width: 400px;
+    width: 400px;
 }
 
 input[type=submit], input[type=button], button, .button {
@@ -248,7 +248,7 @@ input[type=submit], input[type=button], button, .button {
 
 input[type="checkbox"], input[type="radio"]
 {
-     min-width: auto;
+     width: auto;
 }
 
 button[type=submit], input[type=submit], .button-colored {
@@ -282,7 +282,7 @@ form label {
 }
 
 form .select2-container {
-    min-width: 400px;
+    width: 400px;
 }
 
 form td ul {
