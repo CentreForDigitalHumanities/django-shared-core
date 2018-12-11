@@ -1,1 +1,1 @@
-from .base import RedirectActionView
+from .base import RedirectActionView, FormSetUpdateView
