@@ -20,3 +20,18 @@ def is_empty(value):
     if isinstance(value, six.text_type) and not value.strip():
         result = True
     return result
+
+
+def set_model_field_value(model, field, value):
+    """
+    Sets a ForeignKey field value on a model, accepting both model-instance and
+    (int) pk values.
+    :param model: The model instance to set the value on
+    :param field: The name of the field to set
+    :param value: Either a model instance or a PK value for a model
+    :return:
+    """
+    if isinstance(value, int):
+        setattr(model, "{}_id".format(field), value)
+    else:
+        setattr(model, field, value)
