@@ -340,7 +340,6 @@ a:hover {
     padding: 5px 10px;
     line-height: 20px;
     font-size: 12px;
-    min-width: 400px;
 }
 
 .form-control:focus {
