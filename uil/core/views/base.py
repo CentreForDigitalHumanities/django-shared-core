@@ -71,7 +71,6 @@ class FormSetUpdateView(View):
         self._formset = modelformset_factory(self.form._meta.model,
                                              form=self.form, extra=self.extra)
         self.objects = self.get_queryset()
-        self.check_allowed()
 
     def get_queryset(self):
         if self.queryset is None:
