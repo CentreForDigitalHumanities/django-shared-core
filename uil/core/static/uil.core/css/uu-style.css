@@ -256,6 +256,11 @@ button[type=submit], input[type=submit], .button-colored {
     color: #000000;
 }
 
+button[type=submit].button-black, input[type=submit].button-black {
+    background: #000;
+    color: #fff;
+}
+
 button a, .button a,
 button a:hover, .button a:hover {
     color: #fff;
