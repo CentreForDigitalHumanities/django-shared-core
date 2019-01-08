@@ -315,6 +315,10 @@ table thead th {
     border-bottom: 1px solid #ccc;
 }
 
+table tfoot th {
+    border-top: 1px solid #ccc;
+}
+
 table tbody tr:nth-of-type(odd) {
     background: #eee;
 }
@@ -323,7 +327,7 @@ table tbody tr:hover {
     background: #ddd;
 }
 
-table tbody td, table thead th {
+table tbody td, table thead th, table tfoot th {
     padding: 6px 5px;
 }
 
