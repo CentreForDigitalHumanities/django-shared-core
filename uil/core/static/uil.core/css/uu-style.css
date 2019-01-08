@@ -83,6 +83,7 @@ label {
 .loginheader {
     line-height: 54px;
     font-size: 14px;
+    text-align: right;
 }
 
 /* Navigation */
