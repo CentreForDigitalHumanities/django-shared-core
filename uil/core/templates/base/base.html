@@ -72,23 +72,7 @@ Miauw!
                 <div class="col-8">
                     <!--filler-->
                 </div>
-                <div class="col-1 language">
-                    <form method="post" action="{% url 'set_language' %}" class="inline">
-                        {% csrf_token %}
-                        {% if LANGUAGE_CODE == 'nl' %}
-                            <input type="hidden" name="language" value="en">
-                            <button type="submit" name="submit_param" value="submit_value" class="language-button">
-                                {% trans 'lang:en' %}
-                            </button>
-                        {% else %}
-                            <input type="hidden" name="language" value="nl">
-                            <button type="submit" name="submit_param" value="submit_value" class="language-button">
-                                {% trans 'lang:nl' %}
-                            </button>
-                        {% endif %}
-
-                    </form>
-                </div>
+                {% include 'base/language_box.html' %}
             </div>
         </div>
 
