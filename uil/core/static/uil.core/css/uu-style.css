@@ -298,6 +298,29 @@ form td ul {
     padding: 0;
 }
 
+@media (max-width: 870px) {
+
+    form table tr {
+        width: 100%;
+        display: block;
+        word-break: break-all;
+    }
+
+    form table th, form table td {
+        display: block;
+        width: 100%;
+    }
+
+    input {
+        width: 100%;
+    }
+
+    input[type="checkbox"], input[type="radio"]
+    {
+         width: auto;
+    }
+}
+
 .select2-search input {
     min-width: auto;
 }
