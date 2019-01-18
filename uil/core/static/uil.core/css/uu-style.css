@@ -78,6 +78,7 @@ label {
 .titletext a, .titletext a:hover {
     color: #094D8E;
     text-decoration: none;
+    padding: 0 15px;
 }
 
 .loginheader {
