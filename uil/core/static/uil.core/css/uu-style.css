@@ -351,6 +351,10 @@ table tbody tr:hover {
     background: #ddd;
 }
 
+table tbody tr.no-background:hover, table tbody tr.no-background {
+    background: transparent;
+}
+
 table tbody td, table thead th, table tfoot th {
     padding: 6px 5px;
 }
