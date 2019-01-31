@@ -43,7 +43,7 @@ label {
 }
 
 
-@media (max-width: 870px) {
+@media (max-width: 767px) {
     .titletext
     {
         display: none;
@@ -207,7 +207,7 @@ footer a {
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
 
     .hide-xs {
         display: none;
