@@ -34,6 +34,10 @@ label {
     flex-wrap: wrap;
 }
 
+h3 {
+    margin: 0.5rem 0 1rem;
+}
+
 /* Top panel */
 
 .uu-container.toppanel
