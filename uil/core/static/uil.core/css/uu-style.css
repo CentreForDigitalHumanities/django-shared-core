@@ -338,6 +338,14 @@ form td ul {
     width: 300px;
 }
 
+.oneline-form label {
+    display: inline-block;
+    margin-right: 5px;
+}
+.oneline-form input {
+    width: auto;
+}
+
 /* Table styles */
 table thead th {
     border-bottom: 1px solid #ccc;
