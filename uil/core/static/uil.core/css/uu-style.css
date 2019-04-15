@@ -490,6 +490,12 @@ div#messages {
     color: #ffffff;
 }
 
+ul.messages a {
+    color: #ffffff;
+    text-decoration: underline;
+    transition: 0.2s ease color;
+}
+
 /* qTip */
 .qtip-default{
 	border: 1px solid #d7d7d7;
