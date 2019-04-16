@@ -431,6 +431,11 @@ div.dataTables_wrapper div.dataTables_length select {
     float: left;
 }
 
+.dt-button {
+    line-height: 30px;
+    padding: 0 10px
+}
+
 .dataTables_wrapper .btn {
     border-radius: 0;
     background: #000;
