@@ -6,7 +6,7 @@ body {
 }
 
 p {
-    line-height: 1.7; /* Override paragraph for better readability */
+    line-height: 1.4; /* Override paragraph for better readability */
 }
 
 
@@ -34,10 +34,6 @@ label {
     flex-wrap: wrap;
 }
 
-h3 {
-    margin: 0.5rem 0 1rem;
-}
-
 /* Top panel */
 
 .uu-container.toppanel
@@ -46,6 +42,10 @@ h3 {
     border-bottom: 1px solid #efefef;
 }
 
+.uu-container.titlepanel
+{
+    padding: 0;
+}
 
 @media (max-width: 767px) {
     .titletext
@@ -76,7 +76,7 @@ h3 {
     text-decoration: none;
     font-family: "Open Sans","Frutiger",Helvetica,Arial,sans-serif;
     font-weight: 100;
-    padding: 0 0 10px;
+    padding: 3px 0 0;
 }
 
 .titletext a, .titletext a:hover {
@@ -95,10 +95,10 @@ h3 {
 
 .uu-navigation-bar {
     text-align: left;
-    min-height: 56px;
     display: block;
     width: 100%;
     background-color: #000000;
+    padding: 3px 0;
 }
 
 .uu-navigation-bar .nav-item a {
@@ -133,12 +133,6 @@ h3 {
     }
 }
 
-.navbar {
-    padding-left: 0;
-    padding-right: 0;
-    padding-bottom: 0;
-}
-
 .navbar-toggler {
     background: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") no-repeat center center;
 }
@@ -159,7 +153,6 @@ h3 {
 
     .uu-navigation-bar {
         text-align: left;
-        min-height: 56px;
         display: block;
         width: 100%;
         background-color: #fff;
@@ -232,7 +225,7 @@ form > table th {
 input, textarea, select {
     border-radius: 0;
     border: 1px solid #d7d7d7;
-    padding: 10px 20px;
+    padding: 5px 10px;
     line-height: 20px;
     font-size: 16px;
     width: 400px;
@@ -307,7 +300,6 @@ form td ul {
     form table tr {
         width: 100%;
         display: block;
-        word-break: break-all;
     }
 
     form table th, form table td {
