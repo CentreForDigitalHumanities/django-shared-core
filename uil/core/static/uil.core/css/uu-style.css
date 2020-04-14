@@ -119,8 +119,8 @@ h1, h2{
     display: none;
 }
 
-.icon-home:before {
-    content: "\e902";
+.icon-additional-home:before {
+    content: "H";
 }
 
 .nav-container {
@@ -497,7 +497,7 @@ ul.messages a {
 }
 
 /* qTip */
-.qtip-default{
+.qtip-default {
 	border: 1px solid #d7d7d7;
 
 	background-color: #fff;
@@ -509,4 +509,43 @@ ul.messages a {
 /* Fixes the fact that our table styles apply to the picker. */
 .datetimepicker tr, .datetimepicker tr:nth-of-type(odd), .datetimepicker tr:hover {
     background: #fff;
+}
+
+/** Panel **/
+.uu-panel > .panel {
+    margin-bottom: 15px;
+}
+
+.uu-panel .panel-heading {
+    background: #ffcd00;
+    padding: 10px 30px 2px; /* .panel-title has a bottom margin of 8px */
+}
+
+.uu-panel .panel-heading a {
+    text-transform: uppercase;
+    font-weight: bold;
+    text-decoration: none;
+    display: block;
+}
+
+.uu-panel .panel-heading a::after {
+    font-family: 'icomoon-additional';
+    content: "\E612";
+    font-size: 10px;
+    float: right;
+    display: inline-block;
+    text-indent: 0;
+    padding: 6px 0;
+}
+
+.uu-panel .panel-heading a.collapsed::after {
+    content: "\E611";
+}
+
+.uu-panel .panel {
+    border: 1px solid #efefef
+}
+
+.uu-panel .panel-body {
+    padding: 15px 40px 5px 40px
 }
