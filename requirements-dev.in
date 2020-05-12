@@ -1,0 +1,6 @@
+Django>=2.2,<3.0
+requests
+PyJWT
+pip-tools
+cryptography
+backports-datetime-fromisoformat

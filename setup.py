@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="UiL Django Core",
-    version="1.0.0-rc6",
+    version="1.1.0-beta-1",
     author="UiL OTS Labs",
     author_email="labbeheer.gw@uu.nl",
     description="A shared code library for UiL OTS Django projects",
@@ -15,7 +15,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
-        "Framework :: Django :: 2.0",
+        "Framework :: Django :: 2.2",
         "License :: Other/Proprietary License",
         "Operating System :: OS Independent",
     ],
