@@ -5,9 +5,9 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="UiL Django Core",
-    version="1.0.0-rc1",
+    version="1.0.0-rc6",
     author="UiL OTS Labs",
-    author_email="labman.gw@uu.nl",
+    author_email="labbeheer.gw@uu.nl",
     description="A shared code library for UiL OTS Django projects",
     long_description=long_description,
     long_description_content_type="text/markdown",
