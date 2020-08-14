@@ -357,6 +357,12 @@ class ResourceField(_BaseField):
         """Creates a resources object from the supplied dict"""
         cls = self.resource_class
 
+        if value is None:
+            if not self.null or not self.blank:
+                raise ValueError("Tried to serialize null, but it's not "
+                                 "allowed")
+            return value
+
         if isinstance(cls, str):
             app_label = self.resource._meta.app_label
 
