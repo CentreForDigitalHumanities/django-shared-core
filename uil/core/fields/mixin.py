@@ -4,7 +4,6 @@ Adapted from django-encrypted-model-fields by
 from __future__ import unicode_literals
 
 import cryptography.fernet
-from django.utils.six import string_types
 
 from .crypter import decrypt_str, encrypt_str
 
@@ -14,7 +13,7 @@ class EncryptedMixin(object):
         if value is None:
             return value
 
-        if isinstance(value, (bytes, string_types[0])):
+        if isinstance(value, (bytes, str)):
             if isinstance(value, bytes):
                 value = value.decode('utf-8')
             try:
