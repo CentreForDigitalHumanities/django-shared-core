@@ -123,6 +123,11 @@ h1, h2{
     content: "H";
 }
 
+.disabled-icon {
+    color: #aaa;
+    cursor: not-allowed;
+}
+
 .nav-container {
     max-width: 1200px;
     width: 100%;
