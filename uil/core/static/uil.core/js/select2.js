@@ -227,7 +227,7 @@ var requirejs, require, define;
         return defined[name];
     }
 
-    //Turns a plugin!resource to [plugin, resource]
+    //Turns a plugin!resources to [plugin, resources]
     //with the plugin being undefined if the name
     //did not have a plugin prefix.
     function splitPrefix(name) {
@@ -241,7 +241,7 @@ var requirejs, require, define;
     }
 
     //Creates a parts array for a relName where first part is plugin ID,
-    //second part is resource ID. Assumes relName has already been normalized.
+    //second part is resources ID. Assumes relName has already been normalized.
     function makeRelParts(relName) {
         return relName ? splitPrefix(relName) : [];
     }
