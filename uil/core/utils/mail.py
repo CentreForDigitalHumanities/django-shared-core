@@ -7,9 +7,6 @@ from django.core.mail import EmailMultiAlternatives, get_connection, send_mail
 from django.template.loader import render_to_string
 from django.utils import translation
 
-from experiments.models import Experiment
-from .models import User
-
 
 def send_template_email(
         recipient_list: list,
