@@ -1,6 +1,3 @@
-import django.utils.six as six
-
-
 def string_to_bool(s):
     if s == 'None' or s is None:
         return False
@@ -17,7 +14,7 @@ def is_empty(value):
         result = True
     if hasattr(value, '__len__') and len(value) == 0:
         result = True
-    if isinstance(value, six.text_type) and not value.strip():
+    if isinstance(value, str) and not value.strip():
         result = True
     return result
 
