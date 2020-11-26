@@ -509,6 +509,11 @@ ul.messages a {
 	color: #333;
 }
 
+.qtip {
+    font-size: 14px;
+    line-height: 16px;
+    max-width: 400px;
+}
 
 /* Bootstrap DateTime picker */
 /* Fixes the fact that our table styles apply to the picker. */
