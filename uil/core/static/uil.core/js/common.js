@@ -27,7 +27,7 @@ $(function() {
         if (help.html())
         {
             let label = $("th label[for^='" + $(this).attr('id') + "']").first();
-            let icon = $('<span class="icon-info"></span');
+            let icon = $('<span class="icon-info"></span>');
             icon.html('&nbsp;');
             icon.appendTo(label);
             icon.qtip({
@@ -39,6 +39,11 @@ $(function() {
                     delay: 500,
                 },
             });
+
+            // Django inserts an br when a help_text is present. Let's remove it
+            let prevElement = help.prev();
+            if (prevElement.is('br'))
+                prevElement.remove();
             help.remove();
         }
     });
