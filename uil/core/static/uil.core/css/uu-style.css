@@ -114,6 +114,10 @@ h1, h2{
     color: #FFCD00;
 }
 
+.uu-navigation-bar a.dropdown-item,
+.uu-navigation-bar a.dropdown-item:hover{
+    color: #212529;
+}
 
 .home-text {
     display: none;
@@ -269,13 +273,16 @@ button[type=submit].button-black, input[type=submit].button-black {
 }
 
 button a, .button a,
-button a:hover, .button a:hover {
+button a:hover, .button a:hover,
+a.button, a.button:hover {
     color: #fff;
     text-decoration: none;
 }
 
 .button-colored a,
-.button-colored a:hover {
+.button-colored a:hover,
+a.button-colored,
+a.button-colored:hover {
     color: #000;
 }
 
@@ -315,7 +322,7 @@ form td ul {
         width: 100%;
     }
 
-    input {
+    input, textarea {
         width: 100%;
     }
 
