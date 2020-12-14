@@ -37,6 +37,28 @@ h1, h2{
     flex-wrap: wrap;
 }
 
+/* Cover image */
+.coverimage {
+    position: relative;
+    top: -10px;
+    left: -15px;
+    width: calc(100% + 30px);
+}
+
+.coverimage img {
+    display: block;
+    position: relative;
+    left: 50%;
+    margin-left: -800px
+}
+
+@media (max-width: 767px) {
+    .coverimage img {
+        height: 200px;
+        margin-left: -400px;
+    }
+}
+
 /* Top panel */
 
 .uu-container.toppanel
