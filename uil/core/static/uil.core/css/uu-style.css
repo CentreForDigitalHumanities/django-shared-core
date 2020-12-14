@@ -145,6 +145,10 @@ h6 {
     color: #212529;
 }
 
+.uu-navigation-bar .dropdown-menu {
+    border-radius: 0;
+}
+
 .home-text {
     display: none;
 }
