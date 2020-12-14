@@ -17,6 +17,10 @@ h1, h2{
     font-size: 2rem;
 }
 
+h6 {
+    font-size: 1.1rem;
+}
+
 /* Structural */
 #container {
     width: 100%;
