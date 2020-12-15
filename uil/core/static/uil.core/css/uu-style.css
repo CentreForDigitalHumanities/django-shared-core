@@ -17,6 +17,10 @@ h1, h2{
     font-size: 2rem;
 }
 
+h6 {
+    font-size: 1.1rem;
+}
+
 /* Structural */
 #container {
     width: 100%;
@@ -35,6 +39,28 @@ h1, h2{
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
+}
+
+/* Cover image */
+.coverimage {
+    position: relative;
+    top: -10px;
+    left: -15px;
+    width: calc(100% + 30px);
+}
+
+.coverimage img {
+    display: block;
+    position: relative;
+    left: 50%;
+    margin-left: -800px
+}
+
+@media (max-width: 767px) {
+    .coverimage img {
+        height: 200px;
+        margin-left: -400px;
+    }
 }
 
 /* Top panel */
@@ -117,6 +143,10 @@ h1, h2{
 .uu-navigation-bar a.dropdown-item,
 .uu-navigation-bar a.dropdown-item:hover{
     color: #212529;
+}
+
+.uu-navigation-bar .dropdown-menu {
+    border-radius: 0;
 }
 
 .home-text {

@@ -2,7 +2,7 @@
 {% get_current_language as LANGUAGE_CODE %}
 
 <div class="col-1 language">
-    <form method="post" action="{% url 'set_language' %}" class="inline">
+    <form method="post" action="{% url 'set_language' %}" class="inline language-form">
         {% csrf_token %}
         {% if LANGUAGE_CODE == 'nl' %}
             <input type="hidden" name="language" value="en">
