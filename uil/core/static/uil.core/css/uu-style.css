@@ -64,6 +64,7 @@ h1, h2, h3, h4, h5, h6 {
     top: -10px;
     left: -15px;
     width: calc(100% + 30px);
+    overflow: hidden;
 }
 
 .coverimage img {
