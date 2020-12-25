@@ -617,3 +617,279 @@ ul.messages a {
 .uu-panel .panel-body {
     padding: 15px 40px 5px 40px
 }
+
+/* Bootstrap-like contextual boxes */
+div.success {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #DFF0D8;
+    list-style-type: none;
+}
+
+div.failed {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #F2DEDE;
+    list-style-type: none;
+}
+
+div.warning {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #FCF8E3;
+    list-style-type: none;
+}
+
+div.info {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #D9EDF7;
+    list-style-type: none;
+}
+
+/**** Fancy List ****/
+/* (Simplistic) Alternative for a DataTable, which allows hiding a lot of info behind a click */
+
+.uu-fancy-list-controls {
+    font-size: 0.9rem;
+}
+.uu-fancy-list-controls input {
+    width: 200px;
+    float: right;
+    font-size: 0.9rem;
+}
+.uu-fancy-list-controls select {
+    width: 50px;
+}
+.uu-fancy-list {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+.uu-fancy-list .ufl-item {
+    border-bottom: 2px solid #eee;
+    padding: 15px 10px;
+    transition: .2s;
+    background: #fff;
+    width: 100%;
+    z-index: 2;
+    position: relative;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+
+.uu-fancy-list .ufl-item:after {
+    font-family: 'icomoon-additional';
+    content: "\E611";
+    font-size: 10px;
+    color: #666;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    transition: 0.2s;
+}
+
+.uu-fancy-list .ufl-item.expanded {
+    background: #f7f7f7;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+    width: calc(100% + 10px);
+    left: -5px;
+    top: -5px;
+    padding: 15px;
+    margin-bottom: -10px;
+    border-color: transparent;
+    z-index: 3;
+}
+
+.uu-fancy-list .ufl-item.expanded:after {
+    content: "\E612";
+    right: 25px;
+}
+
+.uu-fancy-list .ufl-item .ufl-actions {
+    display: inline-block;
+    color: #666;
+    font-weight: 400;
+    font-size: 1.4rem;
+    padding-left: 5px;
+    user-select: none;
+}
+
+.uu-fancy-list .ufl-item .ufl-actions a {
+    text-decoration: none;
+}
+
+.uu-fancy-list .ufl-item h4 {
+    display: inline-block;
+    margin-bottom: 0.3rem;
+    /*
+    This is intentionally darker than all other text
+    Due to the low-weight of this text, it appears lighter than it is.
+    Making it pure black actually makes it appear more visually consistent with
+    other text
+     */
+    color: #000;
+}
+
+.uu-fancy-list .ufl-item .ufl-undertitle {
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.uu-fancy-list .ufl-item .ufl-undertitle .ufl-undertitle-line {
+    display: inline-block;
+}
+
+.uu-fancy-list .ufl-item .ufl-undertitle .ufl-undertitle-line:not(:first-of-type) {
+    margin-left: 4px;
+}
+
+.uu-fancy-list .ufl-item .ufl-details {
+    color: #444;
+    padding-top: 10px;
+    font-size: 0.9rem;
+    cursor: auto;
+    display: none;
+}
+
+.uu-fancy-list .ufl-item .ufl-details tr,
+.uu-fancy-list .ufl-item .ufl-details tr {
+    background: none;
+}
+
+@media (min-width: 767px) {
+    .uu-fancy-list .ufl-item .ufl-undertitle .ufl-undertitle-line:not(:first-of-type):before {
+        content: '';
+        width: 1px;
+        height: 16px;
+        background: #aaa;
+        position: relative;
+        left: -2px;
+        bottom: -4px;
+        display: inline-block;
+    }
+
+    .uu-fancy-list .ufl-item .ufl-actions:before {
+        content: '';
+        width: 1px;
+        height: 22px;
+        background: #aaa;
+        position: relative;
+        left: -2px;
+        bottom: -4px;
+        display: inline-block;
+    }
+}
+
+@media (max-width: 767px) {
+    .uu-fancy-list-controls input {
+        width: 100%;
+        margin-top: 10px;
+        float: none;
+    }
+    .uu-fancy-list .ufl-item .ufl-actions {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+    }
+    .uu-fancy-list .ufl-item .ufl-undertitle .ufl-undertitle-line {
+        display: block;
+        margin-left: 4px;
+    }
+    .uu-fancy-list .ufl-item .ufl-undertitle .ufl-undertitle-line:not(:first-of-type):before {
+        width: 0;
+    }
+}
+
+/**
+* CSS themes for simplePagination.js
+* Author: Flavius Matis - http://flaviusmatis.github.com/
+* URL: https://github.com/flaviusmatis/simplePagination.js
+*/
+
+ul.simple-pagination {
+	list-style: none;
+}
+
+.simple-pagination {
+	display: block;
+	overflow: hidden;
+	padding: 0 5px 5px 0;
+	margin: 0;
+}
+
+.simple-pagination ul {
+	list-style: none;
+	padding: 0;
+	margin: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.simple-pagination li {
+	list-style: none;
+	padding: 0;
+	margin: 0 5px 0 0 ;
+    display: inline-block;
+}
+span.ellipse.clickable {
+	cursor: pointer;
+}
+
+.ellipse input {
+	width: 3em;
+}
+
+/*------------------------------------*\
+	Light Theme Styles
+\*------------------------------------*/
+.light-theme span {
+	cursor: pointer;
+}
+
+.light-theme a, .light-theme span {
+	float: left;
+    height: 35px;
+    width: 35px;
+	font-size: 14px;
+	line-height: 35px;
+	font-weight: normal;
+	text-align: center;
+    text-decoration: none;
+	border: none;
+	min-width: 14px;
+    color: #fff;
+    padding: 0;
+	background: #000000;
+}
+
+.light-theme a:hover, .light-theme li:not(.disabled):not(.active) span:hover {
+	text-decoration: none;
+    color: #000;
+}
+
+.light-theme a:active {
+    box-shadow: none;
+}
+
+.light-theme .current {
+	background: #FFCD00;
+	color: #000;
+	cursor: default;
+}
+
+.light-theme .ellipse {
+	background: none;
+	border: none;
+	border-radius: 0;
+	box-shadow: none;
+	font-weight: bold;
+	cursor: default;
+}
+
