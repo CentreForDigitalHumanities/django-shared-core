@@ -1,4 +1,4 @@
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any, Optional, Tuple
 
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
@@ -34,7 +34,6 @@ class FancyListApiView(GenericAPIView):
                 self,
                 field: str,
                 label: str,
-                default: Optional[str] = None,
                 asc: bool = True,
                 desc: bool = True,
         ):
@@ -42,14 +41,17 @@ class FancyListApiView(GenericAPIView):
             self.label = label
             self.asc = asc
             self.desc = desc
-            self.default = default
 
-        def serialize(self):
+        def serialize(self, default: Tuple[str, str]):
+            _default = None
+            if default and default[0] == self.field:
+                _default = default[1]
+
             return {
                 'label': self.label,
                 'asc': self.asc,
                 'desc': self.desc,
-                'default': self.default,
+                'default': _default,
             }
 
     class FilterDefinition:
@@ -78,6 +80,7 @@ class FancyListApiView(GenericAPIView):
     filter_definitions = []
     context = {}
     num_items_options = [5, 10, 25, 50]
+    default_sort = None
 
     def get(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -116,7 +119,9 @@ class FancyListApiView(GenericAPIView):
 
     def _get_sort_definitions(self) -> Dict[str, Dict]:
         """Serializes get_sort_definitions"""
-        return {x.field: x.serialize() for x in self.get_sort_definitions()}
+        # Cache value, as an override of get_default_sort can be heavy
+        default_sort = self.get_default_sort()
+        return {x.field: x.serialize(default_sort) for x in self.get_sort_definitions()}
 
     def get_context(self) -> Dict[str, Any]:
         """Returns any data accessible by all items in the Vue template"""
@@ -125,6 +130,12 @@ class FancyListApiView(GenericAPIView):
     def get_num_items_options(self) -> List[int]:
         """Returns the possible items per page options"""
         return self.num_items_options
+
+    def get_default_sort(self) -> Tuple[str, str]:
+        """Return the default sort. Should be a tuple of (field, direction).
+        Where direction is either 'asc' or 'desc'.
+        """
+        return self.default_sort
 
     def get_filter_definitions(self) -> List['FilterDefinition']:
         """Returns a list of filter definitions. See FilterDefinition for more
