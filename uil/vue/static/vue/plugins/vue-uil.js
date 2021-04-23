@@ -1,0 +1,59 @@
+let VueUil = {
+    install: function (Vue, options) {
+        /**
+         * This method exposed the window.reverse method to Vue as a instance method
+         *
+         * Depends on js-urls of uil.core
+         * @param url The name of the url to resolve
+         * @param params Any URL parameters needed
+         * @returns {*}
+         */
+        Vue.prototype.$url = function (url, params) {
+            return window.reverse(url, params);
+        }
+
+        Vue.prototype.$log = console.log.bind(console)
+
+        Vue.prototype.$ufl_load = function (app, url) {
+            $.get(url, data => {
+                for (const [key, value] of Object.entries(data)) {
+                  app[key] = value
+                }
+                app.loaded = true;
+            });
+        }
+
+        Vue.createFancyList = function (element, template, locale, url, url_args=[]) {
+            const i18n = new VueI18n({
+                locale: locale,
+            });
+
+            return new Vue({
+                i18n,
+                el: element,
+                template: template,
+                components: {
+                    // Loaded by the load_vue_component tag, no need to manually load this
+                    FancyList
+                },
+                data: function () {
+                    return {
+                        // Actual data loaded through $ufl_load in mounted()
+                        'items': [],
+                        'context': {},
+                        'searchableFields': [],
+                        'filterDefinitions': {},
+                        'numItemsOptions': [],
+                        'sortDefinitions': {},
+                        'loaded': false,
+                    };
+                },
+                mounted() {
+                    this.$ufl_load(this, this.$url(url, url_args))
+                },
+            });
+        }
+    }
+}
+
+Vue.use(VueUil, {});
