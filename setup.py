@@ -13,6 +13,15 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/UiL-OTS-labs/django-shared-core",
     packages=setuptools.find_packages(),
+    install_requires=[
+        'django>=2.0',
+        'pyscss',
+        'lesscpy',
+        'closure',
+        'vbuild',
+        'requests',
+        'PyJWT',
+    ],
     classifiers=[
         "Programming Language :: Python :: 3",
         "Framework :: Django :: 2.2",
