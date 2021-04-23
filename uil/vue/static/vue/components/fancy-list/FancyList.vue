@@ -243,6 +243,9 @@ export default {
             continue;
 
           let value = this.getValFromPathstring(filter, item);
+          // Fix for numbers, bools, etc not being compared as allowed_values
+          // will always be a string representation of the value
+          value = String(value);
 
           if (!allowed_values.includes(value)) {
             return false;
