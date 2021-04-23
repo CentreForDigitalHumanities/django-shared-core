@@ -4,11 +4,15 @@ let VueUil = {
          * This method exposed the window.reverse method to Vue as a instance method
          *
          * Depends on js-urls of uil.core
-         * @param url The name of the url to resolve
+         * @param url String The name of the url to resolve
          * @param params Any URL parameters needed
          * @returns {*}
          */
         Vue.prototype.$url = function (url, params) {
+            // If it's already a resolved URL, just return that
+            if(url.startsWith('/') || url.startsWith("http"))
+                return url;
+
             return window.reverse(url, params);
         }
 
