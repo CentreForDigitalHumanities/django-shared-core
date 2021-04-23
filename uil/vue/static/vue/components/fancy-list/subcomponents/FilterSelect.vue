@@ -3,7 +3,7 @@
  -->
 <template>
   <select :id="id" class="ufl-select" multiple="multiple">
-    <option v-for="option in options" :value="option">{{option}}</option>
+    <option v-for="option in options" :value="option">{{ format_option(option) }}</option>
   </select>
 </template>
 
@@ -61,6 +61,31 @@ export default {
         }
       }
     }
+  },
+  methods: {
+    /**
+     * Format a filter option
+     * Displays a boolean as yes, no, mostly
+     * @param value
+     */
+    format_option(value) {
+      if (typeof value === "boolean")
+        value = value ? this.$t('yes') : this.$t('no');
+
+      return value
+    },
+  },
+  i18n: {
+    messages: {
+      en: {
+        yes: "Yes",
+        no: "No",
+      },
+      nl: {
+        yes: "Ja",
+        no: "Nee",
+      },
+    },
   },
   mounted() {
     // Alias `this` so we can use it in multiselect
