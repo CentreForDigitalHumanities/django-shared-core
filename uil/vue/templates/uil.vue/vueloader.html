@@ -4,8 +4,10 @@
     {# If we are in dev mode, load the dev Vue library. Which exposes methods to the Vue debugger #}
     <script src="{% static 'vue/vue2.js' %}"></script>
     <script src="{% static 'vue/plugins/vue-i18n.js' %}"></script>
+    <script src="{% static 'vue/plugins/moment.js' %}"></script>
 {% else %}
     <script src="{% static 'vue/vue2.min.js' %}"></script>
     <script src="{% static 'vue/plugins/vue-i18n.min.js' %}"></script>
+    <script src="{% static 'vue/plugins/moment.min.js' %}"></script>
 {% endif %}
 <script src="{% static 'vue/plugins/vue-uil.js' %}"></script>

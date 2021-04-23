@@ -53,10 +53,18 @@ let VueUil = {
                     };
                 },
                 mounted() {
-                    this.$ufl_load(this, this.$url(url, url_args))
+                    this.$ufl_load(this, this.$url(url, url_args));
                 },
             });
         }
+
+        Vue.filter('date', function(timestamp, format="YYYY-MM-DD") {
+            if(timestamp == null)
+                return ""
+            let date = new Date(timestamp);
+
+            return moment(date).format(format)
+		});
     }
 }
 
