@@ -5,7 +5,7 @@ implement things
 -->
 <template>
   <div class="ufl-item clearfix" :class="{ expanded: expanded }">
-    <div class="ufl-bar" @click="toggleDetails">
+    <div class="ufl-bar" @click.self="toggleDetails">
       <h4>
         <slot name="title" :item="item" :context="context" />
       </h4>
