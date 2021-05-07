@@ -137,6 +137,12 @@ export default {
     user-select: none;
 }
 
+.uil-fancy-list .ufl-item .ufl-actions [class^="icon-"],
+.uil-fancy-list .ufl-item .ufl-actions [class*=" icon-"] {
+    font-size: 1rem;
+
+}
+
 .uil-fancy-list .ufl-item .ufl-actions a {
     text-decoration: none;
 }
