@@ -5,12 +5,12 @@ implement things
 -->
 <template>
   <div class="ufl-item clearfix" :class="{ expanded: expanded }">
-    <div class="ufl-bar" @click.self="toggleDetails">
+    <div class="ufl-bar" @click="toggleDetails">
       <h4>
         <slot name="title" :item="item" :context="context" />
       </h4>
 
-      <div class="ufl-actions" v-if="$scopedSlots.actions">
+      <div class="ufl-actions" v-on:click.stop v-if="$scopedSlots.actions">
         <slot name="actions" :item="item" :context="context" />
       </div>
     </div>
@@ -100,7 +100,7 @@ export default {
     cursor: pointer;
 }
 
-.uil-fancy-list .ufl-item:after {
+.uil-fancy-list .ufl-item .ufl-bar:after {
     font-family: 'icomoon-additional';
     content: "\E611";
     font-size: 10px;
@@ -109,6 +109,7 @@ export default {
     top: 20px;
     right: 20px;
     transition: 0.2s;
+    cursor: pointer;
 }
 
 .uil-fancy-list .ufl-item.expanded {
@@ -123,7 +124,7 @@ export default {
     z-index: 3;
 }
 
-.uil-fancy-list .ufl-item.expanded:after {
+.uil-fancy-list .ufl-item.expanded .ufl-bar:after {
     content: "\E612";
     right: 25px;
 }
