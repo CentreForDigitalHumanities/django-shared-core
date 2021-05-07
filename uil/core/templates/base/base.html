@@ -40,16 +40,16 @@ Miauw!
     <link href="{% static 'uil.core/css/jquery.ui.structure.min.css' %}" rel="stylesheet" />
     <link href="{% static 'uil.core/css/jquery.ui.uu-theme.css' %}" rel="stylesheet" />
     <link href="{% static 'uil.core/css/uu-style.css' %}" rel="stylesheet" />
-    <script src="{% static 'uil.core/js/jquery-3.3.1.min.js' %}"></script>
-    <script src="{% static 'uil.core/js/jquery.ui.min.js' %}"></script>
-    <script src="{% static 'uil.core/js/popper.min.js' %}"></script>
-    <script src="{% static 'uil.core/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'uil.core/js/bootstrap-multiselect.js' %}"></script>
-    <script src="{% static 'uil.core/js/datatables.min.js' %}"></script>
-    <script src="{% static 'uil.core/js/select2.min.js' %}"></script>
-    <script src="{% static 'uil.core/js/qtip.min.js' %}"></script>
-    <script src="{% static 'uil.core/js/common.js' %}"></script>
-    <script src="{% url 'uil.core:js_urls' %}"></script>
+    <script src="{% static 'uil.core/js/jquery-3.3.1.min.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'uil.core/js/jquery.ui.min.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'uil.core/js/popper.min.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'uil.core/js/bootstrap.min.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'uil.core/js/bootstrap-multiselect.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'uil.core/js/datatables.min.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'uil.core/js/select2.min.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'uil.core/js/qtip.min.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'uil.core/js/common.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% url 'uil.core:js_urls' %}" nonce="{{ request.csp_nonce }}"></script>
 
     <link rel="shortcut icon" type="image/png" href="{% static 'uil.core/images/favicon.ico' %}"/>
 

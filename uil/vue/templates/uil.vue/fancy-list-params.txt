@@ -1,7 +1,0 @@
-:items="items"
-:filter-definitions="filterDefinitions"
-:context="context"
-:searchable-fields="searchableFields"
-:num-item-options="numItemsOptions"
-:sort-definitions="sortDefinitions"
-:loaded="loaded"
