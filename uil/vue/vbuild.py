@@ -2,6 +2,7 @@ import glob
 import itertools
 import os
 import re
+from typing import List
 
 import vbuild
 
@@ -55,7 +56,6 @@ class VBuild(vbuild.VBuild):
                     _VueJs(name, tplId, vp.script and vp.script.value)
                 ]
             except Exception as e:
-                print(e)
                 raise vbuild.VBuildException(
                     "JS Component %s contains a bad script" % filename
                 )
@@ -63,7 +63,7 @@ class VBuild(vbuild.VBuild):
     @property
     def script(self):
         """ Return JS (js of embbeded components), after transScript"""
-        scripts = sorted(self._script)
+        scripts = list(topological_sort(self._script))
         js = "\n".join([x.code for x in scripts])
         isPyComp = "_pyfunc_op_instantiate(" in js  # in fact : contains
         isLibInside = "var _pyfunc_op_instantiate" in js
@@ -102,10 +102,7 @@ class _VueJs:
             else:
                 raise Exception("Can't find valid content inside '{' and '}'")
 
-        self.dependencies = re.findall(_VueJs.IMPORT_RE, code)
-
-    def __lt__(self, other):
-        return self.name in other.dependencies
+        self.dependencies = set(re.findall(_VueJs.IMPORT_RE, code))
 
     def __repr__(self):
         return "<_VueJS: {}: {}>".format(self.name, self.dependencies)
@@ -116,6 +113,28 @@ class _VueJs:
             name=self.name,
             code=self.js.replace("{", "{\n  template:'%s'," % self.template, 1),
         )
+
+
+def topological_sort(items: List[_VueJs]):
+    """Sorts dependencies using a topological sort algorithm.
+    In other words, makes sure that for any _VueJS, it ensures it's
+    dependencies have been added before it"""
+    # Set of all items that have been added already
+    already_provided = set()
+    while items:
+        remaining_items = []
+
+        for item in items:
+            # Are all dependencies of this item provided already?
+            if item.dependencies.issubset(already_provided):
+                # Then yield it, and mark this item as provided
+                yield item
+                already_provided.add(item.name)
+            else:
+                # If not, retry later
+                remaining_items.append(item)
+
+        items = remaining_items
 
 
 def render(component):
