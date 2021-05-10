@@ -80,6 +80,7 @@ class FancyListApiView(GenericAPIView):
     filter_definitions = []
     context = {}
     num_items_options = [5, 10, 25, 50]
+    default_items_per_page = 10
     default_sort = None
 
     def get(self, request, *args, **kwargs):
@@ -98,6 +99,7 @@ class FancyListApiView(GenericAPIView):
             'searchableFields': self.get_searchable_fields(),
             'filterDefinitions': self._get_filter_definitions(),
             'numItemsOptions': self.get_num_items_options(),
+            'defaultItemsPerPage': self.get_default_items_per_page(),
             'sortDefinitions': self._get_sort_definitions(),
         })
 
@@ -130,6 +132,13 @@ class FancyListApiView(GenericAPIView):
     def get_num_items_options(self) -> List[int]:
         """Returns the possible items per page options"""
         return self.num_items_options
+
+    def get_default_items_per_page(self) -> int:
+        """Returns the default number of items to be displayed on a page.
+
+        Value must be an element in num_items_options
+        """
+        return self.default_items_per_page
 
     def get_default_sort(self) -> Tuple[str, str]:
         """Return the default sort. Should be a tuple of (field, direction).

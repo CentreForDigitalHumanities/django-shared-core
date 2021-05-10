@@ -173,6 +173,13 @@ export default {
       type: Array,
       default() { return [5, 10, 25, 50] },
     },
+    // The default number of items to display in a page
+    // Value must be a value in numItemsOptions
+    defaultItemsPerPage: {
+      type: Number,
+      required: true,
+      default() { return 10 },
+    },
     // Dictionary of filter definitions. Keys should be the pathstring
     // corresponding to the field that can be filtered on Value should be a
     // human readable version of the field, for display  purposes
@@ -410,6 +417,11 @@ export default {
     'controlValues.itemsPerPage': function () {
       // Reset to page one if we change page sizes.
       this.page = 1;
+    },
+    defaultItemsPerPage(val) {
+      // update control value from prop if prop changes
+      console.log("meep", val)
+      this.controlValues.itemsPerPage = val;
     },
     filters () {
       // Reset to page one if a filter changes

@@ -21,7 +21,7 @@ let VueUil = {
         Vue.prototype.$ufl_load = function (app, url) {
             $.get(url, data => {
                 for (const [key, value] of Object.entries(data)) {
-                  app[key] = value
+                  app[key] = value;
                 }
                 app.loaded = true;
             });
@@ -48,6 +48,7 @@ let VueUil = {
                         'searchableFields': [],
                         'filterDefinitions': {},
                         'numItemsOptions': [],
+                        'defaultItemsPerPage': 10,
                         'sortDefinitions': {},
                         'loaded': false,
                     };
