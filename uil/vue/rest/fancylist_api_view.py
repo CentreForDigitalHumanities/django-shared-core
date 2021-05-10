@@ -85,6 +85,19 @@ class FancyListApiView(GenericAPIView):
     default_sort = None
 
     def get(self, request, *args, **kwargs):
+        return Response({
+            'items': self.get_items(),
+            'showControls': self.get_show_controls(),
+            'context': self.get_context(),
+            'searchableFields': self.get_searchable_fields(),
+            'filterDefinitions': self._get_filter_definitions(),
+            'numItemsOptions': self.get_num_items_options(),
+            'defaultItemsPerPage': self.get_default_items_per_page(),
+            'sortDefinitions': self._get_sort_definitions(),
+        })
+
+    def get_items(self):
+        """Get serialized items from QS through the serializer"""
         queryset = self.filter_queryset(self.get_queryset())
 
         page = self.paginate_queryset(queryset)
@@ -94,16 +107,7 @@ class FancyListApiView(GenericAPIView):
 
         serializer = self.get_serializer(queryset, many=True)
 
-        return Response({
-            'items': serializer.data,
-            'showControls': self.get_show_controls(),
-            'context': self.get_context(),
-            'searchableFields': self.get_searchable_fields(),
-            'filterDefinitions': self._get_filter_definitions(),
-            'numItemsOptions': self.get_num_items_options(),
-            'defaultItemsPerPage': self.get_default_items_per_page(),
-            'sortDefinitions': self._get_sort_definitions(),
-        })
+        return serializer.data
 
     def get_show_controls(self) -> bool:
         """If False, all controls will be hidden. (Search, sort on, items per
