@@ -50,6 +50,9 @@ of said item. The context variable will be filled with the same data for all
 items, which will be taken from the context attribute of FancyList. (If you use
 the FancyListApiView, this is where data from get_context() ends up).
 
+Additionally, you can override the 'items are loading'/'there are no items'
+through the `loading`/`no_items` slots respectively.
+
 Add an empty div in your body where you want your list to appear. Set an unique
 id on that div.
 
@@ -94,11 +97,15 @@ window.onload = _ => {
     ></Controls>
 
     <div class="info mt-3" id="ufl-no-items" v-if="!visibleItems.length && loaded">
-      {{ $t('no_items') }}
+      <slot name="no_items">
+        {{ $t('no_items') }}
+      </slot>
     </div>
 
     <div class="info mt-3" id="ufl-loading" v-if="!loaded">
-      {{ $t('loading') }}
+      <slot name="loading">
+        {{ $t('loading') }}
+      </slot>
     </div>
 
     <ListContainer
