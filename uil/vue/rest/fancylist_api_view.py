@@ -75,6 +75,7 @@ class FancyListApiView(GenericAPIView):
             self.field = field
             self.display_name = display_name
 
+    show_controls = True
     searchable_fields = []
     sort_definitions = []
     filter_definitions = []
@@ -95,6 +96,7 @@ class FancyListApiView(GenericAPIView):
 
         return Response({
             'items': serializer.data,
+            'showControls': self.get_show_controls(),
             'context': self.get_context(),
             'searchableFields': self.get_searchable_fields(),
             'filterDefinitions': self._get_filter_definitions(),
@@ -102,6 +104,12 @@ class FancyListApiView(GenericAPIView):
             'defaultItemsPerPage': self.get_default_items_per_page(),
             'sortDefinitions': self._get_sort_definitions(),
         })
+
+    def get_show_controls(self) -> bool:
+        """If False, all controls will be hidden. (Search, sort on, items per
+        page and filters)
+        """
+        return self.show_controls
 
     def get_searchable_fields(self) -> List[str]:
         """Returns a list of path strings of fields that can be searched

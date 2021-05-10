@@ -85,6 +85,7 @@ window.onload = _ => {
 <template>
   <div class="ufl-container">
     <Controls
+      v-if="showControls"
       v-model:value="controlValues"
       :num-items-options="numItemsOptions"
       :available-filters="availableFilters"
@@ -144,6 +145,11 @@ export default {
     items: {
       type: Array,
       required: true,
+    },
+    showControls: {
+      type: Boolean,
+      required: true,
+      default: false,
     },
     // An array of all fields that search should search through
     // Must be an array of pathstrings

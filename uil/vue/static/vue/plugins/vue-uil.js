@@ -44,6 +44,9 @@ let VueUil = {
                     return {
                         // Actual data loaded through $ufl_load in mounted()
                         'items': [],
+                        // Default to false, as this will make the loading seem more seamless. (Defaults to true in
+                        // FancyListApiView anyway, so it will probably be enabled through that).
+                        'showControls': false,
                         'context': {},
                         'searchableFields': [],
                         'filterDefinitions': {},

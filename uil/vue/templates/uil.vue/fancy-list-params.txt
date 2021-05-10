@@ -1,4 +1,5 @@
 :items="items"
+:show-controls="showControls"
 :filter-definitions="filterDefinitions"
 :context="context"
 :searchable-fields="searchableFields"
