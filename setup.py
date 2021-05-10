@@ -21,6 +21,7 @@ setuptools.setup(
         'vbuild',
         'requests',
         'PyJWT',
+        'djangorestframework',
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
