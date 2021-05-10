@@ -426,7 +426,6 @@ export default {
     },
     defaultItemsPerPage(val) {
       // update control value from prop if prop changes
-      console.log("meep", val)
       this.controlValues.itemsPerPage = val;
     },
     filters () {
