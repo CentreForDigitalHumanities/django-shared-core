@@ -275,13 +275,20 @@ export default {
         if (this.controlValues.search) {
           let found = false;
           for (const field of this.searchFields) {
-            let value = this.getValFromPathstring(field, item);
+            try {
+              let value = this.getValFromPathstring(field, item);
 
-            if (String(value).toLowerCase().includes(this.controlValues.search)) {
-              found = true;
-              break; // No sense continuing, as we know this item is to be
-                     // included
+              if (String(value).toLowerCase().includes(
+                  this.controlValues.search.toLowerCase()
+              )) {
+                found = true;
+                break; // No sense continuing, as we know this item is to be
+                       // included
+              }
+            } catch {
+              // This key probably isn't present in this item, ignore
             }
+
           }
 
           return found;
@@ -463,7 +470,7 @@ export default {
       ) {
         // Recursive helper to get all fields
         let getFields = (node) => {
-          let fields = [];
+          let fields = new Set();
           for(const [attr, val] of Object.entries(node)) {
             // Turns out, typeof null === object
             if(typeof val === "object" && val !== null) {
@@ -471,11 +478,11 @@ export default {
               // the child attributes
               getFields(val).forEach( childAttr => {
                 // Join the results to this attribute
-                fields.push(attr + "." + childAttr);
+                fields.add(attr + "." + childAttr);
               });
             }
             else
-              fields.push(attr);
+              fields.add(attr);
           }
           return fields;
         };
