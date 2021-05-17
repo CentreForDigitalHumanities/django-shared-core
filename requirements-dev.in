@@ -1,6 +1,11 @@
-Django>=2.2,<3.0
+Django>=2.2,<3.3
 requests
 PyJWT
 pip-tools
 cryptography
 backports-datetime-fromisoformat
+djangorestframework
+pyscss
+lesscpy
+closure
+vbuild

@@ -1,0 +1,13 @@
+{% load static %}
+
+{% if debug %}
+    {# If we are in dev mode, load the dev Vue library. Which exposes methods to the Vue debugger #}
+    <script src="{% static 'vue/vue2.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'vue/plugins/vue-i18n.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'vue/plugins/moment.js' %}" nonce="{{ request.csp_nonce }}"></script>
+{% else %}
+    <script src="{% static 'vue/vue2.min.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'vue/plugins/vue-i18n.min.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'vue/plugins/moment.min.js' %}" nonce="{{ request.csp_nonce }}"></script>
+{% endif %}
+<script src="{% static 'vue/plugins/vue-uil.js' %}" nonce="{{ request.csp_nonce }}"></script>
