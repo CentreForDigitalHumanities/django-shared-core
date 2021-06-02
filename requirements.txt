@@ -38,9 +38,7 @@ six==1.15.0
     #   pyscss
 sqlparse==0.4.1
     # via django
-typing-extensions==3.7.4.3
-    # via asgiref
-urllib3==1.26.4
+urllib3==1.26.5
     # via requests
 vbuild==0.8.1
     # via -r requirements.in
