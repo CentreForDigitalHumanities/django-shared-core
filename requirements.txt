@@ -12,7 +12,7 @@ chardet==4.0.0
     # via requests
 closure==20191111
     # via -r requirements.in
-django==3.2
+django==3.2.1
     # via djangorestframework
 djangorestframework==3.12.4
     # via -r requirements.in
@@ -38,8 +38,6 @@ six==1.15.0
     #   pyscss
 sqlparse==0.4.1
     # via django
-typing-extensions==3.7.4.3
-    # via asgiref
 urllib3==1.26.4
     # via requests
 vbuild==0.8.1
