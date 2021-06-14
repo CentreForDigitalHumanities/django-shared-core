@@ -1,5 +1,6 @@
 from requests import Response
 
+from uil.rest_client.logging import general_logger as logger
 
 class ApiError(Exception):
     """General API errors"""
@@ -8,6 +9,8 @@ class ApiError(Exception):
         super(ApiError, self).__init__(*args)
         self.status_code = status_code
         self.message = message
+        logger.error(f"Status {status_code}: {message}")
+
 
     def __str__(self):
         return 'ApiError ({}): {}'.format(self.status_code, self.message)

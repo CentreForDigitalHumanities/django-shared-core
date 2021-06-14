@@ -4,6 +4,7 @@ from requests.exceptions import ConnectionError
 from ._base import BaseClient, host_unreachable
 from ..operations import Operations
 from ..exceptions import OperationNotEnabled
+from ..logging import transaction_logger as logger
 
 
 class CollectionClient(BaseClient):
@@ -24,8 +25,9 @@ class CollectionClient(BaseClient):
 
         if not self.operation == Operations.get and \
                 not self.operation == Operations.get_over_post:
-            raise ImproperlyConfigured(
-                "Collections only support get and get_over_post operations!")
+            logger.warning(f"{repr(self)}: GET and GET_OVER_POST are "
+                           f"both enabled. Will use GET_OVER_POST. Please "
+                           f"don't do this.")
 
     def get(self, **kwargs):
         """Gets a collection from the API. Either over GET or GET_OVER_POST,
@@ -48,19 +50,23 @@ class CollectionClient(BaseClient):
         url, kwargs = self._make_url(**kwargs)
 
         try:
+            logger.info(f"GETting {url}")
             request = method(
                 url,
                 kwargs,
                 headers=self._make_auth_headers(),
             )
         except ConnectionError as e:
+            logger.warning(f"Host {url} unreachable")
             host_unreachable()
             return None
 
         if request.ok:
+            logger.info(f"Data retrieved")
             return self.meta.collection(request.json())
 
         if request.status_code == 404:
+            logger.warning(f"Data not found")
             raise ObjectDoesNotExist
 
         self._handle_api_error(request)

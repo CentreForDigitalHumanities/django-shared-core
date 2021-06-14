@@ -8,6 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import gettext as _
 
 from ..exceptions import *
+from ..logging import transaction_logger as logger
 from uil.core.middleware import get_current_authenticated_user, \
     get_current_request, \
     get_current_session
@@ -44,6 +45,8 @@ class BaseClient:
             if 'token' in session:
                 headers['Authorization'] = 'Bearer {}'.format(session['token'])
 
+        logger.debug(f"Using headers: {headers}")
+
         return headers
 
     @staticmethod
@@ -53,6 +56,7 @@ class BaseClient:
         :return:
         """
         if request.status_code == 404:
+            logger.warning("Resource does not exist")
             raise ObjectDoesNotExist
 
         if request.status_code == 401:
@@ -73,6 +77,7 @@ class BaseClient:
         :return: A fully qualified URI to be used in the http request
         """
         url = self.path
+        logger.debug(f"Creating URL: {url}")
         if self.path_variables:
             values = {}
             for path_var in self.path_variables:
@@ -86,7 +91,7 @@ class BaseClient:
                     raise RuntimeError(
                         'No value found for path variable {}'.format(path_var)
                     )
-
+            logger.debug(f"Using values: {values}")
             url = url.format(**values)
 
         return urljoin(self._host, url), kwargs

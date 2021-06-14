@@ -13,6 +13,7 @@ from django.utils.translation import gettext_lazy as _
 from uil.rest_client.collections.collections import ResourceCollection, _TypeCollection
 from uil.rest_client.resources import Resource
 from uil.rest_client.registry import registry
+from uil.rest_client.logging import field_logger as logger
 
 MonkeyPatch.patch_fromisoformat()
 
@@ -156,9 +157,12 @@ class _BaseField(ABC):
         from to_python() and validate() are propagated. Return the correct
         value if no error is raised.
         """
+        logger.debug(f"{repr(self)}: Cleaning {repr(value)}")
         value = self.to_python(value)
+        logger.debug(f"{repr(self)}: Resolved to {repr(value)}")
         self.validate(value)
         self.run_validators(value)
+        logger.debug(f"{repr(self)}: Validated value")
         return value
 
     def __eq__(self, other: object) -> bool:
@@ -193,6 +197,7 @@ class _BaseField(ABC):
         the same as the value supplied, but this can be overridden by fields
         to provide a conversion to a different datatype
         """
+        logger.debug(f"{repr(self)}: serializing to python: {repr(value)}")
         return value
 
     @abstractmethod
@@ -200,6 +205,7 @@ class _BaseField(ABC):
         """This method should return a python datatype that can be deserialized
         properly primarily by the json module.
         """
+        logger.debug(f"{repr(self)}: deserializing to api: {repr(value)}")
         pass
 
 
@@ -214,6 +220,7 @@ class BasicTypeField(_BaseField):
         """Cleans and validates values before casting them to the right
         API type
         """
+        logger.debug(f"{repr(self)}: deserializing to api: {repr(value)}")
         if value is None:
             return value
         try:
@@ -254,6 +261,7 @@ class DateTimeField(_BaseField):
     type = datetime
 
     def to_python(self, value: str) -> type:
+        logger.debug(f"{repr(self)}: serializing to python: {repr(value)}")
         if value is None:
             return value
 
@@ -277,6 +285,7 @@ class DateTimeField(_BaseField):
             )
 
     def to_api(self, value: type) -> str:
+        logger.debug(f"{repr(self)}: deserializing to api: {repr(value)}")
         value = self.clean(value)
 
         if value is None:
@@ -311,6 +320,8 @@ class CollectionField(_BaseField):
         """Transforms the collection into a list, and chains the call to it's
         children.
         """
+        logger.debug(f"{repr(self)}: deserializing to api: {repr(value)}")
+
         if value is None or value in self.empty_values:
             return []
 
@@ -319,6 +330,7 @@ class CollectionField(_BaseField):
     def to_python(self, value: list):
         """Creates a collection object from the supplied list"""
         cls = self.collection
+        logger.debug(f"{repr(self)}: serializing to python: {repr(value)}")
 
         if isinstance(cls, str):
             app_label = self.resource._meta.app_label
@@ -346,6 +358,8 @@ class ResourceField(_BaseField):
         """Transforms the resources into a dict, and chains the call to it's
         children.
         """
+        logger.debug(f"{repr(self)}: deserializing to api: {repr(value)}")
+
         if value is None or value in self.empty_values:
             if not self.null or not self.blank:
                 raise ValueError('Cannot serialize null, as it\'s not allowed!')
@@ -356,6 +370,7 @@ class ResourceField(_BaseField):
     def to_python(self, value: dict):
         """Creates a resources object from the supplied dict"""
         cls = self.resource_class
+        logger.debug(f"{repr(self)}: serializing to python: {repr(value)}")
 
         if value is None:
             if not self.null or not self.blank:

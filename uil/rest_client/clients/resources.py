@@ -5,6 +5,7 @@ from ._base import BaseClient, host_unreachable
 from ..registry import registry
 from ..operations import Operations
 from ..exceptions import OperationNotEnabled
+from ..logging import transaction_logger as logger
 
 
 class ResourceClient(BaseClient):
@@ -42,12 +43,16 @@ class ResourceClient(BaseClient):
 
             if operation == Operations.get:
                 self._get_enabled = True
+                logger.debug(f"{repr(self)}: GET enabled")
             elif operation == Operations.get_over_post:
                 self._get_over_post_enabled = True
+                logger.debug(f"{repr(self)}: GET over POST enabled")
             elif operation == Operations.delete:
                 self._delete_enabled = True
+                logger.debug(f"{repr(self)}: DELETE enabled")
             elif operation == Operations.put:
                 self._put_enabled = True
+                logger.debug(f"{repr(self)}: PUT enabled")
             else:
                 raise NotImplementedError(
                     "Operation not implemented! Please add operation '{}' "
@@ -57,8 +62,9 @@ class ResourceClient(BaseClient):
                 )
 
         if self._get_enabled and self._get_over_post_enabled:
-            raise ImproperlyConfigured(
-                "Resources cannot have both get and get_over_post configured!")
+            logger.warning(f"{repr(self)}: GET and GET_OVER_POST are "
+                           f"both enabled. Will use GET_OVER_POST. Please "
+                           f"don't do this.")
 
     def get(self, **kwargs):
         """Gets a resources from the API. Either over GET or GET_OVER_POST,
@@ -81,16 +87,19 @@ class ResourceClient(BaseClient):
         url, kwargs = self._make_url(**kwargs)
 
         try:
+            logger.info(f"GETting {url}")
             request = method(
                 url,
                 kwargs,
                 headers=self._make_auth_headers(),
             )
         except ConnectionError:
+            logger.warning(f"Host {url} unreachable")
             host_unreachable()
             return None
 
         if request.ok:
+            logger.info(f"Data retrieved")
             return self.meta.resource(**request.json())
 
         self._handle_api_error(request)
@@ -118,20 +127,25 @@ class ResourceClient(BaseClient):
         :return: A return_response instance, or a Boolean (False indicated
         a connection error)
         """
+        logger.debug("Preparing PUT transaction")
         if not self._put_enabled:
             raise OperationNotEnabled
 
         if not return_resource:
+            logger.debug("No return resource specified, falling back to "
+                         "default return response")
             return_resource = self.meta.default_return_resource
 
         if isinstance(return_resource, str):
             app_label = obj._meta.app_label
+            logger.debug("Resolving return resource")
 
             if len(return_resource.split('.')) == 2:
                 app_label, return_resource = return_resource.split('.')
             return_resource = registry.get_resource(app_label, return_resource)
 
         if not as_json:
+            logger.debug("No as_json specified, falling back on default")
             as_json = self._send_as_json
 
         url, kwargs = self._make_url(obj, **kwargs)
@@ -141,24 +155,30 @@ class ResourceClient(BaseClient):
                 'params': kwargs,
                 'headers': self._make_auth_headers(),
             }
+            logger.info(f"PUTting {url}")
 
             if as_json:
                 request_kwargs['json'] = obj.to_api()
             else:
                 request_kwargs['data'] = obj.to_api()
 
+            logger.debug(request_kwargs)
+
             request = self._http_client.post(
                 url,
                 **request_kwargs
             )
         except ConnectionError:
+            logger.warning(f"Host {url} unreachable")
             host_unreachable()
             return False
 
         if request.ok:
             if return_resource:
+                logger.info(f"Data retrieved")
                 return return_resource(**request.json())
 
+            logger.info(f"Transaction successful")
             return True
 
         self._handle_api_error(request)
@@ -176,12 +196,14 @@ class ResourceClient(BaseClient):
         url, kwargs = self._make_url(obj, **kwargs)
 
         try:
+            logger.info(f"DELETEing {url}")
             request = self._http_client.delete(
                 url,
                 params=kwargs,
                 headers=self._make_auth_headers(),
             )
         except ConnectionError:
+            logger.warning(f"Host {url} unreachable")
             host_unreachable()
             return False
 

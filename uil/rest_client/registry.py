@@ -1,4 +1,4 @@
-
+from uil.rest_client.logging import registry_logger as logger
 
 class _RestRegistry:
 
@@ -13,12 +13,9 @@ class _RestRegistry:
             self.resource_registry[app_label] = {}
 
         if resource in self.resource_registry[app_label]:
-            raise RuntimeError(
-                "Conflicting '{}' resources in app '{}'".format(
-                    resource_name,
-                    app_label
-                )
-            )
+            mess = f"Conflicting '{resource_name}' resources in app '{app_label}'"
+            logger.exception(mess)
+            raise RuntimeError(mess)
 
         self.resource_registry[app_label][resource_name] = resource
 
@@ -29,12 +26,9 @@ class _RestRegistry:
             self.collection_registry[app_label] = {}
 
         if collection in self.collection_registry[app_label]:
-            raise RuntimeError(
-                "Conflicting '{}' resources in app '{}'".format(
-                    collection_name,
-                    app_label
-                )
-            )
+            mess = f"Conflicting '{collection_name}' resources in app '{app_label}'"
+            logger.exception(mess)
+            raise RuntimeError(mess)
 
         self.collection_registry[app_label][collection_name] = collection
 

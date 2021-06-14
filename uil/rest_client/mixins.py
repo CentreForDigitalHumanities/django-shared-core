@@ -1,9 +1,8 @@
 from importlib import import_module
-import logging
 
 from django.utils.module_loading import module_has_submodule
 
-logger = logging.getLogger('uil.rest_client.registry')
+from uil.rest_client.logging import registry_logger as logger
 
 
 class ResourceSetupMixin:
