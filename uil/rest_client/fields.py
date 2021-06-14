@@ -365,6 +365,9 @@ class ResourceField(_BaseField):
                 raise ValueError('Cannot serialize null, as it\'s not allowed!')
             return None
 
+        if isinstance(value, int):
+            return value
+
         return value.to_api()
 
     def to_python(self, value: dict):
