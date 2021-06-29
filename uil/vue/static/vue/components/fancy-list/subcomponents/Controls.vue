@@ -131,7 +131,7 @@ export default {
         search_placeholder: "Search",
         num_items: "Items per page",
         filters: "Filters",
-        sort: "Sort on",
+        sort: "Sort by",
       },
       nl: {
         search_placeholder: "Zoeken",

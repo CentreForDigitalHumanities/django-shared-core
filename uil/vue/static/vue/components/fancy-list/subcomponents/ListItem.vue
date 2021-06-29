@@ -148,9 +148,10 @@ export default {
     text-decoration: none;
 }
 
-.uil-fancy-list .ufl-item h4 {
+.uil-fancy-list .ufl-item .ufl-bar > h4 {
     display: inline-block;
     margin-bottom: 0.3rem;
+    padding-right: 30px;
     /*
     This is intentionally darker than all other text
     Due to the low-weight of this text, it appears lighter than it is.
