@@ -260,7 +260,7 @@ footer a {
 
 /* Misc */
 .hide-xs {
-    display: inherit;
+    display: initial;
 }
 
 .show-xs {
