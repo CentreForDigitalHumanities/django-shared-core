@@ -16,7 +16,7 @@
                 {% endwith %}
             {% endif %}
             {% for item in menus.main %}
-                <li class="nav-item {% if item.selected %}active{% endif %} {% if item.children %}dropdown{% endif %}">
+                <li class="nav-item {% if item.selected %}active{% endif %} {% if item.children %}dropdown{% endif %}  {{item.css_class}}">
                     <a
                             class="nav-link {% if item.children %}dropdown-toggle{% endif %}"
                             href="{{ item.url }}"
