@@ -37,7 +37,7 @@
                         <div class="dropdown-menu" aria-labelledby="{{ item.slug }}">
                             {% for child in item.children %}
                                 <a
-                                        class="dropdown-item"
+                                        class="dropdown-item  {{child.css_class}}"
                                         href="{{ child.url }}"
                                         {% if child.open_in_new_tab %}
                                             target="_blank"
