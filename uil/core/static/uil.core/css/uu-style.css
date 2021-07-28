@@ -259,10 +259,6 @@ footer a {
 }
 
 /* Misc */
-.hide-xs {
-    display: initial;
-}
-
 .show-xs {
     display: none;
 }
