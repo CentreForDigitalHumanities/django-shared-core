@@ -221,12 +221,13 @@ h1, h2, h3, h4, h5, h6 {
         width: 100%;
         background-color: #fff;
         border-bottom: 1px solid #bbb;
+        padding-bottom: 0px;
     }
 
     .uu-navigation-bar .nav-item {
         background: #000;
         padding: 5px 10px;
-        border-top: 1px solid #bbb;
+        border-top: 1px solid #333;
     }
 
     .uu-navigation-bar .active {
