@@ -1,0 +1,24 @@
+.uil-files-select-container {
+    width: 100%;
+    padding: 5px 10px 5px 0;
+}
+
+.uil-files-select-container .uil-files-select input[type=file] {
+    /** Hide in a way that screenreaders don't get confused! **/
+    position: absolute;
+    opacity: 0;
+    width: 0.1px;
+    height: 0.1px;
+}
+
+.uil-files-select-container .uil-files-select label,
+.uil-files-select-container .uil-files-remove {
+    cursor: pointer;
+    color: #094D8E;
+    font-weight: bold;
+    float: right;
+}
+
+.uil-files-select-container  .uil-files-remove {
+    display: none;
+}
