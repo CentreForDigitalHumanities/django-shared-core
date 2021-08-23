@@ -1,15 +1,15 @@
-from ..forms import fields
 from django.core import checks, exceptions
 from django.db import router
 from django.db.models import ForeignObject, ManyToOneRel, CASCADE, SET_DEFAULT, \
     SET_NULL
 from django.db.models.fields.related import RECURSIVE_RELATIONSHIP_CONSTANT
-from django.db.models.fields.related_descriptors import \
-    ForeignKeyDeferredAttribute
 from django.db.models.query_utils import PathInfo
 from django.utils.translation import gettext_lazy as _
 
+from .descriptors import FileDescriptor, ForwardFileDescriptor
+from ..forms import fields
 from .models import File
+from .proxy_file import ProxyFile
 
 
 class FileField(ForeignObject):
@@ -20,14 +20,16 @@ class FileField(ForeignObject):
     By default ForeignKey will target the pk of the remote model but this
     behavior can be changed by using the ``to_field`` argument.
     """
-    descriptor_class = ForeignKeyDeferredAttribute
+    descriptor_class = FileDescriptor
     # Field flags
     many_to_many = False
     many_to_one = True
     one_to_many = False
     one_to_one = False
 
+    forward_related_accessor_class = ForwardFileDescriptor
     rel_class = ManyToOneRel
+    attr_class = ProxyFile
 
     empty_strings_allowed = False
     default_error_messages = {
@@ -36,14 +38,14 @@ class FileField(ForeignObject):
     }
     description = _("Foreign Key (type determined by related field)")
 
-    def __init__(self, to=None, on_delete=None, related_name=None,
-                 related_query_name=None, limit_choices_to=None,
+    def __init__(self, to=None, on_delete=None, limit_choices_to=None,
                  parent_link=False, to_field=None, db_constraint=True,
                  **kwargs):
         if to is None:
             to = File
         if on_delete is None:
             on_delete = CASCADE
+
         try:
             to._meta.model_name
         except AttributeError:
@@ -64,8 +66,8 @@ class FileField(ForeignObject):
 
         kwargs['rel'] = self.rel_class(
             self, to, to_field,
-            related_name=related_name,
-            related_query_name=related_query_name,
+            related_name='+',  # No backward relations in uil.files.File pls
+            related_query_name=None,
             limit_choices_to=limit_choices_to,
             parent_link=parent_link,
             on_delete=on_delete,
@@ -136,6 +138,12 @@ class FileField(ForeignObject):
             kwargs['db_index'] = False
         if self.db_constraint is not True:
             kwargs['db_constraint'] = self.db_constraint
+
+        # Not in this implementation of RelatedField
+        if 'related_name' in kwargs:
+            del kwargs['related_name']
+        if 'related_query_name' in kwargs:
+            del kwargs['related_query_name']
 
         # Rel needs more work.
         to_meta = getattr(self.remote_field.model, "_meta", None)
@@ -243,11 +251,19 @@ class FileField(ForeignObject):
 
     def get_prep_value(self, value):
         return self.target_field.get_prep_value(value)
+    #
+    def pre_save(self, model_instance, add):
+        ret = super().pre_save(model_instance, add)
+
+        file = getattr(model_instance, self.name, None)
+        if file and not file._committed:
+            # Commit the file to storage prior to saving the model
+            file.save(file.name, file.file, save=False)
+        return ret
+
 
     def contribute_to_related_class(self, cls, related):
-        super().contribute_to_related_class(cls, related)
-        if self.remote_field.field_name is None:
-            self.remote_field.field_name = cls._meta.pk.name
+        pass  # not needed
 
     def formfield(self, *, using=None, **kwargs):
         if isinstance(self.remote_field.model, str):
@@ -258,6 +274,7 @@ class FileField(ForeignObject):
         return super().formfield(**{
             'form_class': fields.FileField,
             'max_length': self.max_length,
+            'queryset': self.remote_field.model._default_manager.using(using),
             **kwargs,
         })
 

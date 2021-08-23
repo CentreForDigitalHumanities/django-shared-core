@@ -1,5 +1,8 @@
-from typing import Dict, List, Any, Optional, Tuple
+from typing import Dict, List, Any, Tuple
 
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import pagination
+from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
@@ -98,12 +101,7 @@ class FancyListApiView(GenericAPIView):
 
     def get_items(self):
         """Get serialized items from QS through the serializer"""
-        queryset = self.filter_queryset(self.get_queryset())
-
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
+        queryset = self.get_queryset()
 
         serializer = self.get_serializer(queryset, many=True)
 
@@ -170,3 +168,78 @@ class FancyListApiView(GenericAPIView):
         """Serializes get_filter_definitions"""
         return {x.field: x.display_name for x in self.get_filter_definitions()}
 
+
+class FancyListPaginator(pagination.PageNumberPagination):
+    page_size_query_param = 'page_size'
+
+    def __init__(self, view):
+        self.view = view
+
+    @property
+    def page_size(self):
+        return self.view.get_default_items_per_page()
+
+    def get_paginated_response(self, data):
+        return Response({
+            'count':               self.page.paginator.count,
+            'default_page_size':   self.page_size,
+            'items':               data,
+            'showControls':        self.view.get_show_controls(),
+            'context':             self.view.get_context(),
+            'searchableFields':    self.view.get_searchable_fields(),
+            'filterDefinitions':   self.view._get_filter_definitions(),
+            'numItemsOptions':     self.view.get_num_items_options(),
+            'defaultItemsPerPage': self.view.get_default_items_per_page(),
+            'sortDefinitions':     self.view._get_sort_definitions(),
+        })
+
+
+class PagedFancyListApiView(FancyListApiView):
+
+    filter_backends = [
+        DjangoFilterBackend,
+        OrderingFilter,
+        SearchFilter,
+    ]
+
+    @property
+    def filterset_fields(self):
+        return [f.field.replace('.', '__') for f in
+                self.get_filter_definitions()]
+
+    @property
+    def ordering_fields(self):
+        return [s.field.replace('.', '__') for s in
+                self.get_sort_definitions()]
+
+    @property
+    def ordering(self):
+        field, direction = self.get_default_sort()
+
+        field = field.replace(".", "__")
+
+        if direction == "desc":
+            return f"-{field}"
+        else:
+            return field
+
+    @property
+    def search_fields(self):
+        return [f.replace('.', '__') for f in
+                self.get_searchable_fields()]
+
+    @property
+    def paginator(self):
+        if not hasattr(self, '_paginator'):
+            if self.pagination_class is None:
+                self._paginator = FancyListPaginator(self)
+            else:
+                self._paginator = self.pagination_class()
+        return self._paginator
+
+    def get(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        serializer = self.get_serializer(page, many=True)
+        return self.get_paginated_response(serializer.data)

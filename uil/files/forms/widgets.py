@@ -1,57 +1,56 @@
 from django.forms.widgets import CheckboxInput, FILE_INPUT_CONTRADICTION, \
     FileInput
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 
 class SimpleFileInput(FileInput):
     clear_checkbox_label = _('Clear')
     initial_text = _('Currently')
     input_text = _('Change')
-    template_name = 'django/forms/widgets/clearable_file_input.html'
+    template_name = 'uil.files/widgets/file.html'
 
-    def clear_checkbox_name(self, name):
-        """
-        Given the name of the file input, return the name of the clear checkbox
-        input.
-        """
-        return name + '-clear'
+    CHANGED = '1'
+    NOT_CHANGED = '0'
 
-    def clear_checkbox_id(self, name):
-        """
-        Given the name of the clear checkbox input, return the HTML id for it.
-        """
-        return name + '_id'
+    strings = {
+        'empty_file': _('Please select a file'),
+        'remove': _('Clear'),
+        'select_file': _('Select File'),
+    }
 
-    def is_initial(self, value):
-        """
-        Return whether value is considered to be initial value.
-        """
-        return bool(value and getattr(value, 'url', False))
+    def __init__(self, attrs=None):
+        """Update strings from attrs if present"""
+        if attrs:
+            self.strings.update(attrs.pop('strings', {}))
+        super().__init__(attrs)
 
     def format_value(self, value):
         """
         Return the file object if it has a defined url attribute.
         """
-        if self.is_initial(value):
-            return value
+        return value
 
     def get_context(self, name, value, attrs):
         context = super().get_context(name, value, attrs)
-        checkbox_name = self.clear_checkbox_name(name)
-        checkbox_id = self.clear_checkbox_id(checkbox_name)
         context['widget'].update({
-            'checkbox_name': checkbox_name,
-            'checkbox_id': checkbox_id,
-            'is_initial': self.is_initial(value),
+            'strings': self.strings,
             'input_text': self.input_text,
             'initial_text': self.initial_text,
             'clear_checkbox_label': self.clear_checkbox_label,
         })
-        from pprint import pprint
-        pprint(context)
         return context
 
     def value_from_datadict(self, data, files, name):
+        file = files.get(name)
+        uuid = data.get(f"{name}_id")
+        changed = data.get(f"{name}_changed") == self.CHANGED
+        return file, uuid, changed
+
+    def value_omitted_from_data(self, data, files, name):
+        changed = data.get(f"{name}_changed") == self.CHANGED
+        return name not in files or not changed
+
+    def value_from_datadict_old(self, data, files, name):
         upload = super().value_from_datadict(data, files, name)
         if not self.is_required and CheckboxInput().value_from_datadict(
                 data, files, self.clear_checkbox_name(name)):
@@ -63,10 +62,5 @@ class SimpleFileInput(FileInput):
                 return FILE_INPUT_CONTRADICTION
             # False signals to clear any existing value, as opposed to just None
             return False
-        return upload
 
-    def value_omitted_from_data(self, data, files, name):
-        return (
-            super().value_omitted_from_data(data, files, name) and
-            self.clear_checkbox_name(name) not in data
-        )
+        return upload

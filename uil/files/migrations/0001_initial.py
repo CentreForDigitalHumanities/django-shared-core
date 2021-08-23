@@ -3,7 +3,7 @@
 from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
-import uil.files.models
+import uil.files.db
 import uuid
 
 
@@ -32,6 +32,6 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(uil.files.models.FileAccessMixin, models.Model),
+            bases=(models.Model,),
         ),
     ]
