@@ -4,8 +4,9 @@
 {% get_current_language as LANGUAGE_CODE %}
 {% get_available_languages as TEST %}
 {% load menu %}
+{% load file_loading %}
 {% generate_menu %}
-
+{% load_file_vars %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,6 +58,13 @@ Miauw!
 
     {% block html_head %}
     {% endblock %}
+
+    {% for css_file in uil_core_css_files %}
+    <link href="{{ css_file }}" rel="stylesheet" />
+    {% endfor %}
+    {% for js_file in uil_core_js_files %}
+    <script src="{{ js_file }}" nonce="{{ request.csp_nonce }}"></script>
+    {% endfor %}
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
