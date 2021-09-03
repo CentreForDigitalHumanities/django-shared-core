@@ -12,8 +12,9 @@ class FileWrapper(File):
     """
     DEFAULT_CHUNK_SIZE = 64 * 2 ** 10
 
-    def __init__(self, child_instance, file_instance, field, name):
-        super().__init__(None, name)
+    def __init__(self, child_instance, file_instance, field, original_filename):
+        self.file = None
+        self.original_filename = original_filename
         self.child_instance = child_instance
         self.file_instance = file_instance
         self.field = field
@@ -21,8 +22,23 @@ class FileWrapper(File):
         self._committed = True
         self._removed = False
 
+    @property
+    def name(self):
+        return self.field.filename_generator(self)
+
+    @property
+    def name_on_disk(self):
+        if self.file_instance:
+            if not self.file_instance.uuid:
+                self.file_instance.uuid = uuid.uuid4()
+            return str(self.file_instance.uuid)
+        else:
+            raise RuntimeError("No file instance. Can not retrieve filename "
+                               "without it! (Please assign this object to a "
+                               "FileField field of a model before saving)")
+
     def __hash__(self):
-        return hash(self.name)
+        return hash(self.original_filename)
 
     # Alias these to the file_instance, as sometimes the ORM expects these
     # values
@@ -49,7 +65,7 @@ class FileWrapper(File):
     def _get_file(self):
         self._require_file()
         if getattr(self, '_file', None) is None:
-            self._file = self.storage.open(self.name, 'rb')
+            self._file = self.storage.open(self.name_on_disk, 'rb')
         return self._file
 
     def _set_file(self, file):
@@ -61,20 +77,9 @@ class FileWrapper(File):
     file = property(_get_file, _set_file, _del_file)
 
     @property
-    def actual_name(self):
-        if self.file_instance:
-            if not self.file_instance.uuid:
-                self.file_instance.uuid = uuid.uuid4()
-            return str(self.file_instance.uuid)
-        else:
-            raise RuntimeError("No file instance. Can not retrieve filename "
-                               "without it! (Please assign this object to a "
-                               "FileField field of a model before saving)")
-
-    @property
     def path(self):
         self._require_file()
-        return self.storage.path(self.name)
+        return self.storage.path(self.name_on_disk)
 
     @property
     def url(self):
@@ -85,12 +90,12 @@ class FileWrapper(File):
         self._require_file()
         if not self._committed:
             return self.file.size
-        return self.storage.size(self.actual_name)
+        return self.storage.size(self.name_on_disk)
 
     def open(self, mode='rb'):
         self._require_file()
         if getattr(self, '_file', None) is None:
-            self.file = self.storage.open(self.actual_name, mode)
+            self.file = self.storage.open(self.name_on_disk, mode)
         else:
             self.file.open(mode)
         return self
@@ -111,10 +116,10 @@ class FileWrapper(File):
 
         # If we overwrite the file this instance represents, we need to first
         # delete the old one, as otherwise we would lose the new file
-        if self.storage.exists(self.actual_name):
-            self.storage.delete(self.actual_name)
+        if self.storage.exists(self.name_on_disk):
+            self.storage.delete(self.name_on_disk)
         self.storage.save(
-            self.actual_name,
+            self.name_on_disk,
             content,
             max_length=self.field.max_length
         )
@@ -146,6 +151,11 @@ class FileWrapper(File):
     save.alters_data = True
 
     def delete(self, save=True):
+        """Deletes the file on disk. If save = True, the metadata object will
+        also be deleted. Note: only delete the metadata object if no other DB
+        object is referencing it, otherwise you'll get nasty Integrity
+        errors!
+        """
         if not self:
             return
         # Only close the file if it's already open, which we know by the
@@ -154,9 +164,9 @@ class FileWrapper(File):
             self.close()
             del self.file
 
-        self.storage.delete(self.actual_name)
+        self.storage.delete(self.name_on_disk)
 
-        self.name = None
+        self.original_filename = None
         self._committed = False
 
         if save:
@@ -179,14 +189,14 @@ class FileWrapper(File):
         # the file's name. Everything else will be restored later, by
         # FileDescriptor below.
         return {
-            'name':             self.name,
-            'closed':           False,
-            '_committed':       True,
-            '_removed':         self._removed,
-            '_file':            None,
-            'child_instance':   self.child_instance,
-            'file_instance':    self.file_instance,
-            'field':            self.field,
+            'original_filename': self.original_filename,
+            'closed':            False,
+            '_committed':        True,
+            '_removed':          self._removed,
+            '_file':             None,
+            'child_instance':    self.child_instance,
+            'file_instance':     self.file_instance,
+            'field':             self.field,
         }
 
     def __setstate__(self, state):

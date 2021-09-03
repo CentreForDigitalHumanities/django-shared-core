@@ -51,16 +51,34 @@ class FileField(ForeignObject):
     }
     description = _("Foreign Key (type determined by related field)")
 
-    def __init__(self, to=None, on_delete=None, limit_choices_to=None,
-                 parent_link=False, to_field=None, db_constraint=True,
-                 **kwargs):
+    def __init__(self, to=None, on_delete=None, to_field=None, db_constraint=True,
+                 filename_generator: callable = None, **kwargs):
+        """
+
+        :param to: A File-like model.
+        :param on_delete: See Django docs for ForeignKey
+        :param to_field: The field on File one should link to. Only change
+                         this when using a different model in 'to' please
+        :param db_constraint: See Django docs for ForeignKey
+        :param filename_generator: A callable which, given a FileWrapper,
+                                   will return a name for the file. Note that
+                                   this isn't saved anywhere! Changing the
+                                   callable will change the name of all
+                                   existing files
+        :param kwargs: See Django docs for ForeignKey
+        """
         if to is None:
             to = File
         if on_delete is None:
             on_delete = CASCADE
 
+        if filename_generator is None:
+            filename_generator = lambda file_wrapper: \
+                file_wrapper.original_filename
+        self.filename_generator = filename_generator
+
         try:
-            to._meta.model_name
+            to._meta.model_name  # NoQA
         except AttributeError:
             assert isinstance(to, str), (
                     "%s(%r) is invalid. First parameter to ForeignKey must be "
@@ -81,8 +99,8 @@ class FileField(ForeignObject):
             self, to, to_field,
             related_name='+',  # No backward relations in uil.files.File pls
             related_query_name=None,
-            limit_choices_to=limit_choices_to,
-            parent_link=parent_link,
+            limit_choices_to=None,
+            parent_link=False,
             on_delete=on_delete,
         )
         kwargs.setdefault('db_index', True)
@@ -157,6 +175,9 @@ class FileField(ForeignObject):
             del kwargs['related_name']
         if 'related_query_name' in kwargs:
             del kwargs['related_query_name']
+
+        if self.filename_generator is not None:
+            kwargs['filename_generator'] = self.filename_generator
 
         # Rel needs more work.
         to_meta = getattr(self.remote_field.model, "_meta", None)
@@ -332,7 +353,7 @@ class FileField(ForeignObject):
         return super().formfield(**{
             'form_class': fields.FileField,
             'max_length': self.max_length,
-            'queryset': self.remote_field.model._default_manager.using(using),
+            'queryset':   self.remote_field.model._default_manager.using(using),
             **kwargs,
         })
 
