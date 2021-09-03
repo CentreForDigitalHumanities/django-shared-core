@@ -38,7 +38,7 @@ class FileWrapper(File):
                                "FileField field of a model before saving)")
 
     def __hash__(self):
-        return hash(self.original_filename)
+        return hash(self.name_on_disk)
 
     # Alias these to the file_instance, as sometimes the ORM expects these
     # values
