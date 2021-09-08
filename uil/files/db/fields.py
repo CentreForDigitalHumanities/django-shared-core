@@ -13,6 +13,10 @@ from .models import File
 from .file_wrapper import FileWrapper
 
 
+def _default_filename_generator(file_wrapper: FileWrapper):
+    return file_wrapper.original_filename
+
+
 class FileField(ForeignObject):
     """A replacement for Django's FileField. To the programmer, a File-like
     object is exposed which they can use to interact with the files.
@@ -73,8 +77,7 @@ class FileField(ForeignObject):
             on_delete = CASCADE
 
         if filename_generator is None:
-            filename_generator = lambda file_wrapper: \
-                file_wrapper.original_filename
+            filename_generator = _default_filename_generator
         self.filename_generator = filename_generator
 
         try:
