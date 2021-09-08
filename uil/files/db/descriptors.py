@@ -26,7 +26,7 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
             child_instance=instance,
             file_instance=file_obj,
             field=self.field,
-            name=file_obj.original_filename
+            original_filename=file_obj.original_filename
         )
         # Register this FileWrapper as the wrapper on File
         file_obj.file = file_wrapper
