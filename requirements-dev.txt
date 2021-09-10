@@ -28,10 +28,6 @@ djangorestframework==3.12.4
     # via -r requirements-dev.in
 idna==2.10
     # via requests
-importlib-metadata==4.5.0
-    # via
-    #   click
-    #   pep517
 lesscpy==0.14.0
     # via -r requirements-dev.in
 pep517==0.10.0
@@ -56,22 +52,14 @@ six==1.16.0
     # via
     #   lesscpy
     #   pyscss
-sqlparse==0.4.1
+sqlparse==0.4.2
     # via django
 toml==0.10.2
     # via pep517
-typing-extensions==3.10.0.0
-    # via
-    #   asgiref
-    #   importlib-metadata
 urllib3==1.26.5
     # via requests
 vbuild==0.8.1
     # via -r requirements-dev.in
-zipp==3.4.1
-    # via
-    #   importlib-metadata
-    #   pep517
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip

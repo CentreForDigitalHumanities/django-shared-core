@@ -36,10 +36,8 @@ six==1.16.0
     # via
     #   lesscpy
     #   pyscss
-sqlparse==0.4.1
+sqlparse==0.4.2
     # via django
-typing-extensions==3.10.0.0
-    # via asgiref
 urllib3==1.26.5
     # via requests
 vbuild==0.8.1
