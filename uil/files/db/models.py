@@ -54,9 +54,9 @@ class File(models.Model):
         from uil.files.db import FileField
         if not isinstance(field, FileField):
             return
-        self.app_name = field.model._meta.app_label,  # NoQA
-        self.model_name = field.model._meta.object_name,  # NoQA
-        self.field_name = field.name,
+        self.app_name = field.model._meta.app_label  # NoQA
+        self.model_name = field.model._meta.object_name  # NoQA
+        self.field_name = field.name
 
     @cached_property
     def _child_model(self):
