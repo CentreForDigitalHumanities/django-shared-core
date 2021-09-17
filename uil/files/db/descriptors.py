@@ -19,7 +19,7 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
     child (aka the model that has the field definition, parent would be the
     File model)."""
 
-    def _create_file_wrapper(self, instance, file_obj):
+    def _create_file_wrapper(self, instance, file_obj) -> FileWrapper:
         """Helper that creates a FileWrapper given a parent and a child
         instance"""
         file_wrapper = self.field.attr_class(
