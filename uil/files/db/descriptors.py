@@ -69,7 +69,7 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
             # the DB or the file from the disk when saving the new state).
             # The cache will be cleared once the file has been properly
             # disposed of
-            if file_wrapper._removed:
+            if not file_wrapper or file_wrapper._removed:
                 return None
 
             return file_wrapper
