@@ -42,6 +42,15 @@ class FileWrapper(File):
     def __hash__(self):
         return hash(self.name_on_disk)
 
+    def __bool__(self):
+        try:
+            return super().__bool__()
+        except AttributeError:
+            # When this file has been deleted, it might still exist in memory
+            # However, at that point self._file has been removed from the object
+            # Thus, AttributeError is raised by out parent's __bool__
+            return False
+
     # Alias these to the file_instance, as sometimes the ORM expects these
     # values
     id = property(
