@@ -7,3 +7,4 @@ class FilesConfig(AppConfig):
 
     def ready(self):
         import uil.files.checks  # noQA, the import has side effects, linter!
+        import uil.files.signals # noQA, same story
