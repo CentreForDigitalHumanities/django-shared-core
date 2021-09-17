@@ -311,7 +311,7 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
         file_wrapper.file = value
         file_wrapper._committed = False
 
-        return
+        return file_wrapper
 
     def _set_from_none(self, instance):
         """Handles removing the current value by setting it to None."""
