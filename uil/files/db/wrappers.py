@@ -55,6 +55,9 @@ class FileWrapper(File):
         lambda self: delattr(self.file_instance, 'pk')
     )
 
+    # For easier access
+    uuid = property(lambda self: self.file_instance.uuid)
+
     # The standard File contains most of the necessary properties, but
     # FieldFiles can be instantiated without a name, so that needs to
     # be checked for here.
