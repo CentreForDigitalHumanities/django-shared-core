@@ -8,7 +8,7 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from uil.files.db import manager
-from uil.files.db.file_wrapper import FileWrapper
+from uil.files.db.wrappers import FileWrapper
 
 
 logger = logging.getLogger('uil.files')
@@ -126,4 +126,7 @@ class File(models.Model):
         _set_file_wrapper,
         _del_file_wrapper
     )
+
+
+
 

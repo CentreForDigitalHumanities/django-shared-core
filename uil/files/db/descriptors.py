@@ -1,8 +1,13 @@
 from django.core.files import File
-from django.db import router
+from django.db import  router
 from django.db.models import ObjectDoesNotExist
 from django.db.models.fields.related_descriptors import \
-    ForeignKeyDeferredAttribute, ForwardManyToOneDescriptor
+    ForeignKeyDeferredAttribute, ForwardManyToOneDescriptor, \
+    ReverseManyToOneDescriptor
+from django.utils.functional import cached_property
+
+from uil.files.db.manager import create_tracked_file_manager
+from uil.files.db.wrappers import FileWrapper, TrackedFileWrapper
 
 
 class FileDescriptor(ForeignKeyDeferredAttribute):
@@ -341,3 +346,47 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
         #    wait till the programmer expects things to change.
         obj._removed = True
         return obj
+
+
+class TrackedFileDescriptor(ReverseManyToOneDescriptor):
+
+    @property
+    def through(self):
+        # through is provided so that you have easy access to the through
+        # model (Book.authors.through) for inlines, etc. This is done as
+        # a property to ensure that the fully resolved value is returned.
+        return self.rel.through
+
+    def __get__(self, instance, cls=None):
+        if instance is None:
+            return self
+
+        if self.field.is_cached(instance):
+            return self.field.get_cached_value(instance)
+
+        wrapper = self._create_wrapper(instance)
+        self.field.set_cached_value(instance, wrapper)
+
+        return wrapper
+
+    def _create_wrapper(self, instance) -> TrackedFileWrapper:
+        return self.field.attr_class(
+            manager=self.related_manager_cls(instance),
+            instance=instance,
+            field=self.field,
+        )
+
+    @cached_property
+    def related_manager_cls(self):
+        related_model = self.rel.model
+
+        return create_tracked_file_manager(
+            related_model._default_manager.__class__,  # NoQA
+            self.rel,
+        )
+
+    def _get_set_deprecation_msg_params(self):
+        return (
+            'tracked file field',
+            self.field.name,
+        )

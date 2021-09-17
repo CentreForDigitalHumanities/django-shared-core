@@ -3,7 +3,7 @@ from django.utils.functional import cached_property
 from django.views import generic
 
 from uil.files.db import File
-from uil.files.db.file_wrapper import FileWrapper
+from uil.files.db.wrappers import FileWrapper
 
 
 class BaseFileView(generic.View):

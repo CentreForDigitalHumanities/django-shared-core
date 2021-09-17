@@ -1,16 +1,26 @@
+from functools import partial
+
 from django.core import checks, exceptions
 from django.db import router
-from django.db.models import ForeignObject, ManyToOneRel, CASCADE, SET_DEFAULT, \
+from django.db.models import ForeignObject, ForeignObjectRel, ManyToOneRel, \
+    CASCADE, SET_DEFAULT, \
     SET_NULL
-from django.db.models.fields.related import RECURSIVE_RELATIONSHIP_CONSTANT
+from django.db.models.fields.related import ManyToManyField, \
+    RECURSIVE_RELATIONSHIP_CONSTANT, lazy_related_operation, resolve_relation
 from django.db.models.query_utils import PathInfo
-from django.db.models.signals import post_delete, post_save, pre_delete
+from django.db.models.signals import m2m_changed, post_delete, post_save, \
+    pre_delete
+from django.db.models.utils import make_model_tuple
+from django.dispatch import receiver
+from django.forms import ModelMultipleChoiceField
+from django.utils.hashable import make_hashable
 from django.utils.translation import gettext_lazy as _
 
-from .descriptors import FileDescriptor, ForwardFileDescriptor
+from .descriptors import FileDescriptor, ForwardFileDescriptor, \
+    TrackedFileDescriptor
 from ..forms import fields
 from .models import File
-from .file_wrapper import FileWrapper
+from .wrappers import FileWrapper, TrackedFileWrapper
 
 
 def _default_filename_generator(file_wrapper: FileWrapper):
@@ -391,3 +401,249 @@ class FileField(ForeignObject):
                 if output_field is self:
                     raise ValueError('Cannot resolve output_field.')
         return super().get_col(alias, output_field)
+
+
+def create_tracked_file_intermediary_model(field, cls, file_kwargs: dict):
+    from django.db import models
+
+    def set_managed(model, related, through):
+        through._meta.managed = model._meta.managed or related._meta.managed
+
+    to_model = resolve_relation(cls, field.remote_field.model)
+    name = '%s_%s' % (cls._meta.object_name, field.name)
+    lazy_related_operation(set_managed, cls, to_model, name)
+
+    to = make_model_tuple(to_model)[1]
+    from_ = cls._meta.model_name
+
+    meta = type('Meta', (), {
+        'db_table': field._get_m2m_db_table(cls._meta),
+        'auto_created': cls,
+        'app_label': cls._meta.app_label,
+        'db_tablespace': cls._meta.db_tablespace,
+        'unique_together': (from_, to),
+        'verbose_name': _('%(from)s-%(to)s relationship') % {'from': from_, 'to': to},
+        'verbose_name_plural': _('%(from)s-%(to)s relationships') % {'from': from_, 'to': to},
+        'apps': field.model._meta.apps,
+    })
+    # Construct and return the new class.
+    new_cls = type(name, (models.Model,), {
+        'Meta': meta,
+        '__module__': cls.__module__,
+        from_: models.ForeignKey(
+            cls,
+            related_name='%s+' % name,
+            db_tablespace=field.db_tablespace,
+            db_constraint=field.remote_field.db_constraint,
+            on_delete=CASCADE,
+        ),
+        to: FileField(
+            to=to_model,
+            db_tablespace=field.db_tablespace,
+            db_constraint=field.remote_field.db_constraint,
+            on_delete=CASCADE,
+            **file_kwargs
+        )
+    })
+
+    @receiver(pre_delete, sender=cls)
+    def cascade_file_m2m_delete(sender, instance, **kwargs):
+        """
+        Django does not propagate m2m deletion to the other side of the
+        relation (as in most cases, it's not needed or wanted). However,
+        in our case we actually want to delete the other side's objects as
+        well. Otherwise, we'd get files that do not belong to any other model,
+        which at best is a waste of space and at worst an AVG violation.
+
+        The easiest method to do this, is just to attach a signal listener on
+        the parent model and manually delete the other side. (Trust me,
+        this is by far the easiest!)
+
+        As we need to listen to the model we try to link to files, we cannot
+        create this signal receiver in the signals file. Thus, we attach it
+        right after creating the linking model.
+        """
+        # `field` comes from the method containing this method
+        # Is used to retrieve the right wrapper by it's owner field's
+        # accessor name
+        wrapper = getattr(
+            instance,
+            field.attname,
+            None,
+        )
+
+        # Should not really happen... *crosses fingers**
+        if wrapper:
+            for file in wrapper.all:
+                file.delete()
+
+    return new_cls
+
+
+class TrackedFileRel(ForeignObjectRel):
+    """
+    Used by ManyToManyField to store information about the relation.
+
+    ``_meta.get_fields()`` returns this class to provide access to the field
+    flags for the reverse relation.
+    """
+
+    def __init__(self, field, to, related_name=None, related_query_name=None,
+                 limit_choices_to=None, db_constraint=True):
+        super().__init__(
+            field, to,
+            related_name=related_name,
+            related_query_name=related_query_name,
+            limit_choices_to=limit_choices_to,
+        )
+
+        self.through = None
+        self.through_fields = None
+
+        self.symmetrical = False
+        self.db_constraint = db_constraint
+
+    @property
+    def identity(self):
+        return super().identity + (
+            self.through,
+            make_hashable(self.through_fields),
+            self.db_constraint,
+        )
+
+    def get_related_field(self):
+        """
+        Return the field in the 'to' object to which this relationship is tied.
+        Provided for symmetry with ManyToOneRel.
+        """
+        opts = self.through._meta
+        for field in opts.fields:
+            rel = getattr(field, 'remote_field', None)
+            if rel and rel.model == self.model:
+                break
+
+        # Disabled linter warning (which complains field is not always set)
+        # as the for loop above _should_ always find the right field. If not,
+        # this method isn't the problem ;)
+        return field.foreign_related_fields[0] # NoQA;
+
+
+class TrackedFileField(ManyToManyField):
+
+    rel_class = TrackedFileRel
+    attr_class = TrackedFileWrapper
+
+    description = _("File field with history tracking")
+
+    def __init__(self, to=None, related_name=None, related_query_name=None,
+                 limit_choices_to=None, file_kwargs: dict = None,
+                 db_constraint=True, db_table=None,
+                 swappable=True, **kwargs):
+        if to is None:
+            to = File
+        if file_kwargs is None:
+            file_kwargs = {}
+
+        try:
+            to._meta
+        except AttributeError:
+            assert isinstance(to, str), (
+                    "%s(%r) is invalid. First parameter to ManyToManyField must"
+                    " be either a model, a model name, or the string %r" %
+                    (self.__class__.__name__, to,
+                     RECURSIVE_RELATIONSHIP_CONSTANT)
+            )
+
+        kwargs['rel'] = self.rel_class(
+            self, to,
+            related_name=related_name,
+            related_query_name=related_query_name,
+            limit_choices_to=limit_choices_to,
+            db_constraint=db_constraint,
+        )
+        self.has_null_arg = 'null' in kwargs
+
+        # Skip over ManyToMany's init
+        super(ManyToManyField, self).__init__(**kwargs)
+
+        self.db_table = db_table
+        self.swappable = swappable
+        self.file_kwargs = file_kwargs
+
+    def deconstruct(self):
+        name, path, args, kwargs = super().deconstruct()
+
+        # We don't have these parameters
+        if 'through' in kwargs:
+            del kwargs['through']
+        if 'symmetrical' in kwargs:
+            del kwargs['symmetrical']
+        if 'through_fields' in kwargs:
+            del kwargs['through_fields']
+
+        return name, path, args, kwargs
+
+    def contribute_to_class(self, cls, name, **kwargs):
+        if self.remote_field.is_hidden():
+            # If the backwards relation is disabled, replace the original
+            # related_name with one generated from the m2m field name. Django
+            # still uses backwards relations internally and we need to avoid
+            # clashes between multiple m2m fields with related_name == '+'.
+            self.remote_field.related_name = '_%s_%s_%s_+' % (
+                cls._meta.app_label,
+                cls.__name__.lower(),
+                name,
+            )
+
+        # Skip over ManyToMany's contribute_to_class
+        super(ManyToManyField, self).contribute_to_class(cls, name, **kwargs)
+
+        # The intermediate m2m model is not auto created if:
+        #  1) NullPointerException
+        #  2) The class owning the m2m field is abstract.
+        #  3) The class owning the m2m field has been swapped out.
+        if not cls._meta.abstract and not cls._meta.swapped:
+            self.remote_field.through = create_tracked_file_intermediary_model(
+                self,
+                cls,
+                self.file_kwargs,
+            )
+
+        # Add the descriptor for the m2m relation.
+        setattr(
+            cls,
+            self.name,
+            TrackedFileDescriptor(self.remote_field)
+        )
+
+        # Set up the accessor for the m2m table name for the relation.
+        self.m2m_db_table = partial(self._get_m2m_db_table, cls._meta)
+
+    def contribute_to_related_class(self, cls, related):
+        # Set up the accessors for the column names on the m2m table.
+        self.m2m_column_name = partial(self._get_m2m_attr, related, 'column')
+        self.m2m_reverse_name = partial(self._get_m2m_reverse_attr, related, 'column')
+
+        self.m2m_field_name = partial(self._get_m2m_attr, related, 'name')
+        self.m2m_reverse_field_name = partial(self._get_m2m_reverse_attr, related, 'name')
+
+        get_m2m_rel = partial(self._get_m2m_attr, related, 'remote_field')
+        self.m2m_target_field_name = lambda: get_m2m_rel().field_name
+        get_m2m_reverse_rel = partial(self._get_m2m_reverse_attr, related, 'remote_field')
+        self.m2m_reverse_target_field_name = lambda: get_m2m_reverse_rel().field_name
+
+
+    def formfield(self, *, using=None, **kwargs):
+        defaults = {
+            'form_class': ModelMultipleChoiceField,
+            'queryset': self.remote_field.model._default_manager.using(using),
+            **kwargs,
+        }
+        # If initial is passed in, it's a list of related objects, but the
+        # MultipleChoiceField takes a list of IDs.
+        if defaults.get('initial') is not None:
+            initial = defaults['initial']
+            if callable(initial):
+                initial = initial()
+            defaults['initial'] = [i.pk for i in initial]
+        return super().formfield(**defaults)

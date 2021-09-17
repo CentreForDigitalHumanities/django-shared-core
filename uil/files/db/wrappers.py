@@ -1,7 +1,9 @@
 import uuid
+from typing import Optional, Union
 
 from django.core.files import File
 import magic
+from django.db.models import Manager
 
 from .. import settings
 from ..utils import get_storage
@@ -202,3 +204,147 @@ class FileWrapper(File):
     def __setstate__(self, state):
         self.__dict__.update(state)
         self.storage = get_storage()
+
+
+class PrivateCacheMixin:
+
+    def __init__(self, *args, **kwargs):
+        self._cache = {}
+
+    def is_cached(self, key):
+        return key in self._cache and self._cache[key] is not None
+
+    def get_cached_value(self, key):
+        if self.is_cached(key):
+            return self._cache[key]
+
+        return None
+
+    def cache_value(self, key, value):
+        self._cache[key] = value
+
+    def invalidate_cache_value(self, key):
+        self._cache[key] = None
+
+
+class TrackedFileWrapper(PrivateCacheMixin):
+
+    def __init__(self, manager: Manager, instance, field):
+        super().__init__()
+        self._manager = manager
+        self._instance = instance
+        self._field = field
+        self._through_model = self._field.remote_field.through
+
+    def _get_linking_instance(self, obj: Union[FileWrapper, File]):
+        if isinstance(obj, FileWrapper):
+            obj = obj.file_instance
+
+        return self._through_model.objects.get(file_id=obj)
+
+    def _resolve_to_file_wrapper(self, obj):
+        """Tries to map the input to a FileWrapper in this M2M;
+        accepts a FileWrapper itself, a File instance and an int/uuid for a
+        File instance"""
+        if isinstance(obj, FileWrapper):
+            return obj
+        if isinstance(obj, self._field.related_model):
+            return obj.file_wrapper
+        if isinstance(obj, int):
+            try:
+                return self._resolve_to_file_wrapper(self._manager.get(pk=obj))
+            except self._field.related_model.DoesNotExist:
+                pass
+        if isinstance(obj, uuid.UUID):
+            try:
+                return self._resolve_to_file_wrapper(self._manager.get(
+                    uuid=obj))
+            except self._field.related_model.DoesNotExist:
+                pass
+        if isinstance(obj, str):
+            try:
+                obj = uuid.UUID(obj)
+                return self._resolve_to_file_wrapper(obj)
+            except ValueError:
+                pass
+
+        return None
+
+    def _get_current_file(self) -> Optional[FileWrapper]:
+        if self.is_cached('current'):
+            return self.get_cached_value('current')
+
+        file_instance = self._manager.order_by('-modified_on').first()
+
+        if file_instance:
+            self.cache_value('current', file_instance.file_wrapper)
+            return file_instance.file_wrapper
+
+        return None
+
+    def _set_current_file(self, value):
+        if value is None:
+            raise ValueError("Cannot set current_file to None. Please use the delete_all method.")
+
+        resolved_value = self._resolve_to_file_wrapper(value)
+
+        if not resolved_value:
+            raise ValueError() # TODO: naked file?
+
+        self.cache_value('current', resolved_value)
+        # TODO: actually save?
+
+    def _del_current_file(self):
+        self.invalidate_cache_value('current')
+        current_file = self._get_current_file()
+
+        if current_file:
+            # current_file.delete(False) TODO: check if this is indeed unnecessary
+            self._manager.remove(current_file.file_instance)
+
+    current_file = property(
+        _get_current_file,
+        _set_current_file,
+        _del_current_file
+    )
+
+    @property
+    def all(self):
+        return map(
+            lambda file: self._resolve_to_file_wrapper(file),
+            self._manager.all()
+        )
+
+    def add(self, file):
+        through_obj = self._through_model()
+        setattr(
+            through_obj,
+            self._field.m2m_field_name(),
+            self._instance
+        )
+        setattr(
+            through_obj,
+            self._field.m2m_reverse_field_name(),
+            file
+        )
+        file_wrapper = getattr(through_obj, self._field.m2m_reverse_field_name())
+        file_wrapper.save()
+
+        through_obj.save()
+        self.invalidate_cache_value('current')
+
+    add.alters_data = True
+
+    def delete(self, file):
+        if file is None:
+            raise ValueError("Cannot delete None!")
+
+        file = self._resolve_to_file_wrapper(file)
+        link = self._get_linking_instance(file)
+        link.delete()
+
+    def delete_all(self):
+        self._manager.all().delete()
+        self.invalidate_cache_value('current')
+
+    delete_all.alters_data = True
