@@ -155,7 +155,7 @@ class FileWrapper(File):
             from uil.core.middleware import get_current_user
             current_user = get_current_user()
             # Make sure we don't try to safe using AnonymousUser
-            if not current_user.is_anonymous:
+            if current_user and not current_user.is_anonymous:
                 self.file_instance.created_by = get_current_user()
 
         self.file_instance.set_child_info_from_field(self.field)
