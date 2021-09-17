@@ -301,10 +301,9 @@ class TrackedFileWrapper(PrivateCacheMixin):
         resolved_value = self._resolve_to_file_wrapper(value)
 
         if not resolved_value:
-            raise ValueError() # TODO: naked file?
-
+            raise ValueError() # TODO: adding new file
+        resolved_value.save()
         self.cache_value('current', resolved_value)
-        # TODO: actually save?
 
     def _del_current_file(self):
         self.invalidate_cache_value('current')
