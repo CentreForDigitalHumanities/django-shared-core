@@ -110,7 +110,12 @@ class FileField(ForeignObject):
 
         kwargs['rel'] = self.rel_class(
             self, to, to_field,
-            related_name='+',  # No backward relations in uil.files.File pls
+            # Ensure unique related name by using the id of this field
+            # Should only be used by dynamic code, so the name does not matter
+            # as much as avoiding conflicts in said name
+            # the x_ prefix is mostly because Python doesn't allow numeric
+            # variable names
+            related_name=f"x_{id(self)}",
             related_query_name=None,
             limit_choices_to=None,
             parent_link=False,
@@ -352,10 +357,6 @@ class FileField(ForeignObject):
         post_save.connect(self.post_save, sender=self.model)
         pre_delete.connect(self.pre_delete, sender=self.model)
         post_delete.connect(self.post_delete, sender=self.model)
-
-    def contribute_to_related_class(self, cls, related):
-        pass  # not needed (otherwise the File class would get a lot of stuff
-        # attached to it)
 
     def formfield(self, *, using=None, **kwargs):
         if isinstance(self.remote_field.model, str):

@@ -28,7 +28,6 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
         """Helper that creates a FileWrapper given a parent and a child
         instance"""
         file_wrapper = self.field.attr_class(
-            child_instance=instance,
             file_instance=file_obj,
             field=self.field,
             original_filename=file_obj.original_filename
@@ -42,7 +41,6 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
         """Creates a brand-spanking new File instance (or the configured
         subclass)"""
         obj = self.field.remote_field.model.objects.create()
-        obj.set_child_info_from_field(self.field)
         return obj
 
     def get_object(self, instance):
@@ -184,8 +182,8 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
         if value._has_file_wrapper:  # NoQA
             # If the FileWrapper was previously marked for termination, we need
             # to save it now that we have assigned it again
-            value.file._removed = False
-            return value.file
+            value.file_wrapper._removed = False
+            return value.file_wrapper
         else:
             return self._create_file_wrapper(instance, value)
 
@@ -258,11 +256,6 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
                     'name',
                     cached.name
                 )
-                value.child_instance = getattr(
-                    value,
-                    'child_instance',
-                    cached.child_instance
-                )
                 value.file_instance = getattr(
                     value,
                     'file_instance',
@@ -285,8 +278,6 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
         self._setup_db_state(instance, value)
 
         # Make sure that all required fields are filled
-        if not value.child_instance:
-            value.child_instance = instance
         if not value.field:
             value.field = self.field
 

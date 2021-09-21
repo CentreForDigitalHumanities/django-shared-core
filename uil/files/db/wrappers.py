@@ -14,19 +14,20 @@ class FileWrapper(File):
     """
     DEFAULT_CHUNK_SIZE = 64 * 2 ** 10
 
-    def __init__(self, child_instance, file_instance, field, original_filename):
+    def __init__(self, file_instance, field, original_filename):
         self.file = None
         self.original_filename = original_filename
-        self.child_instance = child_instance
         self.file_instance = file_instance
-        self.field = field
+        self._field = field
         self.storage = get_storage()
         self._committed = True
         self._removed = False
 
     @property
     def name(self):
-        return self.field.filename_generator(self)
+        if self._field and self._field.filename_generator:
+            return self.field.filename_generator(self)
+        return self.original_filename
 
     @property
     def name_on_disk(self):
@@ -38,6 +39,16 @@ class FileWrapper(File):
             raise RuntimeError("No file instance. Can not retrieve filename "
                                "without it! (Please assign this object to a "
                                "FileField field of a model before saving)")
+
+    @property
+    def field(self):
+        if self._field:
+            return self._field
+
+        if self.file_instance and self.file_instance._child_fields:
+            return self.file_instance._child_fields[0]
+
+        return None
 
     def __hash__(self):
         return hash(self.name_on_disk)
@@ -158,13 +169,11 @@ class FileWrapper(File):
             if current_user and not current_user.is_anonymous:
                 self.file_instance.created_by = get_current_user()
 
-        self.file_instance.set_child_info_from_field(self.field)
-
         self.file_instance.save()
 
     save.alters_data = True
 
-    def delete(self, save=True):
+    def delete(self, save=True, force=False):
         """Deletes the file on disk. If save = True, the metadata object will
         also be deleted. Note: only delete the metadata object if no other DB
         object is referencing it, otherwise you'll get nasty Integrity
@@ -172,6 +181,13 @@ class FileWrapper(File):
         """
         if not self:
             return
+
+        # Check if
+        if self.file_instance and \
+           self.file_instance._num_child_instances < 1 and \
+           not force:
+            return
+
         # Only close the file if it's already open, which we know by the
         # presence of self._file
         if hasattr(self, '_file'):
@@ -208,7 +224,6 @@ class FileWrapper(File):
             '_committed':        True,
             '_removed':          self._removed,
             '_file':             None,
-            'child_instance':    self.child_instance,
             'file_instance':     self.file_instance,
             'field':             self.field,
         }

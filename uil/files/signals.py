@@ -10,4 +10,6 @@ def delete_file_on_delete(sender, instance, **kwargs):
     # save=False means we will only touch the file on disk, leaving the DB
     # object alone. (That will obviously be handled by the ORM, so we don't
     # want to delete it prematurely)
-    instance.file_wrapper.delete(save=False)
+    # force=True means we will ALWAYS delete the file, even if the ORM still
+    # sees some references to it
+    instance.file_wrapper.delete(save=False, force=True)
