@@ -178,13 +178,20 @@ class FileWrapper(File):
         also be deleted. Note: only delete the metadata object if no other DB
         object is referencing it, otherwise you'll get nasty Integrity
         errors!
+
+        :param save: Whether to also delete the metadata in the DB, defaults
+                     to True
+        :param force: Whether to force a deletion if multiple DB objects still
+                      refer to it, defaults to False
         """
         if not self:
             return
 
-        # Check if
+        # Check if we only have one reference to this file
+        # If we have more than 1 reference, and we're not forcing a deletion,
+        # stop right here!
         if self.file_instance and \
-           self.file_instance._num_child_instances < 1 and \
+           self.file_instance._num_child_instances > 1 and \
            not force:
             return
 
