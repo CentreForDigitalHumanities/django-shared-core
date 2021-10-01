@@ -621,29 +621,6 @@ form .dataTables_filter > label {
     display: inline-block;
 }
 
-
-/* Messages */
-
-ul.messages {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-div#messages {
-    padding: 10px;
-    margin-bottom: 10px;
-    text-align: center;
-    background: #094D8E;
-    color: #ffffff;
-}
-
-ul.messages a {
-    color: #ffffff;
-    text-decoration: underline;
-    transition: 0.2s ease color;
-}
-
 /* qTip */
 .qtip-default {
 	border: 1px solid var(--uu-border-color-input);
