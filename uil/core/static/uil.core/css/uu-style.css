@@ -1,8 +1,51 @@
 /* UU  */
+
+
+:root {
+    /* Main colors */
+     --uu-red: #C00A35;
+     --uu-yellow: #FFCD00;
+    /* Somewhat redundant... */
+     --uu-black: #000;
+     --uu-white: #fff;
+    /* Additional color palette */
+    --uu-cream: #FFE6AB;
+    --uu-orange: #F3965E;
+    --uu-burgandy: #AA1555;
+    --uu-brown: #6E3B23;
+    --uu-green: #24A793; /* Interesting definition of Green, brand-team... */
+    --uu-blue: #5287C6;
+    --uu-mid-blue: #094D8E; /* Own addition, somewhere in between the two official colors */
+    --uu-dark-blue: #001240;
+    --uu-purple: #5B2182;
+    /* structural style */
+    --uu-border-color-light: #efefef;
+    --uu-border-color-mid: #919191;
+    --uu-border-color-dark: #333;
+    --uu-border-color-input: #d7d7d7;
+    --uu-border-color-table: #ccc;
+    --uu-background-color: #F6F6F6;
+    --uu-background-table-color: #eee;
+    --uu-background-table-hover-color: #ddd;
+    --uu-background-code-color: #111;
+    /* text related colors */
+    --uu-text-color: #212529;
+    --uu-disabled-text-color: #aaa;
+    --uu-footer-text-color: #ccc;
+    --uu-light-text-color: #787878;
+    --uu-a-text-color: #212529;
+    --uu-a-hover-text-color: #55555F;
+    /* Message background colors */
+    --uu-message-success-background: #DFF0D8;
+    --uu-message-failed-background: #F2DEDE;
+    --uu-message-warning-background: #FCF8E3;
+    --uu-message-info-background: #D9EDF7;
+}
+
 body {
-    background: rgb(246, 246, 246);
+    background: var(--uu-background-color);
     font-family: "Open Sans","Frutiger",Helvetica,Arial,sans-serif;
-    color: rgb(33, 37, 41);
+    color: var(--uu-text-color);
 }
 
 p {
@@ -13,29 +56,50 @@ label {
     margin-bottom: 0;
 }
 
-h1, h2{
+h1{
+    font-size: 1.9rem;
+    font-weight: 300;
+}
+
+h2{
     font-size: 1.8rem;
+    font-weight: 300;
 }
 
 h3 {
     font-size: 1.6rem;
+    font-weight: 300;
 }
 
 h4 {
     font-size: 1.4rem;
+    font-weight: normal;
 }
 
 h5 {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
+    font-weight: normal;
 }
 
 h6 {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    font-weight: normal;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-weight: 300;
     text-rendering: optimizelegibility;
+}
+
+.uu-red-text {
+    color: var(--uu-red);
+}
+
+code {
+    padding: .4rem .6rem;
+    font-size: 87.5%;
+    color: var(--uu-yellow);
+    background-color: var(--uu-background-code-color);
+    border-radius: .2rem;
 }
 
 /* Structural */
@@ -48,7 +112,7 @@ h1, h2, h3, h4, h5, h6 {
 .uu-container {
     padding-top: 10px;
     padding-bottom: 5px;
-    background: #fff;
+    background: var(--uu-white);
 }
 
 .uu-inner-container {
@@ -86,7 +150,19 @@ h1, h2, h3, h4, h5, h6 {
 .uu-container.toppanel
 {
     padding: 0;
-    border-bottom: 1px solid #efefef;
+    border-bottom: 1px solid var(--uu-border-color-light);
+}
+
+.toppanel-text {
+    font-size: 30px;
+    line-height: 44px;
+    box-sizing: content-box;
+    color: var(--uu-mid-blue);
+    text-decoration: none;
+    font-family: "Open Sans","Frutiger",Helvetica,Arial,sans-serif;
+    font-weight: 100;
+    padding: 12px 0 0;
+    text-align: center;
 }
 
 .uu-container.titlepanel
@@ -102,7 +178,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .language {
-    border-left: 1px solid #efefef;
+    border-left: 1px solid var(--uu-border-color-light);
     line-height: 68px;
 }
 
@@ -119,7 +195,7 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 30px;
     line-height: 44px;
     box-sizing: content-box;
-    color: #094D8E;
+    color: var(--uu-mid-blue);
     text-decoration: none;
     font-family: "Open Sans","Frutiger",Helvetica,Arial,sans-serif;
     font-weight: 100;
@@ -127,7 +203,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .titletext a, .titletext a:hover {
-    color: #094D8E;
+    color: var(--uu-mid-blue);
     text-decoration: none;
     padding: 0 15px;
 }
@@ -144,23 +220,23 @@ h1, h2, h3, h4, h5, h6 {
     text-align: left;
     display: block;
     width: 100%;
-    background-color: #000000;
+    background-color: var(--uu-black);
     padding: 3px 0;
 }
 
 .uu-navigation-bar .nav-item a {
-    color: #fff;
+    color: var(--uu-white);
     text-decoration: none;
 }
 
 .uu-navigation-bar .active a,
 .uu-navigation-bar .nav-item a:hover {
-    color: #FFCD00;
+    color: var(--uu-yellow);
 }
 
 .uu-navigation-bar a.dropdown-item,
 .uu-navigation-bar a.dropdown-item:hover{
-    color: #212529;
+    color: var(--uu-text-color);
 }
 
 .uu-navigation-bar .dropdown-menu {
@@ -168,7 +244,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dropdown-item:active {
-    background: #FFCD00;
+    background: var(--uu-yellow);
 }
 
 .home-text {
@@ -180,7 +256,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .disabled-icon {
-    color: #aaa;
+    color: var(--uu-disabled-text-color);
     cursor: not-allowed;
 }
 
@@ -219,26 +295,27 @@ h1, h2, h3, h4, h5, h6 {
         text-align: left;
         display: block;
         width: 100%;
-        background-color: #fff;
-        border-bottom: 1px solid #bbb;
-        padding-bottom: 0px;
+        background-color: var(--uu-white);
+        border-bottom: 1px solid var(--uu-border-color-mid);
+        padding-bottom: 0;
     }
 
     .uu-navigation-bar .nav-item {
         background: #000;
         padding: 5px 10px;
-        border-top: 1px solid #333;
+        border-top: 1px solid var(--uu-border-color-dark);
     }
 
     .uu-navigation-bar .active {
-        color: #FFCD00;
+        color: var(--uu-yellow);
     }
 }
 
 /* Footer */
 
 footer.container-fluid {
-    background: #000;
+    background: var(--uu-black);
+    color: var(--uu-footer-text-color);
     padding-top: 40px;
     padding-bottom: 40px;
 }
@@ -248,7 +325,7 @@ footer.container-fluid .col-12 img {
 }
 
 footer a {
-    color: #aeaeae;
+    color: var(--uu-footer-text-color);
 }
 
 @media (max-width: 768px) {
@@ -285,7 +362,7 @@ form > table th {
 
 input, textarea, select {
     border-radius: 0;
-    border: 1px solid #d7d7d7;
+    border: 1px solid var(--uu-border-color-input);
     padding: 5px 10px;
     line-height: 20px;
     font-size: 16px;
@@ -293,8 +370,8 @@ input, textarea, select {
 }
 
 input[type=submit], input[type=button], button, .button {
-    background: #000;
-    color: #fff;
+    background: var(--uu-black);
+    color: var(--uu-white);
     border: none;
     font-weight: bold;
     font-size: 15px;
@@ -318,19 +395,19 @@ input[type="checkbox"], input[type="radio"]
 }
 
 button[type=submit], input[type=submit], .button-colored {
-    background: #ffcd00;
-    color: #000000;
+    background: var(--uu-yellow);
+    color: var(--uu-black);
 }
 
 button[type=submit].button-black, input[type=submit].button-black {
-    background: #000;
-    color: #fff;
+    background: var(--uu-black);
+    color: var(--uu-white);
 }
 
 button a, .button a,
 button a:hover, .button a:hover,
 a.button, a.button:hover {
-    color: #fff;
+    color: var(--uu-white);
     text-decoration: none;
 }
 
@@ -338,12 +415,12 @@ a.button, a.button:hover {
 .button-colored a:hover,
 a.button-colored,
 a.button-colored:hover {
-    color: #000;
+    color: var(--uu-black);
 }
 
 
 button.language-button {
-    color: #787878;
+    color: var(--uu-light-text-color);
     text-transform: uppercase;
     font-weight: 400;
     padding: 0;
@@ -392,7 +469,7 @@ form td ul {
 }
 
 .errorlist {
-    color: red;
+    color: var(--uu-red);
 }
 
 .small-form input, .small-form textarea, .small-form select {
@@ -410,19 +487,19 @@ form td ul {
 
 /* Table styles */
 table thead th {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--uu-border-color-table);
 }
 
 table tfoot th {
-    border-top: 1px solid #ccc;
+    border-top: 1px solid var(--uu-border-color-table);
 }
 
 table tbody tr:nth-of-type(odd) {
-    background: #eee;
+    background: var(--uu-background-table-color);
 }
 
 table tbody tr:hover {
-    background: #ddd;
+    background: var(--uu-background-table-hover-color);
 }
 
 table tbody tr.no-background:hover, table tbody tr.no-background {
@@ -435,20 +512,20 @@ table tbody td, table thead th, table tfoot th {
 
 /* Link styles */
 a {
-    color: rgb(33, 37, 41);
+    color: var(--uu-a-text-color);
     text-decoration: underline;
     transition: 0.2s ease color;
 }
 
 a:hover {
     transition: 0.2s ease color;
-    color: rgb(85, 85, 95);
+    color: var(--uu-a-hover-text-color);
 }
 
 /* Bootstrap/DataTables overrides */
 .form-control {
     border-radius: 0;
-    border: 1px solid #d7d7d7;
+    border: 1px solid var(--uu-border-color-input);
     padding: 5px 10px;
     line-height: 20px;
     font-size: 12px;
@@ -457,7 +534,7 @@ a:hover {
 .form-control:focus {
     outline: none;
     box-shadow: none;
-    border: 1px solid #d7d7d7;
+    border: 1px solid var(--uu-border-color-input);
 }
 
 /* This makes sure the x items per page dropdown displays correctly */
@@ -483,9 +560,13 @@ div.dataTables_wrapper div.dataTables_length select {
 }
 
 .pagination .page-item.active .page-link {
-    background: #000;
-    color: #fff;
-    border-color: #000;
+    background: var(--uu-black);
+    color: var(--uu-white);
+    border-color: var(--uu-black);
+}
+
+.dt {
+    width: 100%;
 }
 
 .dt-buttons {
@@ -500,8 +581,8 @@ div.dataTables_wrapper div.dataTables_length select {
 
 .dataTables_wrapper .btn {
     border-radius: 0;
-    background: #000;
-    color: #fff;
+    background: var(--uu-black);
+    color: var(--uu-white);
     border: none;
     font-weight: bold;
     font-size: 15px;
@@ -523,8 +604,8 @@ div.dataTables_wrapper div.dataTables_length select {
 
 .dataTables_wrapper .dropdown-menu .dropdown-item.active,
 .dataTables_wrapper .dropdown-menu .dropdown-item:active {
-    background: #000;
-    color: #fff;
+    background: var(--uu-black);
+    color: var(--uu-white);
 }
 
 .dataTables_wrapper .dropdown-menu .dt-button-collection-title {
@@ -565,10 +646,10 @@ ul.messages a {
 
 /* qTip */
 .qtip-default {
-	border: 1px solid #d7d7d7;
+	border: 1px solid var(--uu-border-color-input);
 
-	background-color: #fff;
-	color: #333;
+	background-color: var(--uu-white);
+	color: var(--uu-text-color);
 }
 
 .qtip {
@@ -580,7 +661,7 @@ ul.messages a {
 /* Bootstrap DateTime picker */
 /* Fixes the fact that our table styles apply to the picker. */
 .datetimepicker tr, .datetimepicker tr:nth-of-type(odd), .datetimepicker tr:hover {
-    background: #fff;
+    background: var(--uu-white);
 }
 
 /** Panel **/
@@ -589,7 +670,7 @@ ul.messages a {
 }
 
 .uu-panel .panel-heading {
-    background: #ffcd00;
+    background: var(--uu-yellow);
     padding: 10px 30px 2px; /* .panel-title has a bottom margin of 8px */
 }
 
@@ -615,7 +696,7 @@ ul.messages a {
 }
 
 .uu-panel .panel {
-    border: 1px solid #efefef
+    border: 1px solid var(--uu-border-color-light);
 }
 
 .uu-panel .panel-body {
@@ -627,15 +708,15 @@ div.success {
     text-align: center;
     padding: 10px;
     margin-bottom: 10px;
-    background-color: #DFF0D8;
+    background-color: var(--uu-message-success-background);
     list-style-type: none;
 }
 
-div.failed {
+div.failed, div.error {
     text-align: center;
     padding: 10px;
     margin-bottom: 10px;
-    background-color: #F2DEDE;
+    background-color: var(--uu-message-failed-background);
     list-style-type: none;
 }
 
@@ -643,7 +724,7 @@ div.warning {
     text-align: center;
     padding: 10px;
     margin-bottom: 10px;
-    background-color: #FCF8E3;
+    background-color: var(--uu-message-warning-background);
     list-style-type: none;
 }
 
@@ -651,8 +732,6 @@ div.info {
     text-align: center;
     padding: 10px;
     margin-bottom: 10px;
-    background-color: #D9EDF7;
+    background-color: var(--uu-message-info-background);
     list-style-type: none;
 }
-
-
