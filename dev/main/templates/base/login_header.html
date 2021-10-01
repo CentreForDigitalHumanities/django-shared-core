@@ -1,0 +1,11 @@
+{% load i18n %}
+{% load transformat %}
+
+{% if request.user.is_authenticated %}
+    {% with request.user as user %}
+        {% transformat "site:header:login" user.first_name %}
+        <a href="{% url 'main:logout' %}">({% trans 'main:globals:logout' %})</a>
+    {% endwith %}
+    {% else %}
+    &nbsp; {# UI requires a line here #}
+{% endif %}
