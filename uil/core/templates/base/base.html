@@ -72,7 +72,7 @@ Miauw!
     <div id="container">
         <div class="container-fluid uu-container hide-xs toppanel">
             <div class="uu-inner-container ">
-                <div class="col-xl-3 col-md-3 col-12">
+                <div class="col-xl-2 col-md-2 col-12">
                     <div class="uu-logo">
                         {% with 'uil.core/images/logo-header-'|add:LANGUAGE_CODE|add:'.svg' as header_image %}
                             <a href="https://www.uu.nl" target="_blank">
@@ -81,8 +81,25 @@ Miauw!
                         {% endwith %}
                     </div>
                 </div>
-                <div class="col-8">
-                    <!--filler-->
+                <div class="col-8 toppanel-text">
+                    {% block toppanel-text %}
+                        {% if debug %}
+                            <span class="uu-red-text">
+                                <span class="icon-warning">⚠</span>
+                                Local development server
+                                <span class="icon-warning">⚠</span>
+                            </span>
+                        {% elif acceptation %}
+                            <span class="uu-red-text">
+                                <span class="icon-warning">⚠</span>
+                                Acceptation server
+                                <span class="icon-warning">⚠</span>
+                            </span>
+                        {% endif %}
+                    {% endblock %}
+                </div>
+                <div class="col-1">
+                    {# Filler; logo is size 2, but language is size 1; this filler makes sure the toppanel-text can be centered nicely #}
                 </div>
                 {% include 'base/language_box.html' %}
             </div>
