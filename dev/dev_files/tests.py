@@ -20,7 +20,7 @@ class FakeStorage:
         self._storage[name] = content
 
     def exists(self, name):
-        return name in self._storage
+        return str(name) in self._storage
 
     def delete(self, name):
         if name in self._storage:
