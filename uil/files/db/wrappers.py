@@ -304,7 +304,21 @@ class TrackedFileWrapper(PrivateCacheMixin):
             self._field.m2m_reverse_field_name()
         )
 
-    def _get_linking_instance(self, obj: Union[FileWrapper, File]):
+    def _get_linking_instance(self, obj: Union[FileWrapper, File]) -> Optional:
+        """Given a FileWrapper or File, this method will try to find the
+        object linking it to an object."""
+        if not self._has_linking_instance(obj):
+            return None
+
+        if isinstance(obj, FileWrapper):
+            obj = obj.file_instance
+
+        kwargs = {
+            self._file_field.attname: obj
+        }
+        return self._through_model.objects.get(**kwargs)
+
+    def _has_linking_instance(self, obj: Union[FileWrapper, File]) -> bool:
         """Given a FileWrapper or File, this method will try to find the
         object linking it to an object."""
         if isinstance(obj, FileWrapper):
@@ -313,7 +327,7 @@ class TrackedFileWrapper(PrivateCacheMixin):
         kwargs = {
             self._file_field.attname: obj
         }
-        return self._through_model.objects.get(**kwargs)
+        return self._through_model.objects.filter(**kwargs).exists()
 
     def _resolve_to_file_wrapper(self, obj: Union[
         uuid.UUID, FileWrapper, 'BaseFile', int, str
@@ -376,11 +390,18 @@ class TrackedFileWrapper(PrivateCacheMixin):
         this field. It can be a file that's already tracked, or a new one.
         """
         if value is None:
-            raise ValueError("Cannot set current_file to None. Please use the delete_all method.")
+            self._del_current_file()
+            return
 
         resolved_value = self._resolve_to_file_wrapper(value)
 
-        if not resolved_value:
+        # If we don't retrieved a value, just use .add;
+        # Even if we get a value, the fact that we got a FileWrapper doesn't
+        # mean it's _our_ FileWrapper. We could of course check FW._field or
+        # FW.file_instance._child_fields; however, it's way easier to just do
+        # an .exists check on the linking table. (As that's cheaper in terms
+        # of computation and DB access).
+        if not resolved_value or not self._has_linking_instance(resolved_value):
             return self.add(value)
 
         resolved_value.save()
