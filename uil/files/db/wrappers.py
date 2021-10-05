@@ -388,6 +388,8 @@ class TrackedFileWrapper(PrivateCacheMixin):
         _set_current_file,
         _del_current_file
     )
+    current_file.fset.alters_data = True
+    current_file.fdel.alters_data = True
 
     def _set_as_current(self, file_wrapper):
         self._through_model.objects.update(current=False)
@@ -423,7 +425,6 @@ class TrackedFileWrapper(PrivateCacheMixin):
         through_obj.save()
 
         self._set_as_current(file_wrapper)
-
     add.alters_data = True
 
     def set_as_current(self, file):
@@ -433,6 +434,7 @@ class TrackedFileWrapper(PrivateCacheMixin):
 
         file = self._resolve_to_file_wrapper(file)
         self._set_as_current(file)
+    set_as_current.alters_data = True
 
     def delete(self, file):
         if file is None:
@@ -445,9 +447,9 @@ class TrackedFileWrapper(PrivateCacheMixin):
 
         if link.current:
             self.invalidate_cache_value('current')
+    delete.alters_data = True
 
     def delete_all(self):
         self._manager.all().delete()
         self.invalidate_cache_value('current')
-
     delete_all.alters_data = True
