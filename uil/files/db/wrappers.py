@@ -325,14 +325,26 @@ class TrackedFileWrapper(PrivateCacheMixin):
         return None
 
     def _get_current_file(self) -> Optional[FileWrapper]:
+        """Tries to retrieve the file representing the 'current' value of
+        this field."""
         if self.is_cached('current'):
             return self.get_cached_value('current')
 
-        file_instance = self._manager.order_by('-modified_on').first()
+        try:
+            linking_instance = self._through_model.objects.get(current=True)
+        except self._through_model.DoesNotExist:
+            return None
 
-        if file_instance:
-            self.cache_value('current', file_instance.file_wrapper)
-            return file_instance.file_wrapper
+        if linking_instance:
+            value = getattr(
+                linking_instance,
+                self._field.m2m_reverse_field_name()
+            )
+            self.cache_value(
+                'current',
+                value
+            )
+            return value
 
         return None
 
@@ -345,21 +357,31 @@ class TrackedFileWrapper(PrivateCacheMixin):
         if not resolved_value:
             raise ValueError() # TODO: adding new file
         resolved_value.save()
+        self._set_as_current(resolved_value)
         self.cache_value('current', resolved_value)
 
     def _del_current_file(self):
+        """Deletes the file currently represeting the """
         self.invalidate_cache_value('current')
         current_file = self._get_current_file()
 
         if current_file:
-            # current_file.delete(False) TODO: check if this is indeed unnecessary
-            self._manager.remove(current_file.file_instance)
+            self.delete(current_file)
 
     current_file = property(
         _get_current_file,
         _set_current_file,
         _del_current_file
     )
+
+    def _set_as_current(self, file_wrapper):
+        self._through_model.objects.update(current=False)
+
+        link = self._get_linking_instance(file_wrapper)
+        link.current = True
+        link.save()
+
+        self.cache_value('current', file_wrapper)
 
     @property
     def all(self):
@@ -384,9 +406,18 @@ class TrackedFileWrapper(PrivateCacheMixin):
         file_wrapper.save()
 
         through_obj.save()
-        self.invalidate_cache_value('current')
+
+        self._set_as_current(file_wrapper)
 
     add.alters_data = True
+
+    def set_as_current(self, file):
+        if file is None:
+            raise ValueError("Cannot set None as current! (Did you mean to "
+                             "delete stuff?)")
+
+        file = self._resolve_to_file_wrapper(file)
+        self._set_as_current(file)
 
     def delete(self, file):
         if file is None:

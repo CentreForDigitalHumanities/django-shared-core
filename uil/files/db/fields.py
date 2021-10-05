@@ -563,6 +563,9 @@ def create_tracked_file_intermediary_model(field, cls, file_kwargs: dict):
             db_constraint=field.remote_field.db_constraint,
             on_delete=CASCADE,
             **file_kwargs
+        ),
+        'current': models.BooleanField(
+            default=False
         )
     })
 
