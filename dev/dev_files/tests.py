@@ -578,6 +578,124 @@ class FileTests(TestCase):
 
         obj.delete()
 
+    def test_tracked_set_from_metadata_model(self):
+        storage = get_storage()
+
+        MetadataModel = self.single_cls.required_file.field.related_model
+
+        obj_1 = self.single_cls()
+        obj_1.required_file = File(open(self.file_cat, mode='rb'))
+        obj_1.save()
+
+        obj_2 = self.tracked_cls()
+        obj_2.save()
+        obj_2.files.current_file = obj_1.required_file.file_instance
+
+        self.assertTrue(
+            storage.exists(obj_2.files.current_file.name_on_disk)
+        )
+        self.assertEqual(
+            MetadataModel.objects.count(),
+            1
+        )
+        self.assertEqual(
+            storage.num_files(),
+            1
+        )
+        self.assertEqual(
+            obj_1.required_file.file_instance,
+            obj_2.files.current_file.file_instance,
+        )
+        self.assertEqual(
+            self.file_cat,
+            obj_2.files.current_file.name
+        )
+
+        obj_1.delete()
+        obj_2.delete()
+
+    def test_tracked_set_from_file_wrapper(self):
+        storage = get_storage()
+
+        MetadataModel = self.single_cls.required_file.field.related_model
+        data = (File(open(self.file_cat, mode='rb')), None, True)
+
+        obj_1 = self.single_cls()
+        obj_1.required_file = data
+        obj_1.save()
+
+        obj_2 = self.tracked_cls()
+        obj_2.save()
+        obj_2.files.current_file = obj_1.required_file
+
+        self.assertTrue(
+            storage.exists(obj_2.files.current_file.name_on_disk)
+        )
+        self.assertEqual(
+            MetadataModel.objects.count(),
+            1
+        )
+        self.assertEqual(
+            storage.num_files(),
+            1
+        )
+        self.assertEqual(
+            obj_1.required_file.file_instance,
+            obj_2.files.current_file.file_instance,
+        )
+        self.assertEqual(
+            self.file_cat,
+            obj_2.files.current_file.name
+        )
+
+        obj_1.delete()
+        obj_2.delete()
+
+    def test_tracked_set_from_None(self):
+        storage = get_storage()
+
+        MetadataModel = self.single_cls.required_file.field.related_model
+
+        obj = self.tracked_cls()
+        obj.save()
+        obj.files.current_file = File(open(self.file_cat, mode='rb'))
+
+        self.assertTrue(
+            storage.exists(obj.files.current_file.name_on_disk)
+        )
+        self.assertEqual(
+            MetadataModel.objects.count(),
+            1
+        )
+        self.assertEqual(
+            storage.num_files(),
+            1
+        )
+        self.assertEqual(
+            self.file_cat,
+            obj.files.current_file.name
+        )
+
+        obj.files.current_file = None
+
+        self.assertIsNone(
+            obj.files.current_file
+        )
+        self.assertEqual(
+            MetadataModel.objects.count(),
+            0
+        )
+        self.assertEqual(
+            storage.num_files(),
+            0
+        )
+        self.assertEqual(
+            len(list(obj.files.all)),
+            0
+        )
+
+        obj.delete()
+
 
 class CustomFileTests(FileTests):
     single_cls = CustomSingleFile
