@@ -441,6 +441,10 @@ class TrackedFileWrapper(PrivateCacheMixin):
         file = self._resolve_to_file_wrapper(file)
         link = self._get_linking_instance(file)
         link.delete()
+        file.delete()
+
+        if link.current:
+            self.invalidate_cache_value('current')
 
     def delete_all(self):
         self._manager.all().delete()
