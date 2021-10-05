@@ -32,6 +32,9 @@ class FakeStorage:
     def clear(self):
         self._storage = {}
 
+    def __repr__(self):
+        return repr(self._storage)
+
 
 class FileTests(TestCase):
     single_cls = SingleFile
@@ -51,13 +54,14 @@ class FileTests(TestCase):
 
     def test_save_delete_single(self):
         MetadataModel = self.single_cls.required_file.field.related_model
+        storage = get_storage()
 
         obj = self.single_cls()
         obj.required_file = File(open(self.file_cat, mode='rb'))
         obj.save()
 
         self.assertTrue(
-            get_storage().exists(obj.required_file.name_on_disk)
+            storage.exists(obj.required_file.name_on_disk)
         )
         self.assertEqual(
             MetadataModel.objects.count(),
@@ -67,7 +71,7 @@ class FileTests(TestCase):
         obj.delete()
 
         self.assertFalse(
-            get_storage().exists(obj.required_file.name_on_disk)
+            storage.exists(obj.required_file.name_on_disk)
         )
         self.assertEqual(
             MetadataModel.objects.count(),
@@ -75,18 +79,20 @@ class FileTests(TestCase):
         )
         self.assertEqual(
             0,
-            get_storage().num_files(),
+            storage.num_files(),
             "Storage is not empty"
         )
 
     def test_single_multiple_use(self):
         MetadataModel = self.single_cls.required_file.field.related_model
+        storage = get_storage()
+
         obj_1 = self.single_cls()
         obj_1.required_file = File(open(self.file_cat, mode='rb'))
         obj_1.save()
 
         self.assertTrue(
-            get_storage().exists(obj_1.required_file.name_on_disk)
+            storage.exists(obj_1.required_file.name_on_disk)
         )
         self.assertEqual(
             MetadataModel.objects.count(),
@@ -98,10 +104,10 @@ class FileTests(TestCase):
         obj_2.save()
 
         self.assertTrue(
-            get_storage().exists(obj_1.required_file.name_on_disk)
+            storage.exists(obj_1.required_file.name_on_disk)
         )
         self.assertTrue(
-            get_storage().exists(obj_2.required_file.name_on_disk)
+            storage.exists(obj_2.required_file.name_on_disk)
         )
         self.assertEqual(
             obj_1.required_file.file_instance,
@@ -122,7 +128,7 @@ class FileTests(TestCase):
         obj_1.delete()
 
         self.assertTrue(
-            get_storage().exists(obj_2.required_file.name_on_disk),
+            storage.exists(obj_2.required_file.name_on_disk),
             "File was removed from storage before it's time"
         )
         self.assertEqual(
@@ -140,7 +146,7 @@ class FileTests(TestCase):
         obj_2.delete()
 
         self.assertFalse(
-            get_storage().exists(obj_2.required_file.name_on_disk),
+            storage.exists(obj_2.required_file.name_on_disk),
             "File was not deleted from storage after all references to it were "
             "deleted"
         )
@@ -156,19 +162,20 @@ class FileTests(TestCase):
         )
         self.assertEqual(
             0,
-            get_storage().num_files(),
+            storage.num_files(),
             "Storage is not empty"
         )
 
     def test_tracked_save_delete(self):
         MetadataModel = self.tracked_cls.files.field.related_model
+        storage = get_storage()
 
         obj = self.tracked_cls()
         obj.save()
         obj.files.add(File(open(self.file_cat, mode='rb')))
 
         self.assertTrue(
-            get_storage().exists(obj.files.current_file.name_on_disk)
+            storage.exists(obj.files.current_file.name_on_disk)
         )
         self.assertEqual(
             MetadataModel.objects.count(),
@@ -178,7 +185,7 @@ class FileTests(TestCase):
         obj.delete()
 
         self.assertFalse(
-            get_storage().exists(obj.files.current_file.name_on_disk)
+            storage.exists(obj.files.current_file.name_on_disk)
         )
         self.assertEqual(
             MetadataModel.objects.count(),
@@ -186,12 +193,13 @@ class FileTests(TestCase):
         )
         self.assertEqual(
             0,
-            get_storage().num_files(),
+            storage.num_files(),
             "Storage is not empty"
         )
 
     def test_tracked_multiple_files(self):
         MetadataModel = self.tracked_cls.files.field.related_model
+        storage = get_storage()
 
         obj = self.tracked_cls()
         obj.save()
@@ -203,7 +211,7 @@ class FileTests(TestCase):
         self.assertNotEqual(cat_uuid, dog_uuid)
 
         self.assertTrue(
-            get_storage().exists(obj.files.current_file.name_on_disk)
+            storage.exists(obj.files.current_file.name_on_disk)
         )
         self.assertEqual(
             obj.files.current_file.name,
@@ -225,10 +233,10 @@ class FileTests(TestCase):
         )
 
         self.assertFalse(
-            get_storage().exists(dog_uuid)
+            storage.exists(dog_uuid)
         )
         self.assertTrue(
-            get_storage().exists(obj.files.current_file.name_on_disk)
+            storage.exists(obj.files.current_file.name_on_disk)
         )
         self.assertEqual(
             obj.files.current_file.name,
@@ -239,7 +247,7 @@ class FileTests(TestCase):
             1
         )
         self.assertEqual(
-            get_storage().num_files(),
+            storage.num_files(),
             1
         )
         self.assertEqual(
@@ -250,7 +258,7 @@ class FileTests(TestCase):
         obj.delete()
 
         self.assertFalse(
-            get_storage().exists(obj.files.current_file.name_on_disk)
+            storage.exists(obj.files.current_file.name_on_disk)
         )
         self.assertEqual(
             MetadataModel.objects.count(),
@@ -262,12 +270,13 @@ class FileTests(TestCase):
         )
         self.assertEqual(
             0,
-            get_storage().num_files(),
+            storage.num_files(),
             "Storage is not empty"
         )
 
     def test_tracked_delete_all(self):
         MetadataModel = self.tracked_cls.files.field.related_model
+        storage = get_storage()
 
         obj = self.tracked_cls()
         obj.save()
@@ -279,10 +288,10 @@ class FileTests(TestCase):
         obj.files.delete_all()
 
         self.assertFalse(
-            get_storage().exists(cat_uuid)
+            storage.exists(cat_uuid)
         )
         self.assertFalse(
-            get_storage().exists(dog_uuid)
+            storage.exists(dog_uuid)
         )
         self.assertEqual(
             MetadataModel.objects.count(),
@@ -293,12 +302,13 @@ class FileTests(TestCase):
             1
         )
         self.assertEqual(
-            get_storage().num_files(),
+            storage.num_files(),
             0
         )
 
     def test_tracked_auto_delete(self):
         MetadataModel = self.tracked_cls.files.field.related_model
+        storage = get_storage()
 
         obj = self.tracked_cls()
         obj.save()
@@ -310,10 +320,10 @@ class FileTests(TestCase):
         obj.delete()
 
         self.assertFalse(
-            get_storage().exists(cat_uuid)
+            storage.exists(cat_uuid)
         )
         self.assertFalse(
-            get_storage().exists(dog_uuid)
+            storage.exists(dog_uuid)
         )
         self.assertEqual(
             MetadataModel.objects.count(),
@@ -324,11 +334,13 @@ class FileTests(TestCase):
             0
         )
         self.assertEqual(
-            get_storage().num_files(),
+            storage.num_files(),
             0
         )
 
     def test_tracked_set_current(self):
+        storage = get_storage()
+
         obj = self.tracked_cls()
         obj.save()
         obj.files.add(File(open(self.file_cat, mode='rb')))
@@ -347,7 +359,7 @@ class FileTests(TestCase):
         )
         self.assertEqual(
             2,
-            get_storage().num_files(),
+            storage.num_files(),
         )
 
         obj.files.set_as_current(cat_wrapper)
@@ -362,7 +374,7 @@ class FileTests(TestCase):
         )
         self.assertEqual(
             2,
-            get_storage().num_files(),
+            storage.num_files(),
         )
         self.assertEqual(
             len(list(obj.files.all)),
@@ -372,6 +384,8 @@ class FileTests(TestCase):
         obj.delete()
 
     def test_single_set_from_django_file(self):
+        storage = get_storage()
+
         MetadataModel = self.single_cls.required_file.field.related_model
         data = File(open(self.file_cat, mode='rb'))
 
@@ -380,7 +394,7 @@ class FileTests(TestCase):
         obj.save()
 
         self.assertTrue(
-            get_storage().exists(obj.required_file.name_on_disk)
+            storage.exists(obj.required_file.name_on_disk)
         )
         self.assertEqual(
             MetadataModel.objects.count(),
@@ -394,6 +408,8 @@ class FileTests(TestCase):
         obj.delete()
 
     def test_single_set_from_tuple(self):
+        storage = get_storage()
+
         MetadataModel = self.single_cls.required_file.field.related_model
         data = (File(open(self.file_cat, mode='rb')), None, True)
 
@@ -402,7 +418,7 @@ class FileTests(TestCase):
         obj.save()
 
         self.assertTrue(
-            get_storage().exists(obj.required_file.name_on_disk)
+            storage.exists(obj.required_file.name_on_disk)
         )
         self.assertEqual(
             MetadataModel.objects.count(),
@@ -416,6 +432,8 @@ class FileTests(TestCase):
         obj.delete()
 
     def test_single_set_from_metadata_model(self):
+        storage = get_storage()
+
         MetadataModel = self.single_cls.required_file.field.related_model
 
         obj_1 = self.single_cls()
@@ -427,14 +445,14 @@ class FileTests(TestCase):
         obj_2.save()
 
         self.assertTrue(
-            get_storage().exists(obj_2.required_file.name_on_disk)
+            storage.exists(obj_2.required_file.name_on_disk)
         )
         self.assertEqual(
             MetadataModel.objects.count(),
             1
         )
         self.assertEqual(
-            get_storage().num_files(),
+            storage.num_files(),
             1
         )
         self.assertEqual(
@@ -450,6 +468,8 @@ class FileTests(TestCase):
         obj_2.delete()
 
     def test_single_set_from_file_wrapper(self):
+        storage = get_storage()
+
         MetadataModel = self.single_cls.required_file.field.related_model
         data = (File(open(self.file_cat, mode='rb')), None, True)
 
@@ -462,14 +482,14 @@ class FileTests(TestCase):
         obj_2.save()
 
         self.assertTrue(
-            get_storage().exists(obj_2.required_file.name_on_disk)
+            storage.exists(obj_2.required_file.name_on_disk)
         )
         self.assertEqual(
             MetadataModel.objects.count(),
             1
         )
         self.assertEqual(
-            get_storage().num_files(),
+            storage.num_files(),
             1
         )
         self.assertEqual(
@@ -485,6 +505,8 @@ class FileTests(TestCase):
         obj_2.delete()
 
     def test_single_set_from_None(self):
+        storage = get_storage()
+
         MetadataModel = self.single_cls.required_file.field.related_model
 
         obj = self.single_cls()
@@ -494,14 +516,14 @@ class FileTests(TestCase):
         nullable_uuid = obj.nullable_file.name_on_disk
 
         self.assertTrue(
-            get_storage().exists(obj.nullable_file.name_on_disk)
+            storage.exists(obj.nullable_file.name_on_disk)
         )
         self.assertEqual(
             MetadataModel.objects.count(),
             2
         )
         self.assertEqual(
-            get_storage().num_files(),
+            storage.num_files(),
             2
         )
         self.assertEqual(
@@ -513,14 +535,14 @@ class FileTests(TestCase):
         obj.save()
 
         self.assertFalse(
-            get_storage().exists(nullable_uuid)
+            storage.exists(nullable_uuid)
         )
         self.assertEqual(
             MetadataModel.objects.count(),
             1
         )
         self.assertEqual(
-            get_storage().num_files(),
+            storage.num_files(),
             1
         )
         self.assertIsNone(
