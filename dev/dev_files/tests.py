@@ -228,7 +228,8 @@ class FileTests(TestCase):
 
         obj.files.delete(obj.files.current_file)
 
-        self.assertIsNotNone(
+        # Current file should now be none
+        self.assertIsNone(
             obj.files.current_file
         )
 
@@ -236,11 +237,7 @@ class FileTests(TestCase):
             storage.exists(dog_uuid)
         )
         self.assertTrue(
-            storage.exists(obj.files.current_file.name_on_disk)
-        )
-        self.assertEqual(
-            obj.files.current_file.name,
-            self.file_cat
+            storage.exists(cat_uuid)
         )
         self.assertEqual(
             MetadataModel.objects.count(),
@@ -253,6 +250,17 @@ class FileTests(TestCase):
         self.assertEqual(
             len(list(obj.files.all)),
             1
+        )
+
+        # Try to set the old cat file as current
+        obj.files.set_as_current(cat_uuid)
+        self.assertIsNotNone(
+            obj.files.current_file
+        )
+
+        self.assertEqual(
+            obj.files.current_file.name,
+            self.file_cat
         )
 
         obj.delete()
@@ -284,6 +292,25 @@ class FileTests(TestCase):
         cat_uuid = obj.files.current_file.uuid
         obj.files.add(File(open(self.file_dog, mode='rb')))
         dog_uuid = obj.files.current_file.uuid
+
+        self.assertTrue(
+            storage.exists(cat_uuid)
+        )
+        self.assertTrue(
+            storage.exists(dog_uuid)
+        )
+        self.assertEqual(
+            MetadataModel.objects.count(),
+            2
+        )
+        self.assertEqual(
+            self.tracked_cls.objects.count(),
+            1
+        )
+        self.assertEqual(
+            storage.num_files(),
+            2
+        )
 
         obj.files.delete_all()
 
