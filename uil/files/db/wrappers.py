@@ -289,12 +289,21 @@ class TrackedFileWrapper(PrivateCacheMixin):
         self._instance = instance
         self._field = field
         self._through_model = self._field.remote_field.through
+        # This should retrieve the FileField actually holding the File; it's
+        # a bit tricky to get it, as it's filename can differ if using custom
+        # File model.
+        self._file_field = self._through_model._meta.get_field(
+            self._field.m2m_reverse_field_name()
+        )
 
     def _get_linking_instance(self, obj: Union[FileWrapper, File]):
         if isinstance(obj, FileWrapper):
             obj = obj.file_instance
 
-        return self._through_model.objects.get(file_id=obj)
+        kwargs = {
+            self._file_field.attname: obj
+        }
+        return self._through_model.objects.get(**kwargs)
 
     def _resolve_to_file_wrapper(self, obj):
         """Tries to map the input to a FileWrapper in this M2M;
@@ -303,7 +312,7 @@ class TrackedFileWrapper(PrivateCacheMixin):
         if isinstance(obj, FileWrapper):
             return obj
         if isinstance(obj, self._field.related_model):
-            return obj.file_wrapper
+            return obj.get_file_wrapper(self._file_field)
         if isinstance(obj, int):
             try:
                 return self._resolve_to_file_wrapper(self._manager.get(pk=obj))
