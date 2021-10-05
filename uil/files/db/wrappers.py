@@ -297,6 +297,8 @@ class TrackedFileWrapper(PrivateCacheMixin):
         )
 
     def _get_linking_instance(self, obj: Union[FileWrapper, File]):
+        """Given a FileWrapper or File, this method will try to find the
+        object linking it to an object."""
         if isinstance(obj, FileWrapper):
             obj = obj.file_instance
 
@@ -358,6 +360,10 @@ class TrackedFileWrapper(PrivateCacheMixin):
         return None
 
     def _set_current_file(self, value):
+        """Tries to set a new file representing the 'current' value of
+        this field. It can be a file that's already tracked, or a new one.
+
+        TODO: support adding a new file"""
         if value is None:
             raise ValueError("Cannot set current_file to None. Please use the delete_all method.")
 
