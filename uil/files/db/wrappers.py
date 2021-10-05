@@ -1,5 +1,5 @@
 import uuid
-from typing import Optional, Union
+from typing import Optional, Union, TYPE_CHECKING
 
 from django.core.files import File
 import magic
@@ -7,6 +7,11 @@ from django.db.models import Manager
 
 from .. import settings
 from ..utils import get_storage
+
+
+if TYPE_CHECKING:
+    from . import TrackedFileField
+    from .models import BaseFile
 
 
 class FileWrapper(File):
@@ -280,10 +285,13 @@ class PrivateCacheMixin:
     def invalidate_cache_value(self, key):
         self._cache[key] = None
 
+    def invalidate_caches(self):
+        self._cache = {}
+
 
 class TrackedFileWrapper(PrivateCacheMixin):
 
-    def __init__(self, manager: Manager, instance, field):
+    def __init__(self, manager: Manager, instance, field: 'TrackedFileField'):
         super().__init__()
         self._manager = manager
         self._instance = instance
@@ -307,7 +315,9 @@ class TrackedFileWrapper(PrivateCacheMixin):
         }
         return self._through_model.objects.get(**kwargs)
 
-    def _resolve_to_file_wrapper(self, obj):
+    def _resolve_to_file_wrapper(self, obj: Union[
+        uuid.UUID, FileWrapper, 'BaseFile', int, str
+    ]) -> Optional[FileWrapper]:
         """Tries to map the input to a FileWrapper in this M2M;
         accepts a FileWrapper itself, a File instance and an int/uuid for a
         File instance"""
@@ -359,7 +369,9 @@ class TrackedFileWrapper(PrivateCacheMixin):
 
         return None
 
-    def _set_current_file(self, value):
+    def _set_current_file(self, value: Union[
+        uuid.UUID, FileWrapper, 'BaseFile', int, str
+    ]) -> None:
         """Tries to set a new file representing the 'current' value of
         this field. It can be a file that's already tracked, or a new one.
 
@@ -375,9 +387,9 @@ class TrackedFileWrapper(PrivateCacheMixin):
         self._set_as_current(resolved_value)
         self.cache_value('current', resolved_value)
 
-    def _del_current_file(self):
+    def _del_current_file(self) -> None:
         """Deletes the file currently represeting the """
-        self.invalidate_cache_value('current')
+        self.invalidate_caches()
         current_file = self._get_current_file()
 
         if current_file:
@@ -391,7 +403,7 @@ class TrackedFileWrapper(PrivateCacheMixin):
     current_file.fset.alters_data = True
     current_file.fdel.alters_data = True
 
-    def _set_as_current(self, file_wrapper):
+    def _set_as_current(self, file_wrapper: FileWrapper) -> None:
         self._through_model.objects.update(current=False)
 
         link = self._get_linking_instance(file_wrapper)
@@ -407,7 +419,9 @@ class TrackedFileWrapper(PrivateCacheMixin):
             self._manager.all()
         )
 
-    def add(self, file):
+    def add(self, file: Union[
+        uuid.UUID, FileWrapper, 'BaseFile', int, str
+    ]) -> None:
         through_obj = self._through_model()
         setattr(
             through_obj,
@@ -427,7 +441,9 @@ class TrackedFileWrapper(PrivateCacheMixin):
         self._set_as_current(file_wrapper)
     add.alters_data = True
 
-    def set_as_current(self, file):
+    def set_as_current(self, file: Union[
+        uuid.UUID, FileWrapper, 'BaseFile', int, str
+    ]) -> None:
         if file is None:
             raise ValueError("Cannot set None as current! (Did you mean to "
                              "delete stuff?)")
@@ -436,7 +452,9 @@ class TrackedFileWrapper(PrivateCacheMixin):
         self._set_as_current(file)
     set_as_current.alters_data = True
 
-    def delete(self, file):
+    def delete(self, file: Union[
+        uuid.UUID, FileWrapper, 'BaseFile', int, str
+    ]) -> None:
         if file is None:
             raise ValueError("Cannot delete None!")
 
@@ -446,10 +464,11 @@ class TrackedFileWrapper(PrivateCacheMixin):
         file.delete()
 
         if link.current:
-            self.invalidate_cache_value('current')
+            self.invalidate_caches()
     delete.alters_data = True
 
-    def delete_all(self):
+    def delete_all(self) -> None:
+        """Delete all files currently tracked"""
         self._manager.all().delete()
-        self.invalidate_cache_value('current')
+        self.invalidate_caches()
     delete_all.alters_data = True
