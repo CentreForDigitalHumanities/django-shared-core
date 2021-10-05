@@ -1,4 +1,4 @@
-Django>=2.2,<3.3
+Django>=3.2,<3.3
 requests
 PyJWT
 pip-tools
@@ -10,3 +10,11 @@ lesscpy
 closure
 vbuild
 python-magic
+django-braces
+django-modeltranslation
+django-impersonate
+django-simple-menu
+django-debug-toolbar
+django-csp
+django-extensions
+mysqlclient
