@@ -667,6 +667,14 @@ class TrackedFileField(ManyToManyField):
         if file_kwargs is None:
             file_kwargs = {}
 
+        if related_name is None:
+            related_name = f"TFF_{id(self)}"
+
+        # Use the same related name if none was provided; makes debugging a tad
+        # more easier as one can see the related is actually from a TFF
+        if 'related_name' not in file_kwargs:
+            file_kwargs['related_name'] = related_name
+
         try:
             to._meta
         except AttributeError:
@@ -703,6 +711,13 @@ class TrackedFileField(ManyToManyField):
             del kwargs['symmetrical']
         if 'through_fields' in kwargs:
             del kwargs['through_fields']
+
+        # Make sure we don't actually return an auto-generated related_name,
+        # as those change every time Python starts up
+        if 'related_name' in kwargs and kwargs['related_name'].startswith(
+                'TFF'
+        ):
+            del kwargs['related_name']
 
         return name, path, args, kwargs
 
