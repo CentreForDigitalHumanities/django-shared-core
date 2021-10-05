@@ -374,18 +374,17 @@ class TrackedFileWrapper(PrivateCacheMixin):
     ]) -> None:
         """Tries to set a new file representing the 'current' value of
         this field. It can be a file that's already tracked, or a new one.
-
-        TODO: support adding a new file"""
+        """
         if value is None:
             raise ValueError("Cannot set current_file to None. Please use the delete_all method.")
 
         resolved_value = self._resolve_to_file_wrapper(value)
 
         if not resolved_value:
-            raise ValueError() # TODO: adding new file
+            return self.add(value)
+
         resolved_value.save()
         self._set_as_current(resolved_value)
-        self.cache_value('current', resolved_value)
 
     def _del_current_file(self) -> None:
         """Deletes the file currently represeting the """
