@@ -15,13 +15,21 @@ class FileWrapper(File):
     DEFAULT_CHUNK_SIZE = 64 * 2 ** 10
 
     def __init__(self, file_instance, field, original_filename):
-        self.file = None
+        # self.file = None
         self.original_filename = original_filename
         self.file_instance = file_instance
         self._field = field
         self.storage = get_storage()
         self._committed = True
         self._removed = False
+
+    def __getattr__(self, item):
+        # Sometimes the ORM expects a different field than id/pk; this function
+        # checks if the requested attribute is said field, return id.
+        if item == self._field.target_field.attname:
+            return self.file_instance.id
+
+        raise AttributeError(f"No such attribute '{item}'")
 
     @property
     def name(self):
@@ -55,11 +63,8 @@ class FileWrapper(File):
 
     def __bool__(self):
         try:
-            return super().__bool__()
+            return bool(self.file)
         except AttributeError:
-            # When this file has been deleted, it might still exist in memory
-            # However, at that point self._file has been removed from the object
-            # Thus, AttributeError is raised by out parent's __bool__
             return False
 
     # Alias these to the file_instance, as sometimes the ORM expects these
@@ -88,9 +93,11 @@ class FileWrapper(File):
                 "The '%s' attribute has no file associated with it." % self.field.name)
 
     def _get_file(self):
-        self._require_file()
-        if getattr(self, '_file', None) is None:
-            self._file = self.storage.open(self.name_on_disk, 'rb')
+        try:
+            if getattr(self, '_file', None) is None:
+                self._file = self.storage.open(self.name_on_disk, 'rb')
+        except FileNotFoundError:
+            self._file = None
         return self._file
 
     def _set_file(self, file):
@@ -184,16 +191,31 @@ class FileWrapper(File):
         :param force: Whether to force a deletion if multiple DB objects still
                       refer to it, defaults to False
         """
-        if not self:
+        if not self.storage.exists(self.name_on_disk):
             return
 
-        # Check if we only have one reference to this file
-        # If we have more than 1 reference, and we're not forcing a deletion,
-        # stop right here!
+        # By default, only delete if there are no references in the DB anymore
+        deletion_threshold = 0
+
+        # If we are instructed to also destroy our file_instance and we still
+        # have a reference, we allow deletion with 1 more reference
+        if save and self.file_instance:
+            model = self.file_instance.__class__
+            if model.objects.filter(pk=self.file_instance.pk).exists():
+                deletion_threshold += 1
+
+        # Check if we only have the allowed amount number of references or fewer
+        # If we have more, and we're not forcing a deletion, stop right here!
         if self.file_instance and \
-           self.file_instance._num_child_instances > 1 and \
+           self.file_instance._num_child_instances > deletion_threshold and \
            not force:
             return
+
+        # First, delete our metadata model. The check above _should_ make sure
+        # we don't get integrity errors, but it's better to have this fail
+        # because of those errors before we have actually deleted the file
+        if save:
+            self.file_instance.delete()
 
         # Only close the file if it's already open, which we know by the
         # presence of self._file
@@ -205,9 +227,7 @@ class FileWrapper(File):
 
         self.original_filename = None
         self._committed = False
-
-        if save:
-            self.file_instance.delete()
+        self.file_instance.clear_file_wrappers()
 
     delete.alters_data = True
 

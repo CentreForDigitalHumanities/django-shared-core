@@ -1,10 +1,9 @@
+from django.apps import apps
 from django.db.models.signals import pre_delete
-from django.dispatch import receiver
 
-from uil.files.db import File
+from uil.files.db import BaseFile
 
 
-@receiver(pre_delete, sender=File)
 def delete_file_on_delete(sender, instance, **kwargs):
     """Deletes the file on disk when the corresponding File is deleted"""
     # save=False means we will only touch the file on disk, leaving the DB
@@ -12,4 +11,9 @@ def delete_file_on_delete(sender, instance, **kwargs):
     # want to delete it prematurely)
     # force=True means we will ALWAYS delete the file, even if the ORM still
     # sees some references to it
-    instance.file_wrapper.delete(save=False, force=True)
+    instance.get_file_wrapper().delete(save=False, force=True)
+
+
+for model in apps.get_models():
+    if issubclass(model, BaseFile):
+        pre_delete.connect(delete_file_on_delete, sender=model)

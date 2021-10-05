@@ -1,3 +1,5 @@
+import io
+
 from django.core.files import File
 from django.db import  router
 from django.db.models import ObjectDoesNotExist
@@ -24,24 +26,15 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
     child (aka the model that has the field definition, parent would be the
     File model)."""
 
-    def _create_file_wrapper(self, instance, file_obj) -> FileWrapper:
+    def _create_file_wrapper(self, file_obj) -> FileWrapper:
         """Helper that creates a FileWrapper given a parent and a child
-        instance"""
-        file_wrapper = self.field.attr_class(
-            file_instance=file_obj,
-            field=self.field,
-            original_filename=file_obj.original_filename
-        )
-        # Register this FileWrapper as the wrapper on File
-        file_obj.file = file_wrapper
-
-        return file_wrapper
+        instance        """
+        return file_obj.get_file_wrapper(self.field)
 
     def _create_file_instance(self):
         """Creates a brand-spanking new File instance (or the configured
         subclass)"""
-        obj = self.field.remote_field.model.objects.create()
-        return obj
+        return self.field.remote_field.model.objects.create()
 
     def get_object(self, instance):
         """Override get_object in order to handle non-existing File objects
@@ -72,7 +65,7 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
             # the DB or the file from the disk when saving the new state).
             # The cache will be cleared once the file has been properly
             # disposed of
-            if not file_wrapper or file_wrapper._removed:
+            if file_wrapper is None or file_wrapper._removed:
                 return None
 
             return file_wrapper
@@ -82,13 +75,16 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
 
         # From this point on we are dealing with a fresh non-cached File object
 
-        if file_obj is None and not self.field.null:
-            raise self.RelatedObjectDoesNotExist(
-                "%s has no %s." % (self.field.model.__name__, self.field.name)
-            )
+        if file_obj is None:
+            if not self.field.null:
+                raise self.RelatedObjectDoesNotExist(
+                    "%s has no %s." % (self.field.model.__name__, self.field.name)
+                )
+            else:
+                return None
 
         # Create our wrapper
-        file_wrapper = self._create_file_wrapper(instance, file_obj)
+        file_wrapper = file_obj.get_file_wrapper(self.field)
         # And cache it, saves some DB calls later!
         self.field.set_cached_value(instance, file_wrapper)
 
@@ -178,14 +174,11 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
         It mostly just creates or updates a FileWrapper around it.
         """
         value = self._setup_db_state(instance, value)
-
-        if value._has_file_wrapper:  # NoQA
-            # If the FileWrapper was previously marked for termination, we need
-            # to save it now that we have assigned it again
-            value.file_wrapper._removed = False
-            return value.file_wrapper
-        else:
-            return self._create_file_wrapper(instance, value)
+        file_wrapper = value.get_file_wrapper(self.field)
+        # If the FileWrapper was previously marked for termination, we need
+        # to save it now that we have assigned it again
+        file_wrapper._removed = False
+        return file_wrapper
 
     def _set_from_tuple(self, instance, value):
         """Handles setting from the tuple returned from the Widget.
@@ -199,42 +192,42 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
         """
         file, uuid, changed = value
 
+        # If changed == False, return what we already have saved (if anything)
+        if not changed:
+            return self.__get__(instance)
+
         # Mark this field for termination if we weren't given a file but it was
         # marked as changed, as that must mean the user wanted to clear the
         # field
-        if not file and changed:
+        if not file:
             return self._set_from_none(instance)
 
-        # If this is an existing File, get the model
+        # If there is an existing File, mark it to be removed
+        # NOTE: it will only be marked as a candidate. The File object has final
+        # say in whether it's actually deleted. (It might be referenced by a
+        # different FileField).
         if uuid:
-            obj = self.field.remote_field.model.objects.get(uuid=uuid)
-        # If not, create one if we did get a file to save
-        elif file:
-            obj = self._create_file_instance()
-            # Set changed to true, as we are creating a new instance
-            changed = True
-        # If we also didn't get a file, just act if we received a None
-        else:
-            return self._set_from_none(instance)
+            old_obj = self.field.remote_field.model.objects.get(uuid=uuid)
+            old_file_wrapper = old_obj.get_file_wrapper(self.field)
+            old_file_wrapper._removed = True
+            # Cache it, so the field can remove it later on save
+            # The new FW will be set later in the chain, so this cached value
+            # will not be seen as 'current'
+            self.field.set_cached_value(instance, old_file_wrapper)
+
+        # Create a new metadata object for the received file
+        obj = self._create_file_instance()
 
         # Make sure we setup the DB side of things
         self._setup_db_state(instance, obj)
 
-        # Re-use an existing wrapper if present
-        if obj._has_file_wrapper:  # NoQA
-            file_wrapper = obj.file
-        elif self.field.is_cached(instance):
-            file_wrapper = self.field.get_cached_value(instance)
-        else:
-            file_wrapper = self._create_file_wrapper(instance, obj)
+        file_wrapper = obj.get_file_wrapper(self.field)
 
-        if file and changed:
-            obj.original_filename = file.name
-            file_wrapper.file = file
-            file_wrapper._committed = False  # Mark the wrapper as need-to-save
-            file_wrapper._removed = False  # One could set a new file after
-            # setting the field to 'None', so we need to make sure the removed
-            # flag from setting 'None' is removed (irony)
+        obj.original_filename = file.name
+        file_wrapper.file = file
+        file_wrapper._committed = False  # Mark the wrapper as need-to-save
+        file_wrapper._removed = False  # Just to be safe. There _should_ be
+        # no way this is not False...
 
         return file_wrapper
 
@@ -244,84 +237,96 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
         The given file wrapper will override any existing in cache, but the
         cached wrapper will supplement any missing fields in the given wrapper
         """
-        # If we have something in cache, try to set missing values from the
-        # cache
-        if self.field.is_cached(instance):
-            cached = self.field.get_cached_value(instance)
-            # If the cached value is in fact the same instance as the one we're
-            # given, we skip this step
-            if cached is not value:
-                value.name = getattr(
-                    value,
-                    'name',
-                    cached.name
-                )
-                value.file_instance = getattr(
-                    value,
-                    'file_instance',
-                    cached.file_instance
-                )
-                value.field = getattr(
-                    value,
-                    'field',
-                    cached.field
-                )
-                value._committed = False
+        # Get the current value, if there is any
+        try:
+            current_fw = self.__get__(instance)
+        except self.RelatedObjectDoesNotExist:
+            current_fw = None
+
+        # See if we own this wrapper
+        if self.field.in_cache(instance, value):
+            # If it isn't the 'current' value, mark the current value to be
+            # removed. (It's going to be overriden by an older version
+            # apparently)
+            if current_fw != value:
+                current_fw._removed = True
+            # Make sure we won't remove it
+            value._removed = False
+            # We don't need to do anything more; __set__ will ensure it's going
+            # to be the current value
+            return value
+
+        # If we have a current FileWrapper, we need to mark it as deleted as
+        # we are replacing it. We don't need to cache it, as __get__ would
+        # have done that for us
+        if current_fw and current_fw != value:
+            current_fw._removed = True
+        elif current_fw == value:
+            value._removed = False
+
         # Create a file instance if one isn't present
         if not value.file_instance:
             value.file_instance = self._create_file_instance()
+            # Make sure our new file_instance knows of this wrapper :)
+            value.file_instance.set_file_wrapper(value, self.field)
             # It's a manually created FileWrapper as far as we know, so we
             # need to safe it at some point;
             value._committed = False
+            # Also make sure we won't delete this
             value._removed = False
+        # If we got handed a FileWrapper that is attached to a different field
+        # we need to make a new wrapper for this field
+        # This really shouldn't happen if this FW has a file_instance,
+        # as you should get a FW from that file_instance (in other words,
+        # the only reason you don't receive a FW with a file_instance is if a
+        # programmer created an empty (non field-attached) FileWrapper)
+        elif value.field != self.field:
+            file = value.file
+            value = value.file_instance.get_file_wrapper(self.field)
+            value.file = file
 
-        self._setup_db_state(instance, value)
-
-        # Make sure that all required fields are filled
-        if not value.field:
-            value.field = self.field
+        self._setup_db_state(instance, value.file_instance)
 
         return value
 
     def _set_from_file_like_object(self, instance, value):
         """Sets from a Django File object."""
-        # If we have something in cache, add it to that wrapper
+        # If we have something in cache, mark it as obsolete
         if self.field.is_cached(instance):
-            file_wrapper = self.field.get_cached_value(instance)
-            file_wrapper.file = value
-            file_wrapper._removed = False
-            file_wrapper._committed = False
+            old_file_wrapper = self.field.get_cached_value(instance)
+            old_file_wrapper._removed = True
+        else:
+            try:
+                current_fw = self.__get__(instance)
+                if current_fw is not None:
+                    current_fw._removed = True
+            except self.RelatedObjectDoesNotExist:
+                pass
 
-            return file_wrapper
-
-        # If not, try to retrieve it from the DB or create a new DB obj if
-        # it does not exist
-        db_obj = self.get_object(instance)
-        if not db_obj:
-            db_obj = self._create_file_instance()
-
+        db_obj = self._create_file_instance()
+        file_wrapper = db_obj.get_file_wrapper(self.field)
         self._setup_db_state(instance, db_obj)
-
         # Create a new wrapper and set the file
-        file_wrapper = self._create_file_wrapper(instance, db_obj)
         file_wrapper.file = value
+        file_wrapper.original_filename = value.name
         file_wrapper._committed = False
 
         return file_wrapper
 
     def _set_from_none(self, instance):
         """Handles removing the current value by setting it to None."""
-        # First, see if we have a cached value
-        obj = self.field.get_cached_value(instance, None)
+        # First, see if we have a value
+        try:
+            obj = self.__get__(instance)
+            # If we got a result, mark it as to be removed
+            if obj:
+                obj._removed = True
+        except self.RelatedObjectDoesNotExist:
+            # If we get this exception, we are not allowed to set None because
+            # the field does not allow it
+            raise ValueError("Cannot set null if null=False")
 
-        # If not, try to retrieve one from the DB
-        if obj is None:
-            db_instance = self.get_object(instance)
-            # If it's in the DB, create a wrapper for it
-            if db_instance is not None:
-                obj = self._create_file_wrapper(instance, db_instance)
-
-        # If it's still not found, actually return None
+        # If there is no value, actually return None
         if obj is None:
             return None
 
@@ -329,9 +334,9 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
         # We don't actually remove the wrapper, as we need it's metadata to
         # properly remove everything when the model is saved. We can't delete
         # it now for two reasons:
-        # 1) Deleting the File before dereferencing it in the child, we get
-        #    integrity errors. The only way to avoid this is to actually save
-        #    the child first, which brings us to 2:
+        # 1) When trying to delete the File before dereferencing it in the
+        #    child, the FileWrapper will refuse to delete. If we set
+        #    _removed=True, FileField will automagically clean up for us
         # 2) It's against normal Django behaviour to alter ANY data before
         #    calling .save() (or .remove() for that matter). Thus, we need to
         #    wait till the programmer expects things to change.

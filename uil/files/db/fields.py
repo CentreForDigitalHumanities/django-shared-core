@@ -8,30 +8,94 @@ from django.db.models import ForeignObject, ForeignObjectRel, ManyToOneRel, \
 from django.db.models.fields.related import ManyToManyField, \
     RECURSIVE_RELATIONSHIP_CONSTANT, lazy_related_operation, resolve_relation
 from django.db.models.query_utils import PathInfo
-from django.db.models.signals import m2m_changed, post_delete, post_save, \
-    pre_delete
+from django.db.models.signals import post_delete, post_save, pre_delete
 from django.db.models.utils import make_model_tuple
 from django.dispatch import receiver
 from django.forms import ModelMultipleChoiceField
 from django.utils.hashable import make_hashable
 from django.utils.translation import gettext_lazy as _
+from uil.core.collections import IndexedOrderedSet
 
 from .descriptors import FileDescriptor, ForwardFileDescriptor, \
     TrackedFileDescriptor
 from ..forms import fields
-from .models import File
+from .models import BaseFile, File
 from .wrappers import FileWrapper, TrackedFileWrapper
+
+NOT_PROVIDED = object()
+
+
+class FileFieldCacheMixin:
+    """Provide an API for working with the model's fields value cache.
+
+    This is a modified version of Django's FieldCacheMixin, which keeps track
+    of the old """
+
+    set_cls = IndexedOrderedSet
+
+    def get_cache_name(self):
+        raise NotImplementedError
+
+    def get_cached_value(self, instance, default=NOT_PROVIDED, all=False):
+        cache_name = self.get_cache_name()
+        try:
+            if all:
+                return instance._state.fields_cache[cache_name]
+            return instance._state.fields_cache[cache_name][-1]
+        except (KeyError, IndexError):
+            if all:
+                return self.set_cls()
+            if default is NOT_PROVIDED:
+                raise KeyError
+            return default
+
+    def is_cached(self, instance):
+        return self.get_cache_name() in instance._state.fields_cache and \
+               len(instance._state.fields_cache[self.get_cache_name()]) > 0
+
+    def in_cache(self, instance, value):
+        return self.get_cache_name() in instance._state.fields_cache and \
+               value in instance._state.fields_cache[self.get_cache_name()]
+
+    def set_cached_value(self, instance, value, clear=False):
+        if self.get_cache_name() not in instance._state.fields_cache or clear:
+            instance._state.fields_cache[self.get_cache_name()] = self.set_cls()
+
+        # If this value is already cached, we need to remove it before adding it
+        # Otherwise, the value wouldn't be seen as the newest value (which
+        # would cause get_cached_value to incorrectly return a different value)
+        if self.in_cache(instance, value):
+            self.delete_value_from_cache(instance, value)
+
+        instance._state.fields_cache[self.get_cache_name()].add(value)
+
+    def delete_value_from_cache(self, instance, value):
+        if self.in_cache(instance, value):
+            instance._state.fields_cache[self.get_cache_name()].remove(value)
+
+    def clear_cache(self, instance):
+        instance._state.fields_cache[self.get_cache_name()] = self.set_cls()
+
+    def delete_cached_value(self, instance):
+        # A hack around Django's behaviour. Django wants to clear the cache
+        # if one swaps in a different related object to make sure the cache
+        # doesn't contain an old value.
+        # However, we handle this differently (as we keep track of old values
+        # for housecleaning). Thus, we simply don't implement this specific
+        # method and use one of the two above
+        pass
 
 
 def _default_filename_generator(file_wrapper: FileWrapper):
     return file_wrapper.original_filename
 
 
-class FileField(ForeignObject):
+class FileField(FileFieldCacheMixin, ForeignObject):
     """A replacement for Django's FileField. To the programmer, a File-like
     object is exposed which they can use to interact with the files.
 
     The main advantages over Django's FileField are:
+
     - If a file is removed from a model, it's actually also removed from disk
       automatically. Django's version leaves it where it is, taking up space
     - Files are not stored on disk using their original filename, an UUID is
@@ -115,7 +179,7 @@ class FileField(ForeignObject):
             # as much as avoiding conflicts in said name
             # the x_ prefix is mostly because Python doesn't allow numeric
             # variable names
-            related_name=f"x_{id(self)}",
+            related_name=f"FF_{id(self)}",
             related_query_name=None,
             limit_choices_to=None,
             parent_link=False,
@@ -137,6 +201,9 @@ class FileField(ForeignObject):
             *super().check(**kwargs),
             *self._check_on_delete(),
             *self._check_unique(),
+            *self._check_attr_class_subclass(),
+            *self._check_basefile_subclass(),
+            *self._check_file_subclass(),
         ]
 
     def _check_on_delete(self):
@@ -176,6 +243,44 @@ class FileField(ForeignObject):
             )
         ] if self.unique else []
 
+    def _check_attr_class_subclass(self):
+        return [
+            checks.Warning(
+                ('The `attr_class` value is not a subclass of '
+                 'uil.files.db.FileWrapper'),
+                hint=('Please ensure this wrapper implements the same API as '
+                      'FileWrapper'),
+                obj=self,
+                id='uil.files.W002',
+            )
+        ] if not issubclass(self.attr_class, FileWrapper) else []
+
+    def _check_file_subclass(self):
+        return [
+            checks.Error(
+                ('The `to` parameter value is a subclass of '
+                 'uil.files.db.File; you are not allowed to subclass File'),
+                hint=('If you want to use a custom File model, '
+                      'use uil.files.db.BaseFile as your base instead.'),
+                obj=self,
+                id='uil.files.E002',
+            )
+        ] if issubclass(self.remote_field.model, File) and \
+             self.remote_field.model != File \
+            else []
+
+    def _check_basefile_subclass(self):
+        return [
+            checks.Warning(
+                ('The `to` parameter value is not a subclass of '
+                 'uil.files.db.BaseFile'),
+                hint=('Please ensure this model implements the same API as '
+                      'File'),
+                obj=self,
+                id='uil.files.W003',
+            )
+        ] if not issubclass(self.remote_field.model, BaseFile) else []
+
     def deconstruct(self):
         name, path, args, kwargs = super().deconstruct()
         del kwargs['to_fields']
@@ -188,8 +293,11 @@ class FileField(ForeignObject):
         if self.db_constraint is not True:
             kwargs['db_constraint'] = self.db_constraint
 
-        # Not in this implementation of RelatedField
-        if 'related_name' in kwargs:
+        # Make sure we don't actually return an auto-generated related_name,
+        # as those change every time Python starts up
+        if 'related_name' in kwargs and kwargs['related_name'].startswith(
+                'FF'
+        ):
             del kwargs['related_name']
         if 'related_query_name' in kwargs:
             del kwargs['related_query_name']
@@ -322,14 +430,20 @@ class FileField(ForeignObject):
         """Handle deletion of a file"""
         # If we have something in cache
         if self.is_cached(instance):
-            value = self.get_cached_value(instance, None)
-            # If the cache contained a FileWrapper which is marked for
-            # termination
-            if value and value._removed:
-                # Terminate this file
-                value.delete()
-                # And clear our cached value
-                self.delete_cached_value(instance)
+            # Get all values
+            # The cache can contain multiple values, in which case all but
+            # the last of them should be marked for deletion
+            values = self.get_cached_value(instance, all=True)
+            for value in values:
+                # If this value is marked for removal, delete :D
+                # Note: This might not actually delete the file, it might be
+                # referenced by a different FileField, in which case
+                # value.delete() will simple stop execution
+                if value is not None and value._removed:
+                    # Terminate this file
+                    value.delete()
+            # And clear our cached value
+            self.clear_cache(instance)
 
     def pre_delete(self, sender, instance, **kwargs):
         # When our model is deleted, we need to remove all linked File objects
@@ -345,9 +459,11 @@ class FileField(ForeignObject):
         # When our model was deleted, we should see if our cache contains files
         # that need to be deleted
         if self.is_cached(instance):
-            # If so, we terminate this file!
             value = self.get_cached_value(instance, None)
-            value.delete()
+            num_references = value.file_instance._num_child_instances
+            # Delete the File if no other object is referencing it
+            if value is not None and num_references == 0:
+                value.delete()
 
     def contribute_to_class(self, *args, **kwargs):
         super().contribute_to_class(*args, **kwargs)
@@ -402,6 +518,9 @@ class FileField(ForeignObject):
                 if output_field is self:
                     raise ValueError('Cannot resolve output_field.')
         return super().get_col(alias, output_field)
+
+    def get_cache_name(self):
+        return self.name
 
 
 def create_tracked_file_intermediary_model(field, cls, file_kwargs: dict):

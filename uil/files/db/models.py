@@ -3,6 +3,7 @@ import uuid
 
 from django.conf import settings
 from django.db import models
+from django.utils.functional import cached_property
 
 from uil.files.db import manager
 from uil.files.db.wrappers import FileWrapper
@@ -11,7 +12,26 @@ from uil.files.db.wrappers import FileWrapper
 logger = logging.getLogger('uil.files')
 
 
-class File(models.Model):
+class _FileWrapperDict:
+    """Instance-local dict. Normally you'd just set a var in your __init__,
+    but Django models don't like custom __init__'s. """
+
+    def __get__(self, instance, *args, **kwargs):
+        if instance is None:
+            return self
+
+        if not hasattr(instance, '_file_wrapper_cache'):
+            instance._file_wrapper_cache = {}
+
+        return instance._file_wrapper_cache
+
+    def __set__(self, instance, value):
+        instance._file_wrapper_cache = value
+
+
+class BaseFile(models.Model):
+    class Meta:
+        abstract = True
 
     objects = manager.FileManager()
 
@@ -38,7 +58,7 @@ class File(models.Model):
 
     modified_on = models.DateTimeField(auto_now=True)
 
-    _file_wrapper = None
+    _file_wrappers = _FileWrapperDict()
 
     @property
     def _num_child_instances(self):
@@ -50,7 +70,9 @@ class File(models.Model):
             related_manager = getattr(self, related_object.related_name, None)
 
             if related_manager:
-                out += related_manager.count()
+                qs = related_manager.all()
+                qs._result_cache = None
+                out += qs.count()
 
         return out
 
@@ -68,7 +90,7 @@ class File(models.Model):
 
         return out
 
-    @property
+    @cached_property
     def _child_fields(self):
         out = []
         for related_object in self._meta.related_objects:
@@ -79,32 +101,55 @@ class File(models.Model):
 
         return out
 
-    @property
-    def _has_file_wrapper(self):
-        return self._file_wrapper is not None
+    def has_file_wrapper(self, field=None):
+        return field in self._file_wrappers and self._file_wrappers[field]
 
-    def _get_file_wrapper(self):
-        if self._file_wrapper is None:
-            self._file_wrapper = FileWrapper(
-                self,
-                None,
-                self.original_filename
+    def get_file_wrapper(self, field=None):
+        from uil.files.db import FileField
+        if field and not issubclass(field.__class__, FileField):
+            raise ValueError("Invalid field (e.g. not None or subclass of "
+                             "FileField)")
+
+        if field not in self._file_wrappers:
+            if field is not None and field not in self._child_fields:
+                raise ValueError("This field is not known to be attached to "
+                                 "this File instance")
+
+            self._file_wrappers[field] = FileWrapper(
+                file_instance=self,
+                field=field,
+                original_filename=self.original_filename,
             )
 
-        return self._file_wrapper
+        return self._file_wrappers[field]
 
-    def _set_file_wrapper(self, file):
-        self._file_wrapper = file
+    def set_file_wrapper(self, value, field):
+        # Local import to prevent cycles
+        from uil.files.db import FileField
+        # The 'None' variant should never be set from outside this class
+        # As wel as non-FileWrapper's
+        if not field or not issubclass(field, FileField):
+            raise ValueError("Cannot set non-field keys")
 
-    def _del_file_wrapper(self):
-        del self._file_wrapper
+        # The 'None' variant should never be set from outside this class
+        # As wel as non-FileWrapper's
+        if value is None or not issubclass(value, FileWrapper):
+            raise ValueError("Value is None or not a (subclass of) "
+                             "FileWrapper!")
 
-    file_wrapper = property(
-        _get_file_wrapper,
-        _set_file_wrapper,
-        _del_file_wrapper
-    )
+        self._file_wrappers[field] = value
+
+    def clear_file_wrapper(self, field):
+        # Local import to prevent cycles
+        from uil.files.db import FileField
+        if field is None or not issubclass(field, FileField):
+            raise ValueError("Cannot delete non-field keys")
+
+        self._file_wrappers[field] = None
+
+    def clear_file_wrappers(self,):
+        self._file_wrappers = {}
 
 
-
-
+class File(BaseFile):
+    pass
