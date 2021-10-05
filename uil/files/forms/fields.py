@@ -7,25 +7,11 @@ from django.utils.translation import gettext_lazy as _
 
 from .widgets import SimpleFileInput
 from ..utils import get_storage
+from ..db.wrappers import FileWrapper
 
 
 class FileField(Field):
     """Form field for the uil.files.db.FileField"""
-    class Data:
-        """Inline object to keep info neat and tidy during templating"""
-        def __init__(self, filename=None, uuid=None, pk=None):
-            self.filename = filename
-            self.pk = pk
-            self.uuid = uuid
-            self.existing = False
-
-        def __repr__(self):
-            """Custom repr for easier debugging. (Mostly to see it's values
-            in the debug toolbar)
-            """
-            return f"<FileField.Data: pk={self.pk}; filename={self.filename}; " \
-                   f"uuid={self.uuid}; existing={self.existing}>"
-
     widget = SimpleFileInput
     default_error_messages = {
         'invalid': _("No file was submitted. Check the encoding type on the form."),
@@ -104,26 +90,23 @@ class FileField(Field):
         return super().clean(data)
 
     def prepare_value(self, value):
-        ret = self.Data()
+        ret = None
         if self.queryset:
             try:
                 # If value is a data-tuple from get_value_from_datadict,
                 # try to use the UUID of that tuple to retrieve our model
                 if isinstance(value, tuple):
-                    # Check if we actaully have a UUID
+                    # Check if we actually have a UUID
                     if value[1]:
                         model = self.queryset.get(uuid=value[1])
+                        return model.get_file_wrapper()
                     else:
-                        # If not, return the empty Data()
+                        # If not, return None
                         return ret
                 else:
                     # Otherwise, we assume we got a PK from the form
                     model = self.queryset.get(pk=value)
-                # Fill in our data class
-                ret.filename = model.original_filename
-                ret.pk = model.pk
-                ret.uuid = model.uuid
-                ret.existing = True
+                    return model.get_file_wrapper()
             except ObjectDoesNotExist:
                 pass
             except AttributeError:
