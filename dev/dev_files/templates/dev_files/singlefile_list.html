@@ -1,0 +1,48 @@
+{% extends 'base/base.html' %}
+
+{% block header_title %}
+    {{ title }} - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            <a class="button button-colored float-right" href="{{ new_url }}">
+                New
+            </a>
+            <h1>{{ title }}</h1>
+            <table class="w-100">
+                <thead>
+                    <tr>
+                        <th>
+                            pk
+                        </th>
+                        <th>
+                            nullable_file
+                        </th>
+                        <th>
+                            required_file
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for obj in object_list %}
+                    <tr>
+                        <td>
+                            <a href="{% url update_url_name obj.pk %}">
+                                {{ obj.pk }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ obj.nullable_file.uuid }}
+                        </td>
+                        <td>
+                            {{ obj.required_file.uuid }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
