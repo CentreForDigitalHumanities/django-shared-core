@@ -26,5 +26,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements-dev.txt
     - name: Run Tests
+      working-directory: dev
       run: |
-        python dev/manage.py test
+        python manage.py test
