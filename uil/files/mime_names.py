@@ -10,6 +10,10 @@ _names = {
     'application/rss+xml': _('RSS feed'),
     'application/rtf': _('Rich text file'),
     'application/x-msaccess': _('Microsoft Access file'),
+    'application/csv': _('Character-Separated Values (CSV) file'),  # Yes we're
+    # aware it's 'Comma-Separated', but there are enough CSV files that use a
+    # different character...
+
     # Start MS BS
     # Word BS
     'application/msword':
