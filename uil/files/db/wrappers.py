@@ -6,6 +6,7 @@ import magic
 from django.db.models import Manager
 
 from .. import settings
+from ..mime_names import get_name_from_mime
 from ..utils import get_storage
 
 
@@ -87,6 +88,13 @@ class FileWrapper(File):
 
     # For easier access
     uuid = property(lambda self: self.file_instance.uuid)
+    content_type = property(lambda self: self.file_instance.content_type)
+    created_by = property(lambda self: self.file_instance.created_by)
+    created_on = property(lambda self: self.file_instance.created_on)
+    modified_on = property(lambda self: self.file_instance.modified_on)
+
+    def get_content_type_display(self):
+        return get_name_from_mime(self.content_type, 'Unknown file type')
 
     # The standard File contains most of the necessary properties, but
     # FieldFiles can be instantiated without a name, so that needs to
