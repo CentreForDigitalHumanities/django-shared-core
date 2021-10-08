@@ -312,6 +312,12 @@ class TrackedFileWrapper(PrivateCacheMixin):
             self._field.m2m_reverse_field_name()
         )
 
+    def __repr__(self):
+        return f"<{self.__class__.__module__}.{self.__class__.__name__} " \
+               f"for {self._instance.__class__.__module__}." \
+               f"{self._instance.__class__.__name__}." \
+               f"{self._field.attname}>"
+
     def _get_linking_instance(self, obj: Union[FileWrapper, File]) -> Optional:
         """Given a FileWrapper or File, this method will try to find the
         object linking it to an object."""
