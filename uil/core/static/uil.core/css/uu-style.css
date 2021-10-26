@@ -3,11 +3,11 @@
 
 :root {
     /* Main colors */
-     --uu-red: #C00A35;
-     --uu-yellow: #FFCD00;
+    --uu-red: #C00A35;
+    --uu-yellow: #FFCD00;
     /* Somewhat redundant... */
-     --uu-black: #000;
-     --uu-white: #fff;
+    --uu-black: #000;
+    --uu-white: #fff;
     /* Additional color palette */
     --uu-cream: #FFE6AB;
     --uu-orange: #F3965E;
@@ -301,7 +301,7 @@ code {
     }
 
     .uu-navigation-bar .nav-item {
-        background: #000;
+        background: var(--uu-black);
         padding: 5px 10px;
         border-top: 1px solid var(--uu-border-color-dark);
     }
