@@ -8,8 +8,25 @@ Menu.add_item("home", MenuItem(_('main:menu:home'),
                                ))
 
 Menu.add_item("main", MenuItem(_('main:menu:styles'),
-                               reverse('main:styles'),
-                               exact_url=True
+                               "#",
+                               exact_url=True,
+                               children=[
+                                   MenuItem(
+                                       _('main:menu:styles:base'),
+                                       reverse('main:styles'),
+                                       exact_url=True,
+                                   ),
+                                   MenuItem(
+                                       _('main:menu:styles:form'),
+                                       reverse('main:styles_form'),
+                                       exact_url=True,
+                                   ),
+                                   MenuItem(
+                                       _('main:menu:styles:jquery_form'),
+                                       reverse('main:styles_form_jquery'),
+                                       exact_url=True,
+                                   ),
+                               ]
                                ))
 
 Menu.add_item("footer", MenuItem(_('main:footer:login'),
