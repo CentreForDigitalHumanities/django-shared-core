@@ -8,13 +8,14 @@ $(function () {
             return;
         el.setup = true;
 
-        el.name = $(el).data('name');
-        el.filenameEl = $(el).find('.uil-files-filename');
+        let jq_el = $(el);
+
+        el.name = jq_el.data('name');
+        el.filenameEl = jq_el.find('.uil-files-filename');
         el.noFileText = el.filenameEl.html(); // By default it's filled with this text
-        el.filenameInput = $(el).find('input[name="'+ el.name +'_filename"]')
-        el.changedInput = $(el).find('input[name="'+ el.name +'_changed"]')
-        el.removeEl = $(el).find('.uil-files-remove');
-        el.selectEl = $(el).find('.uil-files-select');
+        el.changedInput = jq_el.find('input[name="'+ el.name +'_changed"]')
+        el.removeEl = jq_el.find('.uil-files-remove');
+        el.selectEl = jq_el.find('.uil-files-select');
         el.selectLabel = $(el.selectEl).find('label');
         el.selectInput = $(el.selectEl).find('input[type="file"]');
 
@@ -25,16 +26,22 @@ $(function () {
             }
             el.selectEl.show();
         }
-        el.showFile = function (filename="") {
+        el.showFile = function (filename="", url="") {
             el.selectEl.hide();
             if (filename !== "") {
-                el.filenameEl.html(filename);
+                if (url !== "") {
+                    el.filenameEl.html(
+                        '<a href="'+url+'" target="_blank">' + filename + '</a>'
+                    );
+                } else {
+                    el.filenameEl.html(filename);
+                }
             }
             el.removeEl.show();
         }
 
-        if (el.filenameInput.val() !== "") {
-            el.showFile(el.filenameInput.val());
+        if (jq_el.data('filename') !== "") {
+            el.showFile(jq_el.data('filename'), jq_el.data("url"));
         }
 
         el.removeEl.click(function () {

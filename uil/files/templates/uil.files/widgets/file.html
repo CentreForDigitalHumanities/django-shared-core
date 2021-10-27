@@ -1,8 +1,12 @@
 {% load static %}
 {% with value=widget.value %}
-<div class="uil-files-select-container" data-name="{{ widget.name }}">
+<div
+        class="uil-files-select-container"
+        data-name="{{ widget.name }}"
+        data-filename="{{ value.name|default:"" }}"
+        data-url="{{ value.url|default:"" }}"
+>
     <input type="hidden" name="{{ widget.name }}_id" value="{{ value.uuid|default:"" }}">
-    <input type="hidden" name="{{ widget.name }}_filename" value="{{ value.filename|default:"" }}">
     <input type="hidden" name="{{ widget.name }}_changed" value="0">
     <span class="uil-files-filename">
         {{ widget.strings.empty_file }}
