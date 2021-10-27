@@ -115,6 +115,11 @@ class FileWrapper(File):
 
     def _set_file(self, file):
         self._file = file
+        # You might think, why? Well, due to a very complicated descriptor chain
+        # this might actually fail to set, in which case we really should stop
+        # NOW #speakingFromExperience
+        # It will only fail after a code change, so assert should be fine
+        assert self._file == file
 
     def _del_file(self):
         del self._file
