@@ -89,16 +89,16 @@ Miauw!
                 </div>
                 <div class="col-8 toppanel-text">
                     {% block toppanel-text %}
-                        {% if debug %}
-                            <span class="uu-red-text">
-                                <span class="icon-warning">⚠</span>
-                                Local development server
-                                <span class="icon-warning">⚠</span>
-                            </span>
-                        {% elif acceptation %}
+                        {% if acceptation %}
                             <span class="uu-red-text">
                                 <span class="icon-warning">⚠</span>
                                 Acceptation server
+                                <span class="icon-warning">⚠</span>
+                            </span>
+                        {% elif debug %}
+                            <span class="uu-red-text">
+                                <span class="icon-warning">⚠</span>
+                                Local development server
                                 <span class="icon-warning">⚠</span>
                             </span>
                         {% endif %}
