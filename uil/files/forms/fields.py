@@ -91,7 +91,7 @@ class FileField(Field):
 
     def prepare_value(self, value):
         ret = None
-        if self.queryset:
+        if self.queryset is not None:
             try:
                 # If value is a data-tuple from get_value_from_datadict,
                 # try to use the UUID of that tuple to retrieve our model
