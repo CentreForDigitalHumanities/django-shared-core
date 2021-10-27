@@ -7,5 +7,5 @@
         <a href="{% url 'main:logout' %}">({% trans 'main:globals:logout' %})</a>
     {% endwith %}
     {% else %}
-    &nbsp; {# UI requires a line here #}
+    <a href="{% url 'main:login' %}">{% trans 'main:globals:login' %}</a>
 {% endif %}

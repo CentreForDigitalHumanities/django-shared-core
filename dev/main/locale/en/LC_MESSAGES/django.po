@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-26 14:19+0000\n"
+"POT-Creation-Date: 2021-10-27 08:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,6 +51,10 @@ msgstr "Welcome {}!"
 #: main/templates/base/login_header.html:7
 msgid "main:globals:logout"
 msgstr "Logout"
+
+#: main/templates/base/login_header.html:10
+msgid "main:globals:login"
+msgstr "Log in"
 
 #. Translators: This is the title that will end up in the header (in blue)
 #: main/templates/base/site_header.html:4
