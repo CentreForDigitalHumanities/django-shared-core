@@ -130,7 +130,8 @@ class FileField(FileFieldCacheMixin, ForeignObject):
     description = _("Foreign Key (type determined by related field)")
 
     def __init__(self, to=None, on_delete=None, to_field=None, db_constraint=True,
-                 filename_generator: callable = None, **kwargs):
+                 filename_generator: callable = None, url_pattern: str = None,
+                 **kwargs):
         """
 
         :param to: A File-like model.
@@ -195,6 +196,7 @@ class FileField(FileFieldCacheMixin, ForeignObject):
             **kwargs,
         )
         self.db_constraint = db_constraint
+        self.url_pattern = url_pattern
 
     def check(self, **kwargs):
         return [
@@ -661,11 +663,14 @@ class TrackedFileField(ManyToManyField):
     def __init__(self, to=None, related_name=None, related_query_name=None,
                  limit_choices_to=None, file_kwargs: dict = None,
                  db_constraint=True, db_table=None,
-                 swappable=True, **kwargs):
+                 swappable=True, url_pattern: str = None, **kwargs):
         if to is None:
             to = File
         if file_kwargs is None:
             file_kwargs = {}
+
+        self.url_pattern = url_pattern
+        file_kwargs['url_pattern'] = url_pattern
 
         if related_name is None:
             related_name = f"TFF_{id(self)}"

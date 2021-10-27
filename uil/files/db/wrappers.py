@@ -133,7 +133,10 @@ class FileWrapper(File):
 
     @property
     def url(self):
-        raise NotImplementedError
+        if self.field.url_pattern:
+            return reverse_lazy(self.field.url_pattern, args=[self.uuid])
+
+        return None
 
     @property
     def size(self):
