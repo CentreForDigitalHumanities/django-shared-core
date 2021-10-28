@@ -3,9 +3,9 @@
 
 :root {
     /* Main colors */
+    /* https://www.uu.nl/en/organisation/corporate-identity/brand-policy/colour */
     --uu-red: #C00A35;
     --uu-yellow: #FFCD00;
-    /* Somewhat redundant... */
     --uu-black: #000;
     --uu-white: #fff;
     /* Additional color palette */
@@ -18,13 +18,17 @@
     --uu-mid-blue: #094D8E; /* Own addition, somewhere in between the two official colors */
     --uu-dark-blue: #001240;
     --uu-purple: #5B2182;
+
     /* structural style */
     --uu-border-color-light: #efefef;
-    --uu-border-color-mid: #919191;
+    --uu-border-color-mid-light: #ccc;
+    --uu-border-color-mid: #999;
+    --uu-border-color-mid-dark: #666;
     --uu-border-color-dark: #333;
     --uu-border-color-input: #d7d7d7;
     --uu-border-color-table: #ccc;
     --uu-background-color: #F6F6F6;
+    --uu-background-alternative-content: #eee;
     --uu-background-table-color: #eee;
     --uu-background-table-hover-color: #ddd;
     --uu-background-code-color: #111;
@@ -353,20 +357,59 @@ footer a {
     }
 }
 
-/* Input styles */
-
-form > table th {
-    padding-left: 10px;
-    vertical-align: middle;
+/* Table styles */
+table thead th {
+    border-bottom: 1px solid var(--uu-border-color-table);
 }
 
+table tfoot th {
+    border-top: 1px solid var(--uu-border-color-table);
+}
+
+table tbody tr:nth-of-type(odd) {
+    background: var(--uu-background-table-color);
+}
+
+table tbody tr:hover {
+    background: var(--uu-background-table-hover-color);
+}
+
+table tbody tr.no-background:hover, table tbody tr.no-background {
+    background: transparent;
+}
+
+table tbody td, table thead th, table tfoot th {
+    padding: 6px 5px;
+}
+
+/* No bullet for list items in tables */
+td li {
+    list-style-type: none;
+}
+
+/* Input styles */
 input, textarea, select {
     border-radius: 0;
     border: 1px solid var(--uu-border-color-input);
     padding: 5px 10px;
     line-height: 20px;
     font-size: 16px;
-    width: 400px;
+    width: 500px;
+    outline: none;
+    transition: border-color 250ms ease;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: var(--uu-blue);
+}
+
+textarea {
+    padding: 10px;
+}
+
+/* Makes sure there's some spacing between form fields with more than one input */
+input:not(:first-child), textarea:not(:first-child), select:not(:first-child) {
+    margin-top:5px;
 }
 
 input[type=submit], input[type=button], button, .button {
@@ -382,6 +425,23 @@ input[type=submit], input[type=button], button, .button {
     cursor: pointer;
     display: inline-block;
     border-radius: 0;
+}
+
+input[type=color] {
+    padding: 0;
+    height: 35px;
+}
+
+@media (max-width: 870px) {
+
+    input, textarea {
+        width: 100%;
+    }
+
+    input[type="checkbox"], input[type="radio"]
+    {
+         width: auto;
+    }
 }
 
 /* Remove box shadow from bootstrap buttons as well */
@@ -428,18 +488,79 @@ button.language-button {
     background: transparent;
 }
 
+/** Form styles **/
+
+form table {
+    margin-bottom: 2em;
+    table-layout:fixed;
+}
+
+form > table th {
+    padding-left: 10px;
+    vertical-align: middle;
+    width: 45%;
+    text-align: left;
+}
+
+form > table th label {
+    width: auto;
+    min-width: 400px;
+    float: right;
+}
+
+form > table td {
+    /*width: 50%*/
+}
+
+form td ul,
+form ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+form tbody tr {
+    border-bottom: 1px solid var(--uu-border-color-mid-light);
+}
+
+form tbody tr,
+form tbody tr:nth-of-type(2n+1),
+form tbody tr:hover,
+form tbody tr:nth-of-type(2n+1):hover {
+    background: transparent;
+}
+
+form tr:last-child {
+    border-bottom: none;
+}
+
+form tr th, form tr td {
+    padding: 15px 10px;
+}
+
+form tr td {
+    padding-left: 20px;
+}
+
+form tr th .icon-info {
+    cursor: help;
+}
+
 form label {
     display: block;
 }
 
 form .select2-container {
-    width: 400px;
+    width: 500px;
 }
 
-form td ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+.select2-container--default .select2-results__option[aria-disabled=true] {
+    display: none;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    color: var(--uu-white);
+    background: var(--uu-blue);
 }
 
 @media (max-width: 870px) {
@@ -454,13 +575,18 @@ form td ul {
         width: 100%;
     }
 
-    input, textarea {
+    form > table th label {
         width: 100%;
+        float: none;
+        min-width: unset;
     }
 
-    input[type="checkbox"], input[type="radio"]
-    {
-         width: auto;
+    form tr td {
+        padding: 0 10px 15px;
+    }
+
+    form .select2-container {
+        width: 100%;
     }
 }
 
@@ -483,31 +609,6 @@ form td ul {
 }
 .oneline-form input {
     width: auto;
-}
-
-/* Table styles */
-table thead th {
-    border-bottom: 1px solid var(--uu-border-color-table);
-}
-
-table tfoot th {
-    border-top: 1px solid var(--uu-border-color-table);
-}
-
-table tbody tr:nth-of-type(odd) {
-    background: var(--uu-background-table-color);
-}
-
-table tbody tr:hover {
-    background: var(--uu-background-table-hover-color);
-}
-
-table tbody tr.no-background:hover, table tbody tr.no-background {
-    background: transparent;
-}
-
-table tbody td, table thead th, table tfoot th {
-    padding: 6px 5px;
 }
 
 /* Link styles */
@@ -610,10 +711,6 @@ div.dataTables_wrapper div.dataTables_length select {
 
 .dataTables_wrapper .dropdown-menu .dt-button-collection-title {
     padding: 0;
-}
-
-.select2-container--default .select2-results__option[aria-disabled=true] {
-    display: none;
 }
 
 /* Fix for search bar not display properly when the table is wrapped in a form*/

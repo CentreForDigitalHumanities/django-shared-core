@@ -19,7 +19,9 @@ $(function() {
     } );
 
     // Enables select2 for all select boxes in forms
-    $('form table select').select2();
+    $('form table select').select2({
+        'width': 'style'
+    });
 
     // Turns all help text into nice (i) icons with qTip hover-text
     $("[id^=id]").each(function() {
