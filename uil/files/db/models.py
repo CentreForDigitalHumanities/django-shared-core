@@ -91,7 +91,7 @@ class BaseFile(models.Model):
         return out
 
     @cached_property
-    def _child_fields(self):
+    def _related_fields(self):
         out = []
         for related_object in self._meta.related_objects:
             if not related_object or not related_object.field:
@@ -101,19 +101,42 @@ class BaseFile(models.Model):
 
         return out
 
+    @property
+    def _child_fields(self):
+        out = []
+        for related_object in self._meta.related_objects:
+            if not related_object or not related_object.field:
+                continue
+
+            related_manager = getattr(self, related_object.related_name, None)
+            if related_manager and related_manager.exists():
+                out.append(related_object.field)
+
+        return out
+
     def has_file_wrapper(self, field=None):
         return field in self._file_wrappers and self._file_wrappers[field]
 
-    def get_file_wrapper(self, field=None):
+    def get_file_wrapper(self, field=None, only_existing=True):
         from uil.files.db import FileField
         if field and not issubclass(field.__class__, FileField):
             raise ValueError("Invalid field (e.g. not None or subclass of "
                              "FileField)")
 
         if field not in self._file_wrappers:
-            if field is not None and field not in self._child_fields:
-                raise ValueError("This field is not known to be attached to "
-                                 "this File instance")
+            if field is not None:
+                # If we only want FWs for existing relations,
+                # check _child_fields
+                # Otherwise, check _related_fields
+                if only_existing and field not in self._child_fields:
+                    raise ValueError(
+                        "This field is not known to be attached to this File "
+                        "instance"
+                    )
+                if not only_existing and field not in self._related_fields:
+                    raise ValueError(
+                        "This field is not known to be attached to this File "
+                        "class")
 
             self._file_wrappers[field] = FileWrapper(
                 file_instance=self,

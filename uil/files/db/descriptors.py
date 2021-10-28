@@ -221,7 +221,7 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
         # Make sure we setup the DB side of things
         self._setup_db_state(instance, obj)
 
-        file_wrapper = obj.get_file_wrapper(self.field)
+        file_wrapper = obj.get_file_wrapper(self.field, False)
 
         obj.original_filename = file.name
         file_wrapper.file = file
@@ -282,7 +282,7 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
         # programmer created an empty (non field-attached) FileWrapper)
         elif value.field != self.field:
             file = value.file
-            value = value.file_instance.get_file_wrapper(self.field)
+            value = value.file_instance.get_file_wrapper(self.field, False)
             value.file = file
 
         self._setup_db_state(instance, value.file_instance)
@@ -304,7 +304,7 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
                 pass
 
         db_obj = self._create_file_instance()
-        file_wrapper = db_obj.get_file_wrapper(self.field)
+        file_wrapper = db_obj.get_file_wrapper(self.field, False)
         self._setup_db_state(instance, db_obj)
         # Create a new wrapper and set the file
         file_wrapper.file = value

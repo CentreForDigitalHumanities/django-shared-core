@@ -360,7 +360,7 @@ class TrackedFileWrapper(PrivateCacheMixin):
         if isinstance(obj, FileWrapper):
             return obj
         if isinstance(obj, self._field.related_model):
-            return obj.get_file_wrapper(self._file_field)
+            return obj.get_file_wrapper(self._file_field, False)
         if isinstance(obj, int):
             try:
                 return self._resolve_to_file_wrapper(self._manager.get(pk=obj))
