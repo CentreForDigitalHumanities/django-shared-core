@@ -1,6 +1,8 @@
 from django.core.files import File
 from django.test import TestCase
+
 from uil.files import settings
+from uil.files.db.fields import _default_filename_generator
 from uil.files.utils import get_storage
 
 from .models import CustomSingleFile, SingleFile, TrackedCustomFile, TrackedFile
@@ -695,6 +697,41 @@ class FileTests(TestCase):
         )
 
         obj.delete()
+
+    def test_filename_generator(self):
+        static_name = "I love cats"
+        def _static_generator(file_wrapper):
+            return static_name
+
+        self.single_cls._meta.get_field('required_file').filename_generator = \
+            _static_generator
+
+        obj = self.single_cls()
+        obj.required_file = File(open(self.file_cat, mode='rb'))
+        obj.save()
+
+        self.assertEqual(
+            static_name,
+            obj.required_file.name
+        )
+
+        def _dynamic_generator(file_wrapper):
+            return f"{file_wrapper.pk} - {file_wrapper.uuid}"
+
+        self.single_cls._meta.get_field('required_file').filename_generator = \
+            _dynamic_generator
+
+        self.assertEqual(
+            _dynamic_generator(obj.required_file),
+            obj.required_file.name
+        )
+
+        obj.delete()
+
+        self.single_cls._meta.get_field('required_file').filename_generator = \
+            _default_filename_generator
+
+
 
 
 class CustomFileTests(FileTests):
