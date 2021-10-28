@@ -1,8 +1,6 @@
 from django.forms.widgets import FileInput
 from django.utils.translation import gettext_lazy as _
 
-from uil.core.file_loading import add_css_file, add_js_file
-
 
 class SimpleFileInput(FileInput):
     clear_checkbox_label = _('Clear')
@@ -25,9 +23,6 @@ class SimpleFileInput(FileInput):
         """Update strings from attrs if present"""
         if attrs:
             self.strings.update(attrs.pop('strings', {}))
-
-        add_js_file('uil.files/widgets.js')
-        add_css_file('uil.files/widgets.css')
 
         super().__init__(attrs)
 
