@@ -1,5 +1,6 @@
 from django import forms
 from uil.core import fields as core_fields
+from uil.files.forms import FileField, TrackedFileField
 
 
 class FormStylesForm(forms.Form):
@@ -94,6 +95,10 @@ class FormStylesForm(forms.Form):
     image = forms.ImageField()
 
     file = forms.FileField(help_text="Not an UiL.files field ;)")
+
+    uil_file = FileField(None)
+
+    uil_tracked_file = TrackedFileField(None)
 
     IP = forms.GenericIPAddressField()
 
