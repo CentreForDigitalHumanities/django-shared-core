@@ -5,8 +5,8 @@
 {% load question_tags %}
 
 {% block html_head %}
-<link href="{% static 'prereg/questions.css' %}" rel="stylesheet" />
-<link href="{% static 'prereg/prereg.css' %}" rel="stylesheet" />
+<link href="{% static 'questions/questions.css' %}" rel="stylesheet" />
+<link href="{% static 'questions/prereg.css' %}" rel="stylesheet" />
 {% endblock %}
 
 {% block content %}
@@ -29,7 +29,7 @@
                 {% endfor %}
                 <div class="gt-right question-buttons">
 
-                    <a href="{% url 'prereg:new_question' prereg_pk=object.pk question='submodel' %}" class="button">Create</a>
+                    <a href="{{new_url}}" class="button">Create</a>
 
 
                 </div>

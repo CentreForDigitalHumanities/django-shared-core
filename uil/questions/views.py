@@ -36,6 +36,8 @@ class BlueprintView(generic.DetailView):
 
 
 
+
+
 class QuestionDisplayView(generic.TemplateView):
 
     template_name = 'questions/question_detail.html'
@@ -90,9 +92,9 @@ class QuestionView(generic.TemplateView):
 
     def get_success_url(self):
 
-        prereg_pk = self.kwargs.get('prereg_pk')
+        parent_pk = self.kwargs.get(parent_pk_arg)
         return reverse('prereg:prereg_overview',
-                                   kwargs={'prereg_pk': prereg_pk})
+                                   kwargs={parent_pk_arg: parent_pk})
 
 
 
