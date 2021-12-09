@@ -93,7 +93,7 @@ class QuestionView(generic.TemplateView):
     def get_success_url(self):
 
         parent_pk = self.kwargs.get(parent_pk_arg)
-        return reverse('prereg:prereg_overview',
+        return reverse('questions:blueprint_overview',
                                    kwargs={parent_pk_arg: parent_pk})
 
 

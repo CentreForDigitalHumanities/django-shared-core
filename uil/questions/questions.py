@@ -56,7 +56,7 @@ class Segment:
         if hasattr(self, 'template_name'):
             self.template = get_template(self.template_name)
         else:
-            self.template = get_template('questions/tags/question_segments.html')
+            self.template = get_template('uil.questions/tags/question_segments.html')
 
         # This context gets changed to a Context object later
         self.context = {'segment': self}
