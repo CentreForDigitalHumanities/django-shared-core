@@ -23,6 +23,11 @@ class BlueprintView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         context['blueprint'] = self.blueprint
 
+
+        primary_questions = [q(instance=self.object) for q in \
+                             self.blueprint.primary_questions]
+        context['primary_questions'] = primary_questions
+
         return context
 
     def get_submodels(self):
@@ -49,6 +54,7 @@ class QuestionView(generic.TemplateView):
     question = None
     question_dict = None
     question_url_arg = 'question'
+    parent_pk_arg = 'pk'
 
     def get(self, request, *args, **kwargs):
 
@@ -92,9 +98,9 @@ class QuestionView(generic.TemplateView):
 
     def get_success_url(self):
 
-        parent_pk = self.kwargs.get(parent_pk_arg)
+        parent_pk = self.kwargs.get(self.parent_pk_arg)
         return reverse('questions:blueprint_overview',
-                                   kwargs={parent_pk_arg: parent_pk})
+                                   kwargs={self.parent_pk_arg: parent_pk})
 
 
 
@@ -104,7 +110,7 @@ class QuestionEditView(QuestionView,
                        ):
 
     pk_url_kwarg = 'question_pk'
-    template_name = 'questions/question_detail.html'
+    template_name = 'uil.questions/question_detail.html'
 
 
 
