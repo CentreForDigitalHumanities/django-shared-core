@@ -2,6 +2,14 @@
 
 These Django apps implement shared code for UiL OTS Lab Django projects.
 
+## Currently targeting:
+- Python 3.9
+- Python 3.10
+- Django 3.x
+- Django 4.0 (experimental)
+
+Older versions are not supported, please use a older release if needed
+
 # Included libraries
 These libraries have been completely integrated into this codebase
 
