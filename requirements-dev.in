@@ -3,7 +3,6 @@ requests
 PyJWT
 pip-tools
 cryptography
-backports-datetime-fromisoformat
 djangorestframework
 pyscss
 lesscpy

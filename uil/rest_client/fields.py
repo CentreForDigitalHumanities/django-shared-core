@@ -5,7 +5,6 @@ from functools import total_ordering
 from typing import Union
 
 import itertools
-from backports.datetime_fromisoformat import MonkeyPatch
 from django.core import exceptions, validators
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
@@ -14,8 +13,6 @@ from uil.rest_client.collections.collections import ResourceCollection, _TypeCol
 from uil.rest_client.resources import Resource
 from uil.rest_client.registry import registry
 from uil.rest_client.logging import field_logger as logger
-
-MonkeyPatch.patch_fromisoformat()
 
 
 @total_ordering
