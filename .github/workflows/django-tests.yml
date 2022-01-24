@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-
+    name: Tests; Python ${{ matrix.python-version }}, Django {{ $matrix.django-version }}
     runs-on: ubuntu-latest
     continue-on-error: true
     strategy:
