@@ -776,9 +776,13 @@ class TrackedFileField(ManyToManyField):
         self.m2m_reverse_target_field_name = lambda: get_m2m_reverse_rel().field_name
 
 
+    def value_from_object(self, obj):
+        return getattr(obj, self.attname, None)
+        return [] if obj.pk is None else list(getattr(obj, self.attname).all)
+
     def formfield(self, *, using=None, **kwargs):
         defaults = {
-            'form_class': ModelMultipleChoiceField,
+            'form_class': fields.TrackedFileField,
             'queryset': self.remote_field.model._default_manager.using(using),
             **kwargs,
         }

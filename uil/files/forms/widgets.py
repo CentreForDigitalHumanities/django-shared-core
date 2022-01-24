@@ -57,3 +57,24 @@ class SimpleFileInput(FileInput):
         # indicates nothing changed, act like we didn't get any data
         return name not in files or not changed
 
+
+class TrackedFileInput(SimpleFileInput):
+    template_name = 'uil.files/widgets/tracked_file.html'
+
+    # Strings used in the template
+    strings = {
+        'empty_file': _('Please select a file'),
+        'remove': _('Clear'),
+        'select_file': _('Upload new'),
+        'select_existing': _('Select existing'),
+    }
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        context['widget'].update({
+            'strings': self.strings,
+            'input_text': self.input_text,
+            'initial_text': self.initial_text,
+            'clear_checkbox_label': self.clear_checkbox_label,
+        })
+        return context

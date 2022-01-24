@@ -8,17 +8,17 @@
 >
     <input type="hidden" name="{{ widget.name }}_id" value="{{ value.uuid|default:"" }}">
     <input type="hidden" name="{{ widget.name }}_changed" value="0">
-    <span class="uil-files-filename">
+    <div class="uil-files-filename">
         {{ widget.strings.empty_file }}
-    </span>
-    <span class="uil-files-remove">
+    </div>
+    <div class="uil-files-remove">
         {{ widget.strings.remove }}
-    </span>
-    <span class="uil-files-select">
+    </div>
+    <div class="uil-files-select">
         <input type="file" name="{{ widget.name }}">
         <label for="{{ widget.name }}">
             {{ widget.strings.select_file }}
         </label>
-    </span>
+    </div>
 </div>
 {% endwith %}

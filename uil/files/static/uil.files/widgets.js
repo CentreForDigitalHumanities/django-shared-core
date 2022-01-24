@@ -19,10 +19,15 @@ $(function () {
         el.selectLabel = $(el.selectEl).find('label');
         el.selectInput = $(el.selectEl).find('input[type="file"]');
 
-        el.showSelect = function (filename="") {
+        el.selectExisting = $(el.selectEl).find('.uil-files-select-existing')
+        el.selectExisting.click(function () {
+            $('.uil-files-existing-list').toggle()
+        })
+
+        el.showSelect = function (text="") {
             el.removeEl.hide();
-            if (filename !== "") {
-                el.filenameEl.html(filename);
+            if (text !== "") {
+                el.filenameEl.html(text);
             }
             el.selectEl.show();
         }

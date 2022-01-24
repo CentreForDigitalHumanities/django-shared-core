@@ -1,11 +1,14 @@
+import warnings
+
 from django.core.exceptions import ImproperlyConfigured, ObjectDoesNotExist, \
     ValidationError
-from django.forms import Field
-from django.forms.widgets import FILE_INPUT_CONTRADICTION
+from django.forms import Field, ModelChoiceField
+from django.forms.widgets import FILE_INPUT_CONTRADICTION, MultipleHiddenInput
+from django.utils.deprecation import RemovedInDjango40Warning
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 
-from .widgets import SimpleFileInput
+from .widgets import SimpleFileInput, TrackedFileInput
 from ..utils import get_storage
 from ..db.wrappers import FileWrapper
 
@@ -121,3 +124,115 @@ class FileField(Field):
 
     def has_changed(self, initial, data):
         return not self.disabled and data is not None
+
+
+class TrackedFileField(ModelChoiceField):
+    """A MultipleChoiceField whose choices are a model QuerySet."""
+    widget = TrackedFileInput
+    hidden_widget = MultipleHiddenInput
+    default_error_messages = {
+        'invalid_list': _('Enter a list of values.'),
+        'invalid_choice': _('Select a valid choice. %(value)s is not one of the'
+                            ' available choices.'),
+        'invalid_pk_value': _('“%(pk)s” is not a valid value.')
+    }
+
+    def __init__(self, queryset, **kwargs):
+        super().__init__(queryset, empty_label=None, **kwargs)
+        if self.error_messages.get('list') is not None:
+            warnings.warn(
+                "The 'list' error message key is deprecated in favor of "
+                "'invalid_list'.",
+                RemovedInDjango40Warning, stacklevel=2,
+            )
+            self.error_messages['invalid_list'] = self.error_messages['list']
+
+    def to_python(self, value):
+        if not value:
+            return []
+        return list(self._check_values(value))
+
+    def clean(self, value):
+        value = self.prepare_value(value)
+        if self.required and not value:
+            raise ValidationError(self.error_messages['required'], code='required')
+        elif not self.required and not value:
+            return self.queryset.none()
+        if not isinstance(value, (list, tuple)):
+            raise ValidationError(
+                self.error_messages['invalid_list'],
+                code='invalid_list',
+            )
+        qs = self._check_values(value)
+        # Since this overrides the inherited ModelChoiceField.clean
+        # we run custom validators here
+        self.run_validators(value)
+        return qs
+
+    def _check_values(self, value):
+        """
+        Given a list of possible PK values, return a QuerySet of the
+        corresponding objects. Raise a ValidationError if a given value is
+        invalid (not a valid PK, not in the queryset, etc.)
+        """
+        key = self.to_field_name or 'pk'
+        # deduplicate given values to avoid creating many querysets or
+        # requiring the database backend deduplicate efficiently.
+        try:
+            value = frozenset(value)
+        except TypeError:
+            # list of lists isn't hashable, for example
+            raise ValidationError(
+                self.error_messages['invalid_list'],
+                code='invalid_list',
+            )
+        for pk in value:
+            try:
+                self.queryset.filter(**{key: pk})
+            except (ValueError, TypeError):
+                raise ValidationError(
+                    self.error_messages['invalid_pk_value'],
+                    code='invalid_pk_value',
+                    params={'pk': pk},
+                )
+        qs = self.queryset.filter(**{'%s__in' % key: value})
+        pks = {str(getattr(o, key)) for o in qs}
+        for val in value:
+            if str(val) not in pks:
+                raise ValidationError(
+                    self.error_messages['invalid_choice'],
+                    code='invalid_choice',
+                    params={'value': val},
+                )
+        return qs
+
+    def prepare_value(self, value):
+        if (hasattr(value, '__iter__') and
+                not isinstance(value, str) and
+                not hasattr(value, '_meta')):
+            return [self._prepare_value(v) for v in value]
+        return self._prepare_value(value)
+
+    def _prepare_value(self, value):
+        if isinstance(value, FileWrapper):
+            return value
+
+        if hasattr(value, '_meta'):
+            if self.to_field_name:
+                return value.serializable_value(self.to_field_name)
+            else:
+                return value.pk
+        return super().prepare_value(value)
+
+    def has_changed(self, initial, data):
+        if self.disabled:
+            return False
+        if initial is None:
+            initial = []
+        if data is None:
+            data = []
+        if len(initial) != len(data):
+            return True
+        initial_set = {str(value) for value in self.prepare_value(initial)}
+        data_set = {str(value) for value in data}
+        return data_set != initial_set
