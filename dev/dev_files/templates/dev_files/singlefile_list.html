@@ -34,10 +34,18 @@
                             </a>
                         </td>
                         <td>
-                            {{ obj.nullable_file.uuid }}
+                            {% if obj.nullable_file %}
+                                <a href="{{ obj.nullable_file.url }}">
+                                    {{ obj.nullable_file.uuid }}
+                                </a>
+                            {% endif %}
                         </td>
                         <td>
-                            {{ obj.required_file.uuid }}
+                            {% if obj.required_file %}
+                                <a href="{{ obj.required_file.url }}">
+                                    {{ obj.required_file.uuid }}
+                                </a>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}
