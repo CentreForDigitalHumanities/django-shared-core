@@ -61,32 +61,32 @@ label {
 }
 
 h1{
-    font-size: 1.9rem;
-    font-weight: 300;
-}
-
-h2{
-    font-size: 1.8rem;
-    font-weight: 300;
-}
-
-h3 {
     font-size: 1.6rem;
     font-weight: 300;
 }
 
-h4 {
+h2{
     font-size: 1.4rem;
+    font-weight: 300;
+}
+
+h3 {
+    font-size: 1.3rem;
+    font-weight: 300;
+}
+
+h4 {
+    font-size: 1.2rem;
     font-weight: normal;
 }
 
 h5 {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: normal;
 }
 
 h6 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: normal;
 }
 
