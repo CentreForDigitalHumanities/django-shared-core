@@ -4,6 +4,7 @@ from typing import Optional, Union, TYPE_CHECKING
 from django.core.files import File
 import magic
 from django.db.models import Manager
+from django.urls import reverse_lazy
 
 from .. import settings
 from ..mime_names import get_name_from_mime
@@ -458,7 +459,7 @@ class TrackedFileWrapper(PrivateCacheMixin):
     def all(self):
         return map(
             lambda file: self._resolve_to_file_wrapper(file),
-            self._manager.all()
+            self._manager.all().order_by('-created_on')
         )
 
     def add(self, file: Union[
