@@ -4,7 +4,6 @@ from django.core.exceptions import ImproperlyConfigured, ObjectDoesNotExist, \
     ValidationError
 from django.forms import Field, ModelChoiceField
 from django.forms.widgets import FILE_INPUT_CONTRADICTION, MultipleHiddenInput
-from django.utils.deprecation import RemovedInDjango40Warning
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 
@@ -139,13 +138,6 @@ class TrackedFileField(ModelChoiceField):
 
     def __init__(self, queryset, **kwargs):
         super().__init__(queryset, empty_label=None, **kwargs)
-        if self.error_messages.get('list') is not None:
-            warnings.warn(
-                "The 'list' error message key is deprecated in favor of "
-                "'invalid_list'.",
-                RemovedInDjango40Warning, stacklevel=2,
-            )
-            self.error_messages['invalid_list'] = self.error_messages['list']
 
     def to_python(self, value):
         if not value:
