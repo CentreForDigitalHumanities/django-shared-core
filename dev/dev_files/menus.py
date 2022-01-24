@@ -19,6 +19,21 @@ sub_menus.append(
         exact_url=True,
     )
 )
+sub_menus.append(
+    MenuItem(
+        'Tracked file list',
+        reverse('dev_files:tracked_list'),
+        exact_url=True,
+    )
+)
+
+sub_menus.append(
+    MenuItem(
+        'Custom tracked file list',
+        reverse('dev_files:customtracked_list'),
+        exact_url=True,
+    )
+)
 
 Menu.add_item("main", MenuItem('Files',
                                '#',

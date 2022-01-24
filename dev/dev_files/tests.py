@@ -1,5 +1,6 @@
 from django.core.files import File
 from django.test import TestCase
+from django.urls import reverse
 
 from uil.files import settings
 from uil.files.db.fields import _default_filename_generator
@@ -47,6 +48,12 @@ class FileTests(TestCase):
 
     def setUp(self) -> None:
         settings.STORAGE = 'dev_files.tests.FakeStorage'
+        self.url_pattern_single = self.single_cls._meta.get_field(
+            'required_file'
+        ).url_pattern
+        self.url_pattern_tracked = self.tracked_cls._meta.get_field(
+            'files'
+        ).url_pattern
 
     def tearDown(self):
         get_storage().clear()
@@ -731,7 +738,45 @@ class FileTests(TestCase):
         self.single_cls._meta.get_field('required_file').filename_generator = \
             _default_filename_generator
 
+    def test_single_url_generation(self):
+        obj = self.single_cls()
+        obj.required_file = File(open(self.file_cat, mode='rb'))
+        obj.save()
 
+        self.assertEqual(
+            reverse(self.url_pattern_single, args=[obj.required_file.uuid]),
+            obj.required_file.url,
+        )
+
+        obj._meta.get_field('required_file').url_pattern = None
+
+        self.assertEqual(
+            None,
+            obj.required_file.url,
+        )
+
+        obj._meta.get_field('required_file').url_pattern = self.url_pattern_single
+
+        obj.delete()
+
+    def test_tracked_url_generation(self):
+        obj = self.tracked_cls()
+        obj.save()
+        obj.files.add(File(open(self.file_cat, mode='rb')))
+
+        self.assertEqual(
+            reverse(self.url_pattern_tracked, args=[
+                obj.files.current_file.uuid
+            ]),
+            obj.files.current_file.url,
+        )
+
+        obj.delete()
+        # We do not test the None case, as changing it at runtime isn't actually
+        # supported. The single case works (although also not supported), so we
+        # can actually test it there. If it works there, it should work here.
+        # This test case should only test if setting url_pattern will actually
+        # propagate it to the linking model.
 
 
 class CustomFileTests(FileTests):
