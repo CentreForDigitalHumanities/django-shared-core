@@ -55,12 +55,15 @@ jobs:
         working-directory: dev
         run: |
           coverage run --source='..' manage.py test
-      - name: Create coverage XML
+      - name: Create coverage output files
         working-directory: dev
         run: |
-          coverage xml
+          mkdir cov
+          coverage html --directory cov/html
+          coverage xml -o cov/cobertura.coverage.xml
+          coverage report > cov/report.txt
       - name: Archive code coverage results
         uses: actions/upload-artifact@v2
         with:
           name: code-coverage-report
-          path: dev/coverage.xml
+          path: dev/cov/
