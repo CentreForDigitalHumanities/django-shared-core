@@ -490,6 +490,7 @@ button.language-button {
 
 /** Form styles **/
 
+/* Default Django Table Form */
 form table {
     margin-bottom: 2em;
     table-layout:fixed;
@@ -609,6 +610,38 @@ form .select2-container {
 }
 .oneline-form input {
     width: auto;
+}
+
+/* Custom Form Template */
+.custom-form-template {
+    width: 100%;
+    padding: 0 15px;
+}
+.custom-form-template .form-row {
+    width: 100%;
+}
+
+.custom-form-template .form-row:not(:last-of-type) {
+    margin-bottom: 15px;
+}
+
+.custom-form-template .form-row .field {
+    background: var(--uu-background-alternative-content);
+    padding: 30px
+}
+
+.custom-form-template .form-row .field input,
+.custom-form-template .form-row .field textarea,
+.custom-form-template .form-row .field select {
+    width: 100%;
+}
+
+.custom-form-template .form-row .form-text {
+    font-weight: 200;
+}
+
+.custom-form-template .form-row .help-text {
+    padding-left: 15px;
 }
 
 /* Link styles */

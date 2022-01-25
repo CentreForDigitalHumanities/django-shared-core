@@ -1,0 +1,30 @@
+<div class="custom-form-template">
+    {% if errors %}
+        <div class="form-errors">
+            {{ errors }}
+        </div>
+    {% endif %}
+
+    {% for field, errors in fields %}
+        <div
+            {% with classes=field.css_classes %}
+                class="form-row {% if classes %}{{ classes }}{% endif %}"
+            {% endwith %}
+        >
+            <div class="col-8 form-text field">
+                {% if field.label %}{{ field.label_tag }}{% endif %}
+                <div class="row-form-errors">
+                    {{ errors }}
+                </div>
+                {{ field }}
+            </div>
+            <div class="col-4 help-text">
+                {% if field.help_text %}
+                    {{ field.help_text }}
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+
+    {% for field in hidden_fields %}{{ field }}{% endfor %}
+</div>
