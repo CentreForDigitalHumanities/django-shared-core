@@ -1,4 +1,4 @@
-name: Django Tests
+name: Django CI
 
 on:
   push:
@@ -32,3 +32,35 @@ jobs:
       working-directory: dev
       run: |
         python manage.py test
+  coverage:
+    name: Coverage; Python 3.9, Django 4
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      - name: Install Dependencies for Django 4
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-django4.txt
+        working-directory: dev
+      - name: Install coverage.py
+        run: |
+          pip install coverage
+      - name: Run coverage
+        working-directory: dev
+        run: |
+          coverage run --source='..' manage.py test
+      - name: Create coverage XML
+        working-directory: dev
+        run: |
+          coverage xml
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-report
+          path: dev/coverage.xml
