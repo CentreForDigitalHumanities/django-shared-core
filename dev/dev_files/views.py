@@ -1,7 +1,7 @@
 from django.urls import reverse
 from django.views import generic
 
-from uil.files.views import BaseFieldLimitedFileView, BaseFileView
+from cdh.files.views import BaseFieldLimitedFileView, BaseFileView
 
 from .models import CustomFile, SingleFile, CustomSingleFile, TrackedCustomFile, \
     TrackedFile

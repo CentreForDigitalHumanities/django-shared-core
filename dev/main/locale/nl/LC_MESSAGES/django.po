@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-27 08:34+0000\n"
+"POT-Creation-Date: 2022-01-24 15:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,17 +30,21 @@ msgstr "General CSS"
 
 #: main/menus.py:20
 msgid "main:menu:styles:form"
-msgstr "Form CSS"
+msgstr "Standaard Form CSS"
 
 #: main/menus.py:25
+msgid "main:menu:styles:custom_form"
+msgstr "Custom Template Form CSS"
+
+#: main/menus.py:30
 msgid "main:menu:styles:jquery_form"
 msgstr "jQuery UI Form CSS"
 
-#: main/menus.py:32
+#: main/menus.py:37
 msgid "main:footer:login"
 msgstr "Log in"
 
-#: main/menus.py:37
+#: main/menus.py:42
 msgid "main:footer:logout"
 msgstr "Log uit"
 

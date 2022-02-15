@@ -8,7 +8,7 @@ __pycache__/
 
 ### Project-specific ###
 media/
-uil_files/
+cdh_files/
 
 ### Virtual environments ###
 venv

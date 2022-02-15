@@ -15,7 +15,7 @@ def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dev_project.settings')
     # Include our root in the path, otherwise we won't be able to load our
     # actual libraries
-    sys.path.append(get_root_dir())
+    sys.path.insert(1, get_root_dir())
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

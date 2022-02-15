@@ -59,11 +59,11 @@ INSTALLED_APPS = [
     # Django model translation
     'modeltranslation',
 
-    # UiL Core libraries
-    'uil.core',
-    'uil.rest_client',
-    'uil.vue',
-    'uil.files',
+    # CDH Core libraries
+    'cdh.core',
+    'cdh.rest_client',
+    'cdh.vue',
+    'cdh.files',
 
     # Local apps
     'main',
@@ -77,7 +77,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'uil.core.middleware.ThreadLocalUserMiddleware',
+    'cdh.core.middleware.ThreadLocalUserMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'csp.middleware.CSPMiddleware',
@@ -98,7 +98,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'uil.core.context_processors.acceptation',
+                'cdh.core.context_processors.acceptation',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',

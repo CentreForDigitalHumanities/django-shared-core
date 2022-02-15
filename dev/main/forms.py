@@ -1,12 +1,14 @@
 from django import forms
-from uil.core import fields as core_fields
-from uil.files.forms import FileField, TrackedFileField
+from django.utils.safestring import mark_safe
+
+from cdh.core import fields as core_fields
+from cdh.files.forms import FileField, TrackedFileField
 
 
 class FormStylesForm(forms.Form):
     text = forms.CharField()
 
-    textarea = forms.ChoiceField(
+    textarea = forms.CharField(
         widget=forms.Textarea
     )
 
@@ -107,6 +109,34 @@ class FormStylesForm(forms.Form):
     UUID = forms.UUIDField()
 
     password = core_fields.PasswordField()
+
+
+class CustomTemplateFormStylesForm(forms.Form):
+    template_name = 'cdh.core/form_template.html'
+
+    text = forms.CharField(
+        label="Onderzoeksprojectnaam",
+        help_text="Deze naam wordt ook gebruikt als naam voor deze verwerking",
+    )
+
+    supervisor = forms.CharField(
+        label="Eindverantwoordelijke",
+    )
+
+    date_start = core_fields.DateField(
+        label="Begin Datum",
+        help_text="Op deze datum wordt de verwerking actief in het register "
+                  "van verwerkingen"
+    )
+
+    date_end = core_fields.DateField(
+        label="Eind Datum",
+        help_text=mark_safe("Dit is de datum waarop de resultaten worden "
+                            "gepubliceerd."
+                            "<br/>"
+                            "Op deze datum gaat de archiveringstermijn van de "
+                            "onderzoeksdata in")
+    )
 
 
 class JqueryUIFormStylesForm(forms.Form):

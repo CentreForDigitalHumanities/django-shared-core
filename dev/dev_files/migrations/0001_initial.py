@@ -3,7 +3,7 @@
 from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
-import uil.files.db.fields
+import cdh.files.db.fields
 import uuid
 
 
@@ -36,30 +36,38 @@ class Migration(migrations.Migration):
             name='TrackedFile',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('files', uil.files.db.fields.TrackedFileField(to='files.File')),
+                ('files', cdh.files.db.fields.TrackedFileField(
+                    to='files.File')),
             ],
         ),
         migrations.CreateModel(
             name='TrackedCustomFile',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('files', uil.files.db.fields.TrackedFileField(to='dev_files.CustomFile')),
+                ('files', cdh.files.db.fields.TrackedFileField(
+                    to='dev_files.CustomFile')),
             ],
         ),
         migrations.CreateModel(
             name='SingleFile',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('nullable_file', uil.files.db.fields.FileField(blank=True, filename_generator=uil.files.db.fields._default_filename_generator, null=True, on_delete=django.db.models.deletion.CASCADE, to='files.file')),
-                ('required_file', uil.files.db.fields.FileField(filename_generator=uil.files.db.fields._default_filename_generator, on_delete=django.db.models.deletion.CASCADE, to='files.file')),
+                ('nullable_file', cdh.files.db.fields.FileField(blank=True,
+                                                              filename_generator=cdh.files.db.fields._default_filename_generator, null=True, on_delete=django.db.models.deletion.CASCADE, to='files.file')),
+                ('required_file', cdh.files.db.fields.FileField(
+                    filename_generator=cdh.files.db.fields
+                        ._default_filename_generator, on_delete=django.db.models.deletion.CASCADE, to='files.file')),
             ],
         ),
         migrations.CreateModel(
             name='CustomSingleFile',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('nullable_file', uil.files.db.fields.FileField(blank=True, filename_generator=uil.files.db.fields._default_filename_generator, null=True, on_delete=django.db.models.deletion.CASCADE, to='dev_files.customfile')),
-                ('required_file', uil.files.db.fields.FileField(filename_generator=uil.files.db.fields._default_filename_generator, on_delete=django.db.models.deletion.CASCADE, to='dev_files.customfile')),
+                ('nullable_file', cdh.files.db.fields.FileField(blank=True,
+                                                                filename_generator=cdh.files.db.fields._default_filename_generator, null=True, on_delete=django.db.models.deletion.CASCADE, to='dev_files.customfile')),
+                ('required_file', cdh.files.db.fields.FileField(
+                    filename_generator=cdh.files.db.fields
+                        ._default_filename_generator, on_delete=django.db.models.deletion.CASCADE, to='dev_files.customfile')),
             ],
         ),
     ]

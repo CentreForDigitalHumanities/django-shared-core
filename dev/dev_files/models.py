@@ -1,6 +1,6 @@
 from django.db import models
 
-from uil.files.db import fields, BaseFile
+from cdh.files.db import fields, BaseFile
 
 
 # Create your models here.

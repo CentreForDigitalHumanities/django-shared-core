@@ -22,6 +22,11 @@ Menu.add_item("main", MenuItem(_('main:menu:styles'),
                                        exact_url=True,
                                    ),
                                    MenuItem(
+                                       _('main:menu:styles:custom_form'),
+                                       reverse('main:custom_styles_form'),
+                                       exact_url=True,
+                                   ),
+                                   MenuItem(
                                        _('main:menu:styles:jquery_form'),
                                        reverse('main:styles_form_jquery'),
                                        exact_url=True,

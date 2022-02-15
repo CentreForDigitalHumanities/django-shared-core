@@ -5,6 +5,8 @@ from dev_files.models import SingleFile, CustomSingleFile, TrackedCustomFile, \
 
 
 class SingleFileForm(forms.ModelForm):
+    template_name = 'cdh.core/form_template.html'
+
     class Meta:
         model = SingleFile
         fields = ['required_file', 'nullable_file']
@@ -17,6 +19,8 @@ class CustomSingleFileForm(forms.ModelForm):
 
 
 class TrackedFileForm(forms.ModelForm):
+    template_name = 'cdh.core/form_template.html'
+    
     class Meta:
         model = TrackedFile
         fields = ['files', ]

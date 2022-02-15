@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+
+{% block header_title %}
+    CSS Test form - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <div class="uu-inner-container">
+        <div class="col-8">
+            <h1>Verwerkingsvraag</h1>
+            <p>Algemene onderzoeksprojectinformatie</p>
+        </div>
+    </div>
+    <form method="post" enctype="multipart/form-data">
+        <div class="uu-inner-container">
+                {% csrf_token %}
+                {{ form }}
+        </div>
+        <div class="uu-inner-container">
+            <div class="col-8">
+                <hr>
+                <input type="submit" value="Volgende stap >" >
+            </div>
+        </div>
+    </form>
+    <br/>
+{% endblock %}

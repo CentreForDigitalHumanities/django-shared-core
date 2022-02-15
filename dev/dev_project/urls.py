@@ -29,7 +29,7 @@ urlpatterns = [
     path('files/', include('dev_files.urls')),
 
     path('impersonate/', include('impersonate.urls')),
-    path('uilcore/', include('uil.core.urls')),
+    path('cdhcore/', include('cdh.core.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT, show_indexes=True)
 

@@ -1,7 +1,8 @@
 from django.views import generic
 from django.contrib.messages import debug, info, success, warning, error
 
-from .forms import FormStylesForm, JqueryUIFormStylesForm
+from .forms import CustomTemplateFormStylesForm, FormStylesForm, \
+    JqueryUIFormStylesForm
 
 
 class HomeView(generic.TemplateView):
@@ -38,6 +39,11 @@ class StylesView(generic.TemplateView):
 class FormsStylesView(generic.FormView):
     form_class = FormStylesForm
     template_name = 'main/styles_form.html'
+
+
+class CustomTemplateFormsStylesView(generic.FormView):
+    form_class = CustomTemplateFormStylesForm
+    template_name = 'main/custom_styles_form.html'
 
 
 class JqueryUIFormStylesView(generic.FormView):

@@ -2,9 +2,9 @@ from django.core.files import File
 from django.test import TestCase
 from django.urls import reverse
 
-from uil.files import settings
-from uil.files.db.fields import _default_filename_generator
-from uil.files.utils import get_storage
+from cdh.files import settings
+from cdh.files.db.fields import _default_filename_generator
+from cdh.files.utils import get_storage
 
 from .models import CustomSingleFile, SingleFile, TrackedCustomFile, TrackedFile
 
