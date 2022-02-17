@@ -81,7 +81,8 @@ def send_template_email(
         plain_body,
         from_email,
         recipient_list,
-        html_message=html_body
+        html_message=html_body,
+        fail_silently=settings.DEBUG,
     )
 
 
