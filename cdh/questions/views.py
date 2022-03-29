@@ -133,3 +133,30 @@ class QuestionCreateView(QuestionView,
         kwargs = super().get_form_kwargs()
         kwargs.update({'prereg': self.get_prereg()})
         return kwargs
+
+
+class QuestionDeleteView(QuestionView,
+                         generic.edit.DeleteView):
+
+    template_name = "questions/question_detail.html"
+
+
+class QuestionCreateView(QuestionView,
+                         generic.edit.CreateView,
+                         ):
+
+
+    pk_url_kwarg = 'question_pk'
+    template_name = 'questions/question_detail.html'
+
+    def post(self, request, *args, **kwargs):
+
+        self.get_question()
+        return super().post(request, *args, **kwargs)
+
+
+    def get_form_kwargs(self):
+
+        kwargs = super().get_form_kwargs()
+        #kwargs.update({'prereg': self.get_prereg()})
+        return kwargs
