@@ -4,21 +4,21 @@
 #
 #    pip-compile requirements-django3.in
 #
-asgiref==3.5.0
+asgiref==3.5.1
     # via django
 certifi==2021.10.8
     # via requests
 cffi==1.15.0
     # via cryptography
-charset-normalizer==2.0.10
+charset-normalizer==2.0.12
     # via requests
-click==8.0.3
+click==8.1.3
     # via pip-tools
 closure==20191111
     # via -r requirements-django3.in
-cryptography==36.0.1
+cryptography==37.0.2
     # via -r requirements-django3.in
-django==3.2.11
+django==3.2.13
     # via
     #   -r requirements-django3.in
     #   django-braces
@@ -32,13 +32,13 @@ django-braces==1.15.0
     # via -r requirements-django3.in
 django-csp==3.7
     # via -r requirements-django3.in
-django-debug-toolbar==3.2.4
+django-debug-toolbar==3.4.0
     # via -r requirements-django3.in
 django-extensions==3.1.5
     # via -r requirements-django3.in
-django-impersonate==1.7.3
+django-impersonate==1.8.2
     # via -r requirements-django3.in
-django-modeltranslation==0.17.3
+django-modeltranslation==0.17.7
     # via -r requirements-django3.in
 django-simple-menu==1.2.1
     # via -r requirements-django3.in
@@ -52,7 +52,7 @@ mysqlclient==2.1.0
     # via -r requirements-django3.in
 pep517==0.12.0
     # via pip-tools
-pip-tools==6.4.0
+pip-tools==6.6.0
     # via -r requirements-django3.in
 ply==3.11
     # via lesscpy
@@ -60,13 +60,13 @@ pscript==0.7.7
     # via vbuild
 pycparser==2.21
     # via cffi
-pyjwt==2.3.0
+pyjwt==2.4.0
     # via -r requirements-django3.in
-pyscss==1.3.7
+pyscss==1.4.0
     # via -r requirements-django3.in
-python-magic==0.4.24
+python-magic==0.4.25
     # via -r requirements-django3.in
-pytz==2021.3
+pytz==2022.1
     # via
     #   django
     #   djangorestframework
@@ -81,9 +81,9 @@ sqlparse==0.4.2
     # via
     #   django
     #   django-debug-toolbar
-tomli==2.0.0
+tomli==2.0.1
     # via pep517
-urllib3==1.26.8
+urllib3==1.26.9
     # via requests
 vbuild==0.8.1
     # via -r requirements-django3.in
