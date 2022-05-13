@@ -3,7 +3,7 @@ import importlib
 from django.core.exceptions import ImproperlyConfigured
 from django.core.files.storage import Storage
 
-import uil.files.settings as settings # NoQA, absolute import somehow needed
+import cdh.files.settings as settings # NoQA, absolute import somehow needed
 
 
 def get_storage() -> Storage:
