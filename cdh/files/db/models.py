@@ -3,7 +3,7 @@ import uuid
 from django.conf import settings
 from django.db import models
 
-from uil.files.db.proxy_file import ProxyFile
+from cdh.files.db.proxy_file import ProxyFile
 
 
 class File(models.Model):

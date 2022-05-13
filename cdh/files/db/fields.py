@@ -66,7 +66,7 @@ class FileField(ForeignObject):
 
         kwargs['rel'] = self.rel_class(
             self, to, to_field,
-            related_name='+',  # No backward relations in uil.files.File pls
+            related_name='+',  # No backward relations in cdh.files.File pls
             related_query_name=None,
             limit_choices_to=limit_choices_to,
             parent_link=parent_link,

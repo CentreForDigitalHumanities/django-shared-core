@@ -7,7 +7,7 @@ class SimpleFileInput(FileInput):
     clear_checkbox_label = _('Clear')
     initial_text = _('Currently')
     input_text = _('Change')
-    template_name = 'uil.files/widgets/file.html'
+    template_name = 'cdh.files/widgets/file.html'
 
     CHANGED = '1'
     NOT_CHANGED = '0'
