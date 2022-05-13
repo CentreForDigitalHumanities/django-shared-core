@@ -1,0 +1,162 @@
+{% load static %}
+{% load i18n %}
+{% load include_if_exists %}
+{% get_current_language as LANGUAGE_CODE %}
+{% load menu %}
+{% load file_loading %}
+{% generate_menu %}
+{% load_file_vars %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block header_title %}
+            {% include_if_exists 'base/site_title.html' %}
+        {% endblock %}
+    </title>
+
+    <!--
+                                _.---.
+                      |\---/|  / ) ca|
+          ------------;     |-/ /|foo|---
+                      )     (' / `---'
+          ===========(       ,'==========
+          ||   _     |      |
+          || o/ )    |      | o
+          || ( (    /       ;
+          ||  \ `._/       /
+          ||   `._        /|
+          ||      |\    _/||
+        __||_____.' )  |__||____________
+         ________\  |  |_________________
+                  \ \  `-.
+                   `-`---'  hjw
+Miauw!
+    -->
+
+    <link href="{% static 'cdh.core/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'cdh.core/css/bootstrap-grid.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'cdh.core/css/bootstrap-multiselect.css' %}" rel="stylesheet" />
+    <link href="{% static 'cdh.core/css/fonts.css' %}" rel="stylesheet" />
+    <link href="{% static 'cdh.core/css/datatables.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'cdh.core/css/select2.css' %}" rel="stylesheet" />
+    <link href="{% static 'cdh.core/css/qtip.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'cdh.core/css/jquery.ui.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'cdh.core/css/jquery.ui.structure.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'cdh.core/css/jquery.ui.uu-theme.css' %}" rel="stylesheet" />
+    <link href="{% static 'cdh.core/css/uu-style.css' %}" rel="stylesheet" />
+    <script src="{% static 'cdh.core/js/jquery-3.3.1.min.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'cdh.core/js/jquery.ui.min.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'cdh.core/js/popper.min.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'cdh.core/js/bootstrap.min.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'cdh.core/js/bootstrap-multiselect.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'cdh.core/js/datatables.min.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'cdh.core/js/select2.min.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'cdh.core/js/qtip.min.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'cdh.core/js/common.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% url 'cdh.core:js_urls' %}" nonce="{{ request.csp_nonce }}"></script>
+
+    <link rel="shortcut icon" type="image/png" href="{% static 'cdh.core/images/favicon.ico' %}"/>
+
+    {% include_if_exists 'base/site_html_head.html' %}
+
+    {% block html_head %}
+    {% endblock %}
+
+    {% for css_file in cdh_core_css_files %}
+    <link href="{{ css_file }}" rel="stylesheet" />
+    {% endfor %}
+    {% for js_file in cdh_core_js_files %}
+    <script src="{{ js_file }}" nonce="{{ request.csp_nonce }}"></script>
+    {% endfor %}
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div id="container">
+        <div class="container-fluid uu-container hide-xs toppanel">
+            <div class="uu-inner-container ">
+                <div class="col-xl-2 col-md-2 col-12">
+                    <div class="uu-logo">
+                        {% with 'cdh.core/images/logo-header-'|add:LANGUAGE_CODE|add:'.svg' as header_image %}
+                            <a href="https://www.uu.nl" target="_blank">
+                                <img src="{% static header_image %}" alt="{% trans 'cdh.core:uu' %}" title="{% trans 'cdh.core:uu' %}" />
+                            </a>
+                        {% endwith %}
+                    </div>
+                </div>
+                <div class="col-8 toppanel-text">
+                    {% block toppanel-text %}
+                        {% if acceptation %}
+                            <span class="uu-red-text">
+                                <span class="icon-warning">⚠</span>
+                                Acceptation server
+                                <span class="icon-warning">⚠</span>
+                            </span>
+                        {% elif debug %}
+                            <span class="uu-red-text">
+                                <span class="icon-warning">⚠</span>
+                                Local development server
+                                <span class="icon-warning">⚠</span>
+                            </span>
+                        {% endif %}
+                    {% endblock %}
+                </div>
+                <div class="col-1">
+                    {# Filler; logo is size 2, but language is size 1; this filler makes sure the toppanel-text can be centered nicely #}
+                </div>
+                {% include 'base/language_box.html' %}
+            </div>
+        </div>
+
+        <div class="container-fluid uu-container hide-xs titlepanel">
+            <div class="uu-inner-container">
+                <div class="col-7 titletext">
+                    <a href="//{{ request.META.HTTP_HOST }}">
+                        {% include_if_exists 'base/site_header.html' %}
+                    </a>
+                </div>
+                <div class="col-5 loginheader">
+                    {% include_if_exists 'base/login_header.html' %}
+                </div>
+            </div>
+        </div>
+
+        <nav class="navbar navbar-expand-lg navbar-expand-md uu-navigation-bar">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <span class="uu-logo show-xs">
+                <img src="{% static 'cdh.core/images/logo-header-nl.svg' %}" alt="{% trans 'cdh.core:uu' %}" title="{% trans 'cdh.core:uu' %}" />
+            </span>
+            {% include 'base/mainmenu.html' %}
+        </nav>
+        <div class="container-fluid uu-container">
+            {% if messages %}
+                <div class="uu-inner-container">
+                    <div class="col-12">
+                        <div id="messages">
+                            {% for message in messages %}
+                                <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% block content %}
+            {% endblock %}
+        </div>
+        <footer class="container-fluid uu-container">
+            <div class="uu-inner-container">
+                <div class="col-10">
+                    {% with 'cdh.core/images/logo-footer-'|add:LANGUAGE_CODE|add:'.svg' as header_image %}
+                        <img src="{% static header_image %}" alt="{% trans 'cdh.core:uu' %}" title="{% trans 'cdh.core:uu' %}" />
+                    {% endwith %}
+                </div>
+                {% include 'base/footermenu.html' %}
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

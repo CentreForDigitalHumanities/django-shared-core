@@ -14,9 +14,9 @@ def setup_environment():
         INSTALLED_APPS=(
             'django.contrib.contenttypes',
             'django.contrib.auth',
-            'uil.core',
-            'uil.vue',
-            'uil.files',
+            'cdh.core',
+            'cdh.vue',
+            'cdh.files',
         ),
     )
 

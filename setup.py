@@ -23,6 +23,7 @@ setuptools.setup(
         'requests',
         'PyJWT',
         'djangorestframework',
+        'python-magic',
         'django-filter',
     ],
     classifiers=[

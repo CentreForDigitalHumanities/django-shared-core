@@ -12,9 +12,9 @@ db.sqlite3
 *.mo
 
 ### Virtual environments ###
-venv
-env
-.env
+venv*
+env*
+.env*
 
 ### IDE ###
 .idea

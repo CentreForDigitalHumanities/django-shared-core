@@ -1,0 +1,16 @@
+{% extends "base/base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            <h2>
+                {% trans 'main:error:403:title' %}
+            </h2>
+            <p>
+                {% trans 'main:error:403:text' %}
+            </p>
+        </div>
+    </div>
+{% endblock %}
