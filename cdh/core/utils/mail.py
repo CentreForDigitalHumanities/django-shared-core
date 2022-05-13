@@ -1,5 +1,3 @@
-import urllib.parse as parse
-from functools import lru_cache
 from typing import List, Tuple
 
 from django.conf import settings
@@ -81,7 +79,8 @@ def send_template_email(
         plain_body,
         from_email,
         recipient_list,
-        html_message=html_body
+        html_message=html_body,
+        fail_silently=settings.DEBUG,
     )
 
 
