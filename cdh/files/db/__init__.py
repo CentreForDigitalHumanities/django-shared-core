@@ -1,2 +1,2 @@
-from .fields import FileField
-from .models import File
+from .fields import FileField, TrackedFileField
+from .models import File, BaseFile

@@ -1,52 +1,24 @@
 {% load static %}
 {% with value=widget.value %}
-<style>
-    .uil-files-select-container {
-        width: 100%;
-        {#border: 1px #ccc solid;#}
-        {#border-radius: 5px;#}
-        {#background: #fff;#}
-        {#padding: 5px;#}
-        padding: 5px 10px 5px 0;
-    }
-
-    .uil-files-select-container .uil-files-select input[type=file] {
-        /** Hide in a way that screenreaders don't get confused! **/
-        position: absolute;
-        opacity: 0;
-        width: 0.1px;
-        height: 0.1px;
-    }
-
-    .uil-files-select-container .uil-files-select label,
-    .uil-files-select-container .uil-files-remove {
-        cursor: pointer;
-        color: #094D8E;
-        font-weight: bold;
-        float: right;
-    }
-
-    .uil-files-select-container  .uil-files-remove {
-        display: none;
-    }
-
-</style>
-<script src="{% static 'uil.files/widgets.js' %}"></script>
-<div class="uil-files-select-container" data-name="{{ widget.name }}">
-    <input type="hidden" name="{{ widget.name }}_id" value="{{ value.uuid }}">
-    <input type="hidden" name="{{ widget.name }}_filename" value="{{ value.filename }}">
+<div
+        class="uil-files-select-container"
+        data-name="{{ widget.name }}"
+        data-filename="{{ value.name|default:"" }}"
+        data-url="{{ value.url|default:"" }}"
+>
+    <input type="hidden" name="{{ widget.name }}_id" value="{{ value.uuid|default:"" }}">
     <input type="hidden" name="{{ widget.name }}_changed" value="0">
-    <span class="uil-files-filename">
+    <div class="uil-files-filename">
         {{ widget.strings.empty_file }}
-    </span>
-    <span class="uil-files-remove">
+    </div>
+    <div class="uil-files-remove">
         {{ widget.strings.remove }}
-    </span>
-    <span class="uil-files-select">
+    </div>
+    <div class="uil-files-select">
         <input type="file" name="{{ widget.name }}">
         <label for="{{ widget.name }}">
             {{ widget.strings.select_file }}
         </label>
-    </span>
+    </div>
 </div>
 {% endwith %}

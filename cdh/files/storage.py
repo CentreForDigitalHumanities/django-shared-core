@@ -8,7 +8,7 @@ from cdh.files import settings
 
 
 @deconstructible
-class UiLFileStorage(FileSystemStorage):
+class CDHFileStorage(FileSystemStorage):
     """
     Standard filesystem storage
     """
@@ -35,7 +35,7 @@ class UiLFileStorage(FileSystemStorage):
 
 class DefaultStorage(LazyObject):
     def _setup(self):
-        self._wrapped = UiLFileStorage()
+        self._wrapped = CDHFileStorage()
 
 
 default_storage = DefaultStorage()
