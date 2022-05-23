@@ -1,4 +1,4 @@
-from cdh.rest_client.logging import registry_logger as logger
+from cdh.rest.client.logging import registry_logger as logger
 
 
 class _RestRegistry:
