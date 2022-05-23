@@ -1,6 +1,6 @@
 import jwt
 
-import cdh.rest_server.settings as settings
+import cdh.rest.server.settings as settings
 from .token_algorithms import Algorithms
 
 

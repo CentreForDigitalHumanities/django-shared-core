@@ -4,7 +4,7 @@ from requests.exceptions import ConnectionError
 from ._base import BaseClient, host_unreachable
 from ..registry import registry
 from ..operations import Operations
-from ..exceptions import OperationNotEnabled
+from cdh.rest.exceptions import OperationNotEnabled
 from ..logging import transaction_logger as logger
 
 

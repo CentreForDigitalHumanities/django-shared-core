@@ -10,11 +10,11 @@ from django.core import exceptions, validators
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 
-from cdh.rest_client.collections.collections import ResourceCollection, \
+from cdh.rest.client.collections.collections import ResourceCollection, \
     _TypeCollection
-from cdh.rest_client.resources import Resource
-from cdh.rest_client.registry import registry
-from cdh.rest_client.logging import field_logger as logger
+from cdh.rest.client.resources import Resource
+from cdh.rest.client.registry import registry
+from cdh.rest.client.logging import field_logger as logger
 
 
 @total_ordering

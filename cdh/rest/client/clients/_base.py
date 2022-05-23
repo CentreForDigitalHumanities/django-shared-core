@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import gettext as _
 
-from ..exceptions import *
+from cdh.rest.exceptions import *
 from ..logging import transaction_logger as logger
 from cdh.core.middleware import get_current_authenticated_user, \
     get_current_request, \

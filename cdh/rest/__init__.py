@@ -18,3 +18,5 @@ and fields are JSON fields.
 For implementation details, see the :class:Resource and :class:Collection
 classes.
 """
+import cdh.rest.client as client
+import cdh.rest.exceptions as exceptions
