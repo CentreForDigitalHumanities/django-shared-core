@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-07 08:09+0000\n"
+"POT-Creation-Date: 2022-05-23 17:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,15 +18,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: cdh/core/templates/base/base.html:35 cdh/core/templates/base/base.html:81
-#: cdh/core/templates/base/base.html:93
+#: cdh/core/templates/base/base.html:84 cdh/core/templates/base/base.html:131
+#: cdh/core/templates/base/base.html:154
 msgid "cdh.core:uu"
 msgstr "Universiteit Utrecht"
 
-#: cdh/core/templates/base/base.html:49
+#: cdh/core/templates/base/language_box.html:10
 msgid "lang:en"
 msgstr "English"
 
-#: cdh/core/templates/base/base.html:54
+#: cdh/core/templates/base/language_box.html:15
 msgid "lang:nl"
 msgstr "Nederlands"

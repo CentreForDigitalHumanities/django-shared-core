@@ -15,9 +15,22 @@ def setup_environment():
             'django.contrib.contenttypes',
             'django.contrib.auth',
             'cdh.core',
+            'cdh.rest',
             'cdh.vue',
             'cdh.files',
         ),
+        LANGUAGE_CODE='nl',
+        LANGUAGES=(
+            ('nl', 'lang:nl'),
+            ('en', 'lang:en'),
+        ),
+        # LOCALE_PATHS=(
+        #     'cdh/core/locale',
+        #     'cdh/rest/locale',
+        #     'cdh/vue/locale',
+        #     'cdh/files/locale',
+        # )
+
     )
 
     django.setup()

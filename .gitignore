@@ -8,9 +8,6 @@ __pycache__/
 ### Project-specific ###
 db.sqlite3
 
-## Django ##
-*.mo
-
 ### Virtual environments ###
 venv*
 env*

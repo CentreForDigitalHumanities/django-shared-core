@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-24 15:15+0000\n"
+"POT-Creation-Date: 2022-05-23 17:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,123 +16,123 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: main/menus.py:5
+#: dev/main/menus.py:5
 msgid "main:menu:home"
 msgstr ""
 
-#: main/menus.py:10
+#: dev/main/menus.py:10
 msgid "main:menu:styles"
 msgstr "CSS test pages"
 
-#: main/menus.py:15
+#: dev/main/menus.py:15
 msgid "main:menu:styles:base"
 msgstr "General CSS"
 
-#: main/menus.py:20
+#: dev/main/menus.py:20
 msgid "main:menu:styles:form"
 msgstr "Default Form CSS"
 
-#: main/menus.py:25
+#: dev/main/menus.py:25
 msgid "main:menu:styles:custom_form"
 msgstr "Custom Template Form CSS"
 
-#: main/menus.py:30
+#: dev/main/menus.py:30
 msgid "main:menu:styles:jquery_form"
 msgstr "jQuery UI Form CSS"
 
-#: main/menus.py:37
+#: dev/main/menus.py:37
 msgid "main:footer:login"
 msgstr "Log in"
 
-#: main/menus.py:42
+#: dev/main/menus.py:42
 msgid "main:footer:logout"
 msgstr "Log out"
 
-#: main/templates/base/login_header.html:6
+#: dev/main/templates/base/login_header.html:6
 msgid "site:header:login"
 msgstr "Welcome {}!"
 
-#: main/templates/base/login_header.html:7
+#: dev/main/templates/base/login_header.html:7
 msgid "main:globals:logout"
 msgstr "Logout"
 
-#: main/templates/base/login_header.html:10
+#: dev/main/templates/base/login_header.html:10
 msgid "main:globals:login"
 msgstr "Log in"
 
 #. Translators: This is the title that will end up in the header (in blue)
-#: main/templates/base/site_header.html:4
+#: dev/main/templates/base/site_header.html:4
 msgid "site:header:title"
 msgstr "UiL shared library dev-project"
 
 #. Translators: This is the title that will end up in the tab of the browser
-#: main/templates/base/site_title.html:5
+#: dev/main/templates/base/site_title.html:5
 msgid "site:name"
 msgstr "USL dev project"
 
-#: main/templates/error/400.html:9
+#: dev/main/templates/error/400.html:9
 msgid "main:error:400:title"
 msgstr "Bad Request"
 
-#: main/templates/error/400.html:12
+#: dev/main/templates/error/400.html:12
 msgid "main:error:400:text"
 msgstr "The server encountered an error processing your request."
 
-#: main/templates/error/403.html:9
+#: dev/main/templates/error/403.html:9
 msgid "main:error:403:title"
 msgstr "Not authorized"
 
-#: main/templates/error/403.html:12
+#: dev/main/templates/error/403.html:12
 msgid "main:error:403:text"
 msgstr ""
 "It looks like you are trying to access a page you are not allowed to view."
 
-#: main/templates/error/404.html:9
+#: dev/main/templates/error/404.html:9
 msgid "main:error:404:title"
 msgstr "Page not found"
 
-#: main/templates/error/404.html:12
+#: dev/main/templates/error/404.html:12
 msgid "main:error:404:text"
 msgstr ""
 "We can't seem to find the page you're looking for. The link you clicked may "
 "be broken or the page may have been moved."
 
-#: main/templates/error/500.html:9
+#: dev/main/templates/error/500.html:9
 msgid "main:error:500:title"
 msgstr "Something went wrong"
 
-#: main/templates/error/500.html:12
+#: dev/main/templates/error/500.html:12
 msgid "main:error:500:text"
 msgstr "Sorry! It looks like we may have made a mistake!"
 
-#: main/templates/registration/logged_out.html:9
+#: dev/main/templates/registration/logged_out.html:9
 msgid "main:logout:title"
 msgstr ""
 
-#: main/templates/registration/logged_out.html:12
+#: dev/main/templates/registration/logged_out.html:12
 msgid "main:logout:text"
 msgstr ""
 
-#: main/templates/registration/login.html:9
+#: dev/main/templates/registration/login.html:9
 msgid "main:login:title"
 msgstr ""
 
-#: main/templates/registration/login.html:12
+#: dev/main/templates/registration/login.html:12
 msgid "main:login:text"
 msgstr ""
 
-#: main/templates/registration/login.html:16
+#: dev/main/templates/registration/login.html:16
 msgid "main:login:error"
 msgstr ""
 
-#: main/templates/registration/login.html:20
+#: dev/main/templates/registration/login.html:20
 msgid "main:login:username"
 msgstr ""
 
-#: main/templates/registration/login.html:21
+#: dev/main/templates/registration/login.html:21
 msgid "main:login:password"
 msgstr ""
 
-#: main/templates/registration/login.html:22
+#: dev/main/templates/registration/login.html:22
 msgid "main:login:submit"
 msgstr ""
