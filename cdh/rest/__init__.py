@@ -20,3 +20,4 @@ classes.
 """
 import cdh.rest.client as client
 import cdh.rest.exceptions as exceptions
+import cdh.rest.server as server
