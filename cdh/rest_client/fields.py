@@ -1,5 +1,6 @@
 import collections
 from abc import ABC, abstractmethod
+from collections.abc import Iterator
 from datetime import date, datetime, time
 from functools import total_ordering
 from typing import Union
@@ -58,7 +59,7 @@ class _BaseField(ABC):
 
         self.default = default
 
-        if isinstance(choices, collections.Iterator):
+        if isinstance(choices, Iterator):
             choices = list(choices)
         self.choices = choices or []
         self.null = null
