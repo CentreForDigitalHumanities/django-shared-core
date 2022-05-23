@@ -11,7 +11,7 @@ setuptools.setup(
     description="A shared code library for DH-IT & UiL OTS Django projects",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/UiL-OTS-labs/django-shared-core",
+    url="https://github.com/DH-IT-Portal-Development/django-shared-core",
     packages=setuptools.find_packages(),
     license_files=('LICENSE',),
     install_requires=[
