@@ -1,10 +1,10 @@
-# Django CDH Core library
+# Django DH-IT Core library
 
-These Django apps implement shared code for DH-IT Django projects.
+These Django apps implement shared code for DH-IT Django projects. Developed in collaboration with the [UiL OTS Labs](https://github.com/UiL-OTS-labs)
 
 ## Currently targeting:
 - Python 3.9
-- Python 3.10
+- Python 3.10 (experimental)
 - Django 3.x
 - Django 4.0 (experimental)
 
