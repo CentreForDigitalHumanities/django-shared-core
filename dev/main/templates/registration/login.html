@@ -1,0 +1,27 @@
+{% extends "base/base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            <h2>
+                {% trans "main:login:title" %}
+            </h2>
+            <p>
+                {% trans "main:login:text" %}
+            </p>
+            {% if form.errors %}
+                <p class="form-errors">
+                    {% trans "main:login:error" %}
+                </p>
+            {% endif %}
+            <form class="" method="post" action="{% url 'main:login' %}">{% csrf_token %}
+                <input id="id_username" maxlength="254" name="username" type="text" placeholder="{% trans 'main:login:username' %}"><br/>
+                <input class="mt-1" id="id_password" name="password" type="password" placeholder="{% trans 'main:login:password' %}"><br/>
+                <input class="mt-3 mb-3" type="submit" value="{% trans 'main:login:submit' %}" />
+                <input type="hidden" name="next" value="{{ next }}" />
+            </form>
+        </div>
+    </div>
+{% endblock %}

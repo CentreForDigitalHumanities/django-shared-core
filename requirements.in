@@ -1,3 +1,5 @@
+Django>=3.0,<3.3
+cryptography
 pyscss
 lesscpy
 closure
@@ -5,3 +7,4 @@ vbuild
 requests
 PyJWT
 djangorestframework
+python-magic

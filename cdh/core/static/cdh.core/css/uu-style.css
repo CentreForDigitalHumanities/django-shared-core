@@ -1,0 +1,844 @@
+/* UU  */
+
+
+:root {
+    /* Main colors */
+    /* https://www.uu.nl/en/organisation/corporate-identity/brand-policy/colour */
+    --uu-red: #C00A35;
+    --uu-yellow: #FFCD00;
+    --uu-black: #000;
+    --uu-white: #fff;
+    /* Additional color palette */
+    --uu-cream: #FFE6AB;
+    --uu-orange: #F3965E;
+    --uu-burgandy: #AA1555;
+    --uu-brown: #6E3B23;
+    --uu-green: #24A793; /* Interesting definition of Green, brand-team... */
+    --uu-blue: #5287C6;
+    --uu-mid-blue: #094D8E; /* Own addition, somewhere in between the two official colors */
+    --uu-dark-blue: #001240;
+    --uu-purple: #5B2182;
+
+    /* structural style */
+    --uu-border-color-light: #efefef;
+    --uu-border-color-mid-light: #ccc;
+    --uu-border-color-mid: #999;
+    --uu-border-color-mid-dark: #666;
+    --uu-border-color-dark: #333;
+    --uu-border-color-input: #d7d7d7;
+    --uu-border-color-table: #ccc;
+    --uu-background-color: #F6F6F6;
+    --uu-background-alternative-content: #eee;
+    --uu-background-table-color: #eee;
+    --uu-background-table-hover-color: #ddd;
+    --uu-background-code-color: #111;
+    /* text related colors */
+    --uu-text-color: #212529;
+    --uu-disabled-text-color: #aaa;
+    --uu-footer-text-color: #ccc;
+    --uu-light-text-color: #787878;
+    --uu-a-text-color: #212529;
+    --uu-a-hover-text-color: #55555F;
+    /* Message background colors */
+    --uu-message-success-background: #DFF0D8;
+    --uu-message-failed-background: #F2DEDE;
+    --uu-message-warning-background: #FCF8E3;
+    --uu-message-info-background: #D9EDF7;
+}
+
+body {
+    background: var(--uu-background-color);
+    font-family: "Open Sans","Frutiger",Helvetica,Arial,sans-serif;
+    color: var(--uu-text-color);
+}
+
+p {
+    line-height: 1.8; /* Override paragraph for better readability */
+}
+
+label {
+    margin-bottom: 0;
+}
+
+h1{
+    font-size: 1.6rem;
+    font-weight: 300;
+}
+
+h2{
+    font-size: 1.4rem;
+    font-weight: 300;
+}
+
+h3 {
+    font-size: 1.3rem;
+    font-weight: 300;
+}
+
+h4 {
+    font-size: 1.2rem;
+    font-weight: normal;
+}
+
+h5 {
+    font-size: 1.1rem;
+    font-weight: normal;
+}
+
+h6 {
+    font-size: 1.1rem;
+    font-weight: normal;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-rendering: optimizelegibility;
+}
+
+.uu-red-text {
+    color: var(--uu-red);
+}
+
+code {
+    padding: .4rem .6rem;
+    font-size: 87.5%;
+    color: var(--uu-yellow);
+    background-color: var(--uu-background-code-color);
+    border-radius: .2rem;
+}
+
+/* Structural */
+#container {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.uu-container {
+    padding-top: 10px;
+    padding-bottom: 5px;
+    background: var(--uu-white);
+}
+
+.uu-inner-container {
+    max-width: 1170px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Cover image */
+.coverimage {
+    position: relative;
+    top: -10px;
+    left: -15px;
+    width: calc(100% + 30px);
+    overflow: hidden;
+}
+
+.coverimage img {
+    display: block;
+    position: relative;
+    left: 50%;
+    margin-left: -800px
+}
+
+@media (max-width: 767px) {
+    .coverimage img {
+        height: 200px;
+        margin-left: -400px;
+    }
+}
+
+/* Top panel */
+
+.uu-container.toppanel
+{
+    padding: 0;
+    border-bottom: 1px solid var(--uu-border-color-light);
+}
+
+.toppanel-text {
+    font-size: 30px;
+    line-height: 44px;
+    box-sizing: content-box;
+    color: var(--uu-mid-blue);
+    text-decoration: none;
+    font-family: "Open Sans","Frutiger",Helvetica,Arial,sans-serif;
+    font-weight: 100;
+    padding: 12px 0 0;
+    text-align: center;
+}
+
+.uu-container.titlepanel
+{
+    padding: 0;
+}
+
+@media (max-width: 767px) {
+    .titletext
+    {
+        display: none;
+    }
+}
+
+.language {
+    border-left: 1px solid var(--uu-border-color-light);
+    line-height: 68px;
+}
+
+.uu-logo {
+    padding: 10px 0;
+}
+
+.uu-logo img
+{
+    height: 48px;
+}
+
+.titletext {
+    font-size: 30px;
+    line-height: 44px;
+    box-sizing: content-box;
+    color: var(--uu-mid-blue);
+    text-decoration: none;
+    font-family: "Open Sans","Frutiger",Helvetica,Arial,sans-serif;
+    font-weight: 100;
+    padding: 3px 0 0;
+}
+
+.titletext a, .titletext a:hover {
+    color: var(--uu-mid-blue);
+    text-decoration: none;
+    padding: 0 15px;
+}
+
+.loginheader {
+    line-height: 54px;
+    font-size: 14px;
+    text-align: right;
+}
+
+/* Navigation */
+
+.uu-navigation-bar {
+    text-align: left;
+    display: block;
+    width: 100%;
+    background-color: var(--uu-black);
+    padding: 3px 0;
+}
+
+.uu-navigation-bar .nav-item a {
+    color: var(--uu-white);
+    text-decoration: none;
+}
+
+.uu-navigation-bar .active a,
+.uu-navigation-bar .nav-item a:hover {
+    color: var(--uu-yellow);
+}
+
+.uu-navigation-bar a.dropdown-item,
+.uu-navigation-bar a.dropdown-item:hover{
+    color: var(--uu-text-color);
+}
+
+.uu-navigation-bar .dropdown-menu {
+    border-radius: 0;
+}
+
+.dropdown-item:active {
+    background: var(--uu-yellow);
+}
+
+.home-text {
+    display: none;
+}
+
+.icon-additional-home:before {
+    content: "H";
+}
+
+.disabled-icon {
+    color: var(--uu-disabled-text-color);
+    cursor: not-allowed;
+}
+
+.nav-container {
+    max-width: 1200px;
+    width: 100%;
+    padding: 0 30px;
+    margin: 0 auto;
+}
+
+@media (max-width: 992px) {
+    .home-text {
+        display: inline;
+    }
+}
+
+.navbar-toggler {
+    background: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") no-repeat center center;
+}
+
+@media (max-width: 767px) {
+
+    .navbar-toggler {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    }
+
+    .uu-logo img {
+        height: 30px;
+    }
+
+    .nav-container {
+        padding: 0;
+    }
+
+    .uu-navigation-bar {
+        text-align: left;
+        display: block;
+        width: 100%;
+        background-color: var(--uu-white);
+        border-bottom: 1px solid var(--uu-border-color-mid);
+        padding-bottom: 0;
+    }
+
+    .uu-navigation-bar .nav-item {
+        background: var(--uu-black);
+        padding: 5px 10px;
+        border-top: 1px solid var(--uu-border-color-dark);
+    }
+
+    .uu-navigation-bar .active {
+        color: var(--uu-yellow);
+    }
+}
+
+/* Footer */
+
+footer.container-fluid {
+    background: var(--uu-black);
+    color: var(--uu-footer-text-color);
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+footer.container-fluid .col-12 img {
+    height: 73px;
+}
+
+footer a {
+    color: var(--uu-footer-text-color);
+}
+
+@media (max-width: 768px) {
+
+    footer.container-fluid .col-12 img {
+        height: 50px;
+    }
+
+}
+
+/* Misc */
+.show-xs {
+    display: none;
+}
+
+
+@media (max-width: 767px) {
+
+    .hide-xs {
+        display: none;
+    }
+
+    .show-xs {
+        display: inline;
+    }
+}
+
+/* Table styles */
+table thead th {
+    border-bottom: 1px solid var(--uu-border-color-table);
+}
+
+table tfoot th {
+    border-top: 1px solid var(--uu-border-color-table);
+}
+
+table tbody tr:nth-of-type(odd) {
+    background: var(--uu-background-table-color);
+}
+
+table tbody tr:hover {
+    background: var(--uu-background-table-hover-color);
+}
+
+table tbody tr.no-background:hover, table tbody tr.no-background {
+    background: transparent;
+}
+
+table tbody td, table thead th, table tfoot th {
+    padding: 6px 5px;
+}
+
+/* No bullet for list items in tables */
+td li {
+    list-style-type: none;
+}
+
+/* Input styles */
+input, textarea, select {
+    border-radius: 0;
+    border: 1px solid var(--uu-border-color-input);
+    padding: 5px 10px;
+    line-height: 20px;
+    font-size: 16px;
+    width: 500px;
+    outline: none;
+    transition: border-color 250ms ease;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: var(--uu-blue);
+}
+
+textarea {
+    padding: 10px;
+}
+
+/* Makes sure there's some spacing between form fields with more than one input */
+input:not(:first-child), textarea:not(:first-child), select:not(:first-child) {
+    margin-top:5px;
+}
+
+input[type=submit], input[type=button], button, .button {
+    background: var(--uu-black);
+    color: var(--uu-white);
+    border: none;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 0 20px;
+    line-height: 42px;
+    width: auto;
+    min-width: auto;
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 0;
+}
+
+input[type=color] {
+    padding: 0;
+    height: 35px;
+}
+
+@media (max-width: 870px) {
+
+    input, textarea {
+        width: 100%;
+    }
+
+    input[type="checkbox"], input[type="radio"]
+    {
+         width: auto;
+    }
+}
+
+/* Remove box shadow from bootstrap buttons as well */
+.btn, .btn:focus {
+    box-shadow: none;
+}
+
+input[type="checkbox"], input[type="radio"]
+{
+     width: auto;
+}
+
+button[type=submit], input[type=submit], .button-colored {
+    background: var(--uu-yellow);
+    color: var(--uu-black);
+}
+
+button[type=submit].button-black, input[type=submit].button-black {
+    background: var(--uu-black);
+    color: var(--uu-white);
+}
+
+button a, .button a,
+button a:hover, .button a:hover,
+a.button, a.button:hover {
+    color: var(--uu-white);
+    text-decoration: none;
+}
+
+.button-colored a,
+.button-colored a:hover,
+a.button-colored,
+a.button-colored:hover {
+    color: var(--uu-black);
+}
+
+
+button.language-button {
+    color: var(--uu-light-text-color);
+    text-transform: uppercase;
+    font-weight: 400;
+    padding: 0;
+    font-size: 12px;
+    background: transparent;
+}
+
+/** Form styles **/
+
+/* Default Django Table Form */
+form table {
+    margin-bottom: 2em;
+    table-layout:fixed;
+}
+
+form > table th {
+    padding-left: 10px;
+    vertical-align: middle;
+    width: 45%;
+    text-align: left;
+}
+
+form > table th label {
+    width: auto;
+    min-width: 400px;
+    float: right;
+}
+
+form > table td {
+    /*width: 50%*/
+}
+
+form td ul,
+form ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+form tbody tr {
+    border-bottom: 1px solid var(--uu-border-color-mid-light);
+}
+
+form tbody tr,
+form tbody tr:nth-of-type(2n+1),
+form tbody tr:hover,
+form tbody tr:nth-of-type(2n+1):hover {
+    background: transparent;
+}
+
+form tr:last-child {
+    border-bottom: none;
+}
+
+form tr th, form tr td {
+    padding: 15px 10px;
+}
+
+form tr td {
+    padding-left: 20px;
+}
+
+form tr th .icon-info {
+    cursor: help;
+}
+
+form label {
+    display: block;
+}
+
+form .select2-container {
+    width: 500px;
+}
+
+.select2-container--default .select2-results__option[aria-disabled=true] {
+    display: none;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    color: var(--uu-white);
+    background: var(--uu-blue);
+}
+
+@media (max-width: 870px) {
+
+    form table tr {
+        width: 100%;
+        display: block;
+    }
+
+    form table th, form table td {
+        display: block;
+        width: 100%;
+    }
+
+    form > table th label {
+        width: 100%;
+        float: none;
+        min-width: unset;
+    }
+
+    form tr td {
+        padding: 0 10px 15px;
+    }
+
+    form .select2-container {
+        width: 100%;
+    }
+}
+
+.select2-search input {
+    min-width: auto;
+}
+
+.errorlist {
+    color: var(--uu-red);
+}
+
+.small-form input, .small-form textarea, .small-form select {
+    min-width: 300px;
+    width: 300px;
+}
+
+.oneline-form label {
+    display: inline-block;
+    margin-right: 5px;
+}
+.oneline-form input {
+    width: auto;
+}
+
+/* Custom Form Template */
+.custom-form-template {
+    width: 100%;
+    padding: 0 15px;
+}
+.custom-form-template .form-row {
+    width: 100%;
+}
+
+.custom-form-template .form-row:not(:last-of-type) {
+    margin-bottom: 15px;
+}
+
+.custom-form-template .form-row .field {
+    background: var(--uu-background-alternative-content);
+    padding: 30px
+}
+
+.custom-form-template .form-row .field input,
+.custom-form-template .form-row .field textarea,
+.custom-form-template .form-row .field select {
+    width: 100%;
+}
+
+.custom-form-template .form-row .form-text {
+    font-weight: 200;
+}
+
+.custom-form-template .form-row .help-text {
+    padding-left: 15px;
+}
+
+/* Link styles */
+a {
+    color: var(--uu-a-text-color);
+    text-decoration: underline;
+    transition: 0.2s ease color;
+}
+
+a:hover {
+    transition: 0.2s ease color;
+    color: var(--uu-a-hover-text-color);
+}
+
+/* Bootstrap/DataTables overrides */
+.form-control {
+    border-radius: 0;
+    border: 1px solid var(--uu-border-color-input);
+    padding: 5px 10px;
+    line-height: 20px;
+    font-size: 12px;
+}
+
+.form-control:focus {
+    outline: none;
+    box-shadow: none;
+    border: 1px solid var(--uu-border-color-input);
+}
+
+/* This makes sure the x items per page dropdown displays correctly */
+div.dataTables_wrapper div.dataTables_length select {
+    min-width: auto;
+    padding: 0 15px 0 10px;
+}
+
+.pagination .page-item {
+    color: inherit;
+    border-radius: 0;
+}
+
+.pagination .page-link {
+    color: inherit;
+    border-radius: 0;
+    text-decoration: none;
+}
+
+.pagination .page-item:first-child .page-link,
+.pagination .page-item:last-child .page-link {
+    border-radius: 0;
+}
+
+.pagination .page-item.active .page-link {
+    background: var(--uu-black);
+    color: var(--uu-white);
+    border-color: var(--uu-black);
+}
+
+.dt {
+    width: 100%;
+}
+
+.dt-buttons {
+    display: inline-block;
+    float: left;
+}
+
+.dt-button {
+    line-height: 30px;
+    padding: 0 10px
+}
+
+.dataTables_wrapper .btn {
+    border-radius: 0;
+    background: var(--uu-black);
+    color: var(--uu-white);
+    border: none;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 0 10px;
+    line-height: 32px;
+    width: auto;
+    cursor: pointer;
+}
+
+.dataTables_wrapper .dropdown-menu {
+    padding: 0;
+    border-radius: 0;
+    min-width: 134px;
+}
+
+.dataTables_wrapper .dropdown-menu .dropdown-item {
+    text-decoration: none;
+}
+
+.dataTables_wrapper .dropdown-menu .dropdown-item.active,
+.dataTables_wrapper .dropdown-menu .dropdown-item:active {
+    background: var(--uu-black);
+    color: var(--uu-white);
+}
+
+.dataTables_wrapper .dropdown-menu .dt-button-collection-title {
+    padding: 0;
+}
+
+/* Fix for search bar not display properly when the table is wrapped in a form*/
+form .dataTables_filter > label {
+    display: inline-block;
+}
+
+/* qTip */
+.qtip-default {
+	border: 1px solid var(--uu-border-color-input);
+
+	background-color: var(--uu-white);
+	color: var(--uu-text-color);
+}
+
+.qtip {
+    font-size: 14px;
+    line-height: 16px;
+    max-width: 400px;
+}
+
+/* Bootstrap DateTime picker */
+/* Fixes the fact that our table styles apply to the picker. */
+.datetimepicker tr, .datetimepicker tr:nth-of-type(odd), .datetimepicker tr:hover {
+    background: var(--uu-white);
+}
+
+/** Panel **/
+.uu-panel > .panel {
+    margin-bottom: 15px;
+}
+
+.uu-panel .panel-heading {
+    background: var(--uu-yellow);
+    padding: 10px 30px 2px; /* .panel-title has a bottom margin of 8px */
+}
+
+.uu-panel .panel-heading a {
+    text-transform: uppercase;
+    font-weight: bold;
+    text-decoration: none;
+    display: block;
+}
+
+.uu-panel .panel-heading a::after {
+    font-family: 'icomoon-additional';
+    content: "\E612";
+    font-size: 10px;
+    float: right;
+    display: inline-block;
+    text-indent: 0;
+    padding: 6px 0;
+}
+
+.uu-panel .panel-heading a.collapsed::after {
+    content: "\E611";
+}
+
+.uu-panel .panel {
+    border: 1px solid var(--uu-border-color-light);
+}
+
+.uu-panel .panel-body {
+    padding: 15px 40px 5px 40px
+}
+
+/* Bootstrap-like contextual boxes */
+div.success {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: var(--uu-message-success-background);
+    list-style-type: none;
+}
+
+div.failed, div.error {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: var(--uu-message-failed-background);
+    list-style-type: none;
+}
+
+div.warning {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: var(--uu-message-warning-background);
+    list-style-type: none;
+}
+
+div.info {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: var(--uu-message-info-background);
+    list-style-type: none;
+}

@@ -1,0 +1,58 @@
+.uil-files-select-container {
+    width: 100%;
+    max-width: 500px;
+    padding: 5px 10px 5px 0;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.uil-files-select-container .uil-files-select input[type=file] {
+    /** Hide in a way that screenreaders don't get confused! **/
+    position: absolute;
+    opacity: 0;
+    width: 0.1px;
+    height: 0.1px;
+}
+
+.uil-files-select-container .uil-files-select label,
+.uil-files-select-container .uil-files-select-existing,
+.uil-files-select-container .uil-files-remove {
+    cursor: pointer;
+    color: var(--uu-mid-blue);
+    font-weight: bold;
+    float: right;
+    user-select: none;
+}
+
+.uil-files-select-container  .uil-files-remove {
+    display: none;
+}
+
+.uil-files-select-container .uil-files-filename {
+    height: 100%;
+    vertical-align: center;
+    flex-grow: 1;
+}
+
+.uil-files-existing-list {
+    display: none;
+    max-width: 500px;
+}
+
+.uil-files-existing-list .uil-files-existing-file {
+    padding: 5px;
+    background: var(--uu-background-alternative-content);
+    margin-bottom: 5px;
+}
+
+.uil-files-existing-list .uil-files-existing-file:last-of-type {
+    margin: 0;
+}
+
+@media (max-width: 870px) {
+    .uil-files-existing-list,
+    .uil-files-select-container {
+        max-width: unset;
+    }
+}
