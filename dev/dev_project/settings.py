@@ -61,7 +61,7 @@ INSTALLED_APPS = [
 
     # CDH Core libraries
     'cdh.core',
-    'cdh.rest_client',
+    'cdh.rest',
     'cdh.vue',
     'cdh.files',
 
