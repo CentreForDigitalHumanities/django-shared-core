@@ -88,7 +88,14 @@ Miauw!
                 </div>
                 <div class="col-8 toppanel-text">
                     {% block toppanel-text %}
-                        {% if acceptation %}
+                        {% if request.user.is_impersonate %}
+                            <span class="uu-red-text">
+                                <span class="icon-warning">⚠</span>
+                                Impersonating user -
+                                <a href="{% url 'impersonate-stop' %}" class="uu-red-text">Stop</a>
+                                <span class="icon-warning">⚠</span>
+                            </span>
+                        {% elif acceptation %}
                             <span class="uu-red-text">
                                 <span class="icon-warning">⚠</span>
                                 Acceptation server

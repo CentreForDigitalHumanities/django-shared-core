@@ -36,6 +36,12 @@ INTERNAL_IPS = ['127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    # CDH Core libraries
+    'cdh.core',
+    'cdh.rest',
+    'cdh.vue',
+    'cdh.files',
+
     # Django supplied apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -58,12 +64,6 @@ INSTALLED_APPS = [
 
     # Django model translation
     'modeltranslation',
-
-    # CDH Core libraries
-    'cdh.core',
-    'cdh.rest',
-    'cdh.vue',
-    'cdh.files',
 
     # Local apps
     'main',

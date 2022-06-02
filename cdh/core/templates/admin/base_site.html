@@ -1,0 +1,103 @@
+{% extends 'admin/base_site.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block extrastyle %}{{ block.super }}
+<style>
+:root {
+  --primary: #FFCD00;
+  --accent: #C00A35;
+  --header-branding-color: #000;
+  --header-color: #000;
+  --breadcrumbs-bg: #000;
+  --breadcrumbs-fg: #fff;
+  --breadcrumbs-link-fg: #fff;
+  --link-fg: #222;
+  --link-selected-fg: #555;
+  --button-fg: #fff;
+  --button-bg: #000;
+  --button-hover-bg: #555;
+  --default-button-bg: #24A793;
+  --default-button-hover-bg: #048773;
+  --header-link-color: #000;
+  --secondary: #FFCD00;
+}
+
+.uu-logo {
+    height: 35px;
+}
+
+#user-tools {
+    font-weight: 400;
+    font-size: 12px;
+    text-transform: none;
+}
+
+#user-tools a:hover {
+    color: var(--header-link-color);
+}
+
+h1 {
+    font-weight: normal;
+}
+
+#branding a {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#branding a #site-name {
+    color: var(--header-branding-color) !important;
+}
+
+#site-name {
+    display: inline;
+}
+
+#main {
+    margin-top: 10px;
+}
+
+div.breadcrumbs {
+    padding: 12px 40px;
+}
+
+div.breadcrumbs a {
+    font-weight: bold;
+}
+
+#footer {
+    color: var(--body-quiet-color);
+}
+</style>
+{% endblock %}
+
+{% block userlinks %}
+    {% if site_url %}
+        <a href="{% url 'impersonate-search' %}">{% translate 'Impersonate user' %}</a> /
+    {% endif %}
+    {% if site_url %}
+        <a href="{{ site_url }}">{% translate 'View site' %}</a> /
+    {% endif %}
+    {% if user.has_usable_password %}
+    <a href="{% url 'admin:password_change' %}">{% translate 'Change password' %}</a> /
+    {% endif %}
+    <a href="{% url 'admin:logout' %}">{% translate 'Log out' %}</a>
+{% endblock %}
+
+{% block branding %}
+    <a href="{% url 'admin:index' %}">
+        <img src="{% static 'cdh.core/images/logo-header-en.svg' %}" class="uu-logo">
+        <h1 id="site-name">
+            {{ site_header|default:_('Django administration') }}
+        </h1>
+    </a>
+{% endblock %}
+
+
+{% block footer %}
+    <div id="footer">
+        DH-IT Portal Development, Faculty of Humanities, Utrecht University
+    </div>
+{% endblock %}
