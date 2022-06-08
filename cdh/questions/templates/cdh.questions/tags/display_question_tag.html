@@ -1,0 +1,59 @@
+{% load question_tags %}
+
+
+
+
+
+{% if editing %}
+<form method="post" action="">{% csrf_token %}
+{% endif %}
+
+
+    <h3>{{title}}</h3>
+
+
+    <section class="question">
+                    {% if not is_editable %}
+                    {% endif %}
+                    <br />
+                    {% for segment in segments %}
+                    {% render_segment segment %}
+                    {% empty %}
+                    <p>No segments!</p>
+                    {% endfor %}
+                    {% if editing %}
+                    {% for error in question.errors %}
+                    <p>Error: {{error}}</p>
+                    {% endfor %}
+                    {% endif %}
+                    <div class="gt-right question-buttons">
+
+                        {% if editing %}
+
+                        <input type="submit" value="opslaan" />
+
+                        {% else %}
+
+                        {% if question.is_deletable and not deleting %}
+                            <a href="{{question.get_delete_url}}" value="Delete" class="button">Delete</a>
+{% endif %}
+
+                    {% if question.is_editable %}
+                        <a href="{{question.get_edit_url}}" value="Bewerken" class="button">
+                        Bewerken
+                        </a>
+
+
+                    {% endif %}
+                        {% endif %}
+                    </div>
+
+
+
+
+                    <div class="gtph2">&nbsp;</div>
+            </section>
+
+            {% if editing %}
+            </form>
+                {% endif %}
