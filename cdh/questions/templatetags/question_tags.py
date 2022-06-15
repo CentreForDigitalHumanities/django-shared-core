@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 register = template.Library()
 
-@register.inclusion_tag('uil.questions/tags/display_question_tag.html')
+@register.inclusion_tag('cdh.questions/tags/display_question_tag.html')
 def display_question(question, **kwargs):
 
     tag_context = {'test': 123,
@@ -17,7 +17,7 @@ def display_question(question, **kwargs):
 
     return tag_context
 
-@register.inclusion_tag('uil.questions/tags/display_question_tag.html')
+@register.inclusion_tag('cdh.questions/tags/display_question_tag.html')
 def ask_question(question, **kwargs):
 
     tag_context = display_question(question, **kwargs)
