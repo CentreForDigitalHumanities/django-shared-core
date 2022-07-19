@@ -4,8 +4,8 @@
 {% if request.user.is_authenticated %}
     {% with request.user as user %}
         {% transformat "site:header:login" user.first_name %}
-        <a href="{% url 'main:logout' %}">({% trans 'main:globals:logout' %})</a>
+        <a href="{% url 'main:logout' %}" class="text-decoration-underline">({% trans 'main:globals:logout' %})</a>
     {% endwith %}
     {% else %}
-    <a href="{% url 'main:login' %}">{% trans 'main:globals:login' %}</a>
+    <a href="{% url 'main:login' %}" class="text-decoration-underline">{% trans 'main:globals:login' %}</a>
 {% endif %}

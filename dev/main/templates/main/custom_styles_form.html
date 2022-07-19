@@ -5,21 +5,19 @@
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-8">
-            <h1>Verwerkingsvraag</h1>
-            <p>Algemene onderzoeksprojectinformatie</p>
+            <h1>Custom form template</h1>
+            <p>Note: this required Django 4+</p>
         </div>
     </div>
-    <form method="post" enctype="multipart/form-data">
-        <div class="uu-inner-container">
-                {% csrf_token %}
-                {{ form }}
-        </div>
-        <div class="uu-inner-container">
+    <form method="post" class="w-100" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <div class="uu-container">
             <div class="col-8">
                 <hr>
-                <input type="submit" value="Volgende stap >" >
+                <input type="submit" class="btn btn-primary" value="Volgende stap >" >
             </div>
         </div>
     </form>
