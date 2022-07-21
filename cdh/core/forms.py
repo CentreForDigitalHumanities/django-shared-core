@@ -7,6 +7,7 @@ class TemplatedFormMixin:
     template_name = 'cdh.core/form_template.html'
     show_help_column = True
     spaced_questions = True
+    breakpoint = 'md'
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -18,6 +19,7 @@ class TemplatedFormMixin:
 
         context['show_help_column'] = self.show_help_column
         context['spaced_questions'] = self.spaced_questions
+        context['breakpoint'] = self.breakpoint
 
         return context
 

@@ -7,19 +7,19 @@
 
     {% for field, errors in fields %}
         <div
-                {% with classes=field.css_classes %}
-                    class="row flex-column flex-md-row {% if spaced_questions %}mb-4{% endif %} {% if classes %}{{ classes }}{% endif %}"
-                {% endwith %}
+            {% with classes=field.css_classes %}
+                class="row flex-column flex-{{ breakpoint }}-row {% if spaced_questions %}mb-4{% endif %} {% if classes %}{{ classes }}{% endif %}"
+            {% endwith %}
         >
-            <div class="col-12 text-bg-light p-4 {% if show_help_column %}col-md-8{% endif %}">
+            <div class="col-12 text-bg-light p-4 {% if show_help_column %}col-{{ breakpoint }}-8{% endif %}">
                 <label for="{{ field.id_for_label }}" class="form-label d-block">
                     {{ field.label }}
                 </label>
                 {{ errors }}
                 {{ field }}
             </div>
-            {% if show_help_column %}
-                <div class="col-12 col-md-4 text-muted p-3 pt-md-4 ps-md-5">
+            {% if show_help_column and field.help_text %}
+                <div class="col-12 col-{{ breakpoint }}-4 text-muted p-3 pt-{{ breakpoint }}-4 ps-{{ breakpoint }}-5">
                     {% if field.help_text %}
                         {{ field.help_text|safe }}
                     {% endif %}
