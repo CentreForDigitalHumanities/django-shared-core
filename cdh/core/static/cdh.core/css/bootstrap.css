@@ -15133,6 +15133,10 @@ textarea.form-control-lg {
   color: #555;
 }
 
+.flex-fill {
+  min-width: 0;
+}
+
 .font-serif {
   font-family: "Merriweather", serif;
 }
@@ -15189,6 +15193,7 @@ pre.code {
 .stepper {
   position: relative;
   z-index: 1;
+  min-width: 200px;
 }
 .stepper a {
   text-decoration: none;
@@ -15220,6 +15225,7 @@ pre.code {
 }
 .stepper ul li .stepper-bubble {
   background: #cecece;
+  flex: 0 0 auto;
   color: #000;
   font-weight: bold;
   line-height: 2rem;
