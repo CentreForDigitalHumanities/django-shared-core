@@ -17,13 +17,16 @@ class Question(forms.ModelForm):
 
         self.segments = self.get_segments()
 
-    def _fields_to_segments(self):
+    def _fields_to_segments(self, fields_list=None):
+
+        if not fields_list:
+            fields_list = self.fields
 
         segments = []
-        for field in self:
-            segments.append({'type': 'form_field',
-                             'field': field,
-            })
+        for field in self.fields:
+            segments.append(
+                self._field_to_segment(field)
+            )
 
         return segments
 

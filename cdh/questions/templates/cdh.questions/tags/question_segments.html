@@ -19,7 +19,7 @@
 
 {% elif segment.type == "form_field" %}
 <div class="row uil-segment">
-    <div class="col-4 uil-segment-left">
+    <div class="col-5 uil-segment-left">
         <p>
             {{ segment.field.label }}
         </p>
@@ -27,7 +27,7 @@
             {{segment.sub_label}}
         </p>
     </div>
-    <div class="uil-segment-right">
+    <div class="col-7 uil-segment-right">
         {% if editing %}
         {{ segment.field }}
         {% else %}
