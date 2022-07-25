@@ -110,7 +110,7 @@ class QuestionEditView(QuestionView,
                        ):
 
     pk_url_kwarg = 'question_pk'
-    template_name = 'uil.questions/question_detail.html'
+    template_name = 'cdh.questions/question_detail.html'
 
 
 
