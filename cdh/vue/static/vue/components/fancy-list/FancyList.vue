@@ -96,13 +96,13 @@ window.onload = _ => {
       @filterChange="filterChange"
     ></Controls>
 
-    <div class="info mt-3" id="ufl-no-items" v-if="!visibleItems.length && loaded">
+    <div class="alert alert-info text-center mt-3" id="ufl-no-items" v-if="!visibleItems.length && loaded">
       <slot name="no_items">
         {{ $t('no_items') }}
       </slot>
     </div>
 
-    <div class="info mt-3" id="ufl-loading" v-if="!loaded">
+    <div class="alert alert-info text-center mt-3" id="ufl-loading" v-if="!loaded">
       <slot name="loading">
         {{ $t('loading') }}
       </slot>

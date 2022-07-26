@@ -1,0 +1,26 @@
+$merriweather-font-dir: '/static/cdh.core/fonts/merriweather/';
+$open-sans-font-dir: '/static/cdh.core/fonts/open-sans/';
+
+@import "node_modules/uu-bootstrap/scss/bootstrap";
+@import "icomoon";
+
+.uu-header .uu-header-row .language-form {
+    button {
+        background: none;
+        text-transform: uppercase;
+        border: none;
+        font-weight: 400;
+        color: $gray-600;
+    }
+}
+
+.uu-navbar {
+    .icon-additional-home:before {
+        content: "H";
+    }
+}
+
+// Mostly for backwards compatibility, and ease of use
+.dt, .datatables {
+    @extend .table;
+}
