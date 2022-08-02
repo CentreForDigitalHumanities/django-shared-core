@@ -5,7 +5,7 @@
   "author": "DH-IT Portal Development & UiL OTS Labs",
   "license": "Apache-2.0",
   "dependencies": {
-    "uu-bootstrap": "git+ssh://git@github.com/DH-IT-Portal-Development/bootstrap-theme.git"
+    "uu-bootstrap": "git+ssh://git@github.com/DH-IT-Portal-Development/bootstrap-theme.git#1.0.0-rc.1"
   },
   "scripts": {
     "build-css": "yarn _build-css cdh/core/static/cdh.core/css/bootstrap.css && yarn _build-css cdh/core/static/cdh.core/css/bootstrap.css --style=compressed",
