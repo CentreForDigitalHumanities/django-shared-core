@@ -27,6 +27,13 @@ Source: https://github.com/impak-finance/django-js-urls
 
 Licenced under the MIT license, see `cdh/core/js_urls/LICENSE`
 
+## Select2 Bootstrap 5 Theme
+Modified to always apply, minor fixes and better SCSS integration
+
+Source: https://github.com/apalfrey/select2-bootstrap-5-theme
+
+Licenced under the MIT license, see `scss/select2-bootstrap/LICENSE`
+
 # Partly included libraries
 These libraries are partly integrated into this codebase. 
 This means that we still use the original package as a dependency, but parts of it have been copied and 

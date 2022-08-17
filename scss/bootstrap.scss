@@ -3,6 +3,7 @@ $open-sans-font-dir: '/static/cdh.core/fonts/open-sans/';
 
 @import "node_modules/uu-bootstrap/scss/bootstrap";
 @import "icomoon";
+@import "select2-bootstrap";
 
 .uu-header .uu-header-row .language-form {
     button {
