@@ -5,21 +5,22 @@ from django.forms.widgets import CheckboxInput, CheckboxSelectMultiple, \
 
 class TemplatedFormMixin:
     template_name = 'cdh.core/form_template.html'
+    # If False, it will hide the help column on every field
     show_help_column = True
-    spaced_questions = True
-    breakpoint = 'md'
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for visible in self.visible_fields():
-            visible.field.widget.attrs['class'] = 'form-control'
+    # If False, it will hide the help column on fields without a help text
+    always_show_help_column = True
 
     def get_context(self):
         context = super().get_context()
 
+        for field, errors in context['fields']:
+            if errors:
+                field.field.widget.attrs['class'] = 'form-control is-invalid'
+            else:
+                field.field.widget.attrs['class'] = 'form-control'
+
         context['show_help_column'] = self.show_help_column
-        context['spaced_questions'] = self.spaced_questions
-        context['breakpoint'] = self.breakpoint
+        context['always_show_help_column'] = self.always_show_help_column
 
         return context
 

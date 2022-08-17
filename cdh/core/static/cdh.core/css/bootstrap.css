@@ -8243,7 +8243,7 @@ textarea.form-control-lg {
 
 .form-range {
   width: 100%;
-  height: 1.5rem;
+  height: 1rem;
   padding: 0;
   background-color: transparent;
   appearance: none;
@@ -8547,7 +8547,7 @@ textarea.form-control-lg {
 
 .was-validated .form-control:valid:focus, .form-control.is-valid:focus {
   border-color: #2db83d;
-  box-shadow: 0 0 0 0.25rem rgba(45, 184, 61, 0.25);
+  box-shadow: 0 0 0 0 rgba(45, 184, 61, 0.25);
 }
 
 .was-validated textarea.form-control:valid, textarea.form-control.is-valid {
@@ -8568,7 +8568,7 @@ textarea.form-control-lg {
 
 .was-validated .form-select:valid:focus, .form-select.is-valid:focus {
   border-color: #2db83d;
-  box-shadow: 0 0 0 0.25rem rgba(45, 184, 61, 0.25);
+  box-shadow: 0 0 0 0 rgba(45, 184, 61, 0.25);
 }
 
 .was-validated .form-control-color:valid, .form-control-color.is-valid {
@@ -8584,7 +8584,7 @@ textarea.form-control-lg {
 }
 
 .was-validated .form-check-input:valid:focus, .form-check-input.is-valid:focus {
-  box-shadow: 0 0 0 0.25rem rgba(45, 184, 61, 0.25);
+  box-shadow: 0 0 0 0 rgba(45, 184, 61, 0.25);
 }
 
 .was-validated .form-check-input:valid ~ .form-check-label, .form-check-input.is-valid ~ .form-check-label {
@@ -8647,7 +8647,7 @@ textarea.form-control-lg {
 
 .was-validated .form-control:invalid:focus, .form-control.is-invalid:focus {
   border-color: #C00A35;
-  box-shadow: 0 0 0 0.25rem rgba(192, 10, 53, 0.25);
+  box-shadow: 0 0 0 0 rgba(192, 10, 53, 0.25);
 }
 
 .was-validated textarea.form-control:invalid, textarea.form-control.is-invalid {
@@ -8668,7 +8668,7 @@ textarea.form-control-lg {
 
 .was-validated .form-select:invalid:focus, .form-select.is-invalid:focus {
   border-color: #C00A35;
-  box-shadow: 0 0 0 0.25rem rgba(192, 10, 53, 0.25);
+  box-shadow: 0 0 0 0 rgba(192, 10, 53, 0.25);
 }
 
 .was-validated .form-control-color:invalid, .form-control-color.is-invalid {
@@ -8684,7 +8684,7 @@ textarea.form-control-lg {
 }
 
 .was-validated .form-check-input:invalid:focus, .form-check-input.is-invalid:focus {
-  box-shadow: 0 0 0 0.25rem rgba(192, 10, 53, 0.25);
+  box-shadow: 0 0 0 0 rgba(192, 10, 53, 0.25);
 }
 
 .was-validated .form-check-input:invalid ~ .form-check-label, .form-check-input.is-invalid ~ .form-check-label {
