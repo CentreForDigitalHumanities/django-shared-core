@@ -7,6 +7,7 @@ These Django apps implement shared code for DH-IT Django projects. Developed in 
 - Python 3.10 (experimental)
 - Django 3.2+
 - Django 4.0 (recommended)
+- Django 4.1 (experimental)
 
 Older versions are not supported, please use a older release if needed
 
