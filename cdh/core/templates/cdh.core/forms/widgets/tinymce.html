@@ -1,0 +1,24 @@
+{% load i18n %}
+{% get_current_language as language_code %}
+<textarea
+        data-tinymce="true"
+        data-menubar="{{ menubar }}"
+        data-language="{{ language_code }}"
+        data-toolbar="{{ toolbar }}"
+        data-plugins="{{ plugins }}"
+        name="{{ widget.name }}"
+        {% if preview_url %}
+            data-preview-url="{{ preview_url }}"
+        {% endif %}
+        {% if sender_field %}
+            data-sender-field="{{ sender_field }}"
+        {% endif %}
+        {% if banner_field %}
+            data-banner-field="{{ banner_field }}"
+        {% endif %}
+        {% if footer_field %}
+            data-footer-field="{{ footer_field }}"
+        {% endif %}
+        {% include "django/forms/widgets/attrs.html" %}
+>
+{% if widget.value %}{{ widget.value }}{% endif %}</textarea>
