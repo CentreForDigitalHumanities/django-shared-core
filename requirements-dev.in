@@ -18,3 +18,7 @@ django-csp
 django-extensions
 mysqlclient
 Deprecated
+sphinx
+sphinx_rtd_theme
+sphinxcontrib-apidoc
+sphinxcontrib-django2
