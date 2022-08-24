@@ -40,11 +40,15 @@
     <div class="uu-header-row">
         <div class="me-auto uu-header-title">
             <a href="//{{ request.META.HTTP_HOST }}">
-                {% include_if_exists 'base/site_header.html' %}
+                {% block site_header %}
+                    {% include_if_exists 'base/site_header.html' %}
+                {% endblock %}
             </a>
         </div>
         <div class="ms-auto">
-            {% include_if_exists 'base/login_header.html' %}
+            {% block login_header %}
+                {% include_if_exists 'base/login_header.html' %}
+            {% endblock %}
         </div>
     </div>
 {% endblock %}
