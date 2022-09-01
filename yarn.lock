@@ -19,8 +19,8 @@ scss@^0.2.4:
   dependencies:
     ometa "0.2.2"
 
-"uu-bootstrap@git+ssh://git@github.com/DH-IT-Portal-Development/bootstrap-theme.git#1.1.0":
+"uu-bootstrap@git+ssh://git@github.com/DH-IT-Portal-Development/bootstrap-theme.git#1.2.0":
   version "1.1.0"
-  resolved "git+ssh://git@github.com/DH-IT-Portal-Development/bootstrap-theme.git#71041c2906edb926818e8b07db60a0c6d850b5f6"
+  resolved "git+ssh://git@github.com/DH-IT-Portal-Development/bootstrap-theme.git#d5cc87e80b15475e9911d1637bd2e7d686469717"
   dependencies:
     bootstrap "5.2.0"
