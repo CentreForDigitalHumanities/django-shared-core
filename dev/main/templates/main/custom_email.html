@@ -1,0 +1,26 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block header_title %}
+    Custom Email Form- {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <div class="uu-container">
+        <div class="col-12">
+            <h1>Custom Email Form</h1>
+
+            <form method="post" class="uu-form uu-form-no-gap" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form }}
+                <div class="uu-container">
+                    <div class="col-8">
+                        <hr>
+                        <button type="submit" class="btn btn-primary btn-arrow-right">Volgende stap</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,4 +1,4 @@
-Django>=3.0,<3.3
+Django>=3.0,<4.1
 cryptography
 pyscss
 lesscpy
@@ -8,3 +8,4 @@ requests
 PyJWT
 djangorestframework
 python-magic
+Deprecated

@@ -6,20 +6,20 @@
 
 {% block content %}
     <div class="uu-container">
-        <div class="col-8">
+        <div class="col-12">
             <h1>Custom form template</h1>
             <p>Note: this required Django 4+</p>
+
+            <form method="post" class="uu-form" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form }}
+                <div class="uu-container">
+                    <div class="col-8">
+                        <hr>
+                        <button type="submit" class="btn btn-primary btn-arrow-right">Volgende stap</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-    <form method="post" class="w-100" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form }}
-        <div class="uu-container">
-            <div class="col-8">
-                <hr>
-                <input type="submit" class="btn btn-primary" value="Volgende stap >" >
-            </div>
-        </div>
-    </form>
-    <br/>
 {% endblock %}
