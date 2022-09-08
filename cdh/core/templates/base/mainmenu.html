@@ -1,12 +1,12 @@
 {% load i18n %}
 
 <div id="navbar-content" class="collapse navbar-collapse">
-    <ul class="navbar-nav me-auto">
+    <ul class="navbar-nav w-100">
         {% if menus.home %}
             {% with menus.home.0 as home %}
                 <li class="nav-item">
                     <a class="nav-link {% if home.selected %}active{% endif %}" href="{{ home.url }}">
-                        <span class="icon-additional-home"></span>&nbsp;<!-- TODO: icon -->
+                        <span class="icon-additional-home"></span>
                         <span class="d-md-none">
                             {{ home.title }}
                         </span>
