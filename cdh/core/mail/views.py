@@ -28,6 +28,7 @@ class BaseEmailPreviewView(generic.View):
         """A method to provide any additional context to the preview email.
 
         Most of this _should_ be handled by the email class itself, but this
-        method can be used if you want some dynamic defaults.
+        method can be used if you want some dynamic defaults. Any defaults
+        specified in the Email class will be overwritten by data supplied here.
         """
         return {}

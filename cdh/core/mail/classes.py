@@ -658,7 +658,11 @@ class BaseCustomTemplateEmail(BaseEmail):
 
         if preview:
             for var in self.user_variable_defs:
-                context[var.name] = var.preview_value
+                # Only apply the default if we don't have any value in the
+                # context already. Some previews are capable of adding some
+                # more specifc context, and we don't want to overwrite those.
+                if var.name not in context or not context[var.name]:
+                    context[var.name] = var.preview_value
 
         return template.render(
             Context(context)
