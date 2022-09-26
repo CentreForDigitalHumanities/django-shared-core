@@ -33,4 +33,6 @@ def render_segment(context, segment):
     loop variable"""
 
     segment.context.update(context.flatten())
+    field = segment.context['field'].field
+    field.widget.attrs['class'] = "form-control"
     return segment.render()
