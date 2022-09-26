@@ -122,12 +122,12 @@ class DateField(forms.DateField):
     widget = DateInput
 
 
-class TimeInput(forms.DateInput):
+class TimeInput(forms.TimeInput):
     """Override of Django's version to use the right HTML5 input"""
     input_type = 'time'
 
 
-class TimeField(forms.DateField):
+class TimeField(forms.TimeField):
     """Override of Django's version to use the right HTML5 input"""
     widget = TimeInput
 
@@ -137,7 +137,7 @@ class DateTimeInput(forms.DateTimeInput):
     input_type = 'datetime-local'
 
 
-class DateTimeField(forms.DateField):
+class DateTimeField(forms.DateTimeField):
     """Override of Django's version to use the right HTML5 input"""
     widget = DateTimeInput
 
