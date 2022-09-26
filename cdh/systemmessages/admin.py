@@ -17,6 +17,8 @@ class SystemMessageAdmin(admin.ModelAdmin):
     formfield_overrides = {
         TextField: {"widget": TinyMCEWidget},
     }
+    list_display = ('id', 'message', 'color', 'not_before', 'not_after')
+    search_fields = ('message', )
 
 
 admin.site.register(SystemMessage, SystemMessageAdmin)
