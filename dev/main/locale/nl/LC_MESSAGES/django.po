@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-23 17:24+0200\n"
+"POT-Creation-Date: 2022-08-24 11:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,35 +16,51 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: dev/main/emails.py:8
+msgid "example_email.vars.name"
+msgstr "Naam van ontvanger"
+
+#: dev/main/emails.py:9
+msgid "example_email.vars.date"
+msgstr "Huidige datum"
+
+#: dev/main/emails.py:11
+msgid "example_email.vars.random_number"
+msgstr "Willekeurig cijfer"
+
 #: dev/main/menus.py:5
 msgid "main:menu:home"
 msgstr ""
 
 #: dev/main/menus.py:10
-msgid "main:menu:styles"
-msgstr "CSS testpaginas"
+msgid "main:menu:core"
+msgstr "CDH Core"
 
 #: dev/main/menus.py:15
-msgid "main:menu:styles:base"
+msgid "main:menu:core:base"
 msgstr "General CSS"
 
 #: dev/main/menus.py:20
-msgid "main:menu:styles:form"
-msgstr "Standaard Form CSS"
+msgid "main:menu:core:form"
+msgstr "Tabel Form CSS"
 
 #: dev/main/menus.py:25
-msgid "main:menu:styles:custom_form"
+msgid "main:menu:core:custom_form"
 msgstr "Custom Template Form CSS"
 
 #: dev/main/menus.py:30
-msgid "main:menu:styles:jquery_form"
+msgid "main:menu:core:jquery_form"
 msgstr "jQuery UI Form CSS"
 
-#: dev/main/menus.py:37
+#: dev/main/menus.py:35
+msgid "main:menu:core:custom_email_form"
+msgstr "Custom email bewerk form"
+
+#: dev/main/menus.py:42
 msgid "main:footer:login"
 msgstr "Log in"
 
-#: dev/main/menus.py:42
+#: dev/main/menus.py:47
 msgid "main:footer:logout"
 msgstr "Log uit"
 
@@ -63,44 +79,44 @@ msgstr "Log in"
 #. Translators: This is the title that will end up in the header (in blue)
 #: dev/main/templates/base/site_header.html:4
 msgid "site:header:title"
-msgstr "UiL shared library dev-project"
+msgstr "DSC dev-project"
 
 #. Translators: This is the title that will end up in the tab of the browser
 #: dev/main/templates/base/site_title.html:5
 msgid "site:name"
 msgstr "USL dev project"
 
-#: dev/main/templates/error/400.html:9
+#: dev/main/templates/error/400.html:8
 msgid "main:error:400:title"
 msgstr "Bad Request"
 
-#: dev/main/templates/error/400.html:12
+#: dev/main/templates/error/400.html:14
 msgid "main:error:400:text"
 msgstr "Er is een fout opgetreden bij het verwerken van uw verzoek."
 
-#: dev/main/templates/error/403.html:9
+#: dev/main/templates/error/403.html:8
 msgid "main:error:403:title"
 msgstr "Geen toegang"
 
-#: dev/main/templates/error/403.html:12
+#: dev/main/templates/error/403.html:14
 msgid "main:error:403:text"
 msgstr "Het lijkt er op dat je een pagina wilt bezoeken waar je niet bij mag."
 
-#: dev/main/templates/error/404.html:9
+#: dev/main/templates/error/404.html:8
 msgid "main:error:404:title"
 msgstr "Pagina niet gevonden"
 
-#: dev/main/templates/error/404.html:12
+#: dev/main/templates/error/404.html:14
 msgid "main:error:404:text"
 msgstr ""
 "We kunnen de pagina waarnaar u op zoek bent niet vinden.De link waarop u "
 "hebt geklikt is mogelijk incorrect of de pagina is verplaatst."
 
-#: dev/main/templates/error/500.html:9
+#: dev/main/templates/error/500.html:8
 msgid "main:error:500:title"
 msgstr "Er is iets fout gegaan"
 
-#: dev/main/templates/error/500.html:12
+#: dev/main/templates/error/500.html:14
 msgid "main:error:500:text"
 msgstr "Sorry! Het lijkt er op dat wij iets fout hebben gedaan aan onze kant!"
 

@@ -1,0 +1,194 @@
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="x-apple-disable-message-reformatting">
+    <title></title>
+    <!--[if mso]>
+    <style>
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            border: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        div, td {
+            padding: 0;
+        }
+
+        div {
+            margin: 0 !important;
+        }
+    </style>
+    <noscript>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    </noscript>
+    <![endif]-->
+    <style>
+        table, td, div, h1, p {
+            font-family: Arial, sans-serif;
+        }
+
+        h1, h2, h3, h4, h5, h6, p {
+            margin-top: 0 !important;
+            margin-bottom: 10px;
+            margin-bottom: 0.7em;
+        }
+    </style>
+</head>
+<body style="margin:0;padding:0;word-spacing:normal;background-color:{{ theme.main_background }};">
+<div role="article" aria-roledescription="email" lang="en"
+     style="text-size-adjust:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;background-color:{{ theme.main_background }};">
+
+    <table role="presentation"
+           style="width:100%;border:none;border-spacing:0;background-color:{{ theme.main_background }};">
+        <tr>
+            <td align="center">
+                <!--[if mso]>
+                <table role="presentation" align="center" style="width:{{ theme.outer_container_width }};padding:0;border:none;border-spacing:0;background-color:{{ theme.content_background }};">
+                    <tr>
+                        <td>
+                <![endif]-->
+                <table role="presentation"
+                       style="width:100%;max-width:{{ theme.outer_container_width }};border:none;border-spacing:0;background-color:{{ theme.content_background }};">
+                    <tr>
+                        {# Logo and sender #}
+                        <td align="center" style="padding:0;">
+                            <!--[if mso]>
+                            <table role="presentation" align="center" style="width:600px;padding:0;border:none;border-spacing:0;">
+                                <tr>
+                                    <td>
+                            <![endif]-->
+                            <table role="presentation"
+                                   style="width:94%;max-width:600px;border:none;border-spacing:0;text-align:left;font-family:Arial,sans-serif;font-size:16px;line-height:22px;color:{{ theme.content_color }};">
+                                <tr>
+                                    <td style="padding:20px 0 20px 10px;text-align:left;font-size:24px;font-weight:bold;">
+                                        <img
+                                                src="https://staticweb.hum.uu.nl/portaldev/uu-logo-{{ LANGUAGE_CODE }}.png"
+                                                width="200" alt="Universiteit Utrecht"
+                                                style="width:200px;max-width:80%;height:auto;border:none;text-decoration:none;">
+                                    </td>
+                                    {% if has_sender %}
+                                        <td style="text-align: right; padding-right: 10px">
+                                            <h1 style="font-size: 20px; margin:0">
+                                                {% block sender %}{% endblock %}
+                                            </h1>
+                                        </td>
+                                    {% endif %}
+                                </tr>
+                            </table>
+                            <!--[if mso]>
+                            </td>
+                            </tr>
+                            </table>
+                            <![endif]-->
+                        </td>
+                    </tr>
+                    {# Banner #}
+                    {% if has_banner %}
+                        <tr>
+                            <td align="center" style="padding:0;margin-bottom:10px;background:{{ theme.banner_background }};">
+                                <!--[if mso]>
+                                <table role="presentation" align="center" style="width:600px;padding:0;border:none;border-spacing:0;">
+                                    <tr>
+                                        <td>
+                                <![endif]-->
+                                <table role="presentation"
+                                       style="width:94%;max-width:600px;border:none;border-spacing:0;text-align:left;font-family:Arial,sans-serif;font-size:16px;line-height:22px;color:{{ theme.banner_color }};">
+                                    <tr>
+                                        <td style="padding:10px;font-weight:600;">
+                                            {% block banner %}{% endblock %}
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!--[if mso]>
+                                </td>
+                                </tr>
+                                </table>
+                                <![endif]-->
+                            </td>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        {# Content #}
+                        <td align="center" style="padding:0;">
+                            <!--[if mso]>
+                            <table role="presentation" align="center" style="width:600px;padding:0;border:none;border-spacing:0;">
+                                <tr>
+                                    <td>
+                            <![endif]-->
+                            <table role="presentation"
+                                   style="width:94%;max-width:600px;border:none;border-spacing:0;text-align:left;font-family:Arial,sans-serif;font-size:16px;line-height:22px;color:{{ theme.content_color }};">
+                                <tr>
+                                    <td style="padding:20px 10px 20px;background-color:{{ theme.content_background }};">
+                                        {% block content %}{% endblock %}
+                                    </td>
+                                </tr>
+                            </table>
+                            <!--[if mso]>
+                            </td>
+                            </tr>
+                            </table>
+                            <![endif]-->
+                        </td>
+                    </tr>
+                    {% if has_footer %}
+                        <tr>
+                            {# Footer #}
+                            <td align="center" style="padding:0;background:{{ theme.footer_background }};">
+                                <!--[if mso]>
+                                <table role="presentation" align="center" style="width:600px;padding:0;border:none;border-spacing:0;">
+                                    <tr>
+                                        <td>
+                                <![endif]-->
+                                <table role="presentation"
+                                       style="width:94%;max-width:600px;border:none;border-spacing:0;text-align:left;font-family:Arial,sans-serif;font-size:16px;line-height:22px;color: {{ theme.footer_color }};">
+                                    <tr>
+                                        <td style="padding:15px 10px;font-size:12px;">
+                                            {% block footer %}{% endblock %}
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!--[if mso]>
+                                </td>
+                                </tr>
+                                </table>
+                                <![endif]-->
+                            </td>
+                        </tr>
+                        {% if theme.footer_stripe %}
+                            <tr>
+                                {# Stylistic footer stripe #}
+                                <td align="center"
+                                    style="padding:0; background:{{ theme.footer_stripe_color }};height:5px;"></td>
+                            </tr>
+                        {% endif %}
+                        {% else %}
+                        {# If we have no footer, we put a height spacer at the end for visual looks  #}
+                        {# In other words, it looks like a weird abrupt end if there's no footer and no spacer #}
+                        <tr>
+                            <td style="padding:30px;"></td>
+                        </tr>
+                    {% endif %}
+                </table>
+                <!--[if mso]>
+                </td>
+                </tr>
+                </table>
+                <![endif]-->
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

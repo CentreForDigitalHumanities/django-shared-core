@@ -7,28 +7,33 @@ Menu.add_item("home", MenuItem(_('main:menu:home'),
                                exact_url=True
                                ))
 
-Menu.add_item("main", MenuItem(_('main:menu:styles'),
+Menu.add_item("main", MenuItem(_('main:menu:core'),
                                "#",
                                exact_url=True,
                                children=[
                                    MenuItem(
-                                       _('main:menu:styles:base'),
+                                       _('main:menu:core:base'),
                                        reverse('main:styles'),
                                        exact_url=True,
                                    ),
                                    MenuItem(
-                                       _('main:menu:styles:form'),
+                                       _('main:menu:core:form'),
                                        reverse('main:styles_form'),
                                        exact_url=True,
                                    ),
                                    MenuItem(
-                                       _('main:menu:styles:custom_form'),
+                                       _('main:menu:core:custom_form'),
                                        reverse('main:custom_styles_form'),
                                        exact_url=True,
                                    ),
                                    MenuItem(
-                                       _('main:menu:styles:jquery_form'),
+                                       _('main:menu:core:jquery_form'),
                                        reverse('main:styles_form_jquery'),
+                                       exact_url=True,
+                                   ),
+                                   MenuItem(
+                                       _('main:menu:core:custom_email_form'),
+                                       reverse('main:custom_email_form'),
                                        exact_url=True,
                                    ),
                                ]

@@ -1,8 +1,12 @@
 from django import forms
+from django.urls import reverse_lazy
 from django.utils.safestring import mark_safe
 
 from cdh.core import fields as core_fields
+from cdh.core.forms import TemplatedForm
+from cdh.core.mail import EmailContentEditWidget
 from cdh.files.forms import FileField, TrackedFileField
+from dev.main.emails import ExampleCustomTemplateEmail
 
 
 class FormStylesForm(forms.Form):
@@ -111,8 +115,7 @@ class FormStylesForm(forms.Form):
     password = core_fields.PasswordField()
 
 
-class CustomTemplateFormStylesForm(forms.Form):
-    template_name = 'cdh.core/form_template.html'
+class CustomTemplateFormStylesForm(TemplatedForm):
 
     text = forms.CharField(
         label="Onderzoeksprojectnaam",
@@ -138,7 +141,31 @@ class CustomTemplateFormStylesForm(forms.Form):
                             "onderzoeksdata in")
     )
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
+
 
 class JqueryUIFormStylesForm(forms.Form):
     date = forms.DateField()
 
+
+class CustomEmailForm(TemplatedForm):
+
+    sender = forms.CharField()
+
+    banner = forms.CharField()
+
+    contents = forms.CharField(
+        label="Mail content",
+        help_text=ExampleCustomTemplateEmail.help_text(),
+        widget=EmailContentEditWidget(
+            reverse_lazy('main:custom_email_form_preview'),
+            sender_field='sender',
+            banner_field='banner',
+            footer_field='footer',
+        ),
+    )
+
+    footer = forms.CharField()

@@ -31,8 +31,8 @@ way.
       <button
           v-if="availableFilters.length !== 0"
           @click="filtersVisible = !filtersVisible"
-          class="ufl-filters-button"
-          :class="{ 'button-colored': filtersVisible }"
+          class="ufl-filters-button btn"
+          :class="{ 'btn-primary': filtersVisible }"
       >
         {{ $t('filters') }}
         <span v-if="num_selected_filters !== 0">({{ num_selected_filters }})</span>
@@ -55,7 +55,7 @@ way.
       <span>
         <div class="btn-group">
           <button
-              class="btn btn-default button ufl-filters-button"
+              class="btn btn-secondary ufl-filters-button"
               @click="resetFilters"
           >
             Reset
@@ -186,6 +186,7 @@ export default {
   width: 200px;
   float: right;
   font-size: 0.9rem;
+  border: 1px solid #ccc;
 }
 .uu-fancy-list-controls .ufl-select {
   font-size: 0.9rem;
@@ -197,6 +198,7 @@ export default {
   line-height: 20px;
   padding: 3px 5px;
   text-align: left;
+  border: 1px solid #ccc;
 
   background: #fff;
   background-image:

@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="CDH Django Core",
-    version="3.0.0",
+    version="3.0.0-rc.1",
     author="DH-IT Portal development, UiL OTS Labs",
     author_email="portaldev.gw@uu.nl, labbeheer.gw@uu.nl",
     description="A shared code library for DH-IT & UiL OTS Django projects",
@@ -15,7 +15,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     license_files=('LICENSE',),
     install_requires=[
-        'django>=2.0',
+        'django>=3.2',
         'pyscss',
         'lesscpy',
         'closure',
@@ -25,6 +25,7 @@ setuptools.setup(
         'djangorestframework',
         'python-magic',
         'django-filter',
+        'Deprecated',
     ],
     classifiers=[
         "Programming Language :: Python :: 3",

@@ -1,7 +1,7 @@
 {% extends "base/base.html" %}
 
 {% block content %}
-    <div class="uu-inner-container mt-2 mb-2">
+    <div class="uu-container">
         <div class="col-12">
 
             <h1>CSS Styles testpage</h1>
@@ -60,18 +60,6 @@
             <p>
               This is an abbreviation, made with abbr: <abbr>WWW</abbr>. This is an acronym, made with acronym: <acronym>NATO</acronym>. This is a term that needs a definition, made with dfn: <dfn>Yog-Sothoth</dfn>.
             </p>
-            <div class="success">
-                This is a custom success div
-            </div>
-            <div class="failed">
-                This is a custom failed div
-            </div>
-            <div class="warning">
-                This is a custom warning div
-            </div>
-            <div class="info">
-                This is a custom info div
-            </div>
             <p>
               This is an unordered list:
             </p>
@@ -117,14 +105,14 @@
               This is pre-formatted:
             </p>
             <pre>
-            Start in column one.
-                     Then indent to column ten.
-                Then back five spaces.
+Start in column one.
+         Then indent to column ten.
+    Then back five spaces.
             </pre>
             <p>
               Here's a table with a border, a caption, colgroups, cols, thead, tfoot, & tbody:
             </p>
-            <table>
+            <table class="table">
               <caption>This is a table caption, made with caption</caption>
               <colgroup span="2">
                 <col>
@@ -167,7 +155,7 @@
             <p>
                 This is a full-width table
             </p>
-            <table class="w-100">
+            <table class="table w-100">
               <thead>
                 <tr>
                   <th>Table Header 1</th>

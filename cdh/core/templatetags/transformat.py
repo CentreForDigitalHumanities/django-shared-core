@@ -16,6 +16,7 @@ class FormattedTranslateNode(Node):
         if isinstance(self.filter_expression.var, str):
             self.filter_expression.var = Variable("'%s'" %
                                                   self.filter_expression.var)
+            self.filter_expression.is_var = True
 
     def render(self, context):
         self.filter_expression.var.translate = not self.noop

@@ -4,6 +4,8 @@
 *.pyc
 __pycache__/
 
+### Node ###
+node_modules
 
 ### Project-specific ###
 db.sqlite3
