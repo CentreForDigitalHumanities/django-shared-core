@@ -1,6 +1,5 @@
-from django.views import generic
+from django.views import generic, View
 from django.urls import reverse
-
 
 
 class BlueprintView(generic.DetailView):
@@ -15,6 +14,7 @@ class BlueprintView(generic.DetailView):
 
         if not self.model:
             self.model = self.get_model()
+        self.object = None
 
         return super().__init__(*args, **kwargs)
 
@@ -88,13 +88,10 @@ class QuestionView(generic.TemplateView):
     def get_object(self):
         'Returns the object that the question is about.'
 
-        if not self.model:
-            self.model = self.question.model
-
         pk = self.kwargs.get(self.pk_url_kwarg)
         if not pk:
-            return self.model()
-        return self.model.objects.get(pk=pk)
+            return self.question.model()
+        return self.question.model.objects.get(pk=pk)
 
     def get_success_url(self):
 
