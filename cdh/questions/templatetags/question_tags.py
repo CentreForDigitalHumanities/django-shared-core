@@ -10,7 +10,7 @@ def display_question(question, **kwargs):
     tag_context = {'test': 123,
                    'question': question,
                    'title': question.title,
-                   'segments': question.segments,
+                   'segments': question.get_segments(),
     }
 
     tag_context.update(kwargs)
