@@ -9,7 +9,6 @@ class BlueprintMixin():
     blueprint_class = None
     blueprint = None
     blueprint_pk_kwarg = "blueprint_pk"
-    model = None
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -35,17 +34,20 @@ class SingleQuestionMixin():
 
     question_pk_kwarg = "question_pk"
     question_class = None
-    # self.question is the instantiated question
+    # self.question is the instantiated question, don't override
     question = None
 
     def get_question(self):
         if not self.question:
-            cls = self.get_question_class()
-            if cls.model:
-                question_object = self.get_question_object()
-                self.question = cls(instance=question_object)
-            else:
-                self.question = cls()
+            self.question = self.get_form()
+#            cls = self.get_question_class()
+#            if cls.model:
+#                question_object = self.get_question_object()
+#                self.question = cls(
+#                    instance=question_object,
+#                )
+#            else:
+#                self.question = cls()
         return self.question
 
     def get_question_object(self):
@@ -95,6 +97,7 @@ class QuestionView(
     template_name = 'questions/question_detail.html'
     question = None
     question_class = None
+    question_data = {}
     question_pk_kwarg = "question_pk"
     parent_pk_arg = 'pk'
 
@@ -106,10 +109,14 @@ class QuestionView(
 
     def get_object(self):
         'Returns the object that the question is about.'
-        pk = self.kwargs.get(self.pk_url_kwarg)
-        if not pk:
-            return self.question.model()
-        return self.question.model.objects.get(pk=pk)
+        return self._get_question_object(
+            self.get_question_class())
+
+    def get_form_kwargs(self):
+        "Send extra question data to question class"
+        kwargs = super().get_form_kwargs()
+        kwargs["question_data"] = self.question_data
+        return kwargs
 
     def get_success_url(self):
         parent_pk = self.kwargs.get(self.parent_pk_arg)

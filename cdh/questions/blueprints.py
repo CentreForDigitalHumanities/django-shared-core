@@ -9,7 +9,6 @@ class Blueprint:
     errors = {}
 
     def __init__(self, blueprint_object):
-
         self.object = blueprint_object
         self.start()
 
@@ -60,6 +59,7 @@ class BaseConsumer:
 class BaseQuestionConsumer(BaseConsumer):
 
     question_class = None
+    question_data = {}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -69,28 +69,41 @@ class BaseQuestionConsumer(BaseConsumer):
         "Get Django form errors"
         return self.question.errors
 
+    def get_question_data(self):
+        "Placeholder to be overridden by subclass"
+        return self.question_data
+
     def instantiate(self):
         """Create the self.question instance with the correct question object.
         Overwrite this function if the question does not use the default
         blueprint object."""
-        return self.question_class(
+        self.question = self.question_class(
             instance=self.blueprint.object,
+            question_data=self.get_question_data(),
         )
+        return self.question
 
     @property
-    def empty_fields(self):
+    def empty_fields(self, fields=None):
         question = self.question
         empty = []
-        for key in question.Meta.fields:
+        if not fields:
+            fields = question.Meta.fields
+        for key in fields:
             value = question[key].value()
-            if value in ['', 'None']:
-                empty.append(value)
+            if value in ['', 'None', None]:
+                empty.append(key)
         return empty
 
-    def complete(self, *args, **kwargs):
-        self.blueprint.completed += [self.question]
-        self.blueprint.questions += [self.instantiate()]
-        return super().complete(*args, **kwargs)
+
+
+
+
+
+
+
+
+
 
 
 
