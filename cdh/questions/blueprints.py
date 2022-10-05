@@ -1,56 +1,98 @@
+
 class Blueprint:
     '''A blueprint is a method for validating complicated models
     with any number of submodels with interrelated requirements
     and dependencies'''
 
+    model = None
+    starting_consumers = []
+    errors = {}
 
-    # Starting values
-    provided = []
-    required = []
+    def __init__(self, blueprint_object):
 
-    def __init__(self):
+        self.object = blueprint_object
+        self.start()
 
-        pass
+    def start(self):
+        return self.evaluate(self.starting_consumers)
 
-    def __call__(self):
+    def evaluate(self, consumers):
+        """
+        Evaluate all given consumers and their output.
 
-        pass
+        This recursive function goes through the list
+        of consumers and presents them with this blueprint
+        object. The consumers look at the current state of
+        the blueprint to see if it satisfies their needs.
 
-    def provide(self, provider):
+        Consumers should return a list of new consumers to
+        append to the end of the list. This list may be empty.
 
-        self.provided.append(provider)
+        While in this loop, consumers may modify
+        blueprint state by adding errors and appending to
+        desired_next.
+        """
+        # We've run out of consumers. Finally.
+        if consumers == []:
+            return True
 
-    def require(self, requirement):
+        # Instantiate consumer with self
+        current = consumers[0](self)
 
-        self.requirements.append(requirement)
+        # Run consumer logic, and add the list of consumers
+        # it returns to the list of consumers to be run
+        next_consumers = current.consume() + consumers[1:]
 
-    def validate(self):
+        return self.evaluate(consumers=next_consumers)
 
-        pass
 
-    def get_next_step(self):
+class BaseConsumer:
 
-        pass
+    def __init__(self, blueprint):
+        self.blueprint = blueprint
 
-class Requirement:
+    def consume(self):
+        """Returns a list of new consumers depending on
+        blueprint state."""
+        return []
 
-    def __init__(self, fun):
 
-        self.function = fun
+class BaseQuestionConsumer(BaseConsumer):
 
-    def __call__(self, object):
-        '''When a requirement gets called on an object, it does one of the
-        following:
+    question_class = None
 
-        a. Returns False if the object does not provide the requirement
-        b. Returns an optionally empty list of new requirements if the current
-        requirement has been satisfied'''
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.instantiate()
 
-        return self.evaluate(object)
+    def get_django_errors(self):
+        "Get Django form errors"
+        return self.question.errors
 
-    def success_callback(self, blueprint):
-        '''This function is called when the requirement function is successfully
-        fulfilled. For example if fulfilling a requirement should create new
-        requirements'''
+    def instantiate(self):
+        """Create the self.question instance with the correct question object.
+        Overwrite this function if the question does not use the default
+        blueprint object."""
+        return self.question_class(
+            instance=self.blueprint.object,
+        )
 
-        pass
+    @property
+    def empty_fields(self):
+        question = self.question
+        empty = []
+        for key in question.Meta.fields:
+            value = question[key].value()
+            if value in ['', 'None']:
+                empty.append(value)
+        return empty
+
+    def complete(self, *args, **kwargs):
+        self.blueprint.completed += [self.question]
+        self.blueprint.questions += [self.instantiate()]
+        return super().complete(*args, **kwargs)
+
+
+
+
+
