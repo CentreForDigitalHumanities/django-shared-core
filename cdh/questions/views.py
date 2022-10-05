@@ -59,6 +59,9 @@ class SingleQuestionMixin():
             object = question_model()
         return object
 
+    def get_form_class(self):
+        return self.get_question_class()
+
     def get_question_class(self):
         "Placeholder for subclasses"
         return self.question_class
@@ -140,15 +143,10 @@ class QuestionEditView(QuestionView,
         self.object = self.get_question_object()
         return super().post(request, *args, **kwargs)
 
-    def get_form(self):
-        return self.get_question()
-
-
 
 class QuestionCreateView(QuestionView,
                          generic.edit.CreateView,
                          ):
-
 
     pk_url_kwarg = 'question_pk'
     template_name = 'questions/question_detail.html'
