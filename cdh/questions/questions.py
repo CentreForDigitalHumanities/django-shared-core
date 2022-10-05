@@ -17,8 +17,6 @@ class Question(forms.ModelForm):
 
         super().__init__(*args, **kwargs)
 
-        self.segments = self.get_segments()
-
     def _fields_to_segments(self, fields_list=None):
 
         if not fields_list:

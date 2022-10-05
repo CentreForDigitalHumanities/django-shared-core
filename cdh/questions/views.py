@@ -125,6 +125,10 @@ class QuestionEditView(QuestionView,
 
     template_name = 'cdh.questions/question_detail.html'
 
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_question_object()
+        return super().get(request, *args, **kwargs)
+
     def post(self, request, *args, **kwargs):
         self.object = self.get_question_object()
         return super().post(request, *args, **kwargs)
