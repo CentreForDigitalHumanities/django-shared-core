@@ -95,6 +95,16 @@ class BaseQuestionConsumer(BaseConsumer):
                 empty.append(key)
         return empty
 
+    @property
+    def filled_in_fields(self, fields=None):
+        question = self.question
+        if not fields:
+            fields = question.Meta.fields
+        for empty_field in self.empty_fields:
+            fields.remove(empty_field)
+        return fields
+            
+
 
 
 

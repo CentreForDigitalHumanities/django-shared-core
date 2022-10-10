@@ -87,6 +87,7 @@ class QuestionFromURLMixin(SingleQuestionMixin):
         question_kwarg = self.kwargs.get(self.question_class_kwarg)
         return self.question_dict[question_kwarg]
 
+
 class QuestionDisplayView(generic.TemplateView):
 
     template_name = 'questions/question_detail.html'
@@ -98,11 +99,14 @@ class QuestionView(
 ):
 
     template_name = 'questions/question_detail.html'
-    question = None
     question_class = None
-    question_data = {}
     question_pk_kwarg = "question_pk"
     parent_pk_arg = 'pk'
+
+    def __init__(self, *args, **kwargs):
+        self.question_data = {}
+        self.question = None
+        return super().__init__(*args, **kwargs)
 
     def _get_question_object(self, question):
         object_pk = self.kwargs.get(self.question_pk_kwarg)

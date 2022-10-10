@@ -44,9 +44,6 @@ class Question(forms.ModelForm):
 
         return segment
 
-class EditableQuestion(forms.Form, Question):
-
-    "Makes a Question editable as a Django form"
 
 class DisplayQuestion():
 
