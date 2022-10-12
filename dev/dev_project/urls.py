@@ -25,6 +25,7 @@ handler400 = 'main.error_views.error_400'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('saml/', include('djangosaml2.urls')),
     path('', include('main.urls')),
     path('files/', include('dev_files.urls')),
 

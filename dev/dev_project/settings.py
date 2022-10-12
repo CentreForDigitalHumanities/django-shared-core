@@ -68,6 +68,9 @@ INSTALLED_APPS = [
     # Local apps
     'main',
     'dev_files',
+
+    # SAML
+    'djangosaml2',
 ]
 
 MIDDLEWARE = [
@@ -82,6 +85,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'csp.middleware.CSPMiddleware',
+    'djangosaml2.middleware.SamlSessionMiddleware',
 ]
 
 if DEBUG and ENABLE_DEBUG_TOOLBAR:
@@ -137,7 +141,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'main.User'
 
 LOGIN_URL = reverse_lazy('main:login')
-
+LOGIN_URL = '/saml/login/'
 LOGIN_REDIRECT_URL = reverse_lazy('main:home')
 
 
@@ -219,3 +223,17 @@ CSP_IMG_SRC = ["'self'", 'data:', "*"]  # Remove the last one if you
 
 MENU_SELECT_PARENTS = True
 MENU_HIDE_EMPTY = False
+
+try:
+    from cdh.auth.saml.settings import *
+
+    SAML_CONFIG = create_saml_config(
+        base_url='http://localhost:8000/',
+        name='Federated Django sample SP',
+        key_file=path.join(BASE_DIR, 'dev_project/private.key'),
+        cert_file=path.join(BASE_DIR, 'dev_project/public.cert'),
+        idp_metadata='http://localhost:7000/saml/idp/metadata/',
+        debug=True,
+    )
+except:
+    print('something went wrong loading SAML')
