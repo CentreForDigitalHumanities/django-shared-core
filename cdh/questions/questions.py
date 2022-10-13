@@ -20,10 +20,10 @@ class Question(forms.ModelForm):
     def _fields_to_segments(self, fields_list=None):
 
         if not fields_list:
-            fields_list = self.fields
+            fields_list = self.Meta.fields
 
         segments = []
-        for field in self.fields:
+        for field in fields_list
             segments.append(
                 self._field_to_segment(field)
             )
