@@ -23,7 +23,7 @@ class Question(forms.ModelForm):
             fields_list = self.Meta.fields
 
         segments = []
-        for field in fields_list
+        for field in fields_list:
             segments.append(
                 self._field_to_segment(field)
             )
@@ -40,7 +40,12 @@ class Question(forms.ModelForm):
         segment.context.update({
             'type': 'form_field',
             'field': self[field],
+            'value': self[field].value,
         })
+        if hasattr(self, "instance"):
+            value_display = getattr(self.instance, "get_" + field + "_display", None)
+            if value_display:
+                segment.context["value"] = value_display()
 
         return segment
 
