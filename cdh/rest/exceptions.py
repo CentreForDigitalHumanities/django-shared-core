@@ -1,6 +1,6 @@
 from requests import Response
 
-from cdh.rest_client.logging import general_logger as logger
+from cdh.rest.logging import general_logger as logger
 
 class ApiError(Exception):
     """General API errors"""
