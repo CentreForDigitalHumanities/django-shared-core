@@ -1,0 +1,24 @@
+{% load static %}
+{% with value=widget.value %}
+<div
+        class="uil-files-select-container"
+        data-name="{{ widget.name }}"
+        data-filename="{{ value.name|default:"" }}"
+        data-url="{{ value.url|default:"" }}"
+>
+    <input type="hidden" name="{{ widget.name }}_id" value="{{ value.uuid|default:"" }}">
+    <input type="hidden" name="{{ widget.name }}_changed" value="0">
+    <div class="uil-files-filename">
+        {{ widget.strings.empty_file }}
+    </div>
+    <div class="uil-files-remove">
+        {{ widget.strings.remove }}
+    </div>
+    <div class="uil-files-select">
+        <input type="file" name="{{ widget.name }}">
+        <label for="{{ widget.name }}">
+            {{ widget.strings.select_file }}
+        </label>
+    </div>
+</div>
+{% endwith %}

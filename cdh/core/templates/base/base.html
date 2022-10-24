@@ -1,0 +1,91 @@
+{% extends 'base/minimal.html' %}
+
+{% load static %}
+{% load i18n %}
+{% load include_if_exists %}
+{% load menu %}
+{% load messages %}
+
+{% block uu-header %}
+    {% get_current_language as LANGUAGE_CODE %}
+    <div class="uu-header-row justify-content-between">
+        <div class="uu-logo">
+            {% with 'cdh.core/images/logo-header-'|add:LANGUAGE_CODE|add:'.svg' as header_image %}
+                <a href="https://www.uu.nl" target="_blank">
+                    <img src="{% static header_image %}" alt="{% trans 'cdh.core:uu' %}"
+                         title="{% trans 'cdh.core:uu' %}"/>
+                </a>
+            {% endwith %}
+        </div>
+        <div class="text-center uu-header-title text-red">
+            {% block toppanel-text %}
+                {% if request.user.is_impersonate %}
+                    <span class="icon-warning">⚠</span>
+                    Impersonating user -
+                    <a href="{% url 'impersonate-stop' %}" class="uu-red-text">Stop</a>
+                    <span class="icon-warning">⚠</span>
+                {% elif acceptation %}
+                    <span class="icon-warning">⚠</span>
+                    Acceptation server
+                    <span class="icon-warning">⚠</span>
+                {% elif debug %}
+                    <span class="icon-warning">⚠</span>
+                    Local development server
+                    <span class="icon-warning">⚠</span>
+                {% endif %}
+            {% endblock %}
+        </div>
+        {% include 'base/language_box.html' %}
+    </div>
+    <div class="uu-header-row">
+        <div class="me-auto uu-header-title">
+            <a href="//{{ request.META.HTTP_HOST }}">
+                {% block site_header %}
+                    {% include_if_exists 'base/site_header.html' %}
+                {% endblock %}
+            </a>
+        </div>
+        <div class="ms-auto">
+            {% block login_header %}
+                {% include_if_exists 'base/login_header.html' %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block uu-navbar %}
+    {% generate_menu %}
+    <a href="https://www.uu.nl" class="navbar-brand">
+        <img src="{% static 'cdh.core/images/logo-header-nl.svg' %}" alt="{% trans 'cdh.core:uu' %}"
+             title="{% trans 'cdh.core:uu' %}"/>
+    </a>
+    <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbar-content"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+    >
+        <span class="navbar-toggler-icon"/>
+    </button>
+    {% include 'base/mainmenu.html' %}
+{% endblock %}
+
+{% block uu-content %}
+    {% block pre-messages-content %}{% endblock %}
+    {% display_messages messages %}
+
+    {% block content %}{% endblock %}
+{% endblock %}
+
+{% block uu-footer %}
+    {% generate_menu %}
+    {% get_current_language as LANGUAGE_CODE %}
+    <div class="col-10">
+        {% with 'cdh.core/images/logo-footer-'|add:LANGUAGE_CODE|add:'.svg' as header_image %}
+            <img src="{% static header_image %}" alt="{% trans 'cdh.core:uu' %}" title="{% trans 'cdh.core:uu' %}"/>
+        {% endwith %}
+    </div>
+    {% include 'base/footermenu.html' %}
+{% endblock %}

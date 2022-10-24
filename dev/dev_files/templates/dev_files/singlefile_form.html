@@ -1,0 +1,19 @@
+{% extends 'base/base.html' %}
+
+{% block header_title %}
+    SingleFile - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <div class="uu-container">
+        <div class="col-12">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table class="w-100 table">
+                    {{ form }}
+                </table>
+                <input type="submit" value="Submit" class="float-right">
+            </form>
+        </div>
+    </div>
+{% endblock %}

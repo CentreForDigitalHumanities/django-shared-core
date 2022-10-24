@@ -1,0 +1,19 @@
+{% extends "base/base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+    <div class="uu-hero">
+        <h2>
+            {% trans 'main:error:404:title' %}
+        </h2>
+    </div>
+    <div class="uu-container">
+        <div class="col-12">
+            <p>
+                {% trans 'main:error:404:text' %}
+            </p>
+        </div>
+        </div>
+    </div>
+{% endblock %}

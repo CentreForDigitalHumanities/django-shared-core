@@ -1,0 +1,46 @@
+{% load static %}
+{% with value=widget.value %}
+<div
+        class="uil-files-select-container"
+        data-name="{{ widget.name }}"
+        data-filename="{{ value.current_file.name|default:"" }}"
+        data-url="{{ value.current_file.url|default:"" }}"
+>
+    <input type="hidden" name="{{ widget.name }}_id" value="{{ value.current_file.uuid|default:"" }}">
+    <input type="hidden" name="{{ widget.name }}_changed" value="0">
+
+    <div class="uil-files-filename">
+        {{ widget.strings.empty_file }}
+    </div>
+    <div class="uil-files-remove">
+        {{ widget.strings.remove }}
+    </div>
+    <div class="uil-files-select">
+        <input type="file" name="{{ widget.name }}">
+        <label for="{{ widget.name }}">
+            {{ widget.strings.select_file }}
+        </label><br/>
+        <span class="uil-files-select-existing">
+            {{ widget.strings.select_existing }}
+        </span>
+        <br/>
+    </div>
+</div>
+<div class="uil-files-existing-list">
+    {% for file in value.all %}
+        <div class="uil-files-existing-file" data-id="{{ file.id }}">
+            <strong>{{ file.name }}</strong>
+            {% if file.uuid == value.current_file.uuid %}
+                (Current)
+            {% endif %}
+            <br/>
+            {{ file.get_content_type_display }} -
+            {% if file.created_by %}
+                {{ file.created_by.get_full_name }} -
+            {% endif %}
+            {{ file.created_on|date:"Y-m-d H:i" }}
+            <br/>
+        </div>
+    {% endfor %}
+</div>
+{% endwith %}

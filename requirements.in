@@ -1,3 +1,5 @@
+Django>=3.0,<4.1
+cryptography
 pyscss
 lesscpy
 closure
@@ -5,3 +7,5 @@ vbuild
 requests
 PyJWT
 djangorestframework
+python-magic
+Deprecated

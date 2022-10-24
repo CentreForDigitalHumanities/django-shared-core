@@ -1,0 +1,42 @@
+{% extends 'base/base.html' %}
+
+{% block header_title %}
+    Search - Impersonate - {{ block.super }}
+{% endblock %}
+
+{% block pre-messages-content %}
+    <div class="uu-hero justify-content-between align-items-center">
+        <h1>Impersonate - User List - Page {{ page_number }}</h1>
+
+        <a
+            href="{% url 'impersonate-search' %}"
+            class="btn btn-secondary"
+        >
+            Search users
+        </a>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="uu-container">
+        <div class="col-12 mb-1">
+            {% if page.object_list %}
+                <ul>
+                    {% for user in page.object_list %}
+                        <li><a href="{% url 'impersonate-start' user.pk %}{{ redirect }}">{{ user }}</a> - Impersonate
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            {% if page.has_previous %}
+                <a href="{% url 'impersonate-list' %}?page={{ page.previous_page_number }}">Previous Page</a> &nbsp;
+            {% endif %}
+
+            {% if page.has_next %}
+                <a href="{% url 'impersonate-list' %}?page={{ page.next_page_number }}">Next Page</a> &nbsp;
+            {% endif %}
+        </div>
+
+    </div>
+{% endblock %}

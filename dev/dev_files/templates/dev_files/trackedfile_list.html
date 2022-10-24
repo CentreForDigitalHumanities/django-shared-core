@@ -1,0 +1,54 @@
+{% extends 'base/base.html' %}
+
+{% block header_title %}
+    {{ title }} - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <div class="uu-container">
+        <div class="col-12">
+            <a class="btn btn-primary float-end" href="{{ new_url }}">
+                New
+            </a>
+            <h1>{{ title }}</h1>
+            <table class="w-100 table">
+                <thead>
+                    <tr>
+                        <th>
+                            pk
+                        </th>
+                        <th>
+                            current_file
+                        </th>
+                        <th>
+                            all
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for obj in object_list %}
+                    <tr>
+                        <td>
+                            <a href="{% url update_url_name obj.pk %}">
+                                {{ obj.pk }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ obj.files.current_file.uuid }}
+                        </td>
+                        <td>
+                            <ol>
+                                {% for x in obj.files.all %}
+                                    <li>
+                                        {{ x.uuid }}
+                                    </li>
+                                {% endfor %}
+                            </ol>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -4,17 +4,16 @@
 *.pyc
 __pycache__/
 
+### Node ###
+node_modules
 
 ### Project-specific ###
 db.sqlite3
 
-## Django ##
-*.mo
-
 ### Virtual environments ###
-venv
-env
-.env
+venv*
+env*
+.env*
 
 ### IDE ###
 .idea

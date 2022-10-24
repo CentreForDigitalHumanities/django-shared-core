@@ -1,0 +1,19 @@
+{% if system_messages %}
+
+    {% if container %}
+        <div class="uu-container">
+    {% endif %}
+
+    {% for message in system_messages %}
+        <div class="w-100 {{ message.css_class }}">
+        {% autoescape off %}
+            {{ message.message }}
+        {% endautoescape %}
+        </div>
+    {% endfor %}
+
+    {% if container %}
+        </div>
+    {% endif %}
+
+{% endif %}
