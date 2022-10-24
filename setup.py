@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="CDH Django Core",
-    version="3.0.0-rc.4",
+    version="3.0.0",
     author="DH-IT Portal development, UiL OTS Labs",
     author_email="portaldev.gw@uu.nl, labbeheer.gw@uu.nl",
     description="A shared code library for DH-IT & UiL OTS Django projects",
