@@ -7,10 +7,11 @@ register = template.Library()
 @register.inclusion_tag('cdh.questions/tags/display_question_tag.html')
 def display_question(question, **kwargs):
 
-    tag_context = {'test': 123,
-                   'question': question,
-                   'title': question.title,
-                   'segments': question.segments,
+    tag_context = {
+        'test': 123,
+        'question': question,
+        'title': question.title,
+        'segments': question.get_segments(),
     }
 
     tag_context.update(kwargs)
@@ -33,4 +34,7 @@ def render_segment(context, segment):
     loop variable"""
 
     segment.context.update(context.flatten())
+    if "field" in segment.context:
+        field = segment.context['field'].field
+        field.widget.attrs['class'] = "form-control"
     return segment.render()

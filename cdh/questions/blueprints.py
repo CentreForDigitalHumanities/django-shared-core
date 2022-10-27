@@ -1,56 +1,120 @@
+
 class Blueprint:
     '''A blueprint is a method for validating complicated models
     with any number of submodels with interrelated requirements
     and dependencies'''
 
+    model = None
+    starting_consumers = []
+    errors = {}
 
-    # Starting values
-    provided = []
-    required = []
+    def __init__(self, blueprint_object):
+        self.object = blueprint_object
+        self.start()
 
-    def __init__(self):
+    def start(self):
+        return self.evaluate(self.starting_consumers)
 
-        pass
+    def evaluate(self, consumers):
+        """
+        Evaluate all given consumers and their output.
 
-    def __call__(self):
+        This recursive function goes through the list
+        of consumers and presents them with this blueprint
+        object. The consumers look at the current state of
+        the blueprint to see if it satisfies their needs.
 
-        pass
+        Consumers should return a list of new consumers to
+        append to the end of the list. This list may be empty.
 
-    def provide(self, provider):
+        While in this loop, consumers may modify
+        blueprint state by adding errors and appending to
+        desired_next.
+        """
+        # We've run out of consumers. Finally.
+        if consumers == []:
+            return True
 
-        self.provided.append(provider)
+        # Instantiate consumer with self
+        current = consumers[0](self)
 
-    def require(self, requirement):
+        # Run consumer logic, and add the list of consumers
+        # it returns to the list of consumers to be run
+        next_consumers = current.consume() + consumers[1:]
 
-        self.requirements.append(requirement)
+        return self.evaluate(consumers=next_consumers)
 
-    def validate(self):
 
-        pass
+class BaseConsumer:
 
-    def get_next_step(self):
+    def __init__(self, blueprint):
+        self.blueprint = blueprint
 
-        pass
+    def consume(self):
+        """Returns a list of new consumers depending on
+        blueprint state."""
+        return []
 
-class Requirement:
 
-    def __init__(self, fun):
+class BaseQuestionConsumer(BaseConsumer):
 
-        self.function = fun
+    question_class = None
+    question_data = {}
 
-    def __call__(self, object):
-        '''When a requirement gets called on an object, it does one of the
-        following:
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.instantiate()
 
-        a. Returns False if the object does not provide the requirement
-        b. Returns an optionally empty list of new requirements if the current
-        requirement has been satisfied'''
+    def get_django_errors(self):
+        "Get Django form errors"
+        return self.question.errors
 
-        return self.evaluate(object)
+    def get_question_data(self):
+        "Placeholder to be overridden by subclass"
+        return self.question_data
 
-    def success_callback(self, blueprint):
-        '''This function is called when the requirement function is successfully
-        fulfilled. For example if fulfilling a requirement should create new
-        requirements'''
+    def instantiate(self):
+        """Create the self.question instance with the correct question object.
+        Overwrite this function if the question does not use the default
+        blueprint object."""
+        self.question = self.question_class(
+            instance=self.blueprint.object,
+            question_data=self.get_question_data(),
+        )
+        return self.question
 
-        pass
+    @property
+    def empty_fields(self, fields=None):
+        question = self.question
+        empty = []
+        if not fields:
+            fields = question.Meta.fields
+        for key in fields:
+            value = question[key].value()
+            if value in ['', 'None', None]:
+                empty.append(key)
+        return empty
+
+    @property
+    def filled_in_fields(self, fields=None):
+        question = self.question
+        if not fields:
+            fields = question.Meta.fields
+        for empty_field in self.empty_fields:
+            fields.remove(empty_field)
+        return fields
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

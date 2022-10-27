@@ -5,14 +5,14 @@
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12">
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <table class="w-100">
+                <table class="w-100 table">
                     {{ form.as_table }}
                 </table>
-                <input type="submit" value="Submit" class="float-right">
+                <input type="submit" value="Submit" class="btn btn-primary float-end">
             </form>
         </div>
     </div>

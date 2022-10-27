@@ -1,11 +1,13 @@
 from typing import List, Tuple
 
+from deprecated.sphinx import deprecated
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives, get_connection, send_mail
 from django.template.loader import render_to_string
 from django.utils import translation
 
 
+@deprecated(version='3.0', reason="Replaced by cdh.core.mail package")
 def send_template_email(
         recipient_list: list,
         subject: str,
@@ -84,6 +86,7 @@ def send_template_email(
     )
 
 
+@deprecated(version='3.0', reason="Replaced by cdh.core.mail package")
 def send_personalised_mass_mail(datatuple: List[Tuple[str, dict, List[str]]],
                                 template: str,
                                 template_context: dict,

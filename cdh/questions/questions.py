@@ -11,19 +11,19 @@ from django.urls import reverse
 
 class Question(forms.ModelForm):
 
+    segment_template = None
+
     def __init__(self, *args, **kwargs):
-
+        self.question_data = kwargs.pop("question_data", {})
         super().__init__(*args, **kwargs)
-
-        self.segments = self.get_segments()
 
     def _fields_to_segments(self, fields_list=None):
 
         if not fields_list:
-            fields_list = self.fields
+            fields_list = self.Meta.fields
 
         segments = []
-        for field in self.fields:
+        for field in fields_list:
             segments.append(
                 self._field_to_segment(field)
             )
@@ -35,16 +35,20 @@ class Question(forms.ModelForm):
         segment = Segment()
         segment.type = 'form_field'
         segment.field = self[field]
+        if self.segment_template:
+            segment.template_name = self.segment_template
         segment.context.update({
             'type': 'form_field',
             'field': self[field],
-            })
+            'value': self[field].value,
+        })
+        if hasattr(self, "instance"):
+            value_display = getattr(self.instance, "get_" + field + "_display", None)
+            if value_display:
+                segment.context["value"] = value_display()
 
         return segment
 
-class EditableQuestion(forms.Form, Question):
-
-    "Makes a Question editable as a Django form"
 
 class DisplayQuestion():
 
@@ -54,20 +58,24 @@ class DisplayQuestion():
 
 class Segment:
 
-    def __init__(self, **kwargs):
+    default_template_name = 'cdh.questions/tags/question_segments.html'
+    template_name = None
 
-        if hasattr(self, 'template_name'):
-            self.template = get_template(self.template_name)
-        else:
-            self.template = get_template('cdh.questions/tags/question_segments.html')
+    def __init__(self, **kwargs):
 
         # This context gets changed to a Context object later
         self.context = {'segment': self}
         self.context.update(**kwargs)
 
-    def render(self):
+    def get_template(self):
+        if not self.template_name:
+            self.template_name = self.default_template_name
+        self.template = get_template(self.template_name)
+        return self.template
 
-        return self.template.render(self.context)
+    def render(self):
+        template = self.get_template()
+        return template.render(self.context)
 
 
 class SubheaderSegment(Segment):

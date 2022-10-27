@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-23 17:24+0200\n"
+"POT-Creation-Date: 2022-08-24 11:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,8 +18,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: cdh/core/templates/base/base.html:84 cdh/core/templates/base/base.html:131
-#: cdh/core/templates/base/base.html:154
+#: cdh/core/mail/message.py:410
+msgid "core.mail.custom.help_text.variables"
+msgstr "Variabelen"
+
+#: cdh/core/mail/message.py:422
+msgid "core.mail.custom.help_text.tags"
+msgstr "Commando's"
+
+#: cdh/core/templates/admin/base_site.html:97
+msgid "Django administration"
+msgstr ""
+
+#: cdh/core/templates/base/base.html:15 cdh/core/templates/base/base.html:16
+#: cdh/core/templates/base/base.html:59 cdh/core/templates/base/base.html:60
+#: cdh/core/templates/base/base.html:86
 msgid "cdh.core:uu"
 msgstr "Universiteit Utrecht"
 

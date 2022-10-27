@@ -5,8 +5,9 @@ These Django apps implement shared code for DH-IT Django projects. Developed in 
 ## Currently targeting:
 - Python 3.9
 - Python 3.10 (experimental)
-- Django 3.x
-- Django 4.0 (experimental)
+- Django 3.2+
+- Django 4.0 (recommended)
+- Django 4.1 (experimental)
 
 Older versions are not supported, please use a older release if needed
 
@@ -26,6 +27,13 @@ Modified to better suit our usage
 Source: https://github.com/impak-finance/django-js-urls
 
 Licenced under the MIT license, see `cdh/core/js_urls/LICENSE`
+
+## Select2 Bootstrap 5 Theme
+Modified to always apply, minor fixes and better SCSS integration
+
+Source: https://github.com/apalfrey/select2-bootstrap-5-theme
+
+Licenced under the MIT license, see `scss/select2-bootstrap/LICENSE`
 
 # Partly included libraries
 These libraries are partly integrated into this codebase. 

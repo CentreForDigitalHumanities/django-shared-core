@@ -19,7 +19,7 @@
 .uil-files-select-container .uil-files-select-existing,
 .uil-files-select-container .uil-files-remove {
     cursor: pointer;
-    color: var(--uu-mid-blue);
+    color: var(--bs-teal);
     font-weight: bold;
     float: right;
     user-select: none;
@@ -42,7 +42,7 @@
 
 .uil-files-existing-list .uil-files-existing-file {
     padding: 5px;
-    background: var(--uu-background-alternative-content);
+    background: var(--bs-light);
     margin-bottom: 5px;
 }
 
