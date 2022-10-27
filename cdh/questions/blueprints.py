@@ -103,7 +103,6 @@ class BaseQuestionConsumer(BaseConsumer):
         for empty_field in self.empty_fields:
             fields.remove(empty_field)
         return fields
-            
 
 
 
