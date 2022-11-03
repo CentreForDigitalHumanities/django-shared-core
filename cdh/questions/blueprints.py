@@ -10,7 +10,6 @@ class Blueprint:
 
     def __init__(self, blueprint_object):
         self.object = blueprint_object
-        self.start()
 
     def start(self):
         return self.evaluate(self.starting_consumers)
