@@ -9,8 +9,8 @@ class BaseEmailPreviewView(generic.View):
     """
     email_class = None
 
-    def post(self, request):
-        kwargs = {
+    def post(self, request, *args, **kwargs):
+        email_class_kwargs = {
             'to':       'example@example.org',
             'subject':  'Test Email',
             'contents': request.POST.get('contents', None),
@@ -20,7 +20,7 @@ class BaseEmailPreviewView(generic.View):
             'context':  self.get_preview_context(),
         }
 
-        msg = self.email_class(**kwargs)
+        msg = self.email_class(**email_class_kwargs)
 
         return HttpResponse(msg.render_preview())
 
@@ -28,6 +28,7 @@ class BaseEmailPreviewView(generic.View):
         """A method to provide any additional context to the preview email.
 
         Most of this _should_ be handled by the email class itself, but this
-        method can be used if you want some dynamic defaults.
+        method can be used if you want some dynamic defaults. Any defaults
+        specified in the Email class will be overwritten by data supplied here.
         """
         return {}

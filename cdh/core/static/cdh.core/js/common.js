@@ -28,7 +28,7 @@ $(function() {
         let help = $(this).nextAll('.helptext');
         if (help.html())
         {
-            let label = $("th label[for^='" + $(this).attr('id') + "']").first();
+            let label = $(this).parent().parent().find('th label').first();
             let icon = $('<span class="icon-info"></span>');
             icon.html('&nbsp;');
             icon.appendTo(label);

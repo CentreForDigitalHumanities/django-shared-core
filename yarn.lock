@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-bootstrap@5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-5.2.0.tgz#838727fb60f1630db370fe57c63cbcf2962bb3d3"
-  integrity sha512-qlnS9GL6YZE6Wnef46GxGv1UpGGzAwO0aPL1yOjzDIJpeApeMvqV24iL+pjr2kU4dduoBA9fINKWKgMToobx9A==
+bootstrap@5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-5.2.1.tgz#45f97ff05cbe828bad807b014d8425f3aeb8ec3a"
+  integrity sha512-UQi3v2NpVPEi1n35dmRRzBJFlgvWHYwyem6yHhuT6afYF+sziEt46McRbT//kVXZ7b1YUYEVGdXEH74Nx3xzGA==
 
 ometa@0.2.2:
   version "0.2.2"
@@ -19,8 +19,8 @@ scss@^0.2.4:
   dependencies:
     ometa "0.2.2"
 
-"uu-bootstrap@git+ssh://git@github.com/DH-IT-Portal-Development/bootstrap-theme.git#1.1.0":
-  version "1.1.0"
-  resolved "git+ssh://git@github.com/DH-IT-Portal-Development/bootstrap-theme.git#71041c2906edb926818e8b07db60a0c6d850b5f6"
+"uu-bootstrap@git+ssh://git@github.com/DH-IT-Portal-Development/bootstrap-theme.git#1.3.0":
+  version "1.3.0"
+  resolved "git+ssh://git@github.com/DH-IT-Portal-Development/bootstrap-theme.git#e528294a0ae1c6f8a6de79d774772158f8a014b9"
   dependencies:
-    bootstrap "5.2.0"
+    bootstrap "5.2.1"

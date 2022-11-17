@@ -51,9 +51,6 @@ documentation <https://dh-it-portal-development.github.io/bootstrap-theme/migrat
 In addition, table based forms now need the ``.table`` class to be
 applied to the ``<table>``
 
-If that’s not possible (e.g. not using Django 4), you can ask the portal
-dev team to provide you some CSS to make table-based forms work again.
-
 Recommended
 ~~~~~~~~~~~
 
@@ -71,12 +68,11 @@ App-specific base template
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For both future compatibility and more customization options, it’s
-recommended to create your own base template by extending one of two
-base templates included in the library.
+recommended to create your own app-specific base template by extending one of
+two base templates included in the library.
 
-Convention
-
-This will become mandatory in version 4.0.
+Due to the deprecation of (most) ``include_if_exists`` subtemplates, this will
+become mandatory in version 4.0. (See sub-templates below)
 
 Minimal template
 ''''''''''''''''

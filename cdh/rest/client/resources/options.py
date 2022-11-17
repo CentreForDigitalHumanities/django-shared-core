@@ -1,4 +1,4 @@
-from cdh.rest_client.operations import Operations
+from cdh.rest.client.operations import Operations
 
 
 class ResourceOptions:

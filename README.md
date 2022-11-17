@@ -2,6 +2,8 @@
 
 These Django apps implement shared code for DH-IT Django projects. Developed in collaboration with the [UiL OTS Labs](https://github.com/UiL-OTS-labs)
 
+Documentation provided here: https://dh-it-portal-development.github.io/django-shared-core/
+
 ## Currently targeting:
 - Python 3.9
 - Python 3.10 (experimental)

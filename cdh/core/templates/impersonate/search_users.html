@@ -4,25 +4,33 @@
     Search - Impersonate - {{ block.super }}
 {% endblock %}
 
-{% block content %}
-    <div class="uu-inner-container">
-        <div class="col-12">
-            <a
-                href="{% url 'impersonate-list' %}"
-                class="button button-colored float-right"
-            >
-                List all users
-            </a>
-            <h1>Impersonate - Search Users {% if query %}- Page {{ page_number }}{% endif %}</h1>
+{% block pre-messages-content %}
+    <div class="uu-hero justify-content-between align-items-center">
+        <h1>Impersonate - Search Users {% if query %}- Page {{ page_number }}{% endif %}</h1>
 
+        <a
+            href="{% url 'impersonate-list' %}"
+            class="btn btn-secondary"
+        >
+            List all users
+        </a>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="uu-container">
+        <div class="col-12">
             <form action="{% url 'impersonate-search' %}" method="GET">
-                Enter Search Query:<br/>
-                <input type="text" name="q" value="{% if query %}{{ query }}{% endif %}">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="q" placeholder="Search users..." value="{% if query %}{{ query }}{% endif %}">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
                 {{ redirect_field }}
-                <input type="submit" value="Search"><br/>
             </form>
         </div>
-        <div class="col-12 mt-1 mb-1">
+    </div>
+    <div class="uu-container">
+        <div class="col-12">
             {% if query and page.object_list %}
                 <ul>
                     {% for user in page.object_list %}

@@ -2,7 +2,7 @@ from typing import List, Optional
 
 from django import forms
 from django.forms.widgets import CheckboxInput, CheckboxSelectMultiple, \
-    RadioSelect
+    RadioSelect, Select
 
 from cdh.core.file_loading import add_js_file
 
@@ -53,6 +53,21 @@ class TemplatedModelForm(TemplatedFormMixin, forms.ModelForm):
     Uses :class:`.TemplatedFormMixin`
     """
     pass
+
+
+class BootstrapSelect(Select):
+    """Override of Django's version to use the right Bootstrap classes"""
+
+    def get_context(self, *args, **kwargs):
+        if 'form-control' in self.attrs['class']:
+            self.attrs['class'] = self.attrs['class'].replace(
+                'form-control',
+                'form-select'
+            )
+        else:
+            self.attrs['class'] += ' form-select'
+
+        return super().get_context(*args, **kwargs)
 
 
 class BootstrapCheckboxInput(CheckboxInput):
@@ -107,22 +122,22 @@ class DateField(forms.DateField):
     widget = DateInput
 
 
-class TimeInput(forms.DateInput):
+class TimeInput(forms.TimeInput):
     """Override of Django's version to use the right HTML5 input"""
     input_type = 'time'
 
 
-class TimeField(forms.DateField):
+class TimeField(forms.TimeField):
     """Override of Django's version to use the right HTML5 input"""
     widget = TimeInput
 
 
-class DateTimeInput(forms.DateInput):
+class DateTimeInput(forms.DateTimeInput):
     """Override of Django's version to use the right HTML5 input"""
     input_type = 'datetime-local'
 
 
-class DateTimeField(forms.DateField):
+class DateTimeField(forms.DateTimeField):
     """Override of Django's version to use the right HTML5 input"""
     widget = DateTimeInput
 
