@@ -2,6 +2,8 @@ from django import template
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
+from django.forms.widgets import TextInput, CheckboxInput
+
 register = template.Library()
 
 @register.inclusion_tag('cdh.questions/tags/display_question_tag.html')
@@ -36,7 +38,8 @@ def render_segment(context, segment):
     segment.context.update(context.flatten())
     if "field" in segment.context:
         field = segment.context['field'].field
-        field.widget.attrs['class'] = "form-control"
+        if type(field.widget) == TextInput:
+            field.widget.attrs['class'] = "form-control"
     return segment.render()
 
 

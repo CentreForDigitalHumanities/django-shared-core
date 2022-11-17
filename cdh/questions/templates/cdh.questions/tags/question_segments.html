@@ -26,7 +26,7 @@
 {% elif segment.type == "form_field" %}
   <div class="uu-form-row">
     <div class="uu-form-field">
-      <label class="uu-form-field" for="id_{{segment.field.name}}">
+      <label class="form-label d-block" for="id_{{segment.field.name}}">
         {{ segment.field.label }}
       </label>
       {% if editing %}
