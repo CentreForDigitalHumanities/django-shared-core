@@ -14,6 +14,7 @@ class Question(forms.ModelForm):
     segment_template = None
 
     def __init__(self, *args, **kwargs):
+        self.kwargs = kwargs
         self.question_data = kwargs.pop("question_data", {})
         super().__init__(*args, **kwargs)
 
