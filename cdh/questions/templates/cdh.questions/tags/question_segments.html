@@ -1,3 +1,5 @@
+{% load question_tags %}
+
 {% if segment.type == "left_right" %}
 <div class="row segment">
     <div class="col-4 uil-segment-left">
@@ -13,45 +15,36 @@
 {% elif segment.type == "subheader" %}
 <h4>{{subheader}}</h4>
 <hr />
-{% elif segment.type == "paragraph" %}
 
-<p>{{paragraph}}</p>
+{% elif segment.type == "paragraph" %}
+  <div class="uu-form-text-row">
+    <div class="uu-form-text">
+      {{paragraph}}
+    </div>
+  </div>
 
 {% elif segment.type == "form_field" %}
-<div class="row uil-segment">
-    <div class="col-5 uil-segment-left">
-        <p>
-            {{ segment.field.label }}
-        </p>
-        <p>
-            {{segment.sub_label}}
-        </p>
-    </div>
-    <div class="col-7 uil-segment-right">
-        {% if editing %}
+  <div class="uu-form-row">
+    <div class="uu-form-field">
+      <label class="uu-form-field" for="id_{{segment.field.name}}">
+        {{ segment.field.label }}
+      </label>
+      {% if editing %}
         {{ segment.field }}
-        {% else %}
-        {{ segment.field.value }}
-        {% endif %}
-        <p></p>
+      {% else %}
+        <div class="form-control">
+          {{ value }} &nbsp;
+        </div>
+      {% endif %}
     </div>
-
-
-
-</div>
+  </div>
 
 {% elif segment.type == "comments" %}
 
 
-<hr />
-<span class="uil-right-link">(verberg)</span>
-<h4>Comments (2)</h4>
-<p class="uil-comment"><strong>Jan de Bruijn:</strong>
-    Ziet er goed uit, alleen tabel 5 nog even updaten naar de nieuwste cijfers</p>
-<p class="uil-comment"><strong>Arno de Vries (A):</strong>
-    Gebeurd! ({{is_editable}})
-</p>
+{% elif segment_type == "list_of_questions" %}
+  {% display_loq source_question editing=editing %}
 
 {% else %}
-<p> {{segment.type}} </p>
+  <p> {{segment.type}} ~henlo~ </p>
 {% endif %}

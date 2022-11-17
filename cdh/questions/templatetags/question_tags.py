@@ -38,3 +38,28 @@ def render_segment(context, segment):
         field = segment.context['field'].field
         field.widget.attrs['class'] = "form-control"
     return segment.render()
+
+
+@register.inclusion_tag('cdh.questions/tags/display_question_smole.html')
+def display_question_small(question, **kwargs):
+
+    tag_context = display_question_mockup(question, **kwargs)
+
+    tag_context.update(kwargs)
+
+    tag_context['editing'] = False
+
+    return tag_context
+
+
+@register.inclusion_tag('cdh.questions/tags/display_loq.html')
+def display_loq(question, **kwargs):
+
+    tag_context = {
+        "loq": question.get_queryset(),
+        "source_question": question,
+        "create_url": question.get_create_url(),
+    }
+    tag_context.update(**kwargs)
+
+    return tag_context
