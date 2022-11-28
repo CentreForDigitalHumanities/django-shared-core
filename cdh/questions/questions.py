@@ -41,7 +41,7 @@ class Question(forms.ModelForm):
         segment.context.update({
             'type': 'form_field',
             'field': self[field],
-            'value': self[field].value,
+            'value': self[field].value(),
         })
         if hasattr(self, "instance"):
             value_display = getattr(self.instance, "get_" + field + "_display", None)
