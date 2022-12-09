@@ -8,7 +8,7 @@ asgiref==3.5.2
     # via django
 build==0.8.0
     # via pip-tools
-certifi==2022.6.15
+certifi==2022.12.7
     # via requests
 cffi==1.15.1
     # via cryptography
@@ -86,10 +86,6 @@ sqlparse==0.4.2
     # via
     #   django
     #   django-debug-toolbar
-tomli==2.0.1
-    # via
-    #   build
-    #   pep517
 urllib3==1.26.12
     # via requests
 vbuild==0.8.1
