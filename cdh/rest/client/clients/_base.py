@@ -1,5 +1,5 @@
 from typing import Tuple
-from urllib.parse import urljoin
+from urllib.parse import urljoin, quote
 
 import requests
 from django.conf import settings
@@ -26,7 +26,10 @@ class BaseClient:
         self.meta = None
 
         self._http_client = requests
-        self._host = settings.API_HOST
+        if hasattr(settings, 'API_HOST'):
+            self._host = settings.API_HOST
+        else:
+            self._host = None
 
     @staticmethod
     def _make_auth_headers() -> dict:
@@ -84,9 +87,9 @@ class BaseClient:
                 if res and path_var in self.meta.fields:
                     value = getattr(res, path_var)
                     value = self.meta.fields[path_var].clean(value)
-                    values[path_var] = value
+                    values[path_var] = quote(value)
                 elif path_var in kwargs:
-                    values[path_var] = kwargs.pop(path_var)
+                    values[path_var] = quote(kwargs.pop(path_var))
                 else:
                     raise RuntimeError(
                         'No value found for path variable {}'.format(path_var)
