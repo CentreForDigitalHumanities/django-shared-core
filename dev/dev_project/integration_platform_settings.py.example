@@ -1,0 +1,6 @@
+INTEGRATION_PLATFORM_HOST = ''
+
+DIGITAL_IDENTITY_API_CREDENTIALS = {
+    'key': '',
+    'secret': ''
+}
