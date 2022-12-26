@@ -86,15 +86,11 @@ sqlparse==0.4.2
     # via
     #   django
     #   django-debug-toolbar
-tomli==2.0.1
-    # via
-    #   build
-    #   pep517
 urllib3==1.26.12
     # via requests
 vbuild==0.8.1
     # via -r requirements-django3.in
-wheel==0.37.1
+wheel==0.38.1
     # via pip-tools
 
 # The following packages are considered to be unsafe in a requirements file:
