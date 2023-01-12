@@ -50,31 +50,31 @@ class CollectionClient(BaseClient):
         url, kwargs = self._make_url(**kwargs)
 
         try:
-            logger.info(f"GETting {url}")
+            logger.info(f"{repr(self)}: GETting {url}")
             request = method(
                 url,
                 kwargs,
                 headers=self._make_auth_headers(),
             )
         except ConnectionError as e:
-            logger.warning(f"Host {url} unreachable")
+            logger.warning(f"{repr(self)}: Host {url} unreachable")
             host_unreachable()
             return None
 
         if request.ok:
-            logger.info(f"Data retrieved")
+            logger.info(f"{repr(self)}: Data retrieved")
             return self.meta.collection(request.json())
 
         if request.status_code == 404:
-            logger.warning(f"Data not found")
+            logger.warning(f"{repr(self)}: Data not found")
             raise ObjectDoesNotExist
 
         self._handle_api_error(request)
 
     def __str__(self):
-        return '{} client for collection {}'.format(
+        return '{} for {}'.format(
             self.__class__.__name__,
-            self.meta.resource.__class__.__name__
+            self.meta.resource.__name__
         )
 
     def __repr__(self):

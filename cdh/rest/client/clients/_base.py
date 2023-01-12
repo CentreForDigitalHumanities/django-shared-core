@@ -80,7 +80,7 @@ class BaseClient:
         :return: A fully qualified URI to be used in the http request
         """
         url = self.path
-        logger.debug(f"Creating URL: {url}")
+        logger.debug(f"{repr(self)}: Creating URL: {url}")
         if self.path_variables:
             values = {}
             for path_var in self.path_variables:
@@ -94,7 +94,7 @@ class BaseClient:
                     raise RuntimeError(
                         'No value found for path variable {}'.format(path_var)
                     )
-            logger.debug(f"Using values: {values}")
+            logger.debug(f"{repr(self)}: Using values: {values}")
             url = url.format(**values)
 
         return urljoin(self._host, url), kwargs
