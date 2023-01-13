@@ -6,9 +6,9 @@ HOST = getattr(
     '',
 )
 
-DIGITAL_IDENTITY_API_CREDENTIALS = getattr(
+CONSUMER_CREDENTIALS = getattr(
     settings,
-    'DIGITAL_IDENTITY_API_CREDENTIALS',
+    'INTEGRATION_PLATFORM_CONSUMER_CREDENTIALS',
     {
         'key': '',
         'secret': ''

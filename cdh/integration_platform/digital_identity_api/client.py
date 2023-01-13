@@ -1,5 +1,5 @@
 import cdh.integration_platform.settings as settings
-from cdh.integration_platform.token_api.resources import Token
+from cdh.integration_platform.token_api import TokenService
 from cdh.rest.client.clients import ResourceClient
 from cdh.rest.client.logging import transaction_logger as logger
 
@@ -36,7 +36,7 @@ class DIAClient(ResourceClient):
 
 
     def _make_auth_headers(self) -> dict:
-        credentials = Token.client.get().access_token
+        credentials = TokenService.get_token()
 
         headers = {
             'Authorization': f"Bearer {credentials}",
