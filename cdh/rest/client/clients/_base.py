@@ -87,9 +87,14 @@ class BaseClient:
                 if res and path_var in self.meta.fields:
                     value = getattr(res, path_var)
                     value = self.meta.fields[path_var].clean(value)
-                    values[path_var] = quote(value)
+                    if isinstance(value, str):
+                        value = quote(value)
+                    values[path_var] = value
                 elif path_var in kwargs:
-                    values[path_var] = quote(kwargs.pop(path_var))
+                    value = kwargs.pop(path_var)
+                    if isinstance(value, str):
+                        value = quote(value)
+                    values[path_var] = value
                 else:
                     raise RuntimeError(
                         'No value found for path variable {}'.format(path_var)
