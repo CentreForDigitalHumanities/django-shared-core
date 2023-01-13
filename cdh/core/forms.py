@@ -71,6 +71,9 @@ class BootstrapSelect(Select):
     """Override of Django's version to use the right Bootstrap classes"""
 
     def get_context(self, *args, **kwargs):
+        if 'class' not in self.attrs:
+            self.attrs['class'] = ""
+
         if 'form-control' in self.attrs['class']:
             self.attrs['class'] = self.attrs['class'].replace(
                 'form-control',
