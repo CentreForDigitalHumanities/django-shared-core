@@ -1,5 +1,6 @@
 from cdh.rest.client import resources, fields, Operations
 from .client import TokenClient
+from .fields import ExpiryField
 
 
 class Token(resources.Resource):
@@ -14,4 +15,13 @@ class Token(resources.Resource):
 
     token_type = fields.TextField()
 
-    expires_in = fields.IntegerField()
+    expires_in = ExpiryField()
+
+    def revoke(self):
+        self.client.revoke(self)
+
+    def __str__(self):
+        return '<{} ({})>'.format(
+            self.__class__.__name__,
+            self.access_token
+        )
