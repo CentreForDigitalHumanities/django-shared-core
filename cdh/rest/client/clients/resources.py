@@ -100,6 +100,7 @@ class ResourceClient(BaseClient):
 
         if request.ok:
             logger.info(f"{repr(self)}: Data retrieved")
+            logger.debug(f"{repr(self)}: {request.content}")
             return self.meta.resource(**request.json())
 
         self._handle_api_error(request)
