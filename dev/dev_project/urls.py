@@ -27,6 +27,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
     path('files/', include('dev_files.urls')),
+    path('integration_platform/', include('dev_integration_platform.urls')),
 
     path('impersonate/', include('impersonate.urls')),
     path('cdhcore/', include('cdh.core.urls')),
