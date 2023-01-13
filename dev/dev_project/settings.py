@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     # Local apps
     'main',
     'dev_files',
+    'dev_integration_platform',
 ]
 
 MIDDLEWARE = [
