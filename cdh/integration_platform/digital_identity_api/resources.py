@@ -1,6 +1,6 @@
 from pprint import pformat
 
-from cdh.rest.client import resources, fields, Operations
+from cdh.rest.client import resources, fields, Operations, StringCollection
 from .client import DIAClient
 
 
@@ -27,6 +27,42 @@ class Communication(resources.Resource):
         })
 
 
+class Role(resources.Resource):
+
+    main = fields.TextField()
+    sub = fields.TextField()
+
+    def __str__(self):
+        return pformat({
+            'main': self.main,
+            'sub': self.sub,
+        })
+
+
+class Roles(resources.Resource):
+
+    role = fields.ResourceField(Role)
+
+    def __str__(self):
+        return pformat({
+            'role': self.role
+        })
+
+
+class ExternalID(resources.Resource):
+
+    student_number = fields.CollectionField(StringCollection)
+    employee_number = fields.CollectionField(StringCollection)
+    employee_cp_number = fields.CollectionField(StringCollection)
+
+    def __str__(self):
+        return pformat({
+            'student_number': self.student_number,
+            'employee_number': self.employee_number,
+            'employee_cp_number': self.employee_cp_number,
+        })
+
+
 class Identity(resources.Resource):
     class Meta:
         path = "/api/digitalidentity/v2/person/{id_type}/{id}"
@@ -36,8 +72,8 @@ class Identity(resources.Resource):
 
     solisId = fields.TextField()
 
-    status = fields.TextField(null=True, blank=True) # The api seems to return strings of
-    # 'null' here, but not with prefix
+    status = fields.TextField(null=True, blank=True)  # The api seems to return
+    # strings of 'null' here, but not with prefix
 
     initials = fields.TextField()
 
@@ -45,9 +81,11 @@ class Identity(resources.Resource):
 
     prefix = fields.TextField(null=True, blank=True)
 
-    # TODO: roles, external_id
-
     surname = fields.TextField()
+
+    roles = fields.ResourceField(Roles)
+
+    external_id = fields.ResourceField(ExternalID)
 
     communication = fields.ResourceField(Communication)
 
@@ -60,4 +98,6 @@ class Identity(resources.Resource):
             'prefix': self.prefix,
             'surname': self.surname,
             'communication': self.communication,
+            'roles': self.roles,
+            'external_id': self.external_id,
         })
