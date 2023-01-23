@@ -19,6 +19,6 @@ django-extensions
 mysqlclient
 Deprecated
 sphinx
-sphinx_rtd_theme
 sphinxcontrib-apidoc
 sphinxcontrib-django2
+-e git+https://github.com/CentreForDigitalHumanities/sphinx-theme.git@main#egg=uu_sphinx_theme

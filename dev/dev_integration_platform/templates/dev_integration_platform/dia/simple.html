@@ -1,0 +1,50 @@
+{% extends 'base/base.html' %}
+
+{% block pre-messages-content %}
+    <div class="uu-hero">
+        <h1>Digital Identity API - Simple test</h1>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="uu-container">
+        <div class="col-12">
+            {% if identity %}
+                <div class="alert alert-success">
+                    <strong>Found identity:</strong>
+                    <table class="w-100">
+                        <tr class="fw-bold">
+                            <th>Initials</th>
+                            <th>Surname</th>
+                            <th>Given name</th>
+                            <th>Prefix</th>
+                            <th>Status</th>
+                            <th>E-mail</th>
+                        </tr>
+                        <tr>
+                            <td>{{ identity.initials }}</td>
+                            <td>{{ identity.surname }}</td>
+                            <td>{{ identity.givenName }}</td>
+                            <td>{{ identity.prefix }}</td>
+                            <td>{{ identity.status }}</td>
+                            <td>{{ identity.communication.email.employee }}</td>
+                        </tr>
+                    </table>
+                    <strong class="mt-2 d-block">Raw</strong>
+                    <pre>{{ identity }}</pre>
+                </div>
+            {% elif does_not_exist %}
+                <div class="alert alert-danger text-center fw-bold">
+                    No identity found!
+                </div>
+            {% endif %}
+            <form method="post" class="uu-form uu-form-no-gap uu-form-no-help">
+                {% csrf_token %}
+                {{ form }}
+                <button type="submit" class="btn btn-primary mt-3">
+                    Send
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
