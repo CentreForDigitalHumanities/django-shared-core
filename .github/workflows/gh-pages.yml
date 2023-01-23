@@ -103,7 +103,7 @@ jobs:
       # _gh-pages/branch/$brname (transforming '/' into '--')
       - name: Copy new build (branch)
         if: |
-          contains(pull_request, 'push') &&
+          contains(github.event_name, 'push') &&
           !contains(github.ref, env.DEFAULT_BRANCH)
         run: |
           set -x
