@@ -1,7 +1,7 @@
 # From: https://github.com/rkdarst/sphinx-actions-test/blob/master/.github/workflows/sphinx-build.yml
 
 name: Build and deploy sphinx
-on: [push, pull_request]
+on: [push]
 
 env:
   DEFAULT_BRANCH: "master"

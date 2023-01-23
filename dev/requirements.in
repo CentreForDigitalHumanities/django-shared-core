@@ -6,6 +6,7 @@ django-simple-menu
 django-debug-toolbar
 django-csp
 django-extensions
+djangosaml2
 cryptography # Not needed if not using encrypted DB fields
 pip-tools
 mysqlclient
