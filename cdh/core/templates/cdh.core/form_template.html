@@ -17,7 +17,12 @@
                 </label>
                 {{ field }}
                 <div class="invalid-feedback">
-                    {{ errors }}
+                    {% for error in field.errors %}
+                        {{ error }}
+                        {% if not forloop.last %}
+                            <br/>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
             {% if show_help_column and field.help_text %}
