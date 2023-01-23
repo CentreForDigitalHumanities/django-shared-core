@@ -20,7 +20,7 @@ SAML_IGNORE_LOGOUT_ERRORS = True
 SAML_SESSION_COOKIE_NAME = 'saml_session'
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
+    'django.contrib.federated_auth.backends.ModelBackend',
     'djangosaml2.backends.Saml2Backend',
 )
 

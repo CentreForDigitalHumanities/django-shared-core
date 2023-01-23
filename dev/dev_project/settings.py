@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'cdh.vue',
     'cdh.files',
     'cdh.integration_platform',
-    'cdh.auth',
+    'cdh.federated_auth',
 
     # Django supplied apps
     'django.contrib.admin',
@@ -153,21 +153,21 @@ LOGIN_REDIRECT_URL = reverse_lazy('main:home')
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.federated_auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.federated_auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.federated_auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.federated_auth.password_validation.NumericPasswordValidator',
     },
 ]
 
 PASSWORD_HASHERS = [
-    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.federated_auth.hashers.PBKDF2PasswordHasher',
 ]
 
 
@@ -233,7 +233,7 @@ except ImportError:
     print('No integration platform settings found')
 
 try:
-    from cdh.auth.saml.settings import *
+    from cdh.federated_auth.saml.settings import *
 
     SAML_CONFIG = create_saml_config(
         base_url='http://localhost:8000/',
