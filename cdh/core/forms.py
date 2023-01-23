@@ -23,15 +23,28 @@ class TemplatedFormMixin:
     show_help_column = True
     # If False, it will hide the help column on fields without a help text
     always_show_help_column = True
+    # If False, it will supress the is-valid feedback on submit
+    show_valid_fields = True
 
     def get_context(self):
         context = super().get_context()
 
+        form_was_changed = len(self.changed_data) != 0
+
         for field, errors in context['fields']:
+            # Fix for fields that do not set this attr
+            if 'class' not in field.field.widget.attrs:
+                field.field.widget.attrs['class'] = ''
+
+            field.field.widget.attrs['class'] += ' form-control'
+
             if errors:
-                field.field.widget.attrs['class'] = 'form-control is-invalid'
-            else:
-                field.field.widget.attrs['class'] = 'form-control'
+                field.field.widget.attrs['valid'] = 'is-invalid'
+                field.field.widget.attrs['class'] += ' is-invalid'
+            elif form_was_changed:  # Only add if the data on the form was
+                # changed, as that would indicate a validation step gone wrong.
+                field.field.widget.attrs['class'] += ' is-valid'
+                field.field.widget.attrs['valid'] = 'is-valid'
 
         context['show_help_column'] = self.show_help_column
         context['always_show_help_column'] = self.always_show_help_column
@@ -45,7 +58,6 @@ class TemplatedForm(TemplatedFormMixin, forms.Form):
     Uses :class:`.TemplatedFormMixin`
     """
     pass
-
 
 class TemplatedModelForm(TemplatedFormMixin, forms.ModelForm):
     """Extension of the default Form to enable the UU-Form styling

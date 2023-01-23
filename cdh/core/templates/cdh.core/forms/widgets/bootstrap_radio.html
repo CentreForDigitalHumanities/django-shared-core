@@ -1,9 +1,9 @@
 {% with id=widget.attrs.id %}
-    <div{% if id %} id="{{ id }}"{% endif %}>
+    <div{% if id %} id="{{ id }}"{% endif %} {% if widget.attrs.valid %}class="{{ widget.attrs.valid }}"{% endif %}>
         {% for group, options, index in widget.optgroups %}
             {% for option in options %}
                 <div class="form-check">
-                    {% include option.template_name with widget=option %}
+                    {% include option.template_name with widget=option valid=widget.attrs.valid %}
                 </div>
             {% endfor %}
         {% endfor %}

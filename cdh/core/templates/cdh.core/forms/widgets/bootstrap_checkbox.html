@@ -1,4 +1,4 @@
-<div class="form-check">
+<div class="form-check {{ valid }}">
     <input type="{{ widget.type }}" class="form-check-input" name="{{ widget.name }}"{% if widget.value != None %}
        value="{{ widget.value|stringformat:'s' }}"{% endif %}
 {% for name, value in widget.attrs.items %}{% if value is not False and name != 'class' %}
