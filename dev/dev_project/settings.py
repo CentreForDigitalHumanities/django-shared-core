@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'cdh.vue',
     'cdh.files',
     'cdh.integration_platform',
+    'cdh.auth',
 
     # Django supplied apps
     'django.contrib.admin',
