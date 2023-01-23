@@ -1,7 +1,7 @@
 # From: https://github.com/rkdarst/sphinx-actions-test/blob/master/.github/workflows/sphinx-build.yml
 
 name: Build and deploy sphinx
-on: [push, pull_request]
+on: [push]
 
 env:
   DEFAULT_BRANCH: "master"
@@ -103,7 +103,7 @@ jobs:
       # _gh-pages/branch/$brname (transforming '/' into '--')
       - name: Copy new build (branch)
         if: |
-          contains(github.event_name, 'push') &&
+          contains(pull_request, 'push') &&
           !contains(github.ref, env.DEFAULT_BRANCH)
         run: |
           set -x
