@@ -10,6 +10,9 @@ __pycache__/
 media/
 cdh_files/
 
+### Secrets ###
+dev_project/integration_platform_settings.py
+
 ### Virtual environments ###
 venv
 env

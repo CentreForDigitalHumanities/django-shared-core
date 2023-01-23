@@ -87,19 +87,20 @@ class ResourceClient(BaseClient):
         url, kwargs = self._make_url(**kwargs)
 
         try:
-            logger.info(f"GETting {url}")
+            logger.info(f"{repr(self)}: GETting {url}")
             request = method(
                 url,
                 kwargs,
-                headers=self._make_auth_headers(),
+                headers=self._make_auth_headers(), # TODO use auth param instead
             )
         except ConnectionError:
-            logger.warning(f"Host {url} unreachable")
+            logger.warning(f"{repr(self)}: Host {url} unreachable")
             host_unreachable()
             return None
 
         if request.ok:
-            logger.info(f"Data retrieved")
+            logger.info(f"{repr(self)}: Data retrieved")
+            logger.debug(f"{repr(self)}: {request.content}")
             return self.meta.resource(**request.json())
 
         self._handle_api_error(request)
@@ -127,25 +128,25 @@ class ResourceClient(BaseClient):
         :return: A return_response instance, or a Boolean (False indicated
         a connection error)
         """
-        logger.debug("Preparing PUT transaction")
+        logger.debug(f"{repr(self)}: Preparing PUT transaction")
         if not self._put_enabled:
             raise OperationNotEnabled
 
         if not return_resource:
-            logger.debug("No return resource specified, falling back to "
-                         "default return response")
+            logger.debug(f"{repr(self)}: No return resource specified, falling"
+                         f" back to default return response")
             return_resource = self.meta.default_return_resource
 
         if isinstance(return_resource, str):
             app_label = obj._meta.app_label
-            logger.debug("Resolving return resource")
+            logger.debug(f"{repr(self)}: Resolving return resource")
 
             if len(return_resource.split('.')) == 2:
                 app_label, return_resource = return_resource.split('.')
             return_resource = registry.get_resource(app_label, return_resource)
 
         if not as_json:
-            logger.debug("No as_json specified, falling back on default")
+            logger.debug(f"{repr(self)}: No as_json specified, falling back on default")
             as_json = self._send_as_json
 
         url, kwargs = self._make_url(obj, **kwargs)
@@ -155,30 +156,30 @@ class ResourceClient(BaseClient):
                 'params': kwargs,
                 'headers': self._make_auth_headers(),
             }
-            logger.info(f"PUTting {url}")
+            logger.info(f"{repr(self)}: PUTting {url}")
 
             if as_json:
                 request_kwargs['json'] = obj.to_api()
             else:
                 request_kwargs['data'] = obj.to_api()
 
-            logger.debug(request_kwargs)
+            logger.debug(f"{repr(self)}: {request_kwargs}")
 
             request = self._http_client.post(
                 url,
                 **request_kwargs
             )
         except ConnectionError:
-            logger.warning(f"Host {url} unreachable")
+            logger.warning(f"{repr(self)}: Host {url} unreachable")
             host_unreachable()
             return False
 
         if request.ok:
             if return_resource:
-                logger.info(f"Data retrieved")
+                logger.info(f"{repr(self)}: Data retrieved")
                 return return_resource(**request.json())
 
-            logger.info(f"Transaction successful")
+            logger.info(f"{repr(self)}: Transaction successful")
             return True
 
         self._handle_api_error(request)
@@ -196,23 +197,23 @@ class ResourceClient(BaseClient):
         url, kwargs = self._make_url(obj, **kwargs)
 
         try:
-            logger.info(f"DELETEing {url}")
+            logger.info(f"{repr(self)}: DELETEing {url}")
             request = self._http_client.delete(
                 url,
                 params=kwargs,
                 headers=self._make_auth_headers(),
             )
         except ConnectionError:
-            logger.warning(f"Host {url} unreachable")
+            logger.warning(f"{repr(self)}: Host {url} unreachable")
             host_unreachable()
             return False
 
         return request.ok
 
     def __str__(self):
-        return '{} client for resources {}'.format(
+        return '{} for {}'.format(
             self.__class__.__name__,
-            self.meta.resource.__class__.__name__
+            self.meta.resource.__name__
         )
 
     def __repr__(self):

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'cdh.rest',
     'cdh.vue',
     'cdh.files',
+    'cdh.integration_platform',
 
     # Django supplied apps
     'django.contrib.admin',
@@ -68,6 +69,7 @@ INSTALLED_APPS = [
     # Local apps
     'main',
     'dev_files',
+    'dev_integration_platform',
 ]
 
 MIDDLEWARE = [
@@ -219,3 +221,8 @@ CSP_IMG_SRC = ["'self'", 'data:', "*"]  # Remove the last one if you
 
 MENU_SELECT_PARENTS = True
 MENU_HIDE_EMPTY = False
+
+try:
+    from .integration_platform_settings import *
+except ImportError:
+    print('No integration platform settings found')

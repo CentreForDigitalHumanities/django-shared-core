@@ -1,0 +1,11 @@
+<input
+        type="{{ widget.type }}"
+        name="{{ widget.name }}"
+        {% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}
+        {% include "django/forms/widgets/attrs.html" %}
+>
+{% if widget.display_value %}
+{{ widget.display_value }} <button class="btn btn-sm btn-secondary">Change</button> {# todo translations #}
+{% else %}
+    <input name="{{ widget.name }}_fake" type="email" class="form-control dia-single-user" placeholder="E-mail address">
+{% endif %}

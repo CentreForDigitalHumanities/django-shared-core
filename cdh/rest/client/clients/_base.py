@@ -1,5 +1,5 @@
 from typing import Tuple
-from urllib.parse import urljoin
+from urllib.parse import urljoin, quote
 
 import requests
 from django.conf import settings
@@ -26,7 +26,10 @@ class BaseClient:
         self.meta = None
 
         self._http_client = requests
-        self._host = settings.API_HOST
+        if hasattr(settings, 'API_HOST'):
+            self._host = settings.API_HOST
+        else:
+            self._host = None
 
     @staticmethod
     def _make_auth_headers() -> dict:
@@ -77,21 +80,26 @@ class BaseClient:
         :return: A fully qualified URI to be used in the http request
         """
         url = self.path
-        logger.debug(f"Creating URL: {url}")
+        logger.debug(f"{repr(self)}: Creating URL: {url}")
         if self.path_variables:
             values = {}
             for path_var in self.path_variables:
                 if res and path_var in self.meta.fields:
                     value = getattr(res, path_var)
                     value = self.meta.fields[path_var].clean(value)
+                    if isinstance(value, str):
+                        value = quote(value)
                     values[path_var] = value
                 elif path_var in kwargs:
-                    values[path_var] = kwargs.pop(path_var)
+                    value = kwargs.pop(path_var)
+                    if isinstance(value, str):
+                        value = quote(value)
+                    values[path_var] = value
                 else:
                     raise RuntimeError(
                         'No value found for path variable {}'.format(path_var)
                     )
-            logger.debug(f"Using values: {values}")
+            logger.debug(f"{repr(self)}: Using values: {values}")
             url = url.format(**values)
 
         return urljoin(self._host, url), kwargs
