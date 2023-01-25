@@ -1,0 +1,87 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+[project]
+name = "cdh-django-core"
+description = "A Django apps library for DH-IT & ILS Labs projects"
+version = "3.1.0"
+readme = "README.md"
+authors = [
+    {name = "DH-IT Portal Development", email = "portaldev.gw@uu.nl"},
+    {name = "ILS Labs", email = "labbeheer.gw@uu.nl"},
+]
+requires-python = ">=3.9"
+license = {file = "LICENSE"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Framework :: Django :: 4.0",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: Linux",
+]
+dependencies = [
+    "Django >=2.0,<5.0",
+    "Deprecated",
+]
+
+[project.urls]
+repository = "https://github.com/DH-IT-Portal-Development/django-shared-core"
+documentation = "https://dh-it-portal-development.github.io/django-shared-core/"
+
+[project.optional-dependencies]
+all = [
+    "cdh-django-core[recommended,core,federated-auth,files,rest,vue]"
+]
+recommended = [
+    "django-modeltranslation",
+    "django-debug-toolbar",
+    "django-extensions",
+    "django-braces",
+    "bpython",
+]
+core = [
+    "django-impersonate",
+    "django-simple-menu",
+    "djangorestframework",
+    "django-csp",
+    "cryptography",
+    "Django >=4.0,<5.0",
+]
+federated-auth = [
+    "djangosaml2",
+]
+files = [
+    "python-magic",
+    "Django >=4.0,<5.0",
+]
+integration_platform = [
+    "cdh-django-core[rest]",
+    "Django >=3.0,<5.0",
+]
+rest = [
+    "requests",
+    "PyJWT",
+    "djangorestframework",
+    "Django >=3.0,<5.0",
+]
+vue = [
+    "pyscss",
+    "lesscpy",
+    "closure",
+    "vbuild",
+    "Django >=3.0,<5.0",
+]
+docs = [
+    "sphinx",
+    "sphinxcontrib-apidoc",
+    "sphinxcontrib-django2",
+    "uu_sphinx_theme @ git+https://github.com/CentreForDigitalHumanities/sphinx-theme.git@main",
+]
+dev = [
+    "pip-tools",
+    "bpython",
+    "cdh-django-core[all,docs]",
+]

@@ -8,9 +8,9 @@
     "uu-bootstrap": "git+ssh://git@github.com/DH-IT-Portal-Development/bootstrap-theme.git#1.3.0"
   },
   "scripts": {
-    "build-css": "yarn _build-css cdh/core/static/cdh.core/css/bootstrap.css --style=compressed",
-    "_build-css": "sass -I . scss/bootstrap.scss",
-    "watch-css": "yarn _build-css cdh/core/static/cdh.core/css/bootstrap.css --watch"
+    "build-css": "yarn _build-css src/cdh/core/static/cdh.core/css/bootstrap.css --style=compressed",
+    "_build-css": "sass -I . assets/scss/bootstrap.scss",
+    "watch-css": "yarn _build-css src/cdh/core/static/cdh.core/css/bootstrap.css --watch"
   },
   "devDependencies": {
     "scss": "^0.2.4"
