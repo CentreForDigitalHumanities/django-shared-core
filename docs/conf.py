@@ -104,7 +104,7 @@ man_pages = [
 # If true, show URL addresses after external links.
 #man_show_urls = False
 
-apidoc_module_dir = '../cdh'
+apidoc_module_dir = '../src/cdh'
 apidoc_output_dir = 'reference'
 apidoc_excluded_paths = ['*/migrations',]
 apidoc_separate_modules = True
