@@ -15,6 +15,30 @@ Tests are run using these versions; Some apps have lower requirements, but are
 not tested against these lower versions. check the app collection below for
 specifics.
 
+## Installing
+
+### Quick
+
+Add the following line to your python requirements:
+
+``cdh-django-core[all] @ git+https://github.com/DH-IT-Portal-Development/django-shared-core.git@<version>``
+
+Replacing ``<version>`` with the latest DSC release tag. (e.g. ``v3.1.0``).
+
+This will install the entire library with all required dependencies.
+
+See the documentation for per-app instructions on installing the specific apps 
+in your django project.
+
+## Lean
+
+The library can be installed with a reduced dependency set for the apps your
+project uses. To do this, replace the ``all`` with a comma-separated list of
+the apps your project uses (sans ``cdh.``). For example:
+
+``cdh-django-core[core,files,rest] @ git+https://github.com/DH-IT-Portal-Development/django-shared-core.git@[version]``
+
+
 ## App collection
 
 ### Core (``cdh.core``)
