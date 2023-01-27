@@ -78,6 +78,7 @@ class BaseQuestionConsumer(BaseConsumer):
         blueprint object."""
         self.question = self.question_class(
             instance=self.blueprint.object,
+            blueprint=self.blueprint,
             question_data=self.get_question_data(),
         )
         return self.question
