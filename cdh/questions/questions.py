@@ -6,11 +6,7 @@ from django.template.loader import get_template
 from django.views import generic
 from django.urls import reverse
 
-
-
-
 class Question(forms.ModelForm):
-
     segment_template = None
 
     def __init__(self, *args, **kwargs):
@@ -77,6 +73,14 @@ class Segment:
     def render(self):
         template = self.get_template()
         return template.render(self.context)
+
+
+class BlueprintQuestion(Question):
+    """Question class that accepts a blueprint keyword argument"""
+
+    def __init__(self, *args, **kwargs):
+        self.blueprint = kwargs.pop("blueprint", None)
+        return super().__init__(*args, **kwargs)
 
 
 class SubheaderSegment(Segment):
