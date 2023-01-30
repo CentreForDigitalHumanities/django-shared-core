@@ -5,6 +5,7 @@ from django.template import Context
 from django.template.loader import get_template
 from django.views import generic
 from django.urls import reverse
+from django import utils
 
 class Question(forms.ModelForm):
     segment_template = None
@@ -37,7 +38,7 @@ class Question(forms.ModelForm):
         segment.context.update({
             'type': 'form_field',
             'field': self[field],
-            'value': self[field].value() or "",
+            'value': brify(self[field].value()) or "",
         })
         if hasattr(self, "instance"):
             value_display = getattr(self.instance, "get_" + field + "_display", None)
@@ -45,6 +46,14 @@ class Question(forms.ModelForm):
                 segment.context["value"] = value_display()
 
         return segment
+
+
+def brify(s):
+    if type(s) is not str:
+        return s
+    s = utils.html.escape(s)
+    s = s.replace("\n", "<br />")
+    return utils.safestring.mark_safe(s)
 
 
 class DisplayQuestion():
