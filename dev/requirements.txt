@@ -27,7 +27,7 @@ defusedxml==0.7.1
     # via
     #   djangosaml2
     #   pysaml2
-django==4.0.8
+django==4.0.9
     # via
     #   -r requirements.in
     #   django-braces
@@ -107,10 +107,6 @@ sqlparse==0.4.3
     # via
     #   django
     #   django-debug-toolbar
-tomli==2.0.1
-    # via
-    #   build
-    #   pyproject-hooks
 typing-extensions==4.4.0
     # via django-modeltranslation
 urllib3==1.26.14
