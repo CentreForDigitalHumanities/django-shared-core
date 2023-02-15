@@ -1,0 +1,52 @@
+{% load question_tags %}
+{% if question.use_custom_template %}
+<p>Using custom template</p>
+  {% include question %}
+{% else %}
+
+  {% if editing %}
+    <form method="post" action="" class="uu-form uu-form-no-gap">{% csrf_token %}
+  {% else %}
+      <div class="uu-form uu-form-no-gap">
+  {% endif %}
+  
+  <h4>{{title}}</h4>
+  
+  <section class="question">
+    {% if not is_editable %}
+    {% endif %}
+    {% for segment in segments %}
+      {% render_segment segment %}
+    {% empty %}
+      <p>No segments!</p>
+    {% endfor %}
+    
+    {% if editing %}
+      {% for error in question.errors %}
+        <p>Error: {{error}}</p>
+      {% endfor %}
+    {% endif %}
+    
+    <div class="gt-right question-buttons">
+      {% if editing %}
+        <input type="submit" value="opslaan" class="btn btn-primary mt-4"/>
+      {% else %}
+        {% if question.is_deletable and not deleting %}
+          <a href="{{question.get_delete_url}}" value="Delete" class="button">Delete</a>
+        {% endif %}
+        {% if question.is_editable %}
+          <a href="{{question.get_edit_url}}" value="Bewerken" class="btn btn-primary">
+            Bewerken
+          </a>
+        {% endif %}
+      {% endif %}
+    </div>
+    
+    <div class="gtph2">&nbsp;</div>
+  </section>
+  
+  {% if editing %}
+    </form>
+  {% endif %}
+
+{% endif %}
