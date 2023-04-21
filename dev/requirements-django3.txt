@@ -82,14 +82,10 @@ six==1.16.0
     # via
     #   lesscpy
     #   pyscss
-sqlparse==0.4.2
+sqlparse==0.4.4
     # via
     #   django
     #   django-debug-toolbar
-tomli==2.0.1
-    # via
-    #   build
-    #   pep517
 urllib3==1.26.12
     # via requests
 vbuild==0.8.1
