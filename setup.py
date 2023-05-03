@@ -5,10 +5,10 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="CDH Django Core",
-    version="3.0.1",
-    author="DH-IT Portal development, UiL OTS Labs",
+    version="3.0.2",
+    author="Humanities IT Portal development, ILS Labs",
     author_email="portaldev.gw@uu.nl, labbeheer.gw@uu.nl",
-    description="A shared code library for DH-IT & UiL OTS Django projects",
+    description="A shared code library for Hum-IT & ILS Labs Django projects",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/DH-IT-Portal-Development/django-shared-core",
