@@ -1,11 +1,11 @@
 {
   "name": "django-shared-core",
-  "version": "3.0.0",
+  "version": "3.0.2",
   "repository": "git@github.com:DH-IT-Portal-Development/django-shared-core.git",
-  "author": "DH-IT Portal Development & UiL OTS Labs",
+  "author": "Humanities IT Portal Development & ILS Labs",
   "license": "Apache-2.0",
   "dependencies": {
-    "uu-bootstrap": "git+ssh://git@github.com/DH-IT-Portal-Development/bootstrap-theme.git#1.3.0"
+    "uu-bootstrap": "git+ssh://git@github.com/DH-IT-Portal-Development/bootstrap-theme.git#1.3.1"
   },
   "scripts": {
     "build-css": "yarn _build-css cdh/core/static/cdh.core/css/bootstrap.css --style=compressed",
@@ -13,6 +13,6 @@
     "watch-css": "yarn _build-css cdh/core/static/cdh.core/css/bootstrap.css --watch"
   },
   "devDependencies": {
-    "scss": "^0.2.4"
+    "sass": "^1.62.1"
   }
 }
