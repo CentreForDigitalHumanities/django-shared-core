@@ -76,7 +76,7 @@ pytz==2022.2.1
     # via
     #   django
     #   djangorestframework
-requests==2.28.1
+requests==2.31.0
     # via -r requirements-django3.in
 six==1.16.0
     # via
@@ -86,10 +86,6 @@ sqlparse==0.4.2
     # via
     #   django
     #   django-debug-toolbar
-tomli==2.0.1
-    # via
-    #   build
-    #   pep517
 urllib3==1.26.12
     # via requests
 vbuild==0.8.1
