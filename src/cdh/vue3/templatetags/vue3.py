@@ -72,7 +72,7 @@ def vue(parser, token):
                     props[name] = partial(prop_variable, value)
             else:
                 name = args[i][1:]
-                # :prop, same as :prop=prop (treat prop as a python value)
+                # :prop, is the same as :prop=prop (treat prop as a python value)
                 props[name] = partial(prop_variable, name)
 
         elif args[i][0] == '@':
@@ -96,8 +96,10 @@ class VueRenderer(template.Node):
     def render(self, context):
         binding_defs = []
         for prop, value in self.props.items():
-            binding_defs.append(
-                'data["{}"] = {};'.format(prop, value(context)))
+            try:
+                binding_defs.append('data["{}"] = {};'.format(prop, value(context)))
+            except Exception:
+                raise RuntimeError(f'Failed binding proeprty "{prop}"')
 
         binding = mark_safe('\n'.join(binding_defs))
 
