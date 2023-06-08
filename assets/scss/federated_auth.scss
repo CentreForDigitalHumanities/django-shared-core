@@ -1,0 +1,30 @@
+@import "node_modules/uu-bootstrap/scss/configuration";
+
+@import "node_modules/bootstrap/scss/helpers";
+@import "node_modules/bootstrap/scss/utilities/api";
+
+@import "node_modules/uu-bootstrap/scss/components/bootstrap";
+@import "node_modules/uu-bootstrap/scss/components/text";
+
+.cdh-federated-auth {
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        width: 100vw;
+        height: 100vh;
+
+        .content {
+            width: 25rem;
+            padding: 1rem;
+            background: $white;
+
+            .logo {
+                display: block;
+                height: 3.5rem;
+                margin: 0 auto 1rem auto;
+            }
+        }
+    }
+}

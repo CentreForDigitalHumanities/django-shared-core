@@ -1,0 +1,30 @@
+{% extends 'cdh.federated_auth/base.html' %}
+
+{% block header_title %}
+    Authentication Error.
+{% endblock %}
+
+{% block content %}
+    <h2>Authentication Error.</h2>
+
+    <p>
+        We could not process your login request.
+    </p>
+    {% if contact_email %}
+        {# If we have a contact email, we automatically should also have a contact name #}
+        <p>
+            If this issue persists, please contact <a href="mailto:{{ contact_email }}">{{ contact_name }}</a>.
+        </p>
+    {% elif contact_name %}
+        {# If we only have a name, don't use a link #}
+        <p>
+            If this issue persists, please contact {{ contact_name }}.
+        </p>
+    {% endif %}
+
+    {% if debug %}
+        <p>
+        Debug info: {{ exception }}
+        </p>
+    {% endif %}
+{% endblock %}

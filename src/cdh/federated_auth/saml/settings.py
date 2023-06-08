@@ -23,6 +23,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'djangosaml2.backends.Saml2Backend',
 )
+SAML_ACS_FAILURE_RESPONSE_FUNCTION = 'cdh.federated_auth.saml.views.login_error'
 
 def create_saml_config(
         name: str,

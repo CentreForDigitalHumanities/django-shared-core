@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block header_title %}
+        {% endblock %}
+    </title>
+
+    <link href="{% static 'cdh.federated_auth/base.css' %}" rel="stylesheet" />
+
+
+    {% block html_head %}
+    {% endblock %}
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="cdh-federated-auth">
+    <div class="container">
+        <div class="content">
+            <img src="{% static 'cdh.federated_auth/logo.svg' %}" alt="Utrecht University" class="logo" />
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</body>
+</html>
