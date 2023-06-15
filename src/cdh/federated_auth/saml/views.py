@@ -1,7 +1,18 @@
 from typing import Optional, Tuple
 
-from django.shortcuts import render
+from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.contrib.auth.views import SuccessURLAllowedHostsMixin
+from django.contrib.sites.shortcuts import get_current_site
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, resolve_url
 from django.conf import settings
+from django.contrib import auth
+from django.utils.http import url_has_allowed_host_and_scheme
+from django.utils.translation import gettext_lazy as _
+from django.views.generic.base import ContextMixin, TemplateResponseMixin
+
+from djangosaml2.views import LogoutInitView as DjangoSaml2LogoutInitView, \
+    _get_subject_id
 
 CONTACT_PERSON = 'contact_person'
 CONTACT_TYPE = 'contact_type'
@@ -93,3 +104,66 @@ def login_error(request, exception=None, status=403, **kwargs):
         context=context,
         status=status
     )
+
+
+class LogoutInitView(SuccessURLAllowedHostsMixin, TemplateResponseMixin,
+                     ContextMixin, DjangoSaml2LogoutInitView):
+    """Custom LogoutInitView to handle logout requests for non-SAML users.
+    Basically merges Django's LogoutView with DjangoSaml2's LogoutInitView
+    """
+    next_page = None
+    redirect_field_name = REDIRECT_FIELD_NAME
+    template_name = 'registration/logged_out.html'
+    extra_context = None
+
+    def get(self, request, *args, **kwargs):
+        subject_id = _get_subject_id(request.saml_session)
+
+        if subject_id is None:
+            # No saml session present, doing local logout
+            auth.logout(request)
+            next_page = self.get_next_page()
+            if next_page:
+                # Redirect to this page until the session has been cleared.
+                return HttpResponseRedirect(next_page)
+
+            return self.render_to_response(self.get_context_data())
+
+        # SAML session present, proceeding to do SSO logout
+        return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_site = get_current_site(self.request)
+        context.update({
+            'site': current_site,
+            'site_name': current_site.name,
+            'title': _('Logged out'),
+            **(self.extra_context or {})
+        })
+        return context
+
+    def get_next_page(self):
+        if self.next_page is not None:
+            next_page = resolve_url(self.next_page)
+        elif settings.LOGOUT_REDIRECT_URL:
+            next_page = resolve_url(settings.LOGOUT_REDIRECT_URL)
+        else:
+            next_page = self.next_page
+
+        if (self.redirect_field_name in self.request.POST or
+                self.redirect_field_name in self.request.GET):
+            next_page = self.request.POST.get(
+                self.redirect_field_name,
+                self.request.GET.get(self.redirect_field_name)
+            )
+            url_is_safe = url_has_allowed_host_and_scheme(
+                url=next_page,
+                allowed_hosts=self.get_success_url_allowed_hosts(),
+                require_https=self.request.is_secure(),
+            )
+            # Security check -- Ensure the user-originating redirection URL is
+            # safe.
+            if not url_is_safe:
+                next_page = self.request.path
+        return next_page
