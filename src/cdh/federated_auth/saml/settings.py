@@ -50,6 +50,8 @@ SAML_ATTRIBUTE_MAPPING = {
 }
 
 SAML_DEFAULT_BINDING = saml2.BINDING_HTTP_REDIRECT  # or saml2.BIND_HTTP_POST
+SAML_LOGOUT_REQUEST_PREFERRED_BINDING = saml2.BINDING_HTTP_REDIRECT # or saml2.BIND_HTTP_POST
+
 # Set this to 'False' if your app needs to be paranoid. Generally not needed.
 SAML_IGNORE_LOGOUT_ERRORS = True
 SAML_SESSION_COOKIE_NAME = 'saml_session'
