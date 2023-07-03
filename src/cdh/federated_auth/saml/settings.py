@@ -43,10 +43,10 @@ import saml2.saml
 
 # The default attribute map for UU IdP, override for more attributes/other IdP's
 SAML_ATTRIBUTE_MAPPING = {
-    'uushortid':  ('username',),
+    'uuShortID':  ('username',),
     'mail':     ('email',),
     'givenName': ('first_name',),
-    'uuprefixedsn':  ('last_name',),
+    'uuPrefixedSn':  ('last_name',),
 }
 
 SAML_DEFAULT_BINDING = saml2.BINDING_HTTP_REDIRECT  # or saml2.BIND_HTTP_POST
