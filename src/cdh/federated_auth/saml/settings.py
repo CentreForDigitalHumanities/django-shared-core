@@ -41,6 +41,15 @@ from urllib.parse import urljoin
 import saml2
 import saml2.saml
 
+SAML_APPS = [
+    'cdh.federated_auth',
+    'djangosaml2',
+]
+
+SAML_MIDDLEWARE = [
+    'djangosaml2.middleware.SamlSessionMiddleware',
+]
+
 # The default attribute map for UU IdP, override for more attributes/other IdP's
 SAML_ATTRIBUTE_MAPPING = {
     'uuShortID':  ('username',),
