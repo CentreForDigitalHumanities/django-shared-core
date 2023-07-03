@@ -33,6 +33,7 @@ urlpatterns = [
     path('impersonate/', include('impersonate.urls')),
     path('cdhcore/', include('cdh.core.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
+    path('__debug__/', include('cdh.dev_tools.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT, show_indexes=True)
 
 
@@ -41,9 +42,3 @@ admin.site.site_title = ''
 admin.site.index_title = ''
 
 
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns = [
-        path('__debug__/', include(debug_toolbar.urls)),
-
-    ] + urlpatterns

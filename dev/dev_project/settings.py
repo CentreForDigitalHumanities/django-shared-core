@@ -27,7 +27,6 @@ FIELD_ENCRYPTION_KEY = "IhWBKI5MORNNtI5WWqZwOflEwojBACtuz9lKXwcF4HI="
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 ACCEPTATION = False
-ENABLE_DEBUG_TOOLBAR = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 INTERNAL_IPS = ['127.0.0.1']
@@ -91,10 +90,6 @@ MIDDLEWARE = [
     'djangosaml2.middleware.SamlSessionMiddleware',
 ]
 
-if DEBUG and ENABLE_DEBUG_TOOLBAR:
-    INSTALLED_APPS.append('debug_toolbar')
-    MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware', )
-
 ROOT_URLCONF = 'dev_project.urls'
 
 TEMPLATES = [
@@ -117,12 +112,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'dev_project.wsgi.application'
 
-# Email
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 2525
-EMAIL_FROM = 'T.D.Mees@uu.nl'
-
+try:
+    from cdh.dev_tools.settings import *
+    INSTALLED_APPS += DEV_TOOLS_APPS
+    MIDDLEWARE += DEV_TOOLS_MIDDLEWARE
+except:
+    print('Error while initializing CDH devtools app')
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases

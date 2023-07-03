@@ -83,5 +83,9 @@ docs = [
 dev = [
     "pip-tools",
     "bpython",
-    "cdh-django-core[all,docs]",
+    "cdh-django-core[all,docs,dev_tools]",
+]
+dev_tools = [
+    "django-debug-toolbar",
+    "django-mail-panel",
 ]

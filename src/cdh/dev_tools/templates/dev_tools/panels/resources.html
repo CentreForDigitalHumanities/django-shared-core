@@ -1,0 +1,66 @@
+{% load static %}
+{#<link rel="stylesheet" href="{% static 'debug_toolbar/mail/mail_toolbar.css' %}" type="text/css" media="screen" />#}
+{#<script type="module" src="{% static 'debug_toolbar/mail/toolbar.mail.js' %}" async></script>#}
+
+<div class='ddm-rest-client-toolbar'>
+
+    <h4>Resources</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>App</th>
+                <th>Resource</th>
+                <th>Has client</th>
+                <th>Request</th>
+                <th>Serializations</th>
+                <th>De-serializations</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for resource in resources %}
+                <tr>
+                    <td>
+                        {{ resource.app_name }}
+                    </td>
+                    <td>
+                        {{ resource.name }}
+                    </td>
+                    <td>
+                        {{ resource.has_client }}
+                    </td>
+                    <td>
+                        {{ resource.requests }}
+                    </td>
+                    <td>
+                        {{ resource.serializations }}
+                    </td>
+                    <td>
+                        {{ resource.deserializations }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h4>Collections</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>App</th>
+                <th>Collection</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for collection in collections %}
+                <tr>
+                    <td>
+                        {{ collection.app_name }}
+                    </td>
+                    <td>
+                        {{ collection.name }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
