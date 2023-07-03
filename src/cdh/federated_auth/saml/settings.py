@@ -94,9 +94,9 @@ def create_saml_config(
         attribute_map_dir: Optional[str] = None,
         force_authn: bool = False,
         allow_unsolicited: bool = False,
-        want_response_signed: bool = True,
+        want_response_signed: bool = False,
         authn_requests_signed: bool = True,
-        logout_requests_signed: bool = False,
+        logout_requests_signed: bool = True,
         want_assertions_signed: bool = True,
         debug: bool = False,
         config_overrides: Optional[dict] = None,
@@ -206,11 +206,9 @@ def create_saml_config(
     :param allow_unsolicited: If the SP accepts login attempts it has not itself
                               initiated. Defaults to `False`. This happens if
                               a different SP initiates the login for this SP.
-    :param want_response_signed: Defaults to True per UU requirements.
+    :param want_response_signed: False, it errors on UU IdP's if True.
     :param authn_requests_signed: Defaults to True per UU requirements.
     :param logout_requests_signed: Whether logout requests need to be signed.
-                                   Defaults to False, as the UU IdP tends to
-                                   error when set to True
     :param want_assertions_signed: Defaults to True per UU requirements.
     :param debug: Enables detailed debug output if set to true.
     :param config_overrides: A dict that will be merged with the final output
