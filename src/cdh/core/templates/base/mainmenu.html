@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <div id="navbar-content" class="collapse navbar-collapse">
-    <ul class="navbar-nav w-100">
+    <ul class="navbar-nav {{ navbar_classes|default:"w-100" }}">
         {% if menus.home %}
             {% with menus.home.0 as home %}
                 <li class="nav-item">
