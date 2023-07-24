@@ -1,8 +1,4 @@
 from django import template
-from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
-
-from django.forms.widgets import TextInput, CheckboxInput
 
 register = template.Library()
 
