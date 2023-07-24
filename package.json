@@ -1,16 +1,17 @@
 {
   "name": "django-shared-core",
-  "version": "3.0.2",
+  "version": "3.1.0",
   "repository": "git@github.com:DH-IT-Portal-Development/django-shared-core.git",
-  "author": "Humanities IT Portal Development & ILS Labs",
+  "author": "DH-IT Portal Development & UiL OTS Labs",
   "license": "Apache-2.0",
   "dependencies": {
-    "uu-bootstrap": "git+ssh://git@github.com/DH-IT-Portal-Development/bootstrap-theme.git#1.3.1"
+    "uu-bootstrap": "git+ssh://git@github.com/DH-IT-Portal-Development/bootstrap-theme.git#1.4.0-alpha.1"
   },
   "scripts": {
-    "build-css": "yarn _build-css cdh/core/static/cdh.core/css/bootstrap.css --style=compressed",
-    "_build-css": "sass -I . scss/bootstrap.scss",
-    "watch-css": "yarn _build-css cdh/core/static/cdh.core/css/bootstrap.css --watch"
+    "build-css": "yarn _build-css src/cdh/core/static/cdh.core/css/bootstrap.css --style=compressed",
+    "_build-css": "sass -I . assets/scss/bootstrap.scss",
+    "watch-css": "yarn _build-css src/cdh/core/static/cdh.core/css/bootstrap.css --watch",
+    "build-fedauth-css": "sass -I . assets/scss/federated_auth.scss src/cdh/federated_auth/static/cdh.federated_auth/base.css --style=compressed"
   },
   "devDependencies": {
     "sass": "^1.62.1"

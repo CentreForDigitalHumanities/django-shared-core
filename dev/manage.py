@@ -7,7 +7,8 @@ import sys
 def get_root_dir() -> str:
     """Get's the directory directly above this files location"""
     cwd = os.getcwd()
-    return cwd.rsplit(os.sep, 1)[0]
+
+    return os.path.join(cwd.rsplit(os.sep, 1)[0], 'src')
 
 
 def main():

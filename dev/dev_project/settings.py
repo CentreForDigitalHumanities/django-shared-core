@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'cdh.rest',
     'cdh.vue',
     'cdh.files',
+    'cdh.integration_platform',
 
     # Django supplied apps
     'django.contrib.admin',
@@ -68,6 +69,7 @@ INSTALLED_APPS = [
     # Local apps
     'main',
     'dev_files',
+    'dev_integration_platform',
 ]
 
 MIDDLEWARE = [
@@ -137,7 +139,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'main.User'
 
 LOGIN_URL = reverse_lazy('main:login')
-
+LOGIN_URL = '/saml/login/'
 LOGIN_REDIRECT_URL = reverse_lazy('main:home')
 
 
@@ -146,21 +148,21 @@ LOGIN_REDIRECT_URL = reverse_lazy('main:home')
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.federated_auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.federated_auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.federated_auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.federated_auth.password_validation.NumericPasswordValidator',
     },
 ]
 
 PASSWORD_HASHERS = [
-    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.federated_auth.hashers.PBKDF2PasswordHasher',
 ]
 
 
@@ -219,3 +221,25 @@ CSP_IMG_SRC = ["'self'", 'data:', "*"]  # Remove the last one if you
 
 MENU_SELECT_PARENTS = True
 MENU_HIDE_EMPTY = False
+
+try:
+    from .integration_platform_settings import *
+except ImportError:
+    print('No integration platform settings found')
+
+try:
+    from cdh.federated_auth.saml.settings import *
+
+    INSTALLED_APPS += SAML_APPS
+    MIDDLEWARE += SAML_MIDDLEWARE
+
+    SAML_CONFIG = create_saml_config(
+        base_url='http://localhost:8000/',
+        name='Federated Django sample SP',
+        key_file=path.join(BASE_DIR, 'dev_project/private.key'),
+        cert_file=path.join(BASE_DIR, 'dev_project/public.cert'),
+        idp_metadata='http://localhost:7000/saml/idp/metadata/',
+        debug=True,
+    )
+except:
+    print('something went wrong loading SAML')

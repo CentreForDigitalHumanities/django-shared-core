@@ -1,0 +1,92 @@
+{% load static %}
+{% load include_if_exists %}
+{% load file_loading %}
+{% load_file_vars %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block header_title %}
+            {% include_if_exists 'base/site_title.html' %}
+        {% endblock %}
+    </title>
+
+    <!--
+                                _.---.
+                      |\---/|  / ) ca|
+          ------------;     |-/ /|foo|---
+                      )     (' / `---'
+          ===========(       ,'==========
+          ||   _     |      |
+          || o/ )    |      | o
+          || ( (    /       ;
+          ||  \ `._/       /
+          ||   `._        /|
+          ||      |\    _/||
+        __||_____.' )  |__||____________
+         ________\  |  |_________________
+                  \ \  `-.
+                   `-`---'  hjw
+Miauw!
+    -->
+
+    <link href="{% static 'cdh.core/css/bootstrap.css' %}" rel="stylesheet" />
+    <link href="{% static 'cdh.core/css/datatables.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'cdh.core/css/select2.css' %}" rel="stylesheet" />
+    <link href="{% static 'cdh.core/css/qtip.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'cdh.core/css/jquery.ui.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'cdh.core/css/jquery.ui.structure.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'cdh.core/css/jquery.ui.uu-theme.css' %}" rel="stylesheet" />
+    <script src="{% static 'cdh.core/js/jquery-3.6.1.min.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'cdh.core/js/jquery.ui.min.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'cdh.core/js/popper.min.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'cdh.core/js/bootstrap.bundle.min.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'cdh.core/js/bootstrap-multiselect.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'cdh.core/js/datatables.min.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'cdh.core/js/select2.min.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'cdh.core/js/qtip.min.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% static 'cdh.core/js/common.js' %}" nonce="{{ request.csp_nonce }}"></script>
+    <script src="{% url 'cdh.core:js_urls' %}" nonce="{{ request.csp_nonce }}"></script>
+
+    <link rel="shortcut icon" type="image/png" href="{% static 'cdh.core/images/favicon.ico' %}"/>
+
+    {% include_if_exists 'base/site_html_head.html' %}
+
+    {% block html_head %}
+    {% endblock %}
+
+    {% for css_file in cdh_core_css_files %}
+    <link href="{{ css_file }}" rel="stylesheet" />
+    {% endfor %}
+    {% for js_file in cdh_core_js_files %}
+    <script src="{{ js_file }}" nonce="{{ request.csp_nonce }}"></script>
+    {% endfor %}
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="{% block body-classes %}{% endblock %}">
+    <div class="{% block site-container-classes %}uu-root-container{% endblock %}">
+        {% block site-header %}
+            <div class="uu-header">
+                {% block uu-header %}{% endblock %}
+            </div>
+            <nav class="navbar uu-navbar">
+                    <div class="uu-navbar-container">
+                        {% block uu-navbar %}{% endblock %}
+                    </div>
+            </nav>
+        {% endblock %}
+        {% block site-content %}
+            <div class="uu-content">
+                {% block uu-content %}{% endblock %}
+            </div>
+        {% endblock %}
+        {% block site-footer %}
+            <footer class="uu-footer">
+                {% block uu-footer %}{% endblock %}
+            </footer>
+        {% endblock %}
+    </div>
+</body>
+</html>

@@ -6,7 +6,7 @@ from cdh.core import fields as core_fields
 from cdh.core.forms import TemplatedForm
 from cdh.core.mail import EmailContentEditWidget
 from cdh.files.forms import FileField, TrackedFileField
-from dev.main.emails import ExampleCustomTemplateEmail
+from main.emails import ExampleCustomTemplateEmail
 
 
 class FormStylesForm(forms.Form):

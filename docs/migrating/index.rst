@@ -10,6 +10,63 @@ There are three kinds of changes: - Required: stuff won’t work
 future version if you don’t do this - Optional: changes that are not
 (and wil not be) necessary, but is recommended to use anyway
 
+3.1
+---
+
+When upgrading to this version, it's recommended to remove the old version of
+the library first.
+
+As 3.1 is a minor release, no code breaking changes are expected. (If they are
+there, it's a regression and an issue should be opened).
+
+However, there are some non-code breaking changes and deprecations.
+
+Required
+~~~~~~~~
+
+Packaging
+^^^^^^^^^
+
+DSC < 3.1 uses a deprecated packaging setup, which is replaced with a modern,
+spec compliant setup. During this change, the dependency handling was overhauled
+to use 'optional dependencies' to reduce the amount of dependencies needed to
+your app's needs.
+
+As a result, your dependency spec has to be updated to ensure the proper
+dependencies are installed. To recreate old behaviour, use the following line:
+
+``cdh-django-core[all] @ git+https://github.com/DH-IT-Portal-Development/django-shared-core.git@<version>``
+
+Replacing ``<version>`` with the latest DSC release tag. (e.g. ``v3.1.0``).
+
+Optionally, you can only select the dependencies needed for your app by
+specifying which apps of this library you actually use. For example:
+
+``cdh-django-core[core,files,rest] @ git+https://github.com/DH-IT-Portal-Development/django-shared-core.git@[version]``
+
+The values you can specify correspond to the app names (sans ``cdh.``) of
+the apps you use.
+
+Three special values are also present:
+
+- ``docs``: dependencies you need to create the docs only.
+- ``all``: all dependencies for all apps
+- ``dev``: dependencies you need to develop the library, plus all in ``all``
+  and ``docs``
+
+SCSS
+^^^^
+
+Previously, the SCSS files used for the UU Bootstrap version shipped with the
+library were also present in the build package. This is no longer the case.
+Using those files was never officially supported, thus this change does not
+warrant a major update.
+
+If your application was relying on those files for its own SCSS, you should
+supply these files yourself. The UU Bootstrap project will provide most of
+these in the future in some way, this doc should be updated before 3.1
+actually releases with more details. Poke Ty if this was not the case.
+
 3.0
 ---
 
