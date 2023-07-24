@@ -1,4 +1,5 @@
 from django import template
+from django.forms.widgets import TextInput
 
 register = template.Library()
 
