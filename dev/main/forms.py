@@ -3,10 +3,11 @@ from django.urls import reverse_lazy
 from django.utils.safestring import mark_safe
 
 from cdh.core import fields as core_fields
-from cdh.core.forms import TemplatedForm
+from cdh.core.forms import SplitMonthInput, TemplatedForm, TemplatedModelForm
 from cdh.core.mail import EmailContentEditWidget
 from cdh.files.forms import FileField, TrackedFileField
 from main.emails import ExampleCustomTemplateEmail
+from main.models import MonthFieldTest
 
 
 class FormStylesForm(forms.Form):
@@ -169,3 +170,13 @@ class CustomEmailForm(TemplatedForm):
     )
 
     footer = forms.CharField()
+
+
+class MonthFieldTestForm(TemplatedModelForm):
+    show_valid_fields = False
+    class Meta:
+        model = MonthFieldTest
+        fields = ['single_month_field', 'split_month_field']
+        widgets = {
+            'split_month_field': SplitMonthInput
+        }

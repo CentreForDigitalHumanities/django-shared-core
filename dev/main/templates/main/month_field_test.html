@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+
+{% block header_title %}
+    Month Field test - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <div class="uu-container">
+        <div class="col-12">
+            <h1>Month Field test</h1>
+
+            <p>
+                <strong>Current value</strong>
+                <a href="{% url 'main:month_field_test_clear' %}">Clear</a><br/>
+                {{ object }}
+            </p>
+
+            <form method="post" class="uu-form" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form }}
+                <div class="uu-container">
+                    <div class="col-8">
+                        <hr>
+                        <button type="submit" class="btn btn-primary btn-arrow-right">Volgende stap</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
