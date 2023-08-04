@@ -2,7 +2,8 @@ from typing import List, Optional
 
 from django import forms
 from django.forms.widgets import CheckboxInput, CheckboxSelectMultiple, \
-    RadioSelect, Select
+    DateInput, MultiWidget, NumberInput, RadioSelect, Select, TextInput
+from django.utils.translation import gettext_lazy as _
 
 from cdh.core.file_loading import add_js_file
 
@@ -156,6 +157,27 @@ class DateTimeInput(forms.DateTimeInput):
 class DateTimeField(forms.DateTimeField):
     """Override of Django's version to use the right HTML5 input"""
     widget = DateTimeInput
+
+
+class BootstrapMultiWidgetMixin:
+    template_name = 'cdh.core/forms/widgets/bootstrap_multiwidget.html'
+
+    def get_context(self, name, value, attrs):
+        subwidgets = {}
+        if 'subwidgets' in self.attrs:
+            subwidgets = self.attrs['subwidgets']
+        context = super().get_context(name, value, attrs)
+
+        for subwidget_name, subwidget_attrs in subwidgets.items():
+            if subwidget_name in context['widget']['subwidgets']:
+                context['widget']['subwidgets']['attrs'].update(
+                    subwidget_attrs)
+
+        return context
+
+
+class BootstrapMultiWidget(BootstrapMultiWidgetMixin, MultiWidget):
+    pass
 
 
 class SplitDateTimeWidget(forms.SplitDateTimeWidget):
