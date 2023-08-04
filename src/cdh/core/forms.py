@@ -41,8 +41,9 @@ class TemplatedFormMixin:
             if errors:
                 field.field.widget.attrs['valid'] = 'is-invalid'
                 field.field.widget.attrs['class'] += ' is-invalid'
-            elif form_was_changed:  # Only add if the data on the form was
-                # changed, as that would indicate a validation step gone wrong.
+            elif form_was_changed and self.show_valid_fields:
+                # Only add if the data on the form was changed, as that would
+                # indicate a validation step gone wrong.
                 field.field.widget.attrs['class'] += ' is-valid'
                 field.field.widget.attrs['valid'] = 'is-valid'
 
