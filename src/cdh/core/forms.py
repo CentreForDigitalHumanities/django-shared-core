@@ -71,19 +71,19 @@ class TemplatedModelForm(TemplatedFormMixin, forms.ModelForm):
 class BootstrapSelect(Select):
     """Override of Django's version to use the right Bootstrap classes"""
 
-    def get_context(self, *args, **kwargs):
-        if 'class' not in self.attrs:
-            self.attrs['class'] = ""
+    def get_context(self, name, value, attrs):
+        if 'class' not in attrs:
+            attrs['class'] = ""
 
-        if 'form-control' in self.attrs['class']:
-            self.attrs['class'] = self.attrs['class'].replace(
+        if 'form-control' in attrs['class']:
+            attrs['class'] = attrs['class'].replace(
                 'form-control',
                 'form-select'
             )
         else:
-            self.attrs['class'] += ' form-select'
+            attrs['class'] += ' form-select'
 
-        return super().get_context(*args, **kwargs)
+        return super().get_context(name, value, attrs)
 
 
 class BootstrapCheckboxInput(CheckboxInput):
