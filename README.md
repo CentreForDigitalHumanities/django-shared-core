@@ -91,10 +91,19 @@ Requires Django >= 2;
 
 ### Vue (``cdh.vue``)
 
-Helper app to (more) easily integrate small(-ish) Vue components in your Django
+**DEPRECATED**
+
+Helper app to (more) easily integrate small(-ish) Vue 2 components in your Django
 templates.
 
 Requires Django >= 3;
+
+### Vue 3 (``cdh.vue3``)
+
+Helper app to (more) easily integrate small(-ish) Vue 3 components in your Django
+templates.
+
+Requires Django >= 2;
 
 # Included libraries
 These libraries have been completely integrated into this codebase
