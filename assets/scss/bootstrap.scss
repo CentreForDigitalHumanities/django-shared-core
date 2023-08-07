@@ -5,7 +5,7 @@ $open-sans-font-dir: '/static/cdh.core/fonts/open-sans/';
 @import "icomoon";
 @import "select2-bootstrap";
 
-.uu-header .uu-header-row .language-form {
+.uu-header .uu-header-row .language-form, .uu-unified-header-container, .language-form {
     button {
         background: none;
         text-transform: uppercase;
@@ -15,7 +15,7 @@ $open-sans-font-dir: '/static/cdh.core/fonts/open-sans/';
     }
 }
 
-.uu-navbar {
+.uu-navbar, .uu-unified-header-container {
     .icon-additional-home:before {
         content: "H";
     }
@@ -24,4 +24,13 @@ $open-sans-font-dir: '/static/cdh.core/fonts/open-sans/';
 // Mostly for backwards compatibility, and ease of use
 .dt, .datatables {
     @extend .table;
+}
+
+// Bootstrap expects the feedback to be a child of the input group.
+// This is nigh-impossible in Django due to how widgets work, thus it is
+// placed after the input group. This adds some rules to make them display
+.input-group {
+    & ~ .invalid-feedback, & ~ .valid-feedback {
+        display: block;
+    }
 }

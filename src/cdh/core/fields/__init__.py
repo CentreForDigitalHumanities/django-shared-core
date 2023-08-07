@@ -7,3 +7,4 @@ A MIT license has been supplied.
 
 from .encrypted_fields import *
 from .html5 import *
+from .month_fields import *

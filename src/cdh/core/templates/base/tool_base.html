@@ -1,0 +1,82 @@
+{% extends 'base/minimal.html' %}
+
+{% load static %}
+{% load i18n %}
+{% load include_if_exists %}
+{% load menu %}
+{% load messages %}
+{% load transformat %}
+
+{% block site-header %}
+    {% generate_menu %}
+    {% get_current_language as LANGUAGE_CODE %}
+    <div class="uu-unified-header navbar">
+        <div class="uu-unified-header-container">
+            {% block uu-header-brand %}
+                <div class="navbar-brand uu-brand">
+                    <a href="https://www.uu.nl" class="uu-logo pe-1">
+                        <img
+                            src="{% static 'cdh.core/images/uu-roundel.svg' %}"
+                            alt="{% trans 'cdh.core:uu' %}"
+                            title="{% trans 'cdh.core:uu' %}"
+                        />
+                    </a>
+                </div>
+            {% endblock %}
+
+            {% block uu-header-pre-menu %}
+                <div
+                    class="navbar-text fs-4 text-black d-none d-lg-flex text-nowrap pe-4"
+                >
+                    Example portal
+                </div>
+            {% endblock %}
+
+            {% block uu-header-menu %}
+                {% with navbar_classes="ms-auto me-auto" %}
+                    {% include 'base/mainmenu.html' %}
+                {% endwith %}
+            {% endblock %}
+
+
+            {% block uu-header-post-menu %}
+                {% include 'base/tool_language_box.html' %}
+            {% endblock %}
+
+            <button
+                    class="navbar-toggler border-left ms-3"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon" />
+            </button>
+        </div>
+    </div>
+    {% block uu-header-warning-banner %}
+        {% if request.user.is_impersonate or acceptation or debug %}
+            <div class="uu-hero text-bg-danger pt-1 pb-1 fw-bold justify-content-center">
+                {% if request.user.is_impersonate %}
+                    Impersonating user -
+                    <a href="{% url 'impersonate-stop' %}" class="uu-red-text">Stop</a>
+                {% elif acceptation %}
+                    Acceptation/test/dev server
+                {% elif debug %}
+                    Local development server
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endblock %}
+{% endblock %}
+
+{% block uu-content %}
+    {% block pre-messages-content %}{% endblock %}
+    {% display_messages messages %}
+
+    {% block content %}{% endblock %}
+{% endblock %}
+
+{# Empty, tool layout currently has no footer #}
+{% block site-footer %}{% endblock %}

@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'cdh.vue',
     'cdh.files',
     'cdh.integration_platform',
-    'cdh.federated_auth',
 
     # Django supplied apps
     'django.contrib.admin',
@@ -71,9 +70,6 @@ INSTALLED_APPS = [
     'main',
     'dev_files',
     'dev_integration_platform',
-
-    # SAML
-    'djangosaml2',
 ]
 
 MIDDLEWARE = [
@@ -88,7 +84,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'csp.middleware.CSPMiddleware',
-    'djangosaml2.middleware.SamlSessionMiddleware',
 ]
 
 if DEBUG and ENABLE_DEBUG_TOOLBAR:
@@ -234,6 +229,9 @@ except ImportError:
 
 try:
     from cdh.federated_auth.saml.settings import *
+
+    INSTALLED_APPS += SAML_APPS
+    MIDDLEWARE += SAML_MIDDLEWARE
 
     SAML_CONFIG = create_saml_config(
         base_url='http://localhost:8000/',

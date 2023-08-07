@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     strategy:
-      max-parallel: 4
+      max-parallel: 2
       matrix:
         python-version: ['3.9', '3.10']
 
@@ -22,13 +22,11 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-        cache: pip
-        cache-dependency-path: dev/requirements.txt
     - name: Install Dependencies for Django
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
-      working-directory: dev
+        pip install wheel # Install wheel for packages using legacy install methods
+        pip install -e .[dev]
     - name: Run Tests
       working-directory: dev
       run: |
@@ -47,11 +45,11 @@ jobs:
           python-version: '3.9'
           cache: pip
           cache-dependency-path: dev/requirements.txt
-      - name: Install Dependencies for Django 4
+      - name: Install Dependencies for Django
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-        working-directory: dev
+          pip install wheel # Install wheel for packages using legacy install methods
+          pip install -e .[dev]
       - name: Install coverage.py
         run: |
           pip install coverage

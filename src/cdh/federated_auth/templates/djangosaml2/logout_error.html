@@ -1,0 +1,16 @@
+{% extends 'cdh.federated_auth/base.html' %}
+
+{% block header_title %}
+    Logout error
+{% endblock %}
+
+{% block content %}
+    <h2>Logout error</h2>
+    <p>An error occurred during the logout process, and we could not close your global session.</p>
+
+    <p>Your local session in this system has been closed, but you may have open sessions in other systems.</p>
+
+    <p>In order to prevent illicit use of your personal information, please close your browser and/or remove your cookies from your browser.</p>
+
+    <p>Sorry for this inconvenience.</p>
+{% endblock %}

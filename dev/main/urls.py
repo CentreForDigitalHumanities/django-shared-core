@@ -5,7 +5,7 @@ from django.urls import path
 from .views import CustomEmailFormView, CustomEmailPreviewView, \
     CustomTemplateFormsStylesView, \
     FormsStylesView, HomeView, \
-    JqueryUIFormStylesView, StylesView
+    JqueryUIFormStylesView, MonthFieldClearView, MonthFieldTestView, StylesView
 
 app_name = 'main'
 
@@ -23,6 +23,10 @@ urlpatterns = [
          name='custom_email_form'),
     path('custom_email_form/preview/', CustomEmailPreviewView.as_view(),
          name='custom_email_form_preview'),
+    path('month_field_test/', MonthFieldTestView.as_view(),
+         name='month_field_test'),
+    path('month_field_test/clear/', MonthFieldClearView.as_view(),
+         name='month_field_test_clear'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutInitView.as_view(), name='logout'),
 ]

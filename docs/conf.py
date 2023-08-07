@@ -18,6 +18,7 @@ import os
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.insert(0, os.path.abspath('..'))
+sys.path.insert(0, os.path.abspath('../src'))
 
 # -- Django setup
 
@@ -104,7 +105,7 @@ man_pages = [
 # If true, show URL addresses after external links.
 #man_show_urls = False
 
-apidoc_module_dir = '../cdh'
+apidoc_module_dir = '../src/cdh'
 apidoc_output_dir = 'reference'
 apidoc_excluded_paths = ['*/migrations',]
 apidoc_separate_modules = True

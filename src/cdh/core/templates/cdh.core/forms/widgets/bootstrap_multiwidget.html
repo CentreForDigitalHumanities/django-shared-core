@@ -1,0 +1,7 @@
+{% spaceless %}
+  <div class="input-group gap-3 has-validation">
+    {% for widget in widget.subwidgets %}
+        {% include widget.template_name %}
+    {% endfor %}
+  </div>
+{% endspaceless %}

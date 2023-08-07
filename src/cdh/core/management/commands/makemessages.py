@@ -15,7 +15,7 @@ def templatize(src, **kwargs):
 
     template.inline_re = re.compile(
         # Match the trans 'some text' part
-        r"""^\s*trans(?:format)?\s+((?:"[^"]*?")|(?:'[^']*?'))"""
+        r"""^\s*trans(?:format|late)?\s+((?:"[^"]*?")|(?:'[^']*?'))"""
         # Match and ignore optional filters
         r"""(?:\s*\|\s*[^\s:]+(?::(?:[^\s'":]+|(?:"[^"]*?")|(?:'[^']*?')))?)*"""
         # Match the optional context part

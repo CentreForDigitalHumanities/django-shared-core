@@ -1,0 +1,23 @@
+{% extends 'cdh.federated_auth/base.html' %}
+{% load static %}
+
+{% block header_title %}
+    Redirecting...
+{% endblock %}
+
+{% block html_head %}
+    <script src="{% static 'cdh.federated_auth/post_binding_form.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <p>
+    You're being redirected to the login screen.
+    Please click the button below if you're not redirected automatically within a few seconds.
+    </p>
+    <form method="post" action="{{ target_url }}" name="SSO_Login" class="d-flex w-100 justify-content-center">
+        {% for key, value in params.items %}
+            <input type="hidden" name="{{ key }}" value="{{ value }}" />
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Log in</button>
+    </form>
+{% endblock %}

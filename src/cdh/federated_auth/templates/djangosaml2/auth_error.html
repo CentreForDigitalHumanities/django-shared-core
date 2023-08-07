@@ -1,0 +1,16 @@
+{% extends 'cdh.federated_auth/base.html' %}
+{% load static %}
+
+{% block header_title %}
+    Authorization error
+{% endblock %}
+
+{% block content %}
+    <h1>Authorization error</h1>
+    <p>You are already logged in and you are trying to go to the login page again.</p>
+
+    <p>You may have been redirected here when trying to access some content
+      that required extra privileges that you do not have.</p>
+
+    <p>Please <a href="{% url 'saml2_logout' %}">logout</a> and login as a different user</p>
+{% endblock %}

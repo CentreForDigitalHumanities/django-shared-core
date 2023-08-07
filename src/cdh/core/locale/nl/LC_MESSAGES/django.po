@@ -2,13 +2,11 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-26 04:12-0500\n"
+"POT-Creation-Date: 2023-08-04 05:16-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,28 +16,104 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: cdh/core/mail/classes.py:561
+#: src/cdh/core/fields/month_fields.py:16
+#, python-format
+msgid "Ensure the year is less than or equal to %(limit_value)s."
+msgstr "Het jaartal mag niet later zijn dan %(limit_value)s."
+
+#: src/cdh/core/fields/month_fields.py:25
+#, python-format
+msgid "Ensure the year is greater than or equal to %(limit_value)s."
+msgstr "Het jaartal mag niet eerder zijn dan %(limit_value)s."
+
+#: src/cdh/core/fields/month_fields.py:57
+msgid "Year informed invalid. Enter at least 4 digits."
+msgstr "Vul 4 cijfers in voor het jaartal"
+
+#: src/cdh/core/forms.py:246
+msgid "core:fields:month:year_placeholder"
+msgstr "Jaar"
+
+#: src/cdh/core/forms.py:256
+msgid "core:fields:month:month_placeholder"
+msgstr "Kies een maand..."
+
+#: src/cdh/core/forms.py:257
+msgid "core:fields:month:january"
+msgstr "Januari"
+
+#: src/cdh/core/forms.py:258
+msgid "core:fields:month:february"
+msgstr "Februari"
+
+#: src/cdh/core/forms.py:259
+msgid "core:fields:month:march"
+msgstr "Maart"
+
+#: src/cdh/core/forms.py:260
+msgid "core:fields:month:april"
+msgstr "April"
+
+#: src/cdh/core/forms.py:261
+msgid "core:fields:month:may"
+msgstr "Mei"
+
+#: src/cdh/core/forms.py:262
+msgid "core:fields:month:june"
+msgstr "Juni"
+
+#: src/cdh/core/forms.py:263
+msgid "core:fields:month:july"
+msgstr "Juli"
+
+#: src/cdh/core/forms.py:264
+msgid "core:fields:month:augustus"
+msgstr "Augustus"
+
+#: src/cdh/core/forms.py:265
+msgid "core:fields:month:september"
+msgstr "September"
+
+#: src/cdh/core/forms.py:266
+msgid "core:fields:month:october"
+msgstr "Oktober"
+
+#: src/cdh/core/forms.py:267
+msgid "core:fields:month:november"
+msgstr "November"
+
+#: src/cdh/core/forms.py:268
+msgid "core:fields:month:december"
+msgstr "December"
+
+#: src/cdh/core/mail/classes.py:575
 msgid "core.mail.custom.help_text.variables"
 msgstr "Variabelen"
 
-#: cdh/core/mail/classes.py:574
+#: src/cdh/core/mail/classes.py:588
 msgid "core.mail.custom.help_text.tags"
 msgstr "Commando's"
 
-#: cdh/core/templates/admin/base_site.html:97
+#: src/cdh/core/templates/admin/base_site.html:97
 msgid "Django administration"
 msgstr ""
 
-#: cdh/core/templates/base/base.html:15 cdh/core/templates/base/base.html:16
-#: cdh/core/templates/base/base.html:59 cdh/core/templates/base/base.html:60
-#: cdh/core/templates/base/base.html:87
+#: src/cdh/core/templates/base/site_base.html:15
+#: src/cdh/core/templates/base/site_base.html:16
+#: src/cdh/core/templates/base/site_base.html:59
+#: src/cdh/core/templates/base/site_base.html:60
+#: src/cdh/core/templates/base/site_base.html:87
+#: src/cdh/core/templates/base/tool_base.html:20
+#: src/cdh/core/templates/base/tool_base.html:21
 msgid "cdh.core:uu"
 msgstr "Universiteit Utrecht"
 
-#: cdh/core/templates/base/language_box.html:10
+#: src/cdh/core/templates/base/site_language_box.html:10
+#: src/cdh/core/templates/base/tool_language_box.html:12
 msgid "lang:en"
 msgstr "English"
 
-#: cdh/core/templates/base/language_box.html:15
+#: src/cdh/core/templates/base/site_language_box.html:15
+#: src/cdh/core/templates/base/tool_language_box.html:17
 msgid "lang:nl"
 msgstr "Nederlands"
