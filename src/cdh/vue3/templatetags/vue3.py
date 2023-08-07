@@ -109,16 +109,25 @@ class VueRenderer(template.Node):
 
         style = 'display:inline' if self.inline else 'width:100%'
 
-        return format_html('''
-        <div id="{container}" style="{style}"></div>
-        <script>
-        (function() {{
-        let data = {{}};
-        {binding}
-            createApp({component}, data).mount('#{container}')
-        }})();
-        </script>''',
-                           binding=binding,
-                           component=self.component,
-                           container=container,
-                           style=style)
+        # Retrieve the CSP nonce if present
+        nonce = ''
+        if hasattr(context, 'request') and hasattr(context.request,
+                                                   'csp_nonce'):
+            nonce = context.request.csp_nonce
+
+        return format_html(
+            '''
+            <div id="{container}" style="{style}"></div>
+            <script nonce="{nonce}">
+            (function() {{
+            let data = {{}};
+            {binding}
+                createApp({component}, data).mount('#{container}')
+            }})();
+            </script>''',
+            binding=binding,
+            component=self.component,
+            container=container,
+            style=style,
+            nonce=nonce,
+        )
