@@ -1,0 +1,20 @@
+{
+  "name": "uu-list",
+  "version": "1.0.0",
+  "author": "Humanities IT Portal development",
+  "license": "Apache-2.0",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "cdh-vue-lib": "git+https://github.com/CentreForDigitalHumanities/Vue-lib.git#v0.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.3.4",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.9",
+    "vue": "^3.3.4"
+  }
+}
