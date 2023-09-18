@@ -1,0 +1,6 @@
+INTEGRATION_PLATFORM_HOST = ''
+
+INTEGRATION_PLATFORM_CONSUMER_CREDENTIALS = {
+    'key': '',
+    'secret': ''
+}

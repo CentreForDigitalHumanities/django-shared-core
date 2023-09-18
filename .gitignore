@@ -20,3 +20,6 @@ env*
 
 ## project
 media/
+docs/_build
+build
+*.egg-info

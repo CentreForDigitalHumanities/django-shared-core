@@ -1,0 +1,31 @@
+{% extends 'base/base.html' %}
+
+{% block pre-messages-content %}
+    <div class="uu-hero">
+        <h1>Integration platform</h1>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <style>
+        .tile:hover .d-hover-block {
+            display: block !important;
+        }
+    </style>
+    <div class="uu-container">
+        <div class="tiles tiles-n-6">
+            <div class="tile">
+                <strong>Token API</strong>
+            </div>
+            <div class="tile">
+                <strong>Digital Identity API</strong>
+                <a href="{% url 'dev_integration_platform:dia_simple' %}" class="btn btn-secondary btn-sm d-none d-hover-block mt-auto">
+                    Simple test
+                </a>
+                <a href="{% url 'dev_integration_platform:dia_users' %}" class="btn btn-secondary btn-sm d-none d-hover-block mt-1">
+                    User-add widget
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

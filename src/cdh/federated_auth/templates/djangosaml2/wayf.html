@@ -1,0 +1,20 @@
+{% extends 'cdh.federated_auth/base.html' %}
+
+{% block header_title %}
+    Select Identity Provider
+{% endblock %}
+
+{% block content %}
+    <h2>Where are you from?</h2>
+    <p>Please select your <strong>Identity Provider</strong> from the following list:</p>
+
+    {% for url, name in available_idps %}
+        <a
+            href="{% url 'saml2_login' %}?idp={{ url }}{% if came_from %}&next={{ came_from }}{% endif %}"
+            class="btn d-block"
+        >
+            {{ name|default_if_none:url }}
+        </a>
+    {% endfor %}
+
+{% endblock %}

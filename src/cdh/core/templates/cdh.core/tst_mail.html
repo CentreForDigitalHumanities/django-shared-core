@@ -1,0 +1,24 @@
+{% extends 'cdh.core/mail_template.html' %}
+
+{#{% block sender %}Verwerkingsregister<br>Geesteswetenschappen{% endblock %}#}
+{#{% block banner %}Registratie verstuurd{% endblock %}#}
+
+{% block content %}
+<h3>
+    Beste persoon,
+</h3>
+<p>
+    Uw registratie #326943 is verstuurd naar de Privacy Officers van de Universiteit Utrecht.
+    Een reactie op deze registratie heeft een gemiddelde duur van 4 weken.
+</p>
+<p>
+    Mocht U vragen hebben neem dan contact op met een Privacy Officer via privacy@uu.nl.
+</p>
+{#<p>#}
+{#    <em>Dit is een geautomatiseerde email, en kan niet gereageerd op worden</em>#}
+{#</p>#}
+{% endblock %}
+
+{% block footer %}
+    <em>Dit is een geautomatiseerde email, en kan niet gereageerd op worden</em>
+{% endblock %}

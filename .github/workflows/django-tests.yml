@@ -2,20 +2,19 @@ name: Django CI
 
 on:
   push:
-    branches: [ develop, feature/files ]
+    branches: [ develop, master ]
   pull_request:
-    branches: [ develop, feature/files ]
+    branches: [ develop, master ]
 
 jobs:
   test:
-    name: Tests; Python ${{ matrix.python-version }}, Django ${{ matrix.django-version }}
+    name: Tests; Python ${{ matrix.python-version }}
     runs-on: ubuntu-latest
     continue-on-error: true
     strategy:
-      max-parallel: 4
+      max-parallel: 2
       matrix:
         python-version: ['3.9', '3.10']
-        django-version: ['3', '4']
 
     steps:
     - uses: actions/checkout@v2
@@ -23,23 +22,21 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-        cache: pip
-        cache-dependency-path: dev/requirements-django${{ matrix.django-version }}.txt
-    - name: Install Dependencies for Django ${{ matrix.django-version }}
+    - name: Install Dependencies for Django
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements-django${{ matrix.django-version }}.txt
-      working-directory: dev
+        pip install wheel # Install wheel for packages using legacy install methods
+        pip install -e .[dev]
     - name: Run Tests
       working-directory: dev
       run: |
         python manage.py test
   coverage:
-    name: Coverage; Python 3.9, Django 4
+    name: Coverage; Python 3.9
     runs-on: ubuntu-latest
     continue-on-error: true
     if: github.event_name == 'pull_request'
-    
+
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python 3.9
@@ -47,12 +44,12 @@ jobs:
         with:
           python-version: '3.9'
           cache: pip
-          cache-dependency-path: dev/requirements-django4.txt
-      - name: Install Dependencies for Django 4
+          cache-dependency-path: dev/requirements.txt
+      - name: Install Dependencies for Django
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements-django4.txt
-        working-directory: dev
+          pip install wheel # Install wheel for packages using legacy install methods
+          pip install -e .[dev]
       - name: Install coverage.py
         run: |
           pip install coverage

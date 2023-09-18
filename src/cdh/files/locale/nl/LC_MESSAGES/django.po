@@ -1,0 +1,394 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-09-26 04:12-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: cdh/files/db/fields.py:127
+#, python-format
+msgid "%(model)s instance with %(field)s %(value)r does not exist."
+msgstr ""
+
+#: cdh/files/db/fields.py:129
+msgid "Foreign Key (type determined by related field)"
+msgstr ""
+
+#: cdh/files/db/fields.py:546
+#, python-format
+msgid "%(from)s-%(to)s relationship"
+msgstr ""
+
+#: cdh/files/db/fields.py:547
+#, python-format
+msgid "%(from)s-%(to)s relationships"
+msgstr ""
+
+#: cdh/files/db/fields.py:660
+msgid "File field with history tracking"
+msgstr ""
+
+#: cdh/files/forms/fields.py:17
+msgid "No file was submitted. Check the encoding type on the form."
+msgstr ""
+
+#: cdh/files/forms/fields.py:18
+msgid "No file was submitted."
+msgstr ""
+
+#: cdh/files/forms/fields.py:19
+msgid "The submitted file is empty."
+msgstr ""
+
+#: cdh/files/forms/fields.py:21
+#, python-format
+msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
+msgstr ""
+
+#: cdh/files/forms/fields.py:24
+msgid "Please either submit a file or check the clear checkbox, not both."
+msgstr ""
+
+#: cdh/files/forms/fields.py:131
+msgid "Enter a list of values."
+msgstr ""
+
+#: cdh/files/forms/fields.py:132
+#, python-format
+msgid "Select a valid choice. %(value)s is not one of the available choices."
+msgstr ""
+
+#: cdh/files/forms/fields.py:134
+#, python-format
+msgid "“%(pk)s” is not a valid value."
+msgstr ""
+
+#: cdh/files/forms/widgets.py:6 cdh/files/forms/widgets.py:18
+#: cdh/files/forms/widgets.py:67
+msgid "Clear"
+msgstr ""
+
+#: cdh/files/forms/widgets.py:7
+msgid "Currently"
+msgstr ""
+
+#: cdh/files/forms/widgets.py:8
+msgid "Change"
+msgstr ""
+
+#: cdh/files/forms/widgets.py:17 cdh/files/forms/widgets.py:66
+msgid "Please select a file"
+msgstr ""
+
+#: cdh/files/forms/widgets.py:19
+msgid "Select File"
+msgstr ""
+
+#: cdh/files/forms/widgets.py:68
+msgid "Upload new"
+msgstr ""
+
+#: cdh/files/forms/widgets.py:69
+msgid "Select existing"
+msgstr ""
+
+#: cdh/files/mime_names.py:6
+msgid "Unspecified binary data"
+msgstr ""
+
+#: cdh/files/mime_names.py:7
+msgid "JSON data"
+msgstr ""
+
+#: cdh/files/mime_names.py:8
+msgid "PGP encrypted file"
+msgstr ""
+
+#: cdh/files/mime_names.py:9
+msgid "PGP signature"
+msgstr ""
+
+#: cdh/files/mime_names.py:10
+msgid "RSS feed"
+msgstr ""
+
+#: cdh/files/mime_names.py:11
+msgid "Rich text file"
+msgstr ""
+
+#: cdh/files/mime_names.py:12
+msgid "Microsoft Access file"
+msgstr ""
+
+#: cdh/files/mime_names.py:13 cdh/files/mime_names.py:147
+msgid "Character-Separated Values (CSV) file"
+msgstr ""
+
+#: cdh/files/mime_names.py:20 cdh/files/mime_names.py:22
+#: cdh/files/mime_names.py:24
+msgid "Microsoft Word document"
+msgstr ""
+
+#: cdh/files/mime_names.py:26 cdh/files/mime_names.py:28
+msgid "Microsoft Word template"
+msgstr ""
+
+#: cdh/files/mime_names.py:31 cdh/files/mime_names.py:33
+msgid "Microsoft Excel template"
+msgstr ""
+
+#: cdh/files/mime_names.py:35 cdh/files/mime_names.py:37
+#: cdh/files/mime_names.py:39
+msgid "Microsoft Excel spreadsheet"
+msgstr ""
+
+#: cdh/files/mime_names.py:42 cdh/files/mime_names.py:44
+#: cdh/files/mime_names.py:46 cdh/files/mime_names.py:48
+#: cdh/files/mime_names.py:50
+msgid "Powerpoint presentation"
+msgstr ""
+
+#: cdh/files/mime_names.py:52 cdh/files/mime_names.py:54
+msgid "Powerpoint slide"
+msgstr ""
+
+#: cdh/files/mime_names.py:56
+msgid "Powerpoint template"
+msgstr ""
+
+#: cdh/files/mime_names.py:58
+msgid "Microsoft OneNote"
+msgstr ""
+
+#: cdh/files/mime_names.py:60
+msgid "Microsoft Wordpad document"
+msgstr ""
+
+#: cdh/files/mime_names.py:64
+msgid "OpenDocument Database"
+msgstr ""
+
+#: cdh/files/mime_names.py:66 cdh/files/mime_names.py:68
+msgid "OpenDocument formula"
+msgstr ""
+
+#: cdh/files/mime_names.py:70
+msgid "OpenDocument formula template"
+msgstr ""
+
+#: cdh/files/mime_names.py:72 cdh/files/mime_names.py:74
+msgid "OpenDocument graphic"
+msgstr ""
+
+#: cdh/files/mime_names.py:76 cdh/files/mime_names.py:78
+msgid "OpenDocument graphic template"
+msgstr ""
+
+#: cdh/files/mime_names.py:80
+msgid "OpenDocument image"
+msgstr ""
+
+#: cdh/files/mime_names.py:82
+msgid "OpenDocument image template"
+msgstr ""
+
+#: cdh/files/mime_names.py:84 cdh/files/mime_names.py:86
+msgid "OpenDocument presentation"
+msgstr ""
+
+#: cdh/files/mime_names.py:88 cdh/files/mime_names.py:90
+msgid "OpenDocument presentation template"
+msgstr ""
+
+#: cdh/files/mime_names.py:92 cdh/files/mime_names.py:94
+msgid "OpenDocument spreadsheet"
+msgstr ""
+
+#: cdh/files/mime_names.py:96 cdh/files/mime_names.py:98
+msgid "OpenDocument spreadsheet template"
+msgstr ""
+
+#: cdh/files/mime_names.py:100 cdh/files/mime_names.py:102
+msgid "OpenDocument document"
+msgstr ""
+
+#: cdh/files/mime_names.py:104 cdh/files/mime_names.py:106
+msgid "OpenDocument document template"
+msgstr ""
+
+#: cdh/files/mime_names.py:108
+msgid "Debian package"
+msgstr ""
+
+#: cdh/files/mime_names.py:109
+msgid "OTF font"
+msgstr ""
+
+#: cdh/files/mime_names.py:110
+msgid "TTF font"
+msgstr ""
+
+#: cdh/files/mime_names.py:111
+msgid "WOFF font"
+msgstr ""
+
+#: cdh/files/mime_names.py:112
+msgid "BZip file archive"
+msgstr ""
+
+#: cdh/files/mime_names.py:113
+msgid "BZip2 file archive"
+msgstr ""
+
+#: cdh/files/mime_names.py:114
+msgid "GNU Tar file"
+msgstr ""
+
+#: cdh/files/mime_names.py:115
+msgid "LaTeX file"
+msgstr ""
+
+#: cdh/files/mime_names.py:116
+msgid "TeX file"
+msgstr ""
+
+#: cdh/files/mime_names.py:117
+msgid "Shell archive"
+msgstr ""
+
+#: cdh/files/mime_names.py:118
+msgid "RAR file archive"
+msgstr ""
+
+#: cdh/files/mime_names.py:119
+msgid "7-Zip file archive"
+msgstr ""
+
+#: cdh/files/mime_names.py:120
+msgid "Zip file archive"
+msgstr ""
+
+#: cdh/files/mime_names.py:121
+msgid "vCalendar"
+msgstr ""
+
+#: cdh/files/mime_names.py:122
+msgid "vCard"
+msgstr ""
+
+#: cdh/files/mime_names.py:123
+msgid "XML file"
+msgstr ""
+
+#: cdh/files/mime_names.py:126
+msgid "MP3 audio"
+msgstr ""
+
+#: cdh/files/mime_names.py:127
+msgid "MP4 audio"
+msgstr ""
+
+#: cdh/files/mime_names.py:128
+msgid "OGG audio"
+msgstr ""
+
+#: cdh/files/mime_names.py:131
+msgid "Bitmap image"
+msgstr ""
+
+#: cdh/files/mime_names.py:132
+msgid "JPEG image"
+msgstr ""
+
+#: cdh/files/mime_names.py:133
+msgid "BTIF image"
+msgstr ""
+
+#: cdh/files/mime_names.py:134
+msgid "PNG image"
+msgstr ""
+
+#: cdh/files/mime_names.py:135
+msgid "SVG image"
+msgstr ""
+
+#: cdh/files/mime_names.py:136
+msgid "WebP image"
+msgstr ""
+
+#: cdh/files/mime_names.py:137
+msgid "eXtended Image File Format (XIFF)"
+msgstr ""
+
+#: cdh/files/mime_names.py:138
+msgid "Icon image"
+msgstr ""
+
+#: cdh/files/mime_names.py:139
+msgid "Photoshop image"
+msgstr ""
+
+#: cdh/files/mime_names.py:142
+msgid "Text file"
+msgstr ""
+
+#: cdh/files/mime_names.py:143
+msgid "iCalender file"
+msgstr ""
+
+#: cdh/files/mime_names.py:144
+msgid "C source file"
+msgstr ""
+
+#: cdh/files/mime_names.py:145
+msgid "Python source file"
+msgstr ""
+
+#: cdh/files/mime_names.py:146
+msgid "Cascading Style Sheets (CSS) file"
+msgstr ""
+
+#: cdh/files/mime_names.py:150
+msgid "Richt text file"
+msgstr ""
+
+#: cdh/files/mime_names.py:153
+msgid "H.261 video"
+msgstr ""
+
+#: cdh/files/mime_names.py:154
+msgid "H.263 video"
+msgstr ""
+
+#: cdh/files/mime_names.py:155
+msgid "H.264 video"
+msgstr ""
+
+#: cdh/files/mime_names.py:156
+msgid "MPEG video"
+msgstr ""
+
+#: cdh/files/mime_names.py:157
+msgid "MP4 video"
+msgstr ""
+
+#: cdh/files/mime_names.py:158
+msgid "OGG video"
+msgstr ""
+
+#: cdh/files/mime_names.py:159
+msgid "M4V video"
+msgstr ""

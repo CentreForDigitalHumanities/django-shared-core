@@ -12,5 +12,5 @@ call_command(
     'makemessages',
     locale=['nl', 'en'],
     no_obsolete=True,
-    ignore=['__init__.py']
+    ignore=['__init__.py', 'docs', 'dev', 'helpers']
 )
