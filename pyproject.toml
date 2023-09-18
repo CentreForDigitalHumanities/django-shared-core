@@ -51,7 +51,7 @@ core = [
     "Django >=4.0,<5.0",
 ]
 federated-auth = [
-    "djangosaml2",
+    "djangosaml2 <1.7",
 ]
 files = [
     "python-magic",
