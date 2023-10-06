@@ -119,11 +119,11 @@ class VueRenderer(template.Node):
             '''
             <div id="{container}" style="{style}"></div>
             <script nonce="{nonce}">
-            (function() {{
+            document.addEventListener('DOMContentLoaded', (function() {{
             let data = {{}};
             {binding}
                 createApp({component}, data).mount('#{container}')
-            }})();
+            }}));
             </script>''',
             binding=binding,
             component=self.component,
