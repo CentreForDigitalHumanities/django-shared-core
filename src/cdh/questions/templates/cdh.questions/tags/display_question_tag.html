@@ -1,4 +1,5 @@
 {% load question_tags %}
+{% load i18n %}
 {% if question.use_custom_template %}
   {% include question %}
 {% else %}
@@ -28,7 +29,7 @@
     
     <div class="gt-right question-buttons">
       {% if editing %}
-        <input type="submit" value="opslaan" class="btn btn-primary mt-4"/>
+        <input type="submit" value="{% trans 'questions:buttons:save_and_next' %}" class="btn btn-primary mt-4"/>
       {% else %}
         {% if question.is_deletable and not deleting %}
           <a href="{{question.get_delete_url}}" value="Delete" class="button">Delete</a>
