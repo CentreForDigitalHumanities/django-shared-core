@@ -79,9 +79,12 @@ class Segment:
         self.template = get_template(self.template_name)
         return self.template
 
-    def render(self):
+    def render(self, context={}):
+        context.update(self.context)
         template = self.get_template()
-        return template.render(self.context)
+        if type(context) is not dict:
+            context = context.flatten()
+        return template.render(context)
 
 
 class BlueprintQuestion(Question):
