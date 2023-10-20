@@ -11,6 +11,8 @@ class EmailContentEditWidget(TinyMCEWidget):
 
     Will add a 'preview email' button to the editor.
     """
+    class Media:
+        js = ['cdh.core/js/tinymce-preview-mail-plugin.js']
 
     def __init__(
             self,
@@ -39,8 +41,6 @@ class EmailContentEditWidget(TinyMCEWidget):
 
         self.toolbar += " | preview-mail"
         self.plugins.append('preview-mail')
-
-        add_js_file('cdh.core/js/tinymce-preview-mail-plugin.js')
 
     def get_context(self, *args, **kwargs):
         context = super().get_context(*args, **kwargs)

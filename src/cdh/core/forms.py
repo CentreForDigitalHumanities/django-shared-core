@@ -357,6 +357,12 @@ class BootstrapMonthField(forms.DateField):
 class TinyMCEWidget(forms.Widget):
     """A TinyMCE widget for HTML editting"""
     template_name = "cdh.core/forms/widgets/tinymce.html"
+    class Media:
+        js = [
+            'cdh.core/js/tinymce/tinymce.min.js',
+            'cdh.core/js/tinymce/tinymce-jquery.min.js',
+            'cdh.core/js/tinymce/shim.js'
+        ]
 
     def __init__(
             self,
@@ -386,10 +392,6 @@ class TinyMCEWidget(forms.Widget):
         self.menubar = menubar
         self.plugins = plugins
         self.toolbar = toolbar
-
-        add_js_file('cdh.core/js/tinymce/tinymce.min.js')
-        add_js_file('cdh.core/js/tinymce/tinymce-jquery.min.js')
-        add_js_file('cdh.core/js/tinymce/shim.js')
 
     def get_context(self, *args, **kwargs):
         context = super().get_context(*args, **kwargs)
