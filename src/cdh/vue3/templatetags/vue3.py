@@ -6,6 +6,7 @@ from functools import partial
 
 from django import template
 from django.conf import settings
+from django.core.serializers.json import DjangoJSONEncoder
 from django.templatetags.static import static
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
@@ -14,7 +15,7 @@ from django.utils.translation import get_language
 register = template.Library()
 
 
-class VueJSONEncoder(json.JSONEncoder):
+class VueJSONEncoder(DjangoJSONEncoder):
     def encode(self, obj):
         if hasattr(obj, "_wrapped"):
             return super().encode(obj._wrapped)
@@ -119,8 +120,10 @@ class VueRenderer(template.Node):
         binding_defs = []
         for prop, value in self.props.items():
             try:
-                binding_defs.append('data["{}"] = {};'.format(prop, value(context)))
-            except Exception:
+                val = value(context)
+                binding_defs.append('data["{}"] = {};'.format(prop, val))
+            except Exception as e:
+                print(e)
                 raise RuntimeError(f'Failed binding proeprty "{prop}"')
 
         binding = mark_safe("\n".join(binding_defs))
