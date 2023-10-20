@@ -2,7 +2,7 @@
   "name": "django-shared-core",
   "version": "3.1.0",
   "repository": "git@github.com:DH-IT-Portal-Development/django-shared-core.git",
-  "author": "DH-IT Portal Development & UiL OTS Labs",
+  "author": "Hum IT Portal Development & ILS Labs",
   "license": "Apache-2.0",
   "dependencies": {
     "uu-bootstrap": "git+ssh://git@github.com/DH-IT-Portal-Development/bootstrap-theme.git#1.5.0-alpha.0"
