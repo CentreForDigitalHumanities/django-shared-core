@@ -65,6 +65,7 @@ rest = [
     "requests",
     "PyJWT",
     "djangorestframework",
+    "django-filter",
     "Django >=3.0,<5.0",
 ]
 vue = [
@@ -83,5 +84,6 @@ docs = [
 dev = [
     "pip-tools",
     "bpython",
+    "faker",
     "cdh-django-core[all,docs]",
 ]
