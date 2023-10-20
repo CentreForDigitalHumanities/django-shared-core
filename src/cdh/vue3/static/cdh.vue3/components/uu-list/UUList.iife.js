@@ -5536,9 +5536,9 @@ ${codeFrame}` : message);
     setup(i) {
       const t2 = i, o = vue.ref(t2.config.pageSize), n = vue.ref(1), e = vue.ref(""), l = vue.ref("id"), a = vue.ref(true);
       function u() {
-        var f;
+        var m;
         let p = {};
-        return (f = t2.config.filters) == null || f.forEach(($) => {
+        return (m = t2.config.filters) == null || m.forEach(($) => {
           var O;
           if ($.initial) {
             p[$.field] = $.initial;
@@ -5562,14 +5562,14 @@ ${codeFrame}` : message);
       const E = vue.computed(() => {
         let p = [];
         p.push("page_size=" + encodeURIComponent(o.value));
-        for (const [f, $] of Object.entries(_.value))
+        for (const [m, $] of Object.entries(_.value))
           $ != null && (typeof $ == "object" ? $.forEach(
-            (O) => p.push(f + "=" + encodeURIComponent(O))
-          ) : p.push(f + "=" + encodeURIComponent($)));
+            (O) => p.push(m + "=" + encodeURIComponent(O))
+          ) : p.push(m + "=" + encodeURIComponent($)));
         return e.value && p.push("search=" + encodeURIComponent(e.value)), p.push("ordering=" + encodeURIComponent(l.value)), n.value = 1, p;
       }), P = vue.computed(() => {
-        let p = E.value, f = "page=" + encodeURIComponent(n.value);
-        return p.length !== 0 && (f = "&" + f), "?" + p.join("&") + f;
+        let p = E.value, m = "page=" + encodeURIComponent(n.value);
+        return p.length !== 0 && (m = "&" + m), "?" + p.join("&") + m;
       }), D = vue.computed(() => {
         let p = new URL(window.location.protocol + "//" + window.location.host);
         return p.pathname = t2.config.dataUri, p.search = P.value, console.log(p.toString()), p.toString();
@@ -5580,8 +5580,8 @@ ${codeFrame}` : message);
       const y = vue.ref(null);
       function F() {
         y.value && y.value.abort(), y.value = new AbortController(), a.value = true, fetch(D.value, { signal: y.value.signal }).then((p) => {
-          p.json().then((f) => {
-            b.value = f, a.value = false, y.value = null;
+          p.json().then((m) => {
+            b.value = m, a.value = false, m.ordering && (l.value = m.ordering), y.value = null;
           });
         }).catch((p) => {
           console.log(p);
@@ -5589,7 +5589,7 @@ ${codeFrame}` : message);
       }
       return vue.onMounted(() => {
         F();
-      }), (p, f) => {
+      }), (p, m) => {
         var $, O, Z;
         return vue.openBlock(), vue.createBlock(ct, {
           "is-loading": a.value,
@@ -5607,11 +5607,11 @@ ${codeFrame}` : message);
           filters: p.config.filters ?? [],
           "filter-values": _.value,
           container: p.config.container,
-          "onUpdate:search": f[0] || (f[0] = (C) => e.value = C),
-          "onUpdate:currentSort": f[1] || (f[1] = (C) => l.value = C),
-          "onUpdate:pageSize": f[2] || (f[2] = (C) => o.value = C),
-          "onUpdate:currentPage": f[3] || (f[3] = (C) => n.value = C),
-          "onUpdate:filterValues": f[4] || (f[4] = (C) => _.value = C)
+          "onUpdate:search": m[0] || (m[0] = (C) => e.value = C),
+          "onUpdate:currentSort": m[1] || (m[1] = (C) => l.value = C),
+          "onUpdate:pageSize": m[2] || (m[2] = (C) => o.value = C),
+          "onUpdate:currentPage": m[3] || (m[3] = (C) => n.value = C),
+          "onUpdate:filterValues": m[4] || (m[4] = (C) => _.value = C)
         }, {
           data: vue.withCtx(({ data: C, isLoading: oe }) => [
             vue.createVNode(ne, {

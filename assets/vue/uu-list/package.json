@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "cdh-vue-lib": "git+https://github.com/CentreForDigitalHumanities/Vue-lib.git#v0.2.0"
+    "cdh-vue-lib": "git+https://github.com/CentreForDigitalHumanities/Vue-lib.git#v0.2.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.3.4",
