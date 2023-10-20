@@ -41,7 +41,7 @@ class UUListAPIView(generics.ListAPIView):
 
     def get_paginated_response(self, data):
         data = super().get_paginated_response(data)
-        data["ordering"] = self.ordering
+        data["ordering"] = self.request.query_params.get('ordering', self.ordering)
 
         return Response(data)
 
