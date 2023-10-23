@@ -155,6 +155,11 @@ class TemplatedFormTextField(forms.Field):
         Note: use Form.field_order to place this field where you want when
         using model forms.
 
+        Note 2: as always, make sure any used variables are safe as
+        they will be marked safe automatically.
+        Please escape any user-supplied content before it's passed to this
+        field.
+
         :param header: The header text. Ignored if template is specified
         :param caption: (optional) a caption text. Ignored if template is specified
         :param classes: Any CSS classes to add to the containing element.
