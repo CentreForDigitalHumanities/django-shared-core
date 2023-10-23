@@ -7,7 +7,6 @@ from django.forms.renderers import get_default_renderer
 from django.forms.widgets import (
     CheckboxInput,
     CheckboxSelectMultiple,
-    DateInput,
     MultiWidget,
     NumberInput,
     RadioSelect,
@@ -254,6 +253,10 @@ class DateInput(forms.DateInput):
 
     input_type = "date"
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.format = self.format or "%Y-%m-%d"
+
 
 class DateField(forms.DateField):
     """Override of Django's version to use the right HTML5 input"""
@@ -266,6 +269,10 @@ class TimeInput(forms.TimeInput):
 
     input_type = "time"
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.format = self.format or "%H:%M"
+
 
 class TimeField(forms.TimeField):
     """Override of Django's version to use the right HTML5 input"""
@@ -277,6 +284,10 @@ class DateTimeInput(forms.DateTimeInput):
     """Override of Django's version to use the right HTML5 input"""
 
     input_type = "datetime-local"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.format = self.format or "%Y-%m-%d %H:%M"
 
 
 class DateTimeField(forms.DateTimeField):
