@@ -112,7 +112,7 @@ class FormStylesForm(forms.Form):
 
 
 class CustomTemplateFormStylesForm(TemplatedForm):
-    info_header = core_fields.TemplatedFromTextField(
+    info_header = core_fields.TemplatedFormTextField(
         header=_("People involved"), classes=""
     )
 
@@ -125,7 +125,7 @@ class CustomTemplateFormStylesForm(TemplatedForm):
         label="Eindverantwoordelijke",
     )
 
-    date_header = core_fields.TemplatedFromTextField(
+    date_header = core_fields.TemplatedFormTextField(
         header=_("Project duration"), header_element="h4"
     )
 

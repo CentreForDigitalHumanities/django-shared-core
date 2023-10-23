@@ -120,7 +120,7 @@ class BootstrapCheckboxSelectMultiple(CheckboxSelectMultiple):
     option_template_name = "cdh.core/forms/widgets/bootstrap_radio_option.html"
 
 
-class TemplatedFromTextWidget(forms.Widget):
+class TemplatedFormTextWidget(forms.Widget):
     template_name = "cdh.core/forms/widgets/text.html"
 
     def get_context(self, name, value, attrs):
@@ -132,8 +132,8 @@ class TemplatedFromTextWidget(forms.Widget):
         return context
 
 
-class TemplatedFromTextField(forms.Field):
-    widget = TemplatedFromTextWidget
+class TemplatedFormTextField(forms.Field):
+    widget = TemplatedFormTextWidget
     form_text = True
 
     def __init__(
