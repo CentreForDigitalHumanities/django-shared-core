@@ -1,10 +1,10 @@
 # CDH Django libraries
 
-A collection of Django apps for CDH/DH-IT Django projects. Developed by the 
+A collection of Django apps for CDH Django projects. Developed by the 
 [ILS Labs](https://github.com/UiL-OTS-labs) and the 
-[DH-IT Faculty Portal Development and Support Team](https://github.com/DH-IT-Portal-Development/django-shared-core)
+[Humanities IT Portal Development and Support Team](https://github.com/orgs/CentreForDigitalHumanities/teams/portal-development)
 
-Documentation provided here: https://dh-it-portal-development.github.io/django-shared-core/
+Documentation provided here: https://centrefordigitalhumanities.github.io/django-shared-core/
 
 ## Currently targeting:
 - Python 3.9
@@ -21,7 +21,7 @@ specifics.
 
 Add the following line to your python requirements:
 
-``cdh-django-core[all] @ git+https://github.com/DH-IT-Portal-Development/django-shared-core.git@<version>``
+``cdh-django-core[all] @ git+https://github.com/CentreForDigitalHumanities/django-shared-core.git@<version>``
 
 Replacing ``<version>`` with the latest DSC release tag. (e.g. ``v3.1.0``).
 
@@ -36,7 +36,7 @@ The library can be installed with a reduced dependency set for the apps your
 project uses. To do this, replace the ``all`` with a comma-separated list of
 the apps your project uses (sans ``cdh.``). For example:
 
-``cdh-django-core[core,files,rest] @ git+https://github.com/DH-IT-Portal-Development/django-shared-core.git@[version]``
+``cdh-django-core[core,files,rest] @ git+https://github.com/CentreForDigitalHumanities/django-shared-core.git@[version]``
 
 
 ## App collection
