@@ -5,6 +5,7 @@ import json
 from functools import partial
 
 from django import template
+from django.conf import settings
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
@@ -119,11 +120,11 @@ class VueRenderer(template.Node):
             '''
             <div id="{container}" style="{style}"></div>
             <script nonce="{nonce}">
-            (function() {{
+            document.addEventListener('DOMContentLoaded', (function() {{
             let data = {{}};
             {binding}
                 createApp({component}, data).mount('#{container}')
-            }})();
+            }}));
             </script>''',
             binding=binding,
             component=self.component,
@@ -131,3 +132,25 @@ class VueRenderer(template.Node):
             style=style,
             nonce=nonce,
         )
+
+
+@register.simple_tag
+def vue_assets():
+    # read manifest json (based on vite output)
+    with open(settings.VUE_MANIFEST) as f:
+        manifest = json.load(f)
+
+    out = []
+    static = settings.STATIC_URL + 'vue/'
+    if hasattr(settings, 'VUE_URL'):
+        static = settings.VUE_URL
+
+    for name, asset in manifest.items():
+        if asset.get('isEntry'):
+            for css in asset['css']:
+                out.append('<link rel="stylesheet" href="{}"/>'.format(
+                           static + css))
+            out.append('<script type="text/javascript" src="{}"></script>'.format(
+                       static + asset['file']))
+
+    return format_html('\n'.join(out))
