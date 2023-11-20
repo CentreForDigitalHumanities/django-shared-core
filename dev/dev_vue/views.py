@@ -130,3 +130,7 @@ class ListView(DDVListView):
             label="",
         ),
     ]
+
+
+class ExampleCustomListView(ListView):
+    template_name = "dev_vue/example-custom-list.html"
