@@ -8,7 +8,7 @@ include-package-data = true
 [project]
 name = "cdh-django-core"
 description = "A Django apps library for CDH projects"
-version = "3.1.0"
+version = "3.2.0"
 readme = "README.md"
 authors = [
     {name = "DH-IT Portal Development", email = "portaldev.gw@uu.nl"},
