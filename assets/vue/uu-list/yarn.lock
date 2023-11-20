@@ -248,9 +248,9 @@ bootstrap@5.3.1:
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-5.3.1.tgz#8ca07040ad15d7f75891d1504cf14c5dedfb1cfe"
   integrity sha512-jzwza3Yagduci2x0rr9MeFSORjcHpt0lRZukZPZQJT1Dth5qzV7XcgGqYzi39KGAVYR8QEDVoO0ubFKOxzMG+g==
 
-"cdh-vue-lib@git+https://github.com/CentreForDigitalHumanities/Vue-lib.git#v0.2.2":
-  version "0.2.2"
-  resolved "git+https://github.com/CentreForDigitalHumanities/Vue-lib.git#00025fd15143fdfdd3131d927b64cf0c2112aa73"
+"cdh-vue-lib@git+https://github.com/CentreForDigitalHumanities/Vue-lib.git#v0.3.1":
+  version "0.3.1"
+  resolved "git+https://github.com/CentreForDigitalHumanities/Vue-lib.git#ba2ec6c4e601ae21723164adfdd70b0c6a9b1bd3"
   dependencies:
     uu-bootstrap "git+ssh://git@github.com/DH-IT-Portal-Development/bootstrap-theme.git#1.5.0-alpha.0"
     uuid "^9.0.0"

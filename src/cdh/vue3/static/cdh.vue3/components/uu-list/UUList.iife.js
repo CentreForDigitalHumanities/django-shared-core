@@ -40,7 +40,7 @@ var UUList = function(vue) {
     return unsafeStringify(rnds);
   }
   /*!
-    * shared v9.5.0
+    * shared v9.6.2
     * (c) 2023 kazuya kawaguchi
     * Released under the MIT License.
     */
@@ -186,7 +186,7 @@ var UUList = function(vue) {
     return emitter;
   }
   /*!
-    * message-compiler v9.5.0
+    * message-compiler v9.6.2
     * (c) 2023 kazuya kawaguchi
     * Released under the MIT License.
     */
@@ -1681,7 +1681,7 @@ var UUList = function(vue) {
     }
   }
   /*!
-    * core-base v9.5.0
+    * core-base v9.6.2
     * (c) 2023 kazuya kawaguchi
     * Released under the MIT License.
     */
@@ -2124,6 +2124,9 @@ var UUList = function(vue) {
       if (val === void 0) {
         return null;
       }
+      if (isFunction(last)) {
+        return null;
+      }
       last = val;
       i++;
     }
@@ -2351,7 +2354,7 @@ var UUList = function(vue) {
     }
     return follow;
   }
-  const VERSION$1 = "9.5.0";
+  const VERSION$1 = "9.6.2";
   const NOT_REOSLVED = -1;
   const DEFAULT_LOCALE = "en-US";
   const MISSING_RESOLVE_VALUE = "";
@@ -3252,11 +3255,11 @@ ${codeFrame}` : message);
     initFeatureFlags$1();
   }
   /*!
-    * vue-i18n v9.5.0
+    * vue-i18n v9.6.2
     * (c) 2023 kazuya kawaguchi
     * Released under the MIT License.
     */
-  const VERSION = "9.5.0";
+  const VERSION = "9.6.2";
   function initFeatureFlags() {
     if (typeof __VUE_I18N_FULL_INSTALL__ !== "boolean") {
       getGlobalThis().__VUE_I18N_FULL_INSTALL__ = true;
@@ -3483,6 +3486,8 @@ ${codeFrame}` : message);
     return vue.createVNode(vue.Text, null, key, 0);
   }
   const DEVTOOLS_META = "__INTLIFY_META__";
+  const NOOP_RETURN_ARRAY = () => [];
+  const NOOP_RETURN_FALSE = () => false;
   let composerID = 0;
   function defineCoreMissingHandler(missing) {
     return (ctx, locale, key, type) => {
@@ -3497,6 +3502,7 @@ ${codeFrame}` : message);
   function createComposer(options = {}, VueI18nLegacy) {
     const { __root, __injectWithOption } = options;
     const _isGlobal = __root === void 0;
+    const flatJson = options.flatJson;
     let _inheritLocale = isBoolean(options.inheritLocale) ? options.inheritLocale : true;
     const _locale = vue.ref(
       // prettier-ignore
@@ -3623,7 +3629,8 @@ ${codeFrame}` : message);
           _context.fallbackContext = void 0;
         }
       }
-      if (isNumber(ret) && ret === NOT_REOSLVED) {
+      if (warnType !== "translate exists" && // for not `te` (e.g `t`)
+      isNumber(ret) && ret === NOT_REOSLVED || warnType === "translate exists" && !ret) {
         const [key, arg2] = argumentParser();
         if ({}.NODE_ENV !== "production" && __root && isString$1(key) && isResolvedTranslateMessage(warnType, arg2)) {
           if (_fallbackRoot && (isTranslateFallbackWarn(_fallbackWarn, key) || isTranslateMissingWarn(_missingWarn, key))) {
@@ -3704,7 +3711,7 @@ ${codeFrame}` : message);
         "number format",
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (root) => root[NumberPartsSymbol](...args),
-        () => [],
+        NOOP_RETURN_ARRAY,
         (val) => isString$1(val) || isArray(val)
       );
     }
@@ -3715,7 +3722,7 @@ ${codeFrame}` : message);
         "datetime format",
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (root) => root[DatetimePartsSymbol](...args),
-        () => [],
+        NOOP_RETURN_ARRAY,
         (val) => isString$1(val) || isArray(val)
       );
     }
@@ -3724,11 +3731,17 @@ ${codeFrame}` : message);
       _context.pluralRules = _pluralRules;
     }
     function te2(key, locale2) {
-      if (!key)
-        return false;
-      const targetLocale = isString$1(locale2) ? locale2 : _locale.value;
-      const message = getLocaleMessage(targetLocale);
-      return _context.messageResolver(message, key) !== null;
+      return wrapWithDeps(() => {
+        if (!key) {
+          return false;
+        }
+        const targetLocale = isString$1(locale2) ? locale2 : _locale.value;
+        const message = getLocaleMessage(targetLocale);
+        const resolved = _context.messageResolver(message, key);
+        return isMessageAST(resolved) || isMessageFunction(resolved) || isString$1(resolved);
+      }, () => [key], "translate exists", (root) => {
+        return Reflect.apply(root.te, root, [key, locale2]);
+      }, NOOP_RETURN_FALSE, (val) => isBoolean(val));
     }
     function resolveMessages(key) {
       let messages2 = null;
@@ -3751,11 +3764,27 @@ ${codeFrame}` : message);
       return _messages.value[locale2] || {};
     }
     function setLocaleMessage(locale2, message) {
+      if (flatJson) {
+        const _message = { [locale2]: message };
+        for (const key in _message) {
+          if (hasOwn(_message, key)) {
+            handleFlatJson(_message[key]);
+          }
+        }
+        message = _message[locale2];
+      }
       _messages.value[locale2] = message;
       _context.messages = _messages.value;
     }
     function mergeLocaleMessage(locale2, message) {
       _messages.value[locale2] = _messages.value[locale2] || {};
+      const _message = { [locale2]: message };
+      for (const key in _message) {
+        if (hasOwn(_message, key)) {
+          handleFlatJson(_message[key]);
+        }
+      }
+      message = _message[locale2];
       deepCopy(message, _messages.value[locale2]);
       _context.messages = _messages.value;
     }
@@ -4638,11 +4667,11 @@ ${codeFrame}` : message);
         ], 2))), 128))
       ]));
     }
-  }), Oe = {
+  }), Le = {
     class: "pagination justify-content-center",
     role: "navigation",
     "aria-label": "pagination"
-  }, Ie = ["onClick"], Pe = {
+  }, Oe = ["onClick"], Ie = {
     key: 1,
     class: "page-link"
   }, q = /* @__PURE__ */ vue.defineComponent({
@@ -4656,44 +4685,44 @@ ${codeFrame}` : message);
     emits: ["change-page"],
     setup(i, { emit: t2 }) {
       const o = i;
-      function n(u, _, b) {
-        return Math.min(Math.max(u, _), b);
+      function n(u, _, y) {
+        return Math.min(Math.max(u, _), y);
       }
       const e = vue.computed(() => {
-        const u = o.numOptions, _ = o.currentpage - u, b = o.currentpage + u + 1, E = [], P = [];
-        let D;
-        for (let y = 1; y <= o.maxPages; y++)
-          (y === 1 || y === o.maxPages || y >= _ && y < b) && E.push(y);
-        for (const y of E)
-          D && (y - D === 2 ? P.push(D + 1) : y - D !== 1 && P.push(-42)), P.push(y), D = y;
-        return P;
+        const u = o.numOptions, _ = o.currentpage - u, y = o.currentpage + u + 1, P = [], I = [];
+        let U;
+        for (let $ = 1; $ <= o.maxPages; $++)
+          ($ === 1 || $ === o.maxPages || $ >= _ && $ < y) && P.push($);
+        for (const $ of P)
+          U && ($ - U === 2 ? I.push(U + 1) : $ - U !== 1 && I.push(-42)), I.push($), U = $;
+        return I;
       });
       function l(u) {
         u = n(u, 1, o.maxPages), t2("change-page", u);
       }
       const { t: a } = useI18n();
-      return (u, _) => (vue.openBlock(), vue.createElementBlock("ul", Oe, [
+      return (u, _) => (vue.openBlock(), vue.createElementBlock("ul", Le, [
         vue.createElementVNode("li", {
           class: vue.normalizeClass(["page-item page-button", u.currentpage === 1 ? "disabled" : ""])
         }, [
           u.showButtons ? (vue.openBlock(), vue.createElementBlock("a", {
             key: 0,
             class: "page-link",
-            onClick: _[0] || (_[0] = (b) => l(u.currentpage - 1))
+            onClick: _[0] || (_[0] = (y) => l(u.currentpage - 1))
           }, vue.toDisplayString(vue.unref(a)("previous")), 1)) : vue.createCommentVNode("", true)
         ], 2),
-        (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(e.value, (b) => (vue.openBlock(), vue.createElementBlock("li", {
-          key: b,
+        (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(e.value, (y) => (vue.openBlock(), vue.createElementBlock("li", {
+          key: y,
           class: vue.normalizeClass([
             "page-item",
-            (b === -42 ? "disabled page-ellipsis " : "") + (b === u.currentpage ? "active" : "")
+            (y === -42 ? "disabled page-ellipsis " : "") + (y === u.currentpage ? "active" : "")
           ])
         }, [
-          b !== -42 ? (vue.openBlock(), vue.createElementBlock("a", {
+          y !== -42 ? (vue.openBlock(), vue.createElementBlock("a", {
             key: 0,
             class: "page-link",
-            onClick: (E) => l(b)
-          }, vue.toDisplayString(b), 9, Ie)) : (vue.openBlock(), vue.createElementBlock("span", Pe, "…"))
+            onClick: (P) => l(y)
+          }, vue.toDisplayString(y), 9, Oe)) : (vue.openBlock(), vue.createElementBlock("span", Ie, "…"))
         ], 2))), 128)),
         vue.createElementVNode("li", {
           class: vue.normalizeClass(["page-item page-button", u.currentpage >= u.maxPages ? "disabled" : ""])
@@ -4701,7 +4730,7 @@ ${codeFrame}` : message);
           u.showButtons ? (vue.openBlock(), vue.createElementBlock("a", {
             key: 0,
             class: "page-link",
-            onClick: _[1] || (_[1] = (b) => l(u.currentpage + 1))
+            onClick: _[1] || (_[1] = (y) => l(u.currentpage + 1))
           }, vue.toDisplayString(vue.unref(a)("next")), 1)) : vue.createCommentVNode("", true)
         ], 2)
       ]));
@@ -4736,7 +4765,7 @@ ${codeFrame}` : message);
     });
   }
   typeof G == "function" && G(q);
-  const Ee = ["id", "value", "checked", "onClick"], Le = ["for"], Ne = /* @__PURE__ */ vue.defineComponent({
+  const Pe = ["id", "value", "checked", "onClick"], Ee = ["for"], Ne = /* @__PURE__ */ vue.defineComponent({
     __name: "BSRadioSelect",
     props: {
       options: {},
@@ -4757,11 +4786,11 @@ ${codeFrame}` : message);
             value: e,
             checked: o.modelValue == e,
             onClick: (a) => t2("update:model-value", e)
-          }, null, 8, Ee),
+          }, null, 8, Pe),
           vue.createElementVNode("label", {
             class: "form-check-label",
             for: "id_" + e
-          }, vue.toDisplayString(l), 9, Le)
+          }, vue.toDisplayString(l), 9, Ee)
         ], 2))), 128))
       ]));
     }
@@ -4870,9 +4899,9 @@ ${codeFrame}` : message);
     setup(i, { emit: t$1 }) {
       function o(a, u = 500) {
         let _;
-        return (...b) => {
+        return (...y) => {
           clearTimeout(_), _ = setTimeout(() => {
-            a.apply(this, b);
+            a.apply(this, y);
           }, u);
         };
       }
@@ -5067,11 +5096,19 @@ ${codeFrame}` : message);
               ])
             ]),
             e.filtersEnabled ? (vue.openBlock(), vue.createElementBlock("div", lt, [
+              vue.renderSlot(e.$slots, "filters-top", {
+                data: e.data,
+                isLoading: e.isLoading
+              }),
               vue.createVNode(Y, {
                 filters: e.filters,
                 "filter-values": e.filterValues,
                 "onUpdate:filterValues": l[3] || (l[3] = (u) => e.$emit("update:filter-values", u))
-              }, null, 8, ["filters", "filter-values"])
+              }, null, 8, ["filters", "filter-values"]),
+              vue.renderSlot(e.$slots, "filters-bottom", {
+                data: e.data,
+                isLoading: e.isLoading
+              })
             ])) : vue.createCommentVNode("", true),
             vue.createElementVNode("div", rt, [
               vue.renderSlot(e.$slots, "data", {
@@ -5122,12 +5159,20 @@ ${codeFrame}` : message);
             "model-value": e.search,
             "onUpdate:modelValue": l[0] || (l[0] = (a) => e.$emit("update:search", a))
           }, null, 8, ["model-value"])) : vue.createCommentVNode("", true),
+          vue.renderSlot(e.$slots, "filters-top", {
+            data: e.data,
+            isLoading: e.isLoading
+          }),
           e.filters ? (vue.openBlock(), vue.createBlock(Y, {
             key: 1,
             filters: e.filters,
             "filter-values": e.filterValues,
             "onUpdate:filterValues": l[1] || (l[1] = (a) => e.$emit("update:filter-values", a))
-          }, null, 8, ["filters", "filter-values"])) : vue.createCommentVNode("", true)
+          }, null, 8, ["filters", "filter-values"])) : vue.createCommentVNode("", true),
+          vue.renderSlot(e.$slots, "filters-bottom", {
+            data: e.data,
+            isLoading: e.isLoading
+          })
         ]),
         default: vue.withCtx(() => {
           var a;
@@ -5205,7 +5250,7 @@ ${codeFrame}` : message);
   const pt = /* @__PURE__ */ vue.defineComponent({
     __name: "DebugVisualizer",
     props: {
-      data: {},
+      data: { default: void 0 },
       isLoading: { type: Boolean, default: false }
     },
     setup(i) {
@@ -5234,10 +5279,10 @@ ${codeFrame}` : message);
     setup(i, { emit: t2 }) {
       const o = i, n = vue.computed(() => {
         switch (o.container) {
-          case "default":
-            return it;
           case "sidebar":
             return te;
+          default:
+            return it;
         }
       });
       return (e, l) => (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(n.value), {
@@ -5271,6 +5316,18 @@ ${codeFrame}` : message);
               "is-loading": u
             }, null, 8, ["data", "is-loading"])
           ])
+        ]),
+        "filters-top": vue.withCtx(({ data: a, isLoading: u }) => [
+          vue.renderSlot(e.$slots, "filters-top", {
+            data: a,
+            isLoading: u
+          })
+        ]),
+        "filters-bottom": vue.withCtx(({ data: a, isLoading: u }) => [
+          vue.renderSlot(e.$slots, "filters-bottom", {
+            data: a,
+            isLoading: u
+          })
         ]),
         _: 3
       }, 40, ["is-loading", "data", "total-data", "search-enabled", "search", "sort-enabled", "current-sort", "current-page", "page-size-options", "sort-options", "page-size", "filters-enabled", "filters", "filter-values"]));
@@ -5354,7 +5411,7 @@ ${codeFrame}` : message);
         }, 8, ["href", "css-classes", "new-tab", "size", "variant"])
       ])) : vue.createCommentVNode("", true);
     }
-  }), vt = { key: 0 }, bt = ["href", "target"], _t = /* @__PURE__ */ vue.defineComponent({
+  }), vt = { key: 0 }, bt = ["href", "target"], yt = /* @__PURE__ */ vue.defineComponent({
     __name: "DDVLink",
     props: {
       item: {},
@@ -5369,7 +5426,7 @@ ${codeFrame}` : message);
         }, vue.toDisplayString(t2.item[t2.column.field].text), 11, bt)
       ])) : vue.createCommentVNode("", true);
     }
-  }), yt = ["innerHTML"], $t = /* @__PURE__ */ vue.defineComponent({
+  }), _t = ["innerHTML"], $t = /* @__PURE__ */ vue.defineComponent({
     __name: "DDVHTML",
     props: {
       item: {},
@@ -5378,7 +5435,7 @@ ${codeFrame}` : message);
     setup(i) {
       return (t2, o) => (vue.openBlock(), vue.createElementBlock("span", {
         innerHTML: t2.item[t2.column.field]
-      }, null, 8, yt));
+      }, null, 8, _t));
     }
   }), kt = {
     key: 0,
@@ -5427,7 +5484,7 @@ ${codeFrame}` : message);
         key: 2,
         item: t2.item,
         column: t2.column
-      }, null, 8, ["item", "column"])) : t2.column.type == "link" ? (vue.openBlock(), vue.createBlock(_t, {
+      }, null, 8, ["item", "column"])) : t2.column.type == "link" ? (vue.openBlock(), vue.createBlock(yt, {
         key: 3,
         item: t2.item,
         column: t2.column
@@ -5463,7 +5520,7 @@ ${codeFrame}` : message);
   }), Ut = {
     key: 0,
     class: "alert alert-info w-100"
-  }, Ot = { key: 0 }, It = { key: 1 }, Pt = ["colspan"], ne = /* @__PURE__ */ vue.defineComponent({
+  }, Lt = { key: 0 }, Ot = { key: 1 }, It = ["colspan"], ne = /* @__PURE__ */ vue.defineComponent({
     __name: "DataDefinedVisualizer",
     props: {
       data: { default: null },
@@ -5483,13 +5540,13 @@ ${codeFrame}` : message);
             }, vue.toDisplayString(a.label), 1))), 128))
           ])
         ]),
-        o.value ? (vue.openBlock(), vue.createElementBlock("tbody", It, [
+        o.value ? (vue.openBlock(), vue.createElementBlock("tbody", Ot, [
           vue.createElementVNode("tr", null, [
             vue.createElementVNode("td", {
               colspan: e.columns.length
-            }, vue.toDisplayString(vue.unref(n)("no_data")), 9, Pt)
+            }, vue.toDisplayString(vue.unref(n)("no_data")), 9, It)
           ])
-        ])) : (vue.openBlock(), vue.createElementBlock("tbody", Ot, [
+        ])) : (vue.openBlock(), vue.createElementBlock("tbody", Lt, [
           (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(e.data, (a) => (vue.openBlock(), vue.createBlock(Dt, {
             key: a.id,
             item: a,
@@ -5538,50 +5595,50 @@ ${codeFrame}` : message);
       function u() {
         var m;
         let p = {};
-        return (m = t2.config.filters) == null || m.forEach(($) => {
+        return (m = t2.config.filters) == null || m.forEach((k) => {
           var O;
-          if ($.initial) {
-            p[$.field] = $.initial;
+          if (k.initial) {
+            p[k.field] = k.initial;
             return;
           }
-          switch ($.type) {
+          switch (k.type) {
             case "date":
-              p[$.field] = null;
+              p[k.field] = null;
               break;
             case "checkbox":
-              p[$.field] = [];
+              p[k.field] = [];
               break;
             case "radio":
-              ((O = $.options) == null ? void 0 : O.length) != 0 && $.options && (p[$.field] = $.options[0][0]);
+              ((O = k.options) == null ? void 0 : O.length) != 0 && k.options && (p[k.field] = k.options[0][0]);
               break;
           }
         }), p;
       }
       const _ = vue.ref(u());
-      let b = vue.ref(null);
-      const E = vue.computed(() => {
+      let y = vue.ref(null);
+      const P = vue.computed(() => {
         let p = [];
         p.push("page_size=" + encodeURIComponent(o.value));
-        for (const [m, $] of Object.entries(_.value))
-          $ != null && (typeof $ == "object" ? $.forEach(
+        for (const [m, k] of Object.entries(_.value))
+          k != null && (typeof k == "object" ? k.forEach(
             (O) => p.push(m + "=" + encodeURIComponent(O))
-          ) : p.push(m + "=" + encodeURIComponent($)));
+          ) : p.push(m + "=" + encodeURIComponent(k)));
         return e.value && p.push("search=" + encodeURIComponent(e.value)), p.push("ordering=" + encodeURIComponent(l.value)), n.value = 1, p;
-      }), P = vue.computed(() => {
-        let p = E.value, m = "page=" + encodeURIComponent(n.value);
+      }), I = vue.computed(() => {
+        let p = P.value, m = "page=" + encodeURIComponent(n.value);
         return p.length !== 0 && (m = "&" + m), "?" + p.join("&") + m;
-      }), D = vue.computed(() => {
+      }), U = vue.computed(() => {
         let p = new URL(window.location.protocol + "//" + window.location.host);
-        return p.pathname = t2.config.dataUri, p.search = P.value, console.log(p.toString()), p.toString();
+        return p.pathname = t2.config.dataUri, p.search = I.value, console.log(p.toString()), p.toString();
       });
-      vue.watch(D, () => {
+      vue.watch(U, () => {
         F();
       });
-      const y = vue.ref(null);
+      const $ = vue.ref(null);
       function F() {
-        y.value && y.value.abort(), y.value = new AbortController(), a.value = true, fetch(D.value, { signal: y.value.signal }).then((p) => {
+        $.value && $.value.abort(), $.value = new AbortController(), a.value = true, fetch(U.value, { signal: $.value.signal }).then((p) => {
           p.json().then((m) => {
-            b.value = m, a.value = false, m.ordering && (l.value = m.ordering), y.value = null;
+            y.value = m, a.value = false, m.ordering && (l.value = m.ordering), $.value = null;
           });
         }).catch((p) => {
           console.log(p);
@@ -5590,18 +5647,18 @@ ${codeFrame}` : message);
       return vue.onMounted(() => {
         F();
       }), (p, m) => {
-        var $, O, Z;
+        var k, O, Z;
         return vue.openBlock(), vue.createBlock(ct, {
           "is-loading": a.value,
-          data: (($ = vue.unref(b)) == null ? void 0 : $.results) ?? void 0,
-          "total-data": ((O = vue.unref(b)) == null ? void 0 : O.count) ?? 0,
+          data: ((k = vue.unref(y)) == null ? void 0 : k.results) ?? void 0,
+          "total-data": ((O = vue.unref(y)) == null ? void 0 : O.count) ?? 0,
           "search-enabled": p.config.searchEnabled,
           search: e.value,
           "sort-enabled": p.config.sortEnabled,
           "current-sort": l.value,
           "page-size-options": p.config.pageSizeOptions,
           "sort-options": p.config.sortOptions ?? [],
-          "page-size": ((Z = vue.unref(b)) == null ? void 0 : Z.page_size) ?? 10,
+          "page-size": ((Z = vue.unref(y)) == null ? void 0 : Z.page_size) ?? 10,
           "current-page": n.value,
           "filters-enabled": p.config.filtersEnabled,
           filters: p.config.filters ?? [],
