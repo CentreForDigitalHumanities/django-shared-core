@@ -23,13 +23,13 @@ classifiers = [
     "Operating System :: Linux",
 ]
 dependencies = [
-    "Django >=2.0,<5.0",
+    "Django >=2.0,<5.1",
     "Deprecated",
 ]
 
 [project.urls]
-repository = "https://github.com/DH-IT-Portal-Development/django-shared-core"
-documentation = "https://dh-it-portal-development.github.io/django-shared-core/"
+repository = "https://github.com/CentreForDigitalHumanities/django-shared-core"
+documentation = "https://centrefordigitalhumanities.github.io/django-shared-core/"
 
 [project.optional-dependencies]
 all = [
@@ -48,32 +48,32 @@ core = [
     "djangorestframework",
     "django-csp",
     "cryptography",
-    "Django >=4.0,<5.0",
+    "Django >=4.0,<5.1",
 ]
 federated-auth = [
-    "djangosaml2 <1.7",
+    "djangosaml2",
 ]
 files = [
     "python-magic",
-    "Django >=4.0,<5.0",
+    "Django >=4.0,<5.1",
 ]
 integration_platform = [
     "cdh-django-core[rest]",
-    "Django >=3.0,<5.0",
+    "Django >=3.0,<5.1",
 ]
 rest = [
     "requests",
     "PyJWT",
     "djangorestframework",
     "django-filter",
-    "Django >=3.0,<5.0",
+    "Django >=3.0,<5.1",
 ]
 vue = [
     "pyscss",
     "lesscpy",
     "closure",
     "vbuild",
-    "Django >=3.0,<5.0",
+    "Django >=3.0,<5.1",
 ]
 docs = [
     "sphinx",
