@@ -7,9 +7,10 @@ A collection of Django apps for CDH Django projects. Developed by the
 Documentation provided here: https://centrefordigitalhumanities.github.io/django-shared-core/
 
 ## Currently targeting:
-- Python 3.9
-- Python 3.10
-- Django 4.0
+- Python 3.9 (Django 4 only)
+- Python 3.11
+- Django 4.0-4.2
+- Django 5.0
 
 Tests are run using these versions; Some apps have lower requirements, but are 
 not tested against these lower versions. check the app collection below for
