@@ -82,6 +82,20 @@ class FormStylesForm(forms.Form):
         widget=forms.RadioSelect,
     )
 
+    searchable_select = forms.ChoiceField(
+        choices=[
+            (1, "Train"),
+            (2, "Bus"),
+            (3, "Aeroplane"),
+            (4, "Bike"),
+            (5, "Feet"),
+            (6, "Magical Unicorn"),
+            (6, "Broom"),
+            (6, "Thestrals"),
+        ],
+        widget=core_fields.SearchableSelectWidget,
+    )
+
     integer = forms.IntegerField()
 
     float = forms.FloatField(help_text="Floating away")
