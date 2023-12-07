@@ -99,6 +99,24 @@ class BootstrapSelect(Select):
         return super().get_context(name, value, attrs)
 
 
+class SearchableSelectWidget(BootstrapSelect):
+    """A JS-baced widget for a searchable select. Currently using Select2 as
+    the backend."""
+
+    class Media:
+        js = [
+            'cdh.core/js/widget/searchable-select.js',
+        ]
+
+    def get_context(self, name, value, attrs):
+        if "class" not in attrs:
+            attrs["class"] = ""
+
+        attrs["class"] += " dsc-select2"
+
+        return super().get_context(name, value, attrs)
+
+
 class BootstrapCheckboxInput(CheckboxInput):
     """Override of Django's version to use the right Bootstrap classes"""
 
