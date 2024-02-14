@@ -1,0 +1,7 @@
+cdh.federated\_auth.saml.settings module
+========================================
+
+.. automodule:: cdh.federated_auth.saml.settings
+   :members:
+   :undoc-members:
+   :show-inheritance:

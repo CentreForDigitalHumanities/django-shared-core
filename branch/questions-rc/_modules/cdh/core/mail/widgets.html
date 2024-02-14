@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.core.mail.widgets &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../../_static/theme.css" type="text/css"/>
+        <script src="../../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+                    <script src="../../../../_static/doctools.js"></script>
+                    <script src="../../../../_static/sphinx_highlight.js"></script>
+            <script src="../../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.core.mail.widgets</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.core.mail.widgets</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">cdh.core.file_loading</span> <span class="kn">import</span> <span class="n">add_js_file</span>
+<span class="kn">from</span> <span class="nn">cdh.core.forms</span> <span class="kn">import</span> <span class="n">TinyMCEWidget</span>
+
+
+<div class="viewcode-block" id="EmailContentEditWidget"><a class="viewcode-back" href="../../../../reference/cdh.core.mail.widgets.html#cdh.core.mail.widgets.EmailContentEditWidget">[docs]</a><span class="k">class</span> <span class="nc">EmailContentEditWidget</span><span class="p">(</span><span class="n">TinyMCEWidget</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A custom widget to handle editing custom email templates using TinyMCE.</span>
+
+<span class="sd">    At the moment this should only be used on the &#39;contents&#39; template.</span>
+
+<span class="sd">    Will add a &#39;preview email&#39; button to the editor.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="EmailContentEditWidget.__init__"><a class="viewcode-back" href="../../../../reference/cdh.core.mail.widgets.html#cdh.core.mail.widgets.EmailContentEditWidget.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">preview_url</span><span class="p">,</span>
+            <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+            <span class="n">sender_field</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">banner_field</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">footer_field</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param preview_url: a resolved URL for the EmailPreviewView to use</span>
+<span class="sd">        :param sender_field: (optional) the formfield describing the &#39;sender&#39;</span>
+<span class="sd">                             template</span>
+<span class="sd">        :param banner_field: (optional) the formfield describing the &#39;banner&#39;</span>
+<span class="sd">                             template</span>
+<span class="sd">        :param footer_field: (optional) the formfield describing the &#39;footer&#39;</span>
+<span class="sd">                             template</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">preview_url</span> <span class="o">=</span> <span class="n">preview_url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sender_field</span> <span class="o">=</span> <span class="n">sender_field</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">banner_field</span> <span class="o">=</span> <span class="n">banner_field</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">footer_field</span> <span class="o">=</span> <span class="n">footer_field</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">toolbar</span> <span class="o">+=</span> <span class="s2">&quot; | preview-mail&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plugins</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;preview-mail&#39;</span><span class="p">)</span>
+
+        <span class="n">add_js_file</span><span class="p">(</span><span class="s1">&#39;cdh.core/js/tinymce-preview-mail-plugin.js&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EmailContentEditWidget.get_context"><a class="viewcode-back" href="../../../../reference/cdh.core.mail.widgets.html#cdh.core.mail.widgets.EmailContentEditWidget.get_context">[docs]</a>    <span class="k">def</span> <span class="nf">get_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_context</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;preview_url&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preview_url</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;sender_field&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender_field</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;banner_field&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">banner_field</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;footer_field&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">footer_field</span>
+
+        <span class="k">return</span> <span class="n">context</span></div></div>
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

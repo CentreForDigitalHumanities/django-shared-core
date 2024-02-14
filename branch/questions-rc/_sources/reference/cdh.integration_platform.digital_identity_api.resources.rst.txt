@@ -1,0 +1,7 @@
+cdh.integration\_platform.digital\_identity\_api.resources module
+=================================================================
+
+.. automodule:: cdh.integration_platform.digital_identity_api.resources
+   :members:
+   :undoc-members:
+   :show-inheritance:

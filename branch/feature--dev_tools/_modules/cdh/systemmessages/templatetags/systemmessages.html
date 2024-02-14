@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.systemmessages.templatetags.systemmessages &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../../_static/theme.css" type="text/css"/>
+        <script src="../../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+                    <script src="../../../../_static/doctools.js"></script>
+                    <script src="../../../../_static/sphinx_highlight.js"></script>
+            <script src="../../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.systemmessages.templatetags.systemmessages</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.systemmessages.templatetags.systemmessages</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">template</span>
+
+<span class="kn">from</span> <span class="nn">..models</span> <span class="kn">import</span> <span class="n">SystemMessage</span>
+<span class="kn">from</span> <span class="nn">...core.templatetags.cdh_filters</span> <span class="kn">import</span> <span class="n">SetVarNode</span>
+
+<span class="n">register</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Library</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="display_system_messages"><a class="viewcode-back" href="../../../../reference/cdh.systemmessages.templatetags.systemmessages.html#cdh.systemmessages.templatetags.systemmessages.display_system_messages">[docs]</a><span class="nd">@register</span><span class="o">.</span><span class="n">inclusion_tag</span><span class="p">(</span><span class="s1">&#39;systemmessages/message_list.html&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">display_system_messages</span><span class="p">(</span><span class="n">container</span><span class="o">=</span><span class="kc">True</span><span class="p">,):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Displays the system messages, optionally in an .uu-container&quot;&quot;&quot;</span>
+
+    <span class="n">messages</span> <span class="o">=</span> <span class="n">SystemMessage</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get_current_messages</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;system_messages&#39;</span><span class="p">:</span> <span class="n">messages</span><span class="p">,</span>
+        <span class="s1">&#39;container&#39;</span><span class="p">:</span> <span class="n">container</span><span class="p">,</span>
+    <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="load_system_messages"><a class="viewcode-back" href="../../../../reference/cdh.systemmessages.templatetags.systemmessages.html#cdh.systemmessages.templatetags.systemmessages.load_system_messages">[docs]</a><span class="nd">@register</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;load_system_messages&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">load_system_messages</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Loads the system messages in as a variable. By default, they will be</span>
+<span class="sd">    saved under &#39;system_messages&#39;</span>
+<span class="sd">    {% load_system_messages [as varname] %}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">parts</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split_contents</span><span class="p">()</span>
+
+    <span class="n">len_parts</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">len_parts</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">len_parts</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">)</span> <span class="ow">or</span> \
+       <span class="p">(</span><span class="n">len_parts</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;as&#39;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">template</span><span class="o">.</span><span class="n">TemplateSyntaxError</span><span class="p">(</span>
+            <span class="s2">&quot;&#39;load_system_messages&#39; must either be called without arguments &quot;</span>
+            <span class="s2">&quot;({</span><span class="si">% lo</span><span class="s2">ad_system_messages %}) or with &#39;as [variable]&#39; ({% &quot;</span>
+            <span class="s2">&quot;load_system_messages as [variable] %}).&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">var_name</span> <span class="o">=</span> <span class="s1">&#39;system_messages&#39;</span>
+    <span class="k">if</span> <span class="n">len_parts</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">var_name</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="c1"># Just re-use the same node we use for our &#39;set&#39; tag, it does the job</span>
+    <span class="c1"># just fine</span>
+    <span class="k">return</span> <span class="n">SetVarNode</span><span class="p">(</span><span class="n">var_name</span><span class="p">,</span> <span class="n">SystemMessage</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get_current_messages</span><span class="p">())</span></div>
+
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

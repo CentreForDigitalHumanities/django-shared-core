@@ -1,0 +1,7 @@
+cdh.vue.rest.fancylist\_api\_view module
+========================================
+
+.. automodule:: cdh.vue.rest.fancylist_api_view
+   :members:
+   :undoc-members:
+   :show-inheritance:

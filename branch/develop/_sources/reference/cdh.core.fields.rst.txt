@@ -1,0 +1,19 @@
+cdh.core.fields package
+=======================
+
+.. automodule:: cdh.core.fields
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.core.fields.crypter
+   cdh.core.fields.encrypted_fields
+   cdh.core.fields.html5
+   cdh.core.fields.mixin
+   cdh.core.fields.month_fields

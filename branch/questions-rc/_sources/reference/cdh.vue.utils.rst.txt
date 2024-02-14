@@ -1,0 +1,7 @@
+cdh.vue.utils module
+====================
+
+.. automodule:: cdh.vue.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+cdh.core.js\_urls.serializer module
+===================================
+
+.. automodule:: cdh.core.js_urls.serializer
+   :members:
+   :undoc-members:
+   :show-inheritance:

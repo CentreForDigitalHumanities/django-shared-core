@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.files.forms.widgets &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../../_static/theme.css" type="text/css"/>
+        <script src="../../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+                    <script src="../../../../_static/doctools.js"></script>
+                    <script src="../../../../_static/sphinx_highlight.js"></script>
+            <script src="../../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.files.forms.widgets</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.files.forms.widgets</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django.forms.widgets</span> <span class="kn">import</span> <span class="n">FileInput</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="kn">import</span> <span class="n">gettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
+
+
+<div class="viewcode-block" id="SimpleFileInput"><a class="viewcode-back" href="../../../../reference/cdh.files.forms.widgets.html#cdh.files.forms.widgets.SimpleFileInput">[docs]</a><span class="k">class</span> <span class="nc">SimpleFileInput</span><span class="p">(</span><span class="n">FileInput</span><span class="p">):</span>
+    <span class="n">clear_checkbox_label</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Clear&#39;</span><span class="p">)</span>
+    <span class="n">initial_text</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Currently&#39;</span><span class="p">)</span>
+    <span class="n">input_text</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Change&#39;</span><span class="p">)</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;cdh.files/widgets/file.html&#39;</span>
+
+    <span class="c1"># We get these values as string from the HTTP packet</span>
+    <span class="n">CHANGED</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
+    <span class="n">NOT_CHANGED</span> <span class="o">=</span> <span class="s1">&#39;0&#39;</span>
+
+    <span class="c1"># Strings used in the template</span>
+    <span class="n">strings</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;empty_file&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Please select a file&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;remove&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Clear&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;select_file&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Select File&#39;</span><span class="p">),</span>
+    <span class="p">}</span>
+
+<div class="viewcode-block" id="SimpleFileInput.__init__"><a class="viewcode-back" href="../../../../reference/cdh.files.forms.widgets.html#cdh.files.forms.widgets.SimpleFileInput.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update strings from attrs if present&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">attrs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">strings</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">attrs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;strings&#39;</span><span class="p">,</span> <span class="p">{}))</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">attrs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SimpleFileInput.format_value"><a class="viewcode-back" href="../../../../reference/cdh.files.forms.widgets.html#cdh.files.forms.widgets.SimpleFileInput.format_value">[docs]</a>    <span class="k">def</span> <span class="nf">format_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="SimpleFileInput.get_context"><a class="viewcode-back" href="../../../../reference/cdh.files.forms.widgets.html#cdh.files.forms.widgets.SimpleFileInput.get_context">[docs]</a>    <span class="k">def</span> <span class="nf">get_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">attrs</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_context</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">attrs</span><span class="p">)</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;widget&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+            <span class="s1">&#39;strings&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">strings</span><span class="p">,</span>
+            <span class="s1">&#39;input_text&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_text</span><span class="p">,</span>
+            <span class="s1">&#39;initial_text&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_text</span><span class="p">,</span>
+            <span class="s1">&#39;clear_checkbox_label&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">clear_checkbox_label</span><span class="p">,</span>
+        <span class="p">})</span>
+        <span class="k">return</span> <span class="n">context</span></div>
+
+<div class="viewcode-block" id="SimpleFileInput.value_from_datadict"><a class="viewcode-back" href="../../../../reference/cdh.files.forms.widgets.html#cdh.files.forms.widgets.SimpleFileInput.value_from_datadict">[docs]</a>    <span class="k">def</span> <span class="nf">value_from_datadict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="n">files</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">uuid</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_id&quot;</span><span class="p">)</span>
+        <span class="n">changed</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_changed&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">CHANGED</span>
+
+        <span class="c1"># If ID is not set, an empty string is returned. In which case we set</span>
+        <span class="c1"># it to None, as it&#39;s a bit nicer to work with</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">uuid</span><span class="p">:</span>
+            <span class="n">uuid</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">file</span><span class="p">,</span> <span class="n">uuid</span><span class="p">,</span> <span class="n">changed</span></div>
+
+<div class="viewcode-block" id="SimpleFileInput.value_omitted_from_data"><a class="viewcode-back" href="../../../../reference/cdh.files.forms.widgets.html#cdh.files.forms.widgets.SimpleFileInput.value_omitted_from_data">[docs]</a>    <span class="k">def</span> <span class="nf">value_omitted_from_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">changed</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_changed&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">CHANGED</span>
+        <span class="c1"># If we don&#39;t see ourselves in the files-dict OR the data dict</span>
+        <span class="c1"># indicates nothing changed, act like we didn&#39;t get any data</span>
+        <span class="k">return</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">files</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">changed</span></div></div>
+
+
+<div class="viewcode-block" id="TrackedFileInput"><a class="viewcode-back" href="../../../../reference/cdh.files.forms.widgets.html#cdh.files.forms.widgets.TrackedFileInput">[docs]</a><span class="k">class</span> <span class="nc">TrackedFileInput</span><span class="p">(</span><span class="n">SimpleFileInput</span><span class="p">):</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;cdh.files/widgets/tracked_file.html&#39;</span>
+
+    <span class="c1"># Strings used in the template</span>
+    <span class="n">strings</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;empty_file&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Please select a file&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;remove&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Clear&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;select_file&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Upload new&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;select_existing&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Select existing&#39;</span><span class="p">),</span>
+    <span class="p">}</span>
+
+<div class="viewcode-block" id="TrackedFileInput.get_context"><a class="viewcode-back" href="../../../../reference/cdh.files.forms.widgets.html#cdh.files.forms.widgets.TrackedFileInput.get_context">[docs]</a>    <span class="k">def</span> <span class="nf">get_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">attrs</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_context</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">attrs</span><span class="p">)</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;widget&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+            <span class="s1">&#39;strings&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">strings</span><span class="p">,</span>
+            <span class="s1">&#39;input_text&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_text</span><span class="p">,</span>
+            <span class="s1">&#39;initial_text&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_text</span><span class="p">,</span>
+            <span class="s1">&#39;clear_checkbox_label&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">clear_checkbox_label</span><span class="p">,</span>
+        <span class="p">})</span>
+        <span class="k">return</span> <span class="n">context</span></div></div>
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

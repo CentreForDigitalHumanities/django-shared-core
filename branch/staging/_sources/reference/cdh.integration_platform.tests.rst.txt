@@ -1,0 +1,7 @@
+cdh.integration\_platform.tests module
+======================================
+
+.. automodule:: cdh.integration_platform.tests
+   :members:
+   :undoc-members:
+   :show-inheritance:

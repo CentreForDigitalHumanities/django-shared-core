@@ -1,0 +1,7 @@
+cdh.files.forms.fields module
+=============================
+
+.. automodule:: cdh.files.forms.fields
+   :members:
+   :undoc-members:
+   :show-inheritance:

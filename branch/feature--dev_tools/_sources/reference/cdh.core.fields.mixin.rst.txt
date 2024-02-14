@@ -1,0 +1,7 @@
+cdh.core.fields.mixin module
+============================
+
+.. automodule:: cdh.core.fields.mixin
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+cdh.files.views module
+======================
+
+.. automodule:: cdh.files.views
+   :members:
+   :undoc-members:
+   :show-inheritance:

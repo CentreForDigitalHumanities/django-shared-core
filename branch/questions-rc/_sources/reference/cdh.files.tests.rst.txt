@@ -1,0 +1,7 @@
+cdh.files.tests module
+======================
+
+.. automodule:: cdh.files.tests
+   :members:
+   :undoc-members:
+   :show-inheritance:

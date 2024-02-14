@@ -1,0 +1,7 @@
+cdh.integration\_platform.views module
+======================================
+
+.. automodule:: cdh.integration_platform.views
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+cdh.files.mime\_names module
+============================
+
+.. automodule:: cdh.files.mime_names
+   :members:
+   :undoc-members:
+   :show-inheritance:

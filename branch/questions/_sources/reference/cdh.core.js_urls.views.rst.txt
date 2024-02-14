@@ -1,0 +1,7 @@
+cdh.core.js\_urls.views module
+==============================
+
+.. automodule:: cdh.core.js_urls.views
+   :members:
+   :undoc-members:
+   :show-inheritance:

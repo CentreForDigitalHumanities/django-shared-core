@@ -1,0 +1,7 @@
+cdh.core.middleware.local\_thread\_middleware module
+====================================================
+
+.. automodule:: cdh.core.middleware.local_thread_middleware
+   :members:
+   :undoc-members:
+   :show-inheritance:

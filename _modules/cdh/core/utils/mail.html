@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cdh.core.utils.mail &mdash; Django Shared Core 3.0 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> Django Shared Core
+          </a>
+              <div class="version">
+                3.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">cdh</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Django Shared Core</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>cdh.core.utils.mail</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for cdh.core.utils.mail</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span> <span class="nn">deprecated.sphinx</span> <span class="kn">import</span> <span class="n">deprecated</span>
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.core.mail</span> <span class="kn">import</span> <span class="n">EmailMultiAlternatives</span><span class="p">,</span> <span class="n">get_connection</span><span class="p">,</span> <span class="n">send_mail</span>
+<span class="kn">from</span> <span class="nn">django.template.loader</span> <span class="kn">import</span> <span class="n">render_to_string</span>
+<span class="kn">from</span> <span class="nn">django.utils</span> <span class="kn">import</span> <span class="n">translation</span>
+
+
+<div class="viewcode-block" id="send_template_email"><a class="viewcode-back" href="../../../../reference/cdh.core.utils.mail.html#cdh.core.utils.mail.send_template_email">[docs]</a><span class="nd">@deprecated</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;3.0&#39;</span><span class="p">,</span> <span class="n">reason</span><span class="o">=</span><span class="s2">&quot;Replaced by cdh.core.mail package&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">send_template_email</span><span class="p">(</span>
+        <span class="n">recipient_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+        <span class="n">subject</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">template</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">template_context</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="n">from_email</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">plain_context</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">html_context</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;nl&#39;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Light wrapper for Django&#39;s send_mail function. The main addition: this</span>
+<span class="sd">    function handles the template rendering for you. Just specify the template</span>
+<span class="sd">    name (without extensions).</span>
+
+<span class="sd">    Note: both a HTML and a plain text version of the template should exist!</span>
+
+<span class="sd">    For example:</span>
+<span class="sd">    app/test.html</span>
+<span class="sd">    app/test.txt</span>
+
+<span class="sd">    Function call: send_template_email(template=&#39;app/test&#39;, *args, **kwargs)</span>
+
+<span class="sd">    html_context and plain_context can be used to override something in the</span>
+<span class="sd">    regular template_context for either the html version of the plain text</span>
+<span class="sd">    version. (Note: you can also add a key that does not exist in</span>
+<span class="sd">    template_context)</span>
+
+<span class="sd">    :param recipient_list: A list of recipients</span>
+<span class="sd">    :param subject: Email subject</span>
+<span class="sd">    :param template: Template name, without extension</span>
+<span class="sd">    :param template_context: Any context variables for the templates</span>
+<span class="sd">    :param from_email: FROM header. If absent, settings.FROM_EMAIL will be used</span>
+<span class="sd">    :param html_context: Optional dict with context specifically for HTML</span>
+<span class="sd">    :param plain_context: Optional dict with context specifically for plaintext</span>
+<span class="sd">    :param language: Which language Django should use when creating the mail</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">plain_context</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">plain_context</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">html_context</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">html_context</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c1"># Override so that all emails will be parsed with the desired language</span>
+    <span class="n">old_lang</span> <span class="o">=</span> <span class="n">translation</span><span class="o">.</span><span class="n">get_language</span><span class="p">()</span>
+    <span class="n">translation</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="n">language</span><span class="p">)</span>
+
+    <span class="c1"># Create the context for both the plain text email</span>
+    <span class="n">plain_text_context</span> <span class="o">=</span> <span class="n">template_context</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">plain_text_context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">plain_context</span><span class="p">)</span>
+
+    <span class="c1"># And now the same for the HTML version</span>
+    <span class="n">html_text_context</span> <span class="o">=</span> <span class="n">template_context</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">html_text_context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">html_context</span><span class="p">)</span>
+
+    <span class="n">plain_body</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span>
+        <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.txt&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">template</span><span class="p">),</span>
+        <span class="n">plain_text_context</span>
+    <span class="p">)</span>
+    <span class="n">html_body</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span>
+        <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.html&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">template</span><span class="p">),</span>
+        <span class="n">html_text_context</span>
+    <span class="p">)</span>
+
+    <span class="c1"># revert to the original language</span>
+    <span class="n">translation</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="n">old_lang</span><span class="p">)</span>
+
+    <span class="n">from_email</span> <span class="o">=</span> <span class="n">from_email</span> <span class="ow">or</span> <span class="n">settings</span><span class="o">.</span><span class="n">EMAIL_FROM</span>
+
+    <span class="n">send_mail</span><span class="p">(</span>
+        <span class="n">subject</span><span class="p">,</span>
+        <span class="n">plain_body</span><span class="p">,</span>
+        <span class="n">from_email</span><span class="p">,</span>
+        <span class="n">recipient_list</span><span class="p">,</span>
+        <span class="n">html_message</span><span class="o">=</span><span class="n">html_body</span><span class="p">,</span>
+        <span class="n">fail_silently</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="send_personalised_mass_mail"><a class="viewcode-back" href="../../../../reference/cdh.core.utils.mail.html#cdh.core.utils.mail.send_personalised_mass_mail">[docs]</a><span class="nd">@deprecated</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;3.0&#39;</span><span class="p">,</span> <span class="n">reason</span><span class="o">=</span><span class="s2">&quot;Replaced by cdh.core.mail package&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">send_personalised_mass_mail</span><span class="p">(</span><span class="n">datatuple</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]],</span>
+                                <span class="n">template</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                                <span class="n">template_context</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+                                <span class="n">from_email</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                <span class="n">plain_context</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                <span class="n">html_context</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;nl&#39;</span><span class="p">,</span>
+                                <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Given a datatuple of (subject, personal_context, recipient_list),</span>
+<span class="sd">    send each message to each recipient list.</span>
+
+<span class="sd">    personal_context and template_context will be merged together to create</span>
+<span class="sd">    a personalised email.</span>
+
+<span class="sd">    html_context and plain_context can be used to override something in the</span>
+<span class="sd">    regular template_context for either the html version of the plain text</span>
+<span class="sd">    version. (Note: you can also add a key that does not exist in</span>
+<span class="sd">    template_context)</span>
+
+<span class="sd">    :param datatuple: A tuple of tuples: (subject, personal_context, recipient_list)</span>
+<span class="sd">    :param template: Template name, without extension</span>
+<span class="sd">    :param template_context: Any context variables for the templates</span>
+<span class="sd">    :param from_email: FROM header. If absent, settings.FROM_EMAIL will be used</span>
+<span class="sd">    :param html_context: Optional dict with context specifically for HTML</span>
+<span class="sd">    :param plain_context: Optional dict with context specifically for plaintext</span>
+<span class="sd">    :param language: Which language Django should use when creating the mail</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">plain_context</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">plain_context</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">html_context</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">html_context</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">messages</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">from_email</span> <span class="o">=</span> <span class="n">from_email</span> <span class="ow">or</span> <span class="n">settings</span><span class="o">.</span><span class="n">FROM_EMAIL</span>
+    <span class="n">connection</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
+
+    <span class="c1"># Override so that all emails will be parsed with the desired language set</span>
+    <span class="n">old_lang</span> <span class="o">=</span> <span class="n">translation</span><span class="o">.</span><span class="n">get_language</span><span class="p">()</span>
+    <span class="n">translation</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="n">language</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">subject</span><span class="p">,</span> <span class="n">personal_context</span><span class="p">,</span> <span class="n">recipient_list</span> <span class="ow">in</span> <span class="n">datatuple</span><span class="p">:</span>
+        <span class="c1"># Copy the personal context and extend it with the generic context</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">personal_context</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">template_context</span><span class="p">)</span>
+
+        <span class="c1"># Copy our newly made context, and extend it with the plain_context</span>
+        <span class="n">plain_text_context</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">plain_text_context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">plain_context</span><span class="p">)</span>
+
+        <span class="c1"># And now the same for the HTML version</span>
+        <span class="n">html_text_context</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">html_text_context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">html_context</span><span class="p">)</span>
+
+        <span class="n">plain_body</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span>
+            <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.txt&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">template</span><span class="p">),</span>
+            <span class="n">plain_text_context</span>
+        <span class="p">)</span>
+        <span class="n">html_body</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span>
+            <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.html&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">template</span><span class="p">),</span>
+            <span class="n">html_text_context</span>
+        <span class="p">)</span>
+
+        <span class="n">message</span> <span class="o">=</span> <span class="n">EmailMultiAlternatives</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">plain_body</span><span class="p">,</span> <span class="n">from_email</span><span class="p">,</span>
+                                         <span class="n">recipient_list</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">)</span>
+
+        <span class="n">message</span><span class="o">.</span><span class="n">attach_alternative</span><span class="p">(</span><span class="n">html_body</span><span class="p">,</span> <span class="s1">&#39;text/html&#39;</span><span class="p">)</span>
+
+        <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+    <span class="n">translation</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="n">old_lang</span><span class="p">)</span>
+
+    <span class="n">connection</span><span class="o">.</span><span class="n">send_messages</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

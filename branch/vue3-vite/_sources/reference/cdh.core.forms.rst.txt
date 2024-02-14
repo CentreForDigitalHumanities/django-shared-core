@@ -1,0 +1,7 @@
+cdh.core.forms module
+=====================
+
+.. automodule:: cdh.core.forms
+   :members:
+   :undoc-members:
+   :show-inheritance:

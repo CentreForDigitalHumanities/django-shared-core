@@ -1,0 +1,7 @@
+cdh.files.forms.widgets module
+==============================
+
+.. automodule:: cdh.files.forms.widgets
+   :members:
+   :undoc-members:
+   :show-inheritance:

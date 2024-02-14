@@ -1,0 +1,30 @@
+cdh.vue package
+===============
+
+.. automodule:: cdh.vue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.vue.rest
+   cdh.vue.templatetags
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.vue.apps
+   cdh.vue.components
+   cdh.vue.urls
+   cdh.vue.utils
+   cdh.vue.vbuild
+   cdh.vue.views
+   cdh.vue.vue

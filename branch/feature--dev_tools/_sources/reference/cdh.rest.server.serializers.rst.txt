@@ -1,0 +1,7 @@
+cdh.rest.server.serializers module
+==================================
+
+.. automodule:: cdh.rest.server.serializers
+   :members:
+   :undoc-members:
+   :show-inheritance:

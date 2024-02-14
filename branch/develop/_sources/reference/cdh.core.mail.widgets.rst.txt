@@ -1,0 +1,7 @@
+cdh.core.mail.widgets module
+============================
+
+.. automodule:: cdh.core.mail.widgets
+   :members:
+   :undoc-members:
+   :show-inheritance:

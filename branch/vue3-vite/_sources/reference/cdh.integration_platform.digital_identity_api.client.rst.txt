@@ -1,0 +1,7 @@
+cdh.integration\_platform.digital\_identity\_api.client module
+==============================================================
+
+.. automodule:: cdh.integration_platform.digital_identity_api.client
+   :members:
+   :undoc-members:
+   :show-inheritance:

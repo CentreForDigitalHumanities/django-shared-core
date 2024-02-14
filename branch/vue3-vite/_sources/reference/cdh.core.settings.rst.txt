@@ -1,0 +1,7 @@
+cdh.core.settings module
+========================
+
+.. automodule:: cdh.core.settings
+   :members:
+   :undoc-members:
+   :show-inheritance:

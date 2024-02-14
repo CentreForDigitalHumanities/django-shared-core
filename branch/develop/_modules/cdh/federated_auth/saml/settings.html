@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.federated_auth.saml.settings &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../../_static/theme.css" type="text/css"/>
+        <script src="../../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../../../../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+                    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.federated_auth.saml.settings</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.federated_auth.saml.settings</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;SAML settings for Django settings.py</span>
+
+<span class="sd">Import the contents of this module in your ``settings.py`` to easily setup SAML</span>
+<span class="sd">for your Django app. This module contains all needed settings for a basic</span>
+<span class="sd">SAML setup, you might need to change some settings for your app.</span>
+
+<span class="sd">Basic usage:</span>
+
+<span class="sd">.. code-block:: python</span>
+
+<span class="sd">    try:</span>
+<span class="sd">        from cdh.federated_auth.saml.settings import *</span>
+
+<span class="sd">        SAML_CONFIG = create_saml_config(</span>
+<span class="sd">            base_url=&#39;https://sp.example.org/&#39;,</span>
+<span class="sd">            name=&#39;My awesome app&#39;,</span>
+<span class="sd">            key_file=path.join(BASE_DIR, &#39;private.key&#39;),</span>
+<span class="sd">            cert_file=path.join(BASE_DIR, &#39;public.cert&#39;),</span>
+<span class="sd">            idp_metadata=&#39;https://idp.example.org/metadata/&#39;,</span>
+<span class="sd">        )</span>
+
+<span class="sd">        # Any overrides go here</span>
+
+<span class="sd">    except:</span>
+<span class="sd">        print(&#39;Could not load SAML settings&#39;)</span>
+
+<span class="sd">This will set up a minimal DjangoSAML2 setup. Please refer to the source code</span>
+<span class="sd">for all settings and to the docstring :meth:`create_saml_config` for more info.</span>
+
+<span class="sd">.. warning::</span>
+<span class="sd">   You will also need to add additional config elsewhere in your app, not</span>
+<span class="sd">   described here. Please refer to the general CDH SAML setup guide for more</span>
+<span class="sd">   info.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urljoin</span>
+
+<span class="kn">import</span> <span class="nn">saml2</span>
+<span class="kn">import</span> <span class="nn">saml2.saml</span>
+
+<span class="n">SAML_APPS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;cdh.federated_auth&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;djangosaml2&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">SAML_MIDDLEWARE</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;djangosaml2.middleware.SamlSessionMiddleware&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1"># The default attribute map for UU IdP, override for more attributes/other IdP&#39;s</span>
+<span class="n">SAML_ATTRIBUTE_MAPPING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;uuShortID&#39;</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,),</span>
+    <span class="s1">&#39;mail&#39;</span><span class="p">:</span>     <span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">,),</span>
+    <span class="s1">&#39;givenName&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;first_name&#39;</span><span class="p">,),</span>
+    <span class="s1">&#39;uuPrefixedSn&#39;</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;last_name&#39;</span><span class="p">,),</span>
+<span class="p">}</span>
+
+<span class="n">SAML_DEFAULT_BINDING</span> <span class="o">=</span> <span class="n">saml2</span><span class="o">.</span><span class="n">BINDING_HTTP_REDIRECT</span>  <span class="c1"># or saml2.BIND_HTTP_POST</span>
+<span class="n">SAML_LOGOUT_REQUEST_PREFERRED_BINDING</span> <span class="o">=</span> <span class="n">saml2</span><span class="o">.</span><span class="n">BINDING_HTTP_REDIRECT</span> <span class="c1"># or saml2.BIND_HTTP_POST</span>
+
+<span class="c1"># Set this to &#39;False&#39; if your app needs to be paranoid. Generally not needed.</span>
+<span class="n">SAML_IGNORE_LOGOUT_ERRORS</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">SAML_SESSION_COOKIE_NAME</span> <span class="o">=</span> <span class="s1">&#39;saml_session&#39;</span>
+
+<span class="c1"># This will override the default Django setting, but in more complicated auth</span>
+<span class="c1"># setups you&#39;ll need to override this. Make sure Saml2Backend is below</span>
+<span class="c1"># ModelBackend!</span>
+<span class="n">AUTHENTICATION_BACKENDS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s1">&#39;django.contrib.auth.backends.ModelBackend&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;djangosaml2.backends.Saml2Backend&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># This view is used to display any errors during login assertion processing</span>
+<span class="c1"># (In layman terms: when the user has logged into the IdP, during processing</span>
+<span class="c1"># of the login details the IdP send back).</span>
+<span class="c1"># Our custom view displays a somewhat friendly message with contact details.</span>
+<span class="c1"># It&#39;s generally recommended to override the &#39;djangosaml2/login_error.html&#39;</span>
+<span class="c1"># template if you want to customize this page. Overriding the view should only</span>
+<span class="c1"># be necessary if you need extra context data.</span>
+<span class="n">SAML_ACS_FAILURE_RESPONSE_FUNCTION</span> <span class="o">=</span> <span class="s1">&#39;cdh.federated_auth.saml.views.login_error&#39;</span>
+
+
+<div class="viewcode-block" id="create_saml_config">
+<a class="viewcode-back" href="../../../../reference/cdh.federated_auth.saml.settings.html#cdh.federated_auth.saml.settings.create_saml_config">[docs]</a>
+<span class="k">def</span> <span class="nf">create_saml_config</span><span class="p">(</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">base_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">key_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">cert_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">idp_metadata</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">entity_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">url_prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;saml/&#39;</span><span class="p">,</span>
+        <span class="n">contact_person</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">contact_given_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Humanities IT&quot;</span><span class="p">,</span>
+        <span class="n">contact_sur_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">contact_email</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;dh-it@uu.nl&quot;</span><span class="p">,</span>
+        <span class="n">required_attributes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">optional_attributes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">name_id_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">saml2</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">NAMEID_FORMAT_TRANSIENT</span><span class="p">,</span>
+        <span class="n">name_id_allow_create</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">attribute_map_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">force_authn</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">allow_unsolicited</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">want_response_signed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">authn_requests_signed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">logout_requests_signed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">want_assertions_signed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">config_overrides</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A function to generate the `SAML_CONFIG` setting</span>
+
+<span class="sd">    Keyword arguments are optional. Most arguments are named after the PySAML2</span>
+<span class="sd">    config keys, it is recommended you consult the PySAML2 docs as well:</span>
+<span class="sd">    https://pysaml2.readthedocs.io/en/latest/howto/config.html</span>
+
+<span class="sd">    URL generation</span>
+<span class="sd">    --------------</span>
+
+<span class="sd">    This function generates a lot of URLs for you, so it&#39;s important your make</span>
+<span class="sd">    sure your values for `base_url` and `url_prefix` is correct. For example:</span>
+<span class="sd">    If your SP&#39;s metadata is located at &#39;https://sp.example.org/saml/metadata&#39;</span>
+<span class="sd">    &#39;https://sp.example.org/&#39; is your `base_url` and &#39;saml/&#39; is your</span>
+<span class="sd">    `url_prefix`.</span>
+
+<span class="sd">    NameID</span>
+<span class="sd">    ------</span>
+
+<span class="sd">    The SAML protocol uses a NameID to identify users/sessions. The ID itself is</span>
+<span class="sd">    often a (pseudo)random string or a hash. You have the option to use</span>
+<span class="sd">    persistent or transient NameIDs, which can be set using the</span>
+<span class="sd">    `name_id_format` keyword argument.</span>
+
+<span class="sd">    When using persistent NameIDs, the IdP will (try to) use the same ID every</span>
+<span class="sd">    time a particular user logs in. Transient IDs will be unique for every</span>
+<span class="sd">    session, thus a user will receive a new one every time they log in.</span>
+<span class="sd">    Persistent IDs are recommended when using the NameID as the primary</span>
+<span class="sd">    identifier, transient is recommended otherwise. The pro&#39;s and cons of</span>
+<span class="sd">    both approaches are out of scope for this docstring.</span>
+
+<span class="sd">    Please note that not all IdPs guarantee that persistent ID&#39;s will never</span>
+<span class="sd">    change, so please contact your IdP&#39;s contact to ask if they do before using</span>
+<span class="sd">    it as the primary identifier.</span>
+
+<span class="sd">    Example minimal usage:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">      SAML_CONFIG = create_saml_config(</span>
+<span class="sd">        base_url=&#39;https://sp.example.org/&#39;,</span>
+<span class="sd">        name=&#39;My awesome app&#39;,</span>
+<span class="sd">        key_file=path.join(BASE_DIR, &#39;private.key&#39;),</span>
+<span class="sd">        cert_file=path.join(BASE_DIR, &#39;public.cert&#39;),</span>
+<span class="sd">        idp_metadata=&#39;https://idp.example.org/metadata/&#39;,</span>
+<span class="sd">      )</span>
+
+<span class="sd">    Required params:</span>
+<span class="sd">    ----------------</span>
+
+<span class="sd">    :param name: Human-readable name of this SP (e.g. My Awesome App)</span>
+<span class="sd">    :param base_url: The base URL of the SP, including protocol.</span>
+<span class="sd">                     (e.g. https://sp.example.org/)</span>
+<span class="sd">    :param key_file: The location of your private key of the SSL cert on the</span>
+<span class="sd">                     filesystem.</span>
+<span class="sd">    :param cert_file: The location of your SSL cert on the filesystem</span>
+<span class="sd">    :param idp_metadata: The URL of the IDP&#39;s metadata</span>
+<span class="sd">                         (e.g. https://idp.example.org/metadata/)</span>
+
+<span class="sd">    Optional params:</span>
+<span class="sd">    ----------------</span>
+
+<span class="sd">    :param url_prefix: The URL prefix for all SAML views. Defaults to &#39;saml&#39;.</span>
+<span class="sd">                       It should be the same as the path that is used in the</span>
+<span class="sd">                       urlpatterns when including the SAML urlpatterns.</span>
+<span class="sd">                       See above for more information</span>
+<span class="sd">    :param entity_id: The entity ID of the SP, by convention the URL of the SP&#39;s</span>
+<span class="sd">                      metadata. If omitted, it will be autogenerated using</span>
+<span class="sd">                      `base_url` and `url_prefix`.</span>
+<span class="sd">    :param contact_person: A list of dicts, containing the contact information</span>
+<span class="sd">                           for this SP. If not set, it will be generated using</span>
+<span class="sd">                           `contact_given_name`, `contact_sur_name` and</span>
+<span class="sd">                           `contact_email`. Please consult the PySAML2 docs for</span>
+<span class="sd">                           the exact format</span>
+<span class="sd">    :param contact_given_name: The first name of the technical contact (or</span>
+<span class="sd">                               the department name). Ignored if</span>
+<span class="sd">                               `contact_person` is set</span>
+<span class="sd">    :param contact_sur_name: The surname of the technical contact (or empty).</span>
+<span class="sd">                             Ignored if `contact_person` is set</span>
+<span class="sd">    :param contact_email: The email of the technical contact. Ignored if</span>
+<span class="sd">                          `contact_person` is set</span>
+<span class="sd">    :param required_attributes: A list of attributes that are needed for</span>
+<span class="sd">                                successful authentication in the SP. If not set,</span>
+<span class="sd">                                defaults to: `givenName`, `uuprefixedsn`,</span>
+<span class="sd">                                `uushortid`, `mail`</span>
+<span class="sd">    :param optional_attributes: A list of attributes that the SP would like</span>
+<span class="sd">                                to have. Not required and defaults to an</span>
+<span class="sd">                                empty list</span>
+<span class="sd">    :param name_id_format: NAMEID_FORMAT_PERSISTENT or NAMEID_FORMAT_TRANSIENT.</span>
+<span class="sd">                           Defaults to transient.</span>
+<span class="sd">    :param name_id_allow_create: Sets the default value for AllowCreate on</span>
+<span class="sd">                                 login requests. Defaults to True.</span>
+<span class="sd">                                 Only applicable to persistent NameID&#39;s. Note:</span>
+<span class="sd">                                 best to leave this value alone if you are </span>
+<span class="sd">                                 unsure. </span>
+<span class="sd">    :param attribute_map_dir: The location of the PySAML2 SAML attribute files.</span>
+<span class="sd">                              If omitted, the library-provided files are used.</span>
+<span class="sd">    :param force_authn: If set to &#39;True&#39;, a user must always authenticate when</span>
+<span class="sd">                        logging into your SP. When set to &#39;False&#39;, existing</span>
+<span class="sd">                        sessions on the IdP may be used instead. (In other</span>
+<span class="sd">                        words, if a user has just logged into a different SP,</span>
+<span class="sd">                        the IdP may skip authentication and log the user in</span>
+<span class="sd">                        directly). Defaults to False.</span>
+<span class="sd">    :param allow_unsolicited: If the SP accepts login attempts it has not itself</span>
+<span class="sd">                              initiated. Defaults to `False`. This happens if</span>
+<span class="sd">                              a different SP initiates the login for this SP.</span>
+<span class="sd">    :param want_response_signed: False, it errors on UU IdP&#39;s if True.</span>
+<span class="sd">    :param authn_requests_signed: Defaults to True per UU requirements.</span>
+<span class="sd">    :param logout_requests_signed: Whether logout requests need to be signed.</span>
+<span class="sd">    :param want_assertions_signed: Defaults to True per UU requirements.</span>
+<span class="sd">    :param debug: Enables detailed debug output if set to true.</span>
+<span class="sd">    :param config_overrides: A dict that will be merged with the final output</span>
+<span class="sd">                             before returning. Can be used to override some data</span>
+<span class="sd">                             in the resulting SAML_CONFIG that cannot be changed</span>
+<span class="sd">                             using any of the provided arguments.</span>
+<span class="sd">                             Please consider opening an issue/a PR to add the</span>
+<span class="sd">                             required argument first, it might benefit other</span>
+<span class="sd">                             users as well!</span>
+<span class="sd">    :return: The computed value of `SAML_CONFIG`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">attribute_map_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">attribute_map_dir</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">absolute</span><span class="p">(),</span>
+            <span class="s1">&#39;attribute-maps&#39;</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">required_attributes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">required_attributes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;givenName&#39;</span><span class="p">,</span> <span class="s1">&#39;uuprefixedsn&#39;</span><span class="p">,</span> <span class="s1">&#39;uushortid&#39;</span><span class="p">,</span> <span class="s1">&#39;mail&#39;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">optional_attributes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">required_attributes</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="n">contact_person</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">contact_person</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;given_name&#39;</span><span class="p">:</span>    <span class="n">contact_given_name</span><span class="p">,</span>
+                <span class="s1">&#39;sur_name&#39;</span><span class="p">:</span>      <span class="n">contact_sur_name</span><span class="p">,</span>
+                <span class="s1">&#39;company&#39;</span><span class="p">:</span>       <span class="s1">&#39;Universiteit Utrecht&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;email_address&#39;</span><span class="p">:</span> <span class="n">contact_email</span><span class="p">,</span>
+                <span class="s1">&#39;contact_type&#39;</span><span class="p">:</span>  <span class="s1">&#39;technical&#39;</span>
+            <span class="p">},</span>
+        <span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">config_overrides</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">config_overrides</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">base_saml_url</span> <span class="o">=</span> <span class="n">urljoin</span><span class="p">(</span><span class="n">base_url</span><span class="p">,</span> <span class="n">url_prefix</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">entity_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">entity_id</span> <span class="o">=</span> <span class="n">urljoin</span><span class="p">(</span><span class="n">base_saml_url</span><span class="p">,</span> <span class="s1">&#39;metadata/&#39;</span><span class="p">)</span>
+
+    <span class="n">acs_url</span> <span class="o">=</span> <span class="n">urljoin</span><span class="p">(</span><span class="n">base_saml_url</span><span class="p">,</span> <span class="s1">&#39;acs/&#39;</span><span class="p">)</span>
+    <span class="n">logout_service_url</span> <span class="o">=</span> <span class="n">urljoin</span><span class="p">(</span><span class="n">base_saml_url</span><span class="p">,</span> <span class="s1">&#39;ls/&#39;</span><span class="p">)</span>
+
+    <span class="n">saml_config</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="c1"># full path to the xmlsec1 binary programm</span>
+        <span class="s1">&#39;xmlsec_binary&#39;</span><span class="p">:</span>       <span class="s1">&#39;/usr/bin/xmlsec1&#39;</span><span class="p">,</span>
+
+        <span class="c1"># your entity id, usually your subdomain plus the url to the metadata view</span>
+        <span class="s1">&#39;entityid&#39;</span><span class="p">:</span>            <span class="n">entity_id</span><span class="p">,</span>
+
+        <span class="c1"># directory with attribute mapping</span>
+        <span class="s1">&#39;attribute_map_dir&#39;</span><span class="p">:</span> <span class="n">attribute_map_dir</span><span class="p">,</span>
+
+        <span class="c1"># Permits to have attributes not configured in attribute-mappings</span>
+        <span class="c1"># otherwise...without OID will be rejected</span>
+        <span class="s1">&#39;allow_unknown_attributes&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+
+        <span class="c1"># this block states what services we provide</span>
+        <span class="s1">&#39;service&#39;</span><span class="p">:</span>             <span class="p">{</span>
+            <span class="c1"># we are just a lonely SP</span>
+            <span class="s1">&#39;sp&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;name&#39;</span><span class="p">:</span>                        <span class="n">name</span><span class="p">,</span>
+                <span class="s1">&#39;name_id_format&#39;</span><span class="p">:</span>              <span class="n">name_id_format</span><span class="p">,</span>
+                <span class="s1">&#39;name_id_policy_format&#39;</span><span class="p">:</span>       <span class="n">name_id_format</span><span class="p">,</span>
+
+                <span class="s1">&#39;endpoints&#39;</span><span class="p">:</span>                   <span class="p">{</span>
+                    <span class="c1"># url and binding to the assetion consumer service view</span>
+                    <span class="c1"># do not change the binding or service name</span>
+                    <span class="s1">&#39;assertion_consumer_service&#39;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">(</span><span class="n">acs_url</span><span class="p">,</span> <span class="n">saml2</span><span class="o">.</span><span class="n">BINDING_HTTP_POST</span><span class="p">),</span>
+                    <span class="p">],</span>
+                    <span class="c1"># url and binding to the single logout service view</span>
+                    <span class="c1"># do not change the binding or service name</span>
+                    <span class="s1">&#39;single_logout_service&#39;</span><span class="p">:</span>      <span class="p">[</span>
+                        <span class="c1"># Disable next two lines for HTTP_REDIRECT for IDP&#39;s that only support HTTP_POST. Ex. Okta:</span>
+                        <span class="p">(</span><span class="n">logout_service_url</span><span class="p">,</span>
+                         <span class="n">SAML_DEFAULT_BINDING</span><span class="p">),</span>
+                    <span class="p">],</span>
+                <span class="p">},</span>
+
+                <span class="s1">&#39;signing_algorithm&#39;</span><span class="p">:</span>           <span class="n">saml2</span><span class="o">.</span><span class="n">xmldsig</span><span class="o">.</span><span class="n">SIG_RSA_SHA256</span><span class="p">,</span>
+                <span class="s1">&#39;digest_algorithm&#39;</span><span class="p">:</span>            <span class="n">saml2</span><span class="o">.</span><span class="n">xmldsig</span><span class="o">.</span><span class="n">DIGEST_SHA256</span><span class="p">,</span>
+
+                <span class="c1"># Mandates that the identity provider MUST authenticate the</span>
+                <span class="c1"># presenter directly rather than rely on a previous security context.</span>
+                <span class="s1">&#39;force_authn&#39;</span><span class="p">:</span>                 <span class="n">force_authn</span><span class="p">,</span>
+
+                <span class="c1"># Enable AllowCreate in NameIDPolicy.</span>
+                <span class="s1">&#39;name_id_format_allow_create&#39;</span><span class="p">:</span> <span class="n">name_id_allow_create</span><span class="p">,</span>
+
+                <span class="c1"># attributes that this project would like to have for a user</span>
+                <span class="s1">&#39;optional_attributes&#39;</span><span class="p">:</span>         <span class="n">optional_attributes</span><span class="p">,</span>
+                <span class="c1"># attributes that this project need to identify a user</span>
+                <span class="s1">&#39;required_attributes&#39;</span><span class="p">:</span>         <span class="n">required_attributes</span><span class="p">,</span>
+
+                <span class="s1">&#39;want_response_signed&#39;</span><span class="p">:</span>        <span class="n">want_response_signed</span><span class="p">,</span>
+                <span class="s1">&#39;authn_requests_signed&#39;</span><span class="p">:</span>       <span class="n">authn_requests_signed</span><span class="p">,</span>
+                <span class="s1">&#39;logout_requests_signed&#39;</span><span class="p">:</span>      <span class="n">logout_requests_signed</span><span class="p">,</span>
+                <span class="c1"># Indicates that Authentication Responses to this SP must</span>
+                <span class="c1"># be signed. If set to True, the SP will not consume</span>
+                <span class="c1"># any SAML Responses that are not signed.</span>
+                <span class="s1">&#39;want_assertions_signed&#39;</span><span class="p">:</span>      <span class="n">want_assertions_signed</span><span class="p">,</span>
+
+                <span class="s1">&#39;only_use_keys_in_metadata&#39;</span><span class="p">:</span>   <span class="kc">True</span><span class="p">,</span>
+
+                <span class="c1"># When set to true, the SP will consume unsolicited SAML</span>
+                <span class="c1"># Responses, i.e. SAML Responses for which it has not sent</span>
+                <span class="c1"># a respective SAML Authentication Request.</span>
+                <span class="s1">&#39;allow_unsolicited&#39;</span><span class="p">:</span>           <span class="n">allow_unsolicited</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+
+        <span class="c1"># where the remote metadata is stored, local, remote or mdq server.</span>
+        <span class="c1"># One metadatastore or many ...</span>
+        <span class="s1">&#39;metadata&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;remote&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">idp_metadata</span>
+                <span class="p">},</span>
+            <span class="p">],</span>
+        <span class="p">},</span>
+
+        <span class="c1"># set to 1 to output debugging information</span>
+        <span class="s1">&#39;debug&#39;</span><span class="p">:</span>               <span class="mi">1</span> <span class="k">if</span> <span class="n">debug</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+
+        <span class="c1"># Signing</span>
+        <span class="s1">&#39;key_file&#39;</span><span class="p">:</span>            <span class="n">key_file</span><span class="p">,</span>  <span class="c1"># private part</span>
+        <span class="s1">&#39;cert_file&#39;</span><span class="p">:</span>           <span class="n">cert_file</span><span class="p">,</span>  <span class="c1"># public part</span>
+
+        <span class="s1">&#39;valid_for&#39;</span><span class="p">:</span> <span class="mi">365</span> <span class="o">*</span> <span class="mi">24</span><span class="p">,</span>
+
+
+        <span class="c1"># Encryption</span>
+        <span class="s1">&#39;encryption_keypairs&#39;</span><span class="p">:</span> <span class="p">[{</span>
+            <span class="s1">&#39;key_file&#39;</span><span class="p">:</span>  <span class="n">key_file</span><span class="p">,</span>  <span class="c1"># private part</span>
+            <span class="s1">&#39;cert_file&#39;</span><span class="p">:</span> <span class="n">cert_file</span><span class="p">,</span>  <span class="c1"># public part</span>
+        <span class="p">}],</span>
+
+        <span class="c1"># own metadata settings</span>
+        <span class="s1">&#39;contact_person&#39;</span><span class="p">:</span> <span class="n">contact_person</span><span class="p">,</span>
+
+        <span class="c1"># you can set multilanguage information here</span>
+        <span class="s1">&#39;organization&#39;</span><span class="p">:</span>        <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span>         <span class="p">[</span>
+                <span class="p">(</span><span class="s1">&#39;Utrecht University&#39;</span><span class="p">,</span> <span class="s1">&#39;en&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;Universiteit Utrecht&#39;</span><span class="p">,</span> <span class="s1">&#39;nl&#39;</span><span class="p">),</span>
+            <span class="p">],</span>
+            <span class="s1">&#39;display_name&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s1">&#39;Utrecht University&#39;</span><span class="p">,</span> <span class="s1">&#39;en&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;Universiteit Utrecht&#39;</span><span class="p">,</span> <span class="s1">&#39;nl&#39;</span><span class="p">),</span>
+            <span class="p">],</span>
+            <span class="s1">&#39;url&#39;</span><span class="p">:</span>          <span class="p">[</span>
+                <span class="p">(</span><span class="s1">&#39;http://www.uu.nl&#39;</span><span class="p">,</span> <span class="s1">&#39;nl&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;http://www.uu.nl/en&#39;</span><span class="p">,</span> <span class="s1">&#39;en&#39;</span><span class="p">)</span>
+            <span class="p">],</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+
+    <span class="n">saml_config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">config_overrides</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">saml_config</span></div>
+
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

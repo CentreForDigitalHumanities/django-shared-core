@@ -1,0 +1,15 @@
+cdh.dev\_tools.debug\_toolbar package
+=====================================
+
+.. automodule:: cdh.dev_tools.debug_toolbar
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.dev_tools.debug_toolbar.panels

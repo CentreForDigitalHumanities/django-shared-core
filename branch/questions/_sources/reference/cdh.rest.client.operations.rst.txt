@@ -1,0 +1,7 @@
+cdh.rest.client.operations module
+=================================
+
+.. automodule:: cdh.rest.client.operations
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,33 @@
+cdh.files package
+=================
+
+.. automodule:: cdh.files
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.files.db
+   cdh.files.forms
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.files.admin
+   cdh.files.apps
+   cdh.files.checks
+   cdh.files.mime_names
+   cdh.files.settings
+   cdh.files.signals
+   cdh.files.storage
+   cdh.files.tests
+   cdh.files.utils
+   cdh.files.views

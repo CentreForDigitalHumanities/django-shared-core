@@ -1,0 +1,7 @@
+cdh.vue3.components.uu\_list.paginator module
+=============================================
+
+.. automodule:: cdh.vue3.components.uu_list.paginator
+   :members:
+   :undoc-members:
+   :show-inheritance:

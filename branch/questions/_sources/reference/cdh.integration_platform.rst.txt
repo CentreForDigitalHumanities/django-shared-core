@@ -1,0 +1,29 @@
+cdh.integration\_platform package
+=================================
+
+.. automodule:: cdh.integration_platform
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.integration_platform.digital_identity_api
+   cdh.integration_platform.token_api
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.integration_platform.admin
+   cdh.integration_platform.apps
+   cdh.integration_platform.checks
+   cdh.integration_platform.settings
+   cdh.integration_platform.tests
+   cdh.integration_platform.views

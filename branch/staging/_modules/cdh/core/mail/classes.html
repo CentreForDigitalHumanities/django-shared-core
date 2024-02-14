@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.core.mail.classes &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../../_static/theme.css" type="text/css"/>
+        <script src="../../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../../../../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+                    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.core.mail.classes</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.core.mail.classes</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">email.mime.base</span> <span class="kn">import</span> <span class="n">MIMEBase</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">lru_cache</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.core.mail</span> <span class="kn">import</span> <span class="n">EmailMultiAlternatives</span>
+<span class="kn">from</span> <span class="nn">django.template</span> <span class="kn">import</span> <span class="n">Context</span><span class="p">,</span> <span class="n">Engine</span><span class="p">,</span> <span class="n">Template</span>
+<span class="kn">from</span> <span class="nn">django.template.loader</span> <span class="kn">import</span> <span class="n">get_template</span><span class="p">,</span> <span class="n">render_to_string</span>
+<span class="kn">from</span> <span class="nn">django.template.loader_tags</span> <span class="kn">import</span> <span class="n">BlockNode</span>
+<span class="kn">from</span> <span class="nn">django.utils.safestring</span> <span class="kn">import</span> <span class="n">mark_safe</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="kn">import</span> <span class="n">gettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
+<span class="kn">from</span> <span class="nn">django.utils</span> <span class="kn">import</span> <span class="n">translation</span>
+<span class="kn">from</span> <span class="nn">django.utils.functional</span> <span class="kn">import</span> <span class="n">keep_lazy_text</span>
+<span class="kn">from</span> <span class="nn">django.utils.html</span> <span class="kn">import</span> <span class="n">_strip_once</span>
+
+<span class="kn">from</span> <span class="nn">cdh.core.settings</span> <span class="kn">import</span> <span class="n">CDH_EMAIL_THEME_SETTINGS</span><span class="p">,</span> \
+    <span class="n">CDH_EMAIL_PLAIN_FALLBACK_TEMPLATE</span><span class="p">,</span> <span class="n">CDH_EMAIL_HTML_FALLBACK_TEMPLATE</span>
+
+
+<span class="nd">@keep_lazy_text</span>
+<span class="k">def</span> <span class="nf">_strip_tags</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the given HTML with all tags stripped, and leading/trailing</span>
+<span class="sd">    whitespace stripped but with line breaks preserved.</span>
+
+<span class="sd">    :meta private:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="c1"># Manually replace &lt;br&gt; tags; to preserve intended newlines _strip_once</span>
+    <span class="c1"># just strips it but doesn&#39;t actually add a newline for rendering. Thus:</span>
+    <span class="c1"># &#39;hello&lt;br/&gt;world&#39; would become &#39;helloworld&#39; instead of &#39;hello\nworld&#39;. The</span>
+    <span class="c1"># \n in the regex is to make sure we don&#39;t add _two_ newlines if someone</span>
+    <span class="c1"># actually puts a newline after a &lt;br&gt;</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&lt;br ?/?&gt;\n?&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="c1"># Strip HTML tags</span>
+    <span class="c1"># Note: in typical case this loop executes _strip_once once. Loop condition</span>
+    <span class="c1"># is redundant, but helps to reduce number of executions of _strip_once.</span>
+    <span class="k">while</span> <span class="s2">&quot;&lt;&quot;</span> <span class="ow">in</span> <span class="n">value</span> <span class="ow">and</span> <span class="s2">&quot;&gt;&quot;</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+        <span class="n">new_value</span> <span class="o">=</span> <span class="n">_strip_once</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;&lt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">new_value</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;&lt;&quot;</span><span class="p">):</span>
+            <span class="c1"># _strip_once wasn&#39;t able to detect more tags.</span>
+            <span class="k">break</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">new_value</span>
+
+    <span class="c1"># Go over every line and strip</span>
+    <span class="c1"># This is needed because the stripping above doesn&#39;t account for indenting</span>
+    <span class="c1"># from the HTML structure</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">):</span>
+        <span class="n">ret</span> <span class="o">+=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="c1"># Add back the newline we split on</span>
+        <span class="n">ret</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="c1"># Remove any remaining leading/trailing whitespace (often from tags)</span>
+    <span class="c1"># before returning</span>
+    <span class="k">return</span> <span class="n">ret</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="BaseEmail">
+<a class="viewcode-back" href="../../../../reference/cdh.core.mail.classes.html#cdh.core.mail.classes.BaseEmail">[docs]</a>
+<span class="k">class</span> <span class="nc">BaseEmail</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for all email classes.</span>
+
+<span class="sd">    These params mostly correspond to Django&#39;s Message, so read those docs</span>
+<span class="sd">    for more details</span>
+
+<span class="sd">    About render/template contexts:</span>
+<span class="sd">    When not supplied with both an HTML and a plain text email, the missing one</span>
+<span class="sd">    will be automatically generated. However, it will not use render contexts</span>
+<span class="sd">    of the other variant. For example, if you leave the plain text version to</span>
+<span class="sd">    be automatically generated, the plain text version will use plain_context</span>
+<span class="sd">    and not html_context.</span>
+
+<span class="sd">    About theme settings:</span>
+<span class="sd">    The HTML template has some styling configuration to tweak the appearance of</span>
+<span class="sd">    the email. You can specify any changes on this class, but in most cases it&#39;s</span>
+<span class="sd">    better to apply app-wide changes using the CDH_EMAIL_THEME_SETTINGS config</span>
+<span class="sd">    value in settings.py</span>
+
+<span class="sd">    About fallback templates:</span>
+<span class="sd">    These templates are used when generating a missing variant. For example,</span>
+<span class="sd">    if you supply a plain text template only, html_fallback_template will</span>
+<span class="sd">    be used as the base template for the generated HTML version.</span>
+<span class="sd">    When your app uses a custom base template, it&#39;s best to set this template</span>
+<span class="sd">    globally using the settings.py settings. It&#39;s provided on the class only</span>
+<span class="sd">    if your app uses multiple base templates.</span>
+
+<span class="sd">    HTML base templates MUST have a block called &#39;content&#39; and are encouraged to</span>
+<span class="sd">    have &#39;sender&#39;, &#39;banner&#39; and &#39;footer&#39; blocks.</span>
+<span class="sd">    Plain base templates use template vars instead of blocks, but the same</span>
+<span class="sd">    requirements apply on those vars as well.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BaseEmail.__init__">
+<a class="viewcode-back" href="../../../../reference/cdh.core.mail.classes.html#cdh.core.mail.classes.BaseEmail.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">to</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+            <span class="n">subject</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;nl&#39;</span><span class="p">,</span>
+            <span class="n">from_email</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">headers</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">attachments</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">MIMEBase</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span>
+                                                             <span class="nb">str</span><span class="p">]]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">cc</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">bcc</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">reply_to</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+
+            <span class="n">context</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">plain_context</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">html_context</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+
+            <span class="n">theme_settings</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+
+            <span class="n">html_fallback_template</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">CDH_EMAIL_HTML_FALLBACK_TEMPLATE</span><span class="p">,</span>
+            <span class="n">plain_fallback_template</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">CDH_EMAIL_PLAIN_FALLBACK_TEMPLATE</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param to: a list of recipients, can be plain email or formatted (&quot;John</span>
+<span class="sd">                   Doe &lt;j.doe@example.org&gt;&quot;)</span>
+<span class="sd">        :type to: list of str</span>
+<span class="sd">        :param str subject: the email subject</span>
+<span class="sd">        :param str language: the language used during rendering the email. Uses</span>
+<span class="sd">                             Django&#39;s i18n framework</span>
+<span class="sd">        :param from_email: the From: email address. Uses settings.EMAIL_FROM if</span>
+<span class="sd">                           omitted</span>
+<span class="sd">        :type from_email: str or None</span>
+<span class="sd">        :param headers: any additional SMTP headers to be used</span>
+<span class="sd">        :type headers: dict or None</span>
+<span class="sd">        :param attachments: a list of email attachments to be sent along.</span>
+<span class="sd">        :type attachments: list of MimeBase or Tuple</span>
+<span class="sd">        :param cc: a list of recipients to put as CC:</span>
+<span class="sd">        :type cc: list of str or None</span>
+<span class="sd">        :param bcc: a list of recipients to put ad BCC:</span>
+<span class="sd">        :type bcc: list of str or None</span>
+<span class="sd">        :param reply_to: an email to be set as REPLY_TO: (not set if left empty)</span>
+<span class="sd">        :type reply_to: list of str or None</span>
+
+<span class="sd">        :param dict context: any template context needed for both the templates</span>
+<span class="sd">        :param dict html_context: any template context needed by the HTML template,</span>
+<span class="sd">                                  will override values in context if both have them</span>
+<span class="sd">        :param dict plain_context: any template context needed by the plain</span>
+<span class="sd">                                   template, will override values in context if</span>
+<span class="sd">                                   both have them.</span>
+
+<span class="sd">        :param dict  theme_settings: a dict of overrides for the styling of the</span>
+<span class="sd">                                     HTML email does not need to contain all</span>
+<span class="sd">                                     values, only the ones you want to override.</span>
+<span class="sd">        :param str html_fallback_template: the base template for HTML emails used</span>
+<span class="sd">                                           for generating an HTML version of a</span>
+<span class="sd">                                           plain text email</span>
+<span class="sd">        :param str plain_fallback_template: the base template for plain text emails</span>
+<span class="sd">                                            used for generating a plain text version</span>
+<span class="sd">                                            of an HTML email</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">to</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">to</span> <span class="o">=</span> <span class="p">[</span><span class="n">to</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">to</span> <span class="o">=</span> <span class="n">to</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cc</span> <span class="o">=</span> <span class="n">cc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bcc</span> <span class="o">=</span> <span class="n">bcc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reply_to</span> <span class="o">=</span> <span class="n">reply_to</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subject</span> <span class="o">=</span> <span class="n">subject</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">from_email</span> <span class="o">=</span> <span class="n">from_email</span> <span class="ow">or</span> <span class="n">settings</span><span class="o">.</span><span class="n">EMAIL_FROM</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">language</span> <span class="o">=</span> <span class="n">language</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attachments</span> <span class="o">=</span> <span class="n">attachments</span> <span class="ow">or</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plain_context</span> <span class="o">=</span> <span class="n">plain_context</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">html_context</span> <span class="o">=</span> <span class="n">html_context</span> <span class="ow">or</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">theme_settings</span> <span class="o">=</span> <span class="n">CDH_EMAIL_THEME_SETTINGS</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">theme_settings</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">apply_theme_settings</span><span class="p">(</span><span class="n">theme_settings</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">html_fallback_template</span> <span class="o">=</span> <span class="n">html_fallback_template</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plain_fallback_template</span> <span class="o">=</span> <span class="n">plain_fallback_template</span></div>
+
+
+<div class="viewcode-block" id="BaseEmail.apply_theme_settings">
+<a class="viewcode-back" href="../../../../reference/cdh.core.mail.classes.html#cdh.core.mail.classes.BaseEmail.apply_theme_settings">[docs]</a>
+    <span class="k">def</span> <span class="nf">apply_theme_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theme_settings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Applies theme settings</span>
+
+<span class="sd">            :param dict theme_settings: a dict of overrides for the styling</span>
+<span class="sd">                                        of the HTML email does not need to</span>
+<span class="sd">                                        contain all values, only the ones you</span>
+<span class="sd">                                        want to override.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">theme_settings</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">theme_settings</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BaseEmail.attach">
+<a class="viewcode-back" href="../../../../reference/cdh.core.mail.classes.html#cdh.core.mail.classes.BaseEmail.attach">[docs]</a>
+    <span class="k">def</span> <span class="nf">attach</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mimetype</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Attach a new attachment to this email</span>
+
+<span class="sd">        :param filename: either a string of the filename, or a MIMEBase object</span>
+<span class="sd">                         representing the entire file</span>
+<span class="sd">        :type filename: str or MIMEBase</span>
+<span class="sd">        :param content: If filename is a string, the contents of the file.</span>
+<span class="sd">                        Ignored otherwise</span>
+<span class="sd">        :type content: str or None</span>
+<span class="sd">        :param mimetype: If filename is a string, the mimetype of the file.</span>
+<span class="sd">                         Ignored otherwise</span>
+<span class="sd">        :type mimetype: str or None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">MIMEBase</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">attachments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">attachments</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">filename</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">mimetype</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="BaseEmail.send">
+<a class="viewcode-back" href="../../../../reference/cdh.core.mail.classes.html#cdh.core.mail.classes.BaseEmail.send">[docs]</a>
+    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fail_silently</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sends the email</span>
+
+<span class="sd">        If sending multiple emails in a row, it&#39;s recommended to create a</span>
+<span class="sd">        connection yourself and use them on all emails for performance reasons.</span>
+
+<span class="sd">        :param connection: a Django email backend to send the mail with. If</span>
+<span class="sd">                           omitted, the default backend will be used</span>
+<span class="sd">        :param bool fail_silently: whether errors during sending should be</span>
+<span class="sd">                                   suppressed</span>
+<span class="sd">        :return: number of emails sent</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">old_lang</span> <span class="o">=</span> <span class="n">translation</span><span class="o">.</span><span class="n">get_language</span><span class="p">()</span>
+        <span class="n">translation</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">language</span><span class="p">)</span>
+
+        <span class="n">email</span> <span class="o">=</span> <span class="n">EmailMultiAlternatives</span><span class="p">(</span>
+            <span class="n">to</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">to</span><span class="p">,</span>
+            <span class="n">subject</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">subject</span><span class="p">,</span>
+            <span class="n">from_email</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">from_email</span><span class="p">,</span>
+            <span class="n">reply_to</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">reply_to</span><span class="p">,</span>
+            <span class="n">cc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cc</span><span class="p">,</span>
+            <span class="n">bcc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bcc</span><span class="p">,</span>
+            <span class="n">body</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_plain_body</span><span class="p">(),</span>
+            <span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">,</span>
+            <span class="n">attachments</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">attachments</span><span class="p">,</span>
+            <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">email</span><span class="o">.</span><span class="n">attach_alternative</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_get_html_body</span><span class="p">(),</span>
+            <span class="s1">&#39;text/html&#39;</span>
+        <span class="p">)</span>
+
+        <span class="n">translation</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="n">old_lang</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">email</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">fail_silently</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_get_plain_context</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plain_context</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">context</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_get_html_context</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Overrides must add the following keys:</span>
+<span class="sd">        has_sender, has_banner and has_footer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">html_context</span><span class="p">)</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;theme&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">theme_settings</span>
+
+        <span class="k">return</span> <span class="n">context</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_get_plain_body</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_get_html_body</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="TemplateEmail">
+<a class="viewcode-back" href="../../../../reference/cdh.core.mail.classes.html#cdh.core.mail.classes.TemplateEmail">[docs]</a>
+<span class="k">class</span> <span class="nc">TemplateEmail</span><span class="p">(</span><span class="n">BaseEmail</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Regular Django template files based emails</span>
+
+<span class="sd">    One of the two templates is required. If one is missing, it will be</span>
+<span class="sd">    generated from the other.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TemplateEmail.__init__">
+<a class="viewcode-back" href="../../../../reference/cdh.core.mail.classes.html#cdh.core.mail.classes.TemplateEmail.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+            <span class="n">html_template</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">plain_template</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
+
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        :param str html_template: the HTML template to send</span>
+<span class="sd">        :param str plain_template: the plain text template to send</span>
+
+<span class="sd">        :param to: a list of recipients, can be plain email or formatted (&quot;John</span>
+<span class="sd">                   Doe &lt;j.doe@example.org&gt;&quot;)</span>
+<span class="sd">        :type to: list of str</span>
+<span class="sd">        :param str subject: the email subject</span>
+<span class="sd">        :param str language: the language used during rendering the email. Uses</span>
+<span class="sd">                             Django&#39;s i18n framework</span>
+<span class="sd">        :param from_email: the From: email address. Uses settings.EMAIL_FROM if</span>
+<span class="sd">                           omitted</span>
+<span class="sd">        :type from_email: str or None</span>
+<span class="sd">        :param headers: any additional SMTP headers to be used</span>
+<span class="sd">        :type headers: dict or None</span>
+<span class="sd">        :param attachments: a list of email attachments to be sent along.</span>
+<span class="sd">        :type attachments: list of MimeBase or Tuple</span>
+<span class="sd">        :param cc: a list of recipients to put as CC:</span>
+<span class="sd">        :type cc: list of str or None</span>
+<span class="sd">        :param bcc: a list of recipients to put ad BCC:</span>
+<span class="sd">        :type bcc: list of str or None</span>
+<span class="sd">        :param reply_to: an email to be set as REPLY_TO: (not set if left empty)</span>
+<span class="sd">        :type reply_to: list of str or None</span>
+
+<span class="sd">        :param dict context: any template context needed for both the templates</span>
+<span class="sd">        :param dict html_context: any template context needed by the HTML template,</span>
+<span class="sd">                                  will override values in context if both have them</span>
+<span class="sd">        :param dict plain_context: any template context needed by the plain</span>
+<span class="sd">                                   template, will override values in context if</span>
+<span class="sd">                                   both have them.</span>
+
+<span class="sd">        :param dict  theme_settings: a dict of overrides for the styling of the</span>
+<span class="sd">                                     HTML email does not need to contain all</span>
+<span class="sd">                                     values, only the ones you want to override.</span>
+<span class="sd">        :param str html_fallback_template: the base template for HTML emails used</span>
+<span class="sd">                                           for generating an HTML version of a</span>
+<span class="sd">                                           plain text email</span>
+<span class="sd">        :param str plain_fallback_template: the base template for plain text emails</span>
+<span class="sd">                                            used for generating a plain text version</span>
+<span class="sd">                                            of an HTML email</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">html_template</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">plain_template</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No email templates supplied!&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">html_template</span> <span class="o">=</span> <span class="n">html_template</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plain_template</span> <span class="o">=</span> <span class="n">plain_template</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_html_blocks</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_get_html_blocks</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">BlockNode</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Helper method to extract the individual content block nodes from the</span>
+<span class="sd">        supplied HTML template&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_html_blocks</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_has_html_body</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_html_blocks</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_html_blocks</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;sender&#39;</span><span class="p">:</span>  <span class="kc">None</span><span class="p">,</span>
+            <span class="s1">&#39;banner&#39;</span><span class="p">:</span>  <span class="kc">None</span><span class="p">,</span>
+            <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s1">&#39;footer&#39;</span><span class="p">:</span>  <span class="kc">None</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">html_template</span> <span class="o">=</span> <span class="n">get_template</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">html_template</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">base</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">html_template</span><span class="o">.</span><span class="n">template</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">nodelist</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Invalid mail html template loaded!&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">base</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">BlockNode</span><span class="p">)</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;sender&#39;</span><span class="p">,</span>
+                                                             <span class="s1">&#39;banner&#39;</span><span class="p">,</span>
+                                                             <span class="s1">&#39;content&#39;</span><span class="p">,</span>
+                                                             <span class="s1">&#39;footer&#39;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_html_blocks</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_html_blocks</span>
+
+    <span class="k">def</span> <span class="nf">_get_html_context</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_html_context</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">blocks</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_html_blocks</span><span class="p">():</span>
+            <span class="n">context</span><span class="p">[</span><span class="s1">&#39;has_sender&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">blocks</span><span class="p">[</span><span class="s1">&#39;sender&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="n">context</span><span class="p">[</span><span class="s1">&#39;has_banner&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">blocks</span><span class="p">[</span><span class="s1">&#39;banner&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="n">context</span><span class="p">[</span><span class="s1">&#39;has_footer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">blocks</span><span class="p">[</span><span class="s1">&#39;footer&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">context</span>
+
+    <span class="k">def</span> <span class="nf">_get_plain_body</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plain_template</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">render_to_string</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">plain_template</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_get_plain_context</span><span class="p">()</span>
+            <span class="p">)</span>
+
+        <span class="c1"># If we don&#39;t have a Plain template, we&#39;re going to build our own!</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_has_html_body</span><span class="p">():</span>
+            <span class="c1"># Render the content blocks individually and strip the HTML tags</span>
+            <span class="c1"># from them</span>
+            <span class="n">blocks</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">name</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">+</span><span class="n">_strip_tags</span><span class="p">(</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">render</span><span class="p">(</span>
+                        <span class="n">Context</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_plain_context</span><span class="p">())</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_html_blocks</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">node</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="n">render_to_string</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">plain_fallback_template</span><span class="p">,</span>
+                <span class="n">blocks</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_has_html_body</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">html_template</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_get_html_body</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_html_context</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_has_html_body</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">render_to_string</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">html_template</span><span class="p">,</span>
+                <span class="n">context</span>
+            <span class="p">)</span>
+
+        <span class="c1"># If we don&#39;t have an HTML template, we&#39;re going to build our own!</span>
+        <span class="c1"># And paste in the plain content</span>
+        <span class="n">engine</span> <span class="o">=</span> <span class="n">Engine</span><span class="o">.</span><span class="n">get_default</span><span class="p">()</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span>
+            <span class="s2">&quot;{</span><span class="si">% e</span><span class="s2">xtends &#39;&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">html_fallback_template</span> <span class="o">+</span> <span class="s2">&quot;&#39; %}&quot;</span>
+            <span class="s2">&quot;{% block content %}{{ plain_content|linebreaks }}{</span><span class="si">% e</span><span class="s2">ndblock %}&quot;</span>
+        <span class="p">)</span>
+
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;plain_content&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_plain_body</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">Context</span><span class="p">(</span><span class="n">context</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="CTEVarDef">
+<a class="viewcode-back" href="../../../../reference/cdh.core.mail.classes.html#cdh.core.mail.classes.CTEVarDef">[docs]</a>
+<span class="k">class</span> <span class="nc">CTEVarDef</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Descriptor class for user-usable variables in a Custom Template Email</span>
+
+<span class="sd">    This class serves two roles:</span>
+<span class="sd">    - Provide information for help text generation</span>
+<span class="sd">    - Provide a default value when rendering the preview</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="CTEVarDef.__init__">
+<a class="viewcode-back" href="../../../../reference/cdh.core.mail.classes.html#cdh.core.mail.classes.CTEVarDef.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">help_text</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">preview_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">safe</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param str name: The variable name</span>
+<span class="sd">        :param help_text: a short description of what this var will output</span>
+<span class="sd">                          (optional)</span>
+<span class="sd">        :type help_text: str or None</span>
+<span class="sd">        :param preview_value: a placeholder value that will be inserted when</span>
+<span class="sd">                              rendering the preview (optional)</span>
+<span class="sd">        :param safe: if the contents of the var should be marked safe.</span>
+<span class="sd">        :type safe: bool</span>
+<span class="sd">        :param kwargs: Any other parameter passed to the class. Not used in</span>
+<span class="sd">                       default implementations, but can be used for custom ones</span>
+<span class="sd">        :type kwargs: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">help_text</span> <span class="o">=</span> <span class="n">help_text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">preview_value</span> <span class="o">=</span> <span class="n">preview_value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">safe</span> <span class="o">=</span> <span class="n">safe</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="CTETagPackage">
+<a class="viewcode-back" href="../../../../reference/cdh.core.mail.classes.html#cdh.core.mail.classes.CTETagPackage">[docs]</a>
+<span class="k">class</span> <span class="nc">CTETagPackage</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Configuration class for loading template tag packages</span>
+
+<span class="sd">    This class serves two roles:</span>
+<span class="sd">    - Providing information for loading template tag packages in the template</span>
+<span class="sd">    - Provide information for help text generation</span>
+
+<span class="sd">    All packages need to be importable by the Django rendering engine</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="CTETagPackage.__init__">
+<a class="viewcode-back" href="../../../../reference/cdh.core.mail.classes.html#cdh.core.mail.classes.CTETagPackage.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">package</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">tags</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span>
+                <span class="nb">str</span><span class="p">,</span>
+                <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">],</span>
+                <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+            <span class="p">]]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param str package: the name of the package to load</span>
+<span class="sd">        :param tags: a list of 3-tuples; The tuple should contain:</span>
+<span class="sd">                     - The name of the usable tag inside the package</span>
+<span class="sd">                     - A list of arguments that tag accepts</span>
+<span class="sd">                     - A help string explaining what the tag does</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">package</span> <span class="o">=</span> <span class="n">package</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tags</span> <span class="o">=</span> <span class="n">tags</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="BaseCustomTemplateEmail">
+<a class="viewcode-back" href="../../../../reference/cdh.core.mail.classes.html#cdh.core.mail.classes.BaseCustomTemplateEmail">[docs]</a>
+<span class="k">class</span> <span class="nc">BaseCustomTemplateEmail</span><span class="p">(</span><span class="n">BaseEmail</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Email class for sending HTML emails using user supplied HTML templates</span>
+
+<span class="sd">    DO NOT USE THIS CLASS FOR &#39;HARDCODED&#39; EMAILS. Use :class:`.TemplateEmail`</span>
+<span class="sd">    instead.</span>
+
+<span class="sd">    BE CAREFUL WHAT YOU EXPOSE TO THE USER. This method itself is safe, as</span>
+<span class="sd">    everything is run in a sandbox. However, template tags can have (nasty)</span>
+<span class="sd">    side effects outside the sandbox. Also, some vars might just expose more</span>
+<span class="sd">    than you thought.</span>
+
+<span class="sd">    Unlike TemplateEmail, this class should be extended and not be used</span>
+<span class="sd">    directly. It uses class variables, which should not be set on an instance</span>
+<span class="sd">    level.</span>
+
+<span class="sd">    :param user_variable_defs: a list of user usable variables</span>
+<span class="sd">    :type user_variable_defs: list of :class:`CTEVarDef`</span>
+<span class="sd">    :param template_tag_packages: a list of template tag packages to load</span>
+<span class="sd">    :type template_tag_packages: list of :class:`CTETagPackage`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">user_variable_defs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CTEVarDef</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">template_tag_packages</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CTETagPackage</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="BaseCustomTemplateEmail.__init__">
+<a class="viewcode-back" href="../../../../reference/cdh.core.mail.classes.html#cdh.core.mail.classes.BaseCustomTemplateEmail.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+            <span class="n">contents</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">sender</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">banner</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">footer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param to: a list of recipients, can be plain email or formatted (&quot;John</span>
+<span class="sd">                   Doe &lt;j.doe@example.org&gt;&quot;)</span>
+<span class="sd">        :type to: list of str</span>
+<span class="sd">        :param str subject: the email subject</span>
+<span class="sd">        :param str language: the language used during rendering the email. Uses</span>
+<span class="sd">                             Django&#39;s i18n framework</span>
+<span class="sd">        :param from_email: the From: email address. Uses settings.EMAIL_FROM if</span>
+<span class="sd">                           omitted</span>
+<span class="sd">        :type from_email: str or None</span>
+<span class="sd">        :param headers: any additional SMTP headers to be used</span>
+<span class="sd">        :type headers: dict or None</span>
+<span class="sd">        :param attachments: a list of email attachments to be sent along.</span>
+<span class="sd">        :type attachments: list of MimeBase or Tuple</span>
+<span class="sd">        :param cc: a list of recipients to put as CC:</span>
+<span class="sd">        :type cc: list of str or None</span>
+<span class="sd">        :param bcc: a list of recipients to put ad BCC:</span>
+<span class="sd">        :type bcc: list of str or None</span>
+<span class="sd">        :param reply_to: an email to be set as REPLY_TO: (not set if left empty)</span>
+<span class="sd">        :type reply_to: list of str or None</span>
+
+<span class="sd">        :param dict context: any template context needed for both the templates</span>
+<span class="sd">        :param dict html_context: any template context needed by the HTML template,</span>
+<span class="sd">                                  will override values in context if both have them</span>
+<span class="sd">        :param dict plain_context: any template context needed by the plain</span>
+<span class="sd">                                   template, will override values in context if</span>
+<span class="sd">                                   both have them.</span>
+
+<span class="sd">        :param dict  theme_settings: a dict of overrides for the styling of the</span>
+<span class="sd">                                     HTML email does not need to contain all</span>
+<span class="sd">                                     values, only the ones you want to override.</span>
+<span class="sd">        :param str html_fallback_template: the base template for HTML emails used</span>
+<span class="sd">                                           for generating an HTML version of a</span>
+<span class="sd">                                           plain text email</span>
+<span class="sd">        :param str plain_fallback_template: the base template for plain text emails</span>
+<span class="sd">                                            used for generating a plain text version</span>
+<span class="sd">                                            of an HTML email</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contents</span> <span class="o">=</span> <span class="n">contents</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">banner</span> <span class="o">=</span> <span class="n">banner</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sender</span> <span class="o">=</span> <span class="n">sender</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">footer</span> <span class="o">=</span> <span class="n">footer</span></div>
+
+
+<div class="viewcode-block" id="BaseCustomTemplateEmail.help_text">
+<a class="viewcode-back" href="../../../../reference/cdh.core.mail.classes.html#cdh.core.mail.classes.BaseCustomTemplateEmail.help_text">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="nd">@keep_lazy_text</span>
+    <span class="k">def</span> <span class="nf">help_text</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;A (marked_safe) string describing which vars and tags can be used</span>
+<span class="sd">        in this template. Intended to be used as a formfield help_text&quot;&quot;&quot;</span>
+        <span class="n">help_text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">user_variable_defs</span><span class="p">:</span>
+            <span class="n">help_text</span> <span class="o">+=</span> <span class="s2">&quot;&lt;strong&gt;&quot;</span>
+            <span class="n">help_text</span> <span class="o">+=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;core.mail.custom.help_text.variables&#39;</span><span class="p">)</span>
+            <span class="n">help_text</span> <span class="o">+=</span> <span class="s2">&quot;&lt;/strong&gt;&lt;br/&gt;&quot;</span>
+
+            <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">user_variable_defs</span><span class="p">:</span>
+                <span class="n">help_text</span> <span class="o">+=</span> <span class="s2">&quot;&lt;code&gt;{{ &quot;</span> <span class="o">+</span> <span class="n">var</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot; }}&lt;/code&gt;&quot;</span>
+                <span class="k">if</span> <span class="n">var</span><span class="o">.</span><span class="n">help_text</span><span class="p">:</span>
+                    <span class="n">help_text</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;: </span><span class="si">{</span><span class="n">var</span><span class="o">.</span><span class="n">help_text</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">help_text</span> <span class="o">+=</span> <span class="s2">&quot;&lt;br/&gt;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">template_tag_packages</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">user_variable_defs</span><span class="p">:</span>
+                <span class="n">help_text</span> <span class="o">+=</span> <span class="s2">&quot;&lt;br/&gt;&quot;</span>
+            <span class="n">help_text</span> <span class="o">+=</span> <span class="s2">&quot;&lt;strong&gt;&quot;</span>
+            <span class="n">help_text</span> <span class="o">+=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;core.mail.custom.help_text.tags&#39;</span><span class="p">)</span>
+            <span class="n">help_text</span> <span class="o">+=</span> <span class="s2">&quot;&lt;/strong&gt;&lt;br/&gt;&quot;</span>
+
+            <span class="k">for</span> <span class="n">package</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">template_tag_packages</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">package</span><span class="o">.</span><span class="n">tags</span><span class="p">:</span>
+                    <span class="n">help_text</span> <span class="o">+=</span> <span class="s2">&quot;&lt;code&gt;{% &quot;</span> <span class="o">+</span> <span class="n">tag</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+                    <span class="k">if</span> <span class="n">tag</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                        <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">tag</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                            <span class="n">help_text</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">arg</span><span class="si">}</span><span class="s2">&quot;</span>
+
+                    <span class="n">help_text</span> <span class="o">+=</span> <span class="s2">&quot; %}&lt;/code&gt;&quot;</span>
+
+                    <span class="k">if</span> <span class="n">tag</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+                        <span class="n">help_text</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;: </span><span class="si">{</span><span class="n">tag</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="n">help_text</span> <span class="o">+=</span> <span class="s2">&quot;&lt;br/&gt;&quot;</span>
+
+        <span class="k">return</span> <span class="n">mark_safe</span><span class="p">(</span><span class="n">help_text</span><span class="p">)</span></div>
+
+
+    <span class="nd">@lru_cache</span>
+    <span class="k">def</span> <span class="nf">_get_template_from_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Template</span><span class="p">:</span>
+        <span class="n">engine</span> <span class="o">=</span> <span class="n">Engine</span><span class="o">.</span><span class="n">get_default</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">engine</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_has_sender</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_has_banner</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">banner</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_has_footer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">footer</span><span class="p">)</span>
+
+<div class="viewcode-block" id="BaseCustomTemplateEmail.render_preview">
+<a class="viewcode-back" href="../../../../reference/cdh.core.mail.classes.html#cdh.core.mail.classes.BaseCustomTemplateEmail.render_preview">[docs]</a>
+    <span class="k">def</span> <span class="nf">render_preview</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a rendered HTML document as would be sent as the HTML</span>
+<span class="sd">        content.</span>
+
+<span class="sd">        Uses the variable defaults as defined if nothing was supplied through</span>
+<span class="sd">        the context param.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_html_body</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_get_html_context</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_html_context</span><span class="p">()</span>
+
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;has_sender&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_has_sender</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;has_banner&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_has_banner</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;has_footer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_has_footer</span>
+
+        <span class="k">return</span> <span class="n">context</span>
+
+    <span class="k">def</span> <span class="nf">_generate_template_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">contents</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="s2">&quot;{% block &quot;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot; %}&quot;</span>
+        <span class="n">template</span> <span class="o">+=</span> <span class="n">contents</span>
+        <span class="n">template</span> <span class="o">+=</span> <span class="s2">&quot;{</span><span class="si">% e</span><span class="s2">ndblock %}&quot;</span>
+
+        <span class="k">return</span> <span class="n">template</span>
+
+    <span class="k">def</span> <span class="nf">_generate_template_str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="s2">&quot;{</span><span class="si">% e</span><span class="s2">xtends &#39;&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">html_fallback_template</span> <span class="o">+</span> <span class="s2">&quot;&#39; %}&quot;</span>
+
+        <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">template_tag_packages</span><span class="p">:</span>
+            <span class="n">template</span> <span class="o">+=</span> <span class="s2">&quot;{</span><span class="si">% lo</span><span class="s2">ad &quot;</span> <span class="o">+</span> <span class="n">tag</span><span class="o">.</span><span class="n">package</span> <span class="o">+</span> <span class="s2">&quot; %}&quot;</span>
+
+        <span class="n">template</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_template_block</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_has_sender</span><span class="p">:</span>
+            <span class="n">template</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_template_block</span><span class="p">(</span><span class="s1">&#39;sender&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_has_banner</span><span class="p">:</span>
+            <span class="n">template</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_template_block</span><span class="p">(</span><span class="s1">&#39;banner&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">banner</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_has_footer</span><span class="p">:</span>
+            <span class="n">template</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_template_block</span><span class="p">(</span><span class="s1">&#39;footer&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">footer</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">template</span>
+
+    <span class="k">def</span> <span class="nf">_get_html_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preview</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_template_from_string</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_generate_template_str</span><span class="p">()</span>
+        <span class="p">)</span>
+
+        <span class="n">context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_html_context</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">preview</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_variable_defs</span><span class="p">:</span>
+                <span class="c1"># Only apply the default if we don&#39;t have any value in the</span>
+                <span class="c1"># context already. Some previews are capable of adding some</span>
+                <span class="c1"># more specifc context, and we don&#39;t want to overwrite those.</span>
+                <span class="k">if</span> <span class="n">var</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">context</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">context</span><span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">name</span><span class="p">]:</span>
+                    <span class="n">context</span><span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">preview_value</span>
+
+        <span class="c1"># Mark any vars as safe if configured to do so</span>
+        <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_variable_defs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">var</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">context</span> <span class="ow">and</span> <span class="n">var</span><span class="o">.</span><span class="n">safe</span><span class="p">:</span>
+                <span class="n">context</span><span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">mark_safe</span><span class="p">(</span><span class="n">context</span><span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span>
+            <span class="n">Context</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_plain_part</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_template_from_string</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="o">.</span><span class="n">render</span><span class="p">(</span>
+            <span class="n">Context</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_plain_context</span><span class="p">())</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">_strip_tags</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_plain_body</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_plain_part</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_has_sender</span><span class="p">:</span>
+            <span class="n">context</span><span class="p">[</span><span class="s1">&#39;sender&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_plain_part</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_has_banner</span><span class="p">:</span>
+            <span class="n">context</span><span class="p">[</span><span class="s1">&#39;banner&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_plain_part</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">banner</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_has_footer</span><span class="p">:</span>
+            <span class="n">context</span><span class="p">[</span><span class="s1">&#39;footer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_plain_part</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">footer</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">render_to_string</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plain_fallback_template</span><span class="p">,</span>
+            <span class="n">context</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
+
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.files.db package &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../_static/theme.css" type="text/css"/>
+        <script src="../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../_static/doctools.js?v=888ff710"></script>
+                    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../genindex.html"/>
+            <link rel="search" title="Search" href="../search.html"/>
+            <link rel="next" title="cdh.files.db.descriptors module" href="cdh.files.db.descriptors.html"/>
+            <link rel="prev" title="cdh.files package" href="cdh.files.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="index.html"
+           >
+           cdh
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.html"
+           >
+           cdh package
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.files.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           cdh.files package
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.files.db package</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <section id="module-cdh.files.db">
+<span id="cdh-files-db-package"></span><h1>cdh.files.db package<a class="headerlink" href="#module-cdh.files.db" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cdh.files.db.descriptors.html">cdh.files.db.descriptors module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cdh.files.db.descriptors.html#cdh.files.db.descriptors.FileDescriptor"><code class="docutils literal notranslate"><span class="pre">FileDescriptor</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="cdh.files.db.descriptors.html#cdh.files.db.descriptors.ForwardFileDescriptor"><code class="docutils literal notranslate"><span class="pre">ForwardFileDescriptor</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.descriptors.html#cdh.files.db.descriptors.ForwardFileDescriptor.get_object"><code class="docutils literal notranslate"><span class="pre">ForwardFileDescriptor.get_object()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cdh.files.db.descriptors.html#cdh.files.db.descriptors.TrackedFileDescriptor"><code class="docutils literal notranslate"><span class="pre">TrackedFileDescriptor</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.descriptors.html#cdh.files.db.descriptors.TrackedFileDescriptor.related_manager_cls"><code class="docutils literal notranslate"><span class="pre">TrackedFileDescriptor.related_manager_cls</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.descriptors.html#cdh.files.db.descriptors.TrackedFileDescriptor.through"><code class="docutils literal notranslate"><span class="pre">TrackedFileDescriptor.through</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cdh.files.db.fields.html">cdh.files.db.fields module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField"><code class="docutils literal notranslate"><span class="pre">FileField</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.__init__"><code class="docutils literal notranslate"><span class="pre">FileField.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.attr_class"><code class="docutils literal notranslate"><span class="pre">FileField.attr_class</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.check"><code class="docutils literal notranslate"><span class="pre">FileField.check()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.contribute_to_class"><code class="docutils literal notranslate"><span class="pre">FileField.contribute_to_class()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.convert_empty_strings"><code class="docutils literal notranslate"><span class="pre">FileField.convert_empty_strings()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.db_check"><code class="docutils literal notranslate"><span class="pre">FileField.db_check()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.db_parameters"><code class="docutils literal notranslate"><span class="pre">FileField.db_parameters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.db_type"><code class="docutils literal notranslate"><span class="pre">FileField.db_type()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.deconstruct"><code class="docutils literal notranslate"><span class="pre">FileField.deconstruct()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.default_error_messages"><code class="docutils literal notranslate"><span class="pre">FileField.default_error_messages</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.description"><code class="docutils literal notranslate"><span class="pre">FileField.description</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.descriptor_class"><code class="docutils literal notranslate"><span class="pre">FileField.descriptor_class</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.empty_strings_allowed"><code class="docutils literal notranslate"><span class="pre">FileField.empty_strings_allowed</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.formfield"><code class="docutils literal notranslate"><span class="pre">FileField.formfield()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.forward_related_accessor_class"><code class="docutils literal notranslate"><span class="pre">FileField.forward_related_accessor_class</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.get_attname"><code class="docutils literal notranslate"><span class="pre">FileField.get_attname()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.get_attname_column"><code class="docutils literal notranslate"><span class="pre">FileField.get_attname_column()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.get_cache_name"><code class="docutils literal notranslate"><span class="pre">FileField.get_cache_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.get_col"><code class="docutils literal notranslate"><span class="pre">FileField.get_col()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.get_db_converters"><code class="docutils literal notranslate"><span class="pre">FileField.get_db_converters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.get_db_prep_save"><code class="docutils literal notranslate"><span class="pre">FileField.get_db_prep_save()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.get_db_prep_value"><code class="docutils literal notranslate"><span class="pre">FileField.get_db_prep_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.get_default"><code class="docutils literal notranslate"><span class="pre">FileField.get_default()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.get_prep_value"><code class="docutils literal notranslate"><span class="pre">FileField.get_prep_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.get_reverse_path_info"><code class="docutils literal notranslate"><span class="pre">FileField.get_reverse_path_info()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.many_to_many"><code class="docutils literal notranslate"><span class="pre">FileField.many_to_many</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.many_to_one"><code class="docutils literal notranslate"><span class="pre">FileField.many_to_one</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.one_to_many"><code class="docutils literal notranslate"><span class="pre">FileField.one_to_many</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.one_to_one"><code class="docutils literal notranslate"><span class="pre">FileField.one_to_one</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.post_delete"><code class="docutils literal notranslate"><span class="pre">FileField.post_delete()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.post_save"><code class="docutils literal notranslate"><span class="pre">FileField.post_save()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.pre_delete"><code class="docutils literal notranslate"><span class="pre">FileField.pre_delete()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.pre_save"><code class="docutils literal notranslate"><span class="pre">FileField.pre_save()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.rel_class"><code class="docutils literal notranslate"><span class="pre">FileField.rel_class</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.resolve_related_fields"><code class="docutils literal notranslate"><span class="pre">FileField.resolve_related_fields()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.target_field"><code class="docutils literal notranslate"><span class="pre">FileField.target_field</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.to_python"><code class="docutils literal notranslate"><span class="pre">FileField.to_python()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileField.validate"><code class="docutils literal notranslate"><span class="pre">FileField.validate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileFieldCacheMixin"><code class="docutils literal notranslate"><span class="pre">FileFieldCacheMixin</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileFieldCacheMixin.clear_cache"><code class="docutils literal notranslate"><span class="pre">FileFieldCacheMixin.clear_cache()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileFieldCacheMixin.delete_cached_value"><code class="docutils literal notranslate"><span class="pre">FileFieldCacheMixin.delete_cached_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileFieldCacheMixin.delete_value_from_cache"><code class="docutils literal notranslate"><span class="pre">FileFieldCacheMixin.delete_value_from_cache()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileFieldCacheMixin.get_cache_name"><code class="docutils literal notranslate"><span class="pre">FileFieldCacheMixin.get_cache_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileFieldCacheMixin.get_cached_value"><code class="docutils literal notranslate"><span class="pre">FileFieldCacheMixin.get_cached_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileFieldCacheMixin.in_cache"><code class="docutils literal notranslate"><span class="pre">FileFieldCacheMixin.in_cache()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileFieldCacheMixin.is_cached"><code class="docutils literal notranslate"><span class="pre">FileFieldCacheMixin.is_cached()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileFieldCacheMixin.set_cached_value"><code class="docutils literal notranslate"><span class="pre">FileFieldCacheMixin.set_cached_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.FileFieldCacheMixin.set_cls"><code class="docutils literal notranslate"><span class="pre">FileFieldCacheMixin.set_cls</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.TrackedFileField"><code class="docutils literal notranslate"><span class="pre">TrackedFileField</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.TrackedFileField.__init__"><code class="docutils literal notranslate"><span class="pre">TrackedFileField.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.TrackedFileField.attr_class"><code class="docutils literal notranslate"><span class="pre">TrackedFileField.attr_class</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.TrackedFileField.contribute_to_class"><code class="docutils literal notranslate"><span class="pre">TrackedFileField.contribute_to_class()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.TrackedFileField.contribute_to_related_class"><code class="docutils literal notranslate"><span class="pre">TrackedFileField.contribute_to_related_class()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.TrackedFileField.deconstruct"><code class="docutils literal notranslate"><span class="pre">TrackedFileField.deconstruct()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.TrackedFileField.description"><code class="docutils literal notranslate"><span class="pre">TrackedFileField.description</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.TrackedFileField.formfield"><code class="docutils literal notranslate"><span class="pre">TrackedFileField.formfield()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.TrackedFileField.rel_class"><code class="docutils literal notranslate"><span class="pre">TrackedFileField.rel_class</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.TrackedFileField.value_from_object"><code class="docutils literal notranslate"><span class="pre">TrackedFileField.value_from_object()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.TrackedFileRel"><code class="docutils literal notranslate"><span class="pre">TrackedFileRel</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.TrackedFileRel.__init__"><code class="docutils literal notranslate"><span class="pre">TrackedFileRel.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.TrackedFileRel.get_related_field"><code class="docutils literal notranslate"><span class="pre">TrackedFileRel.get_related_field()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.TrackedFileRel.identity"><code class="docutils literal notranslate"><span class="pre">TrackedFileRel.identity</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.create_tracked_file_intermediary_model"><code class="docutils literal notranslate"><span class="pre">create_tracked_file_intermediary_model()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cdh.files.db.manager.html">cdh.files.db.manager module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cdh.files.db.manager.html#cdh.files.db.manager.FileManager"><code class="docutils literal notranslate"><span class="pre">FileManager</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.manager.html#cdh.files.db.manager.FileManager.get_queryset_from_field"><code class="docutils literal notranslate"><span class="pre">FileManager.get_queryset_from_field()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.manager.html#cdh.files.db.manager.FileManager.get_queryset_from_model"><code class="docutils literal notranslate"><span class="pre">FileManager.get_queryset_from_model()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cdh.files.db.manager.html#cdh.files.db.manager.create_tracked_file_manager"><code class="docutils literal notranslate"><span class="pre">create_tracked_file_manager()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cdh.files.db.models.html">cdh.files.db.models module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.BaseFile"><code class="docutils literal notranslate"><span class="pre">BaseFile</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.BaseFile.clear_file_wrapper"><code class="docutils literal notranslate"><span class="pre">BaseFile.clear_file_wrapper()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.BaseFile.clear_file_wrappers"><code class="docutils literal notranslate"><span class="pre">BaseFile.clear_file_wrappers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.BaseFile.content_type"><code class="docutils literal notranslate"><span class="pre">BaseFile.content_type</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.BaseFile.created_by"><code class="docutils literal notranslate"><span class="pre">BaseFile.created_by</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.BaseFile.created_by_id"><code class="docutils literal notranslate"><span class="pre">BaseFile.created_by_id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.BaseFile.created_on"><code class="docutils literal notranslate"><span class="pre">BaseFile.created_on</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.BaseFile.get_file_wrapper"><code class="docutils literal notranslate"><span class="pre">BaseFile.get_file_wrapper()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.BaseFile.get_next_by_created_on"><code class="docutils literal notranslate"><span class="pre">BaseFile.get_next_by_created_on()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.BaseFile.get_next_by_modified_on"><code class="docutils literal notranslate"><span class="pre">BaseFile.get_next_by_modified_on()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.BaseFile.get_previous_by_created_on"><code class="docutils literal notranslate"><span class="pre">BaseFile.get_previous_by_created_on()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.BaseFile.get_previous_by_modified_on"><code class="docutils literal notranslate"><span class="pre">BaseFile.get_previous_by_modified_on()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.BaseFile.has_file_wrapper"><code class="docutils literal notranslate"><span class="pre">BaseFile.has_file_wrapper()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.BaseFile.modified_on"><code class="docutils literal notranslate"><span class="pre">BaseFile.modified_on</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.BaseFile.objects"><code class="docutils literal notranslate"><span class="pre">BaseFile.objects</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.BaseFile.original_filename"><code class="docutils literal notranslate"><span class="pre">BaseFile.original_filename</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.BaseFile.set_file_wrapper"><code class="docutils literal notranslate"><span class="pre">BaseFile.set_file_wrapper()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.BaseFile.uuid"><code class="docutils literal notranslate"><span class="pre">BaseFile.uuid</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.File"><code class="docutils literal notranslate"><span class="pre">File</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.File.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">File.DoesNotExist</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.File.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">File.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.File.content_type"><code class="docutils literal notranslate"><span class="pre">File.content_type</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.File.created_by"><code class="docutils literal notranslate"><span class="pre">File.created_by</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.File.created_by_id"><code class="docutils literal notranslate"><span class="pre">File.created_by_id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.File.created_on"><code class="docutils literal notranslate"><span class="pre">File.created_on</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.File.get_next_by_created_on"><code class="docutils literal notranslate"><span class="pre">File.get_next_by_created_on()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.File.get_next_by_modified_on"><code class="docutils literal notranslate"><span class="pre">File.get_next_by_modified_on()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.File.get_previous_by_created_on"><code class="docutils literal notranslate"><span class="pre">File.get_previous_by_created_on()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.File.get_previous_by_modified_on"><code class="docutils literal notranslate"><span class="pre">File.get_previous_by_modified_on()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.File.id"><code class="docutils literal notranslate"><span class="pre">File.id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.File.modified_on"><code class="docutils literal notranslate"><span class="pre">File.modified_on</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.File.original_filename"><code class="docutils literal notranslate"><span class="pre">File.original_filename</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.File.uuid"><code class="docutils literal notranslate"><span class="pre">File.uuid</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cdh.files.db.wrappers.html">cdh.files.db.wrappers module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.FileWrapper"><code class="docutils literal notranslate"><span class="pre">FileWrapper</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.FileWrapper.DEFAULT_CHUNK_SIZE"><code class="docutils literal notranslate"><span class="pre">FileWrapper.DEFAULT_CHUNK_SIZE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.FileWrapper.__init__"><code class="docutils literal notranslate"><span class="pre">FileWrapper.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.FileWrapper.close"><code class="docutils literal notranslate"><span class="pre">FileWrapper.close()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.FileWrapper.closed"><code class="docutils literal notranslate"><span class="pre">FileWrapper.closed</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.FileWrapper.content_type"><code class="docutils literal notranslate"><span class="pre">FileWrapper.content_type</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.FileWrapper.created_by"><code class="docutils literal notranslate"><span class="pre">FileWrapper.created_by</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.FileWrapper.created_on"><code class="docutils literal notranslate"><span class="pre">FileWrapper.created_on</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.FileWrapper.delete"><code class="docutils literal notranslate"><span class="pre">FileWrapper.delete()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.FileWrapper.field"><code class="docutils literal notranslate"><span class="pre">FileWrapper.field</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.FileWrapper.file"><code class="docutils literal notranslate"><span class="pre">FileWrapper.file</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.FileWrapper.get_content_type_display"><code class="docutils literal notranslate"><span class="pre">FileWrapper.get_content_type_display()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.FileWrapper.id"><code class="docutils literal notranslate"><span class="pre">FileWrapper.id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.FileWrapper.modified_on"><code class="docutils literal notranslate"><span class="pre">FileWrapper.modified_on</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.FileWrapper.name"><code class="docutils literal notranslate"><span class="pre">FileWrapper.name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.FileWrapper.name_on_disk"><code class="docutils literal notranslate"><span class="pre">FileWrapper.name_on_disk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.FileWrapper.open"><code class="docutils literal notranslate"><span class="pre">FileWrapper.open()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.FileWrapper.path"><code class="docutils literal notranslate"><span class="pre">FileWrapper.path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.FileWrapper.pk"><code class="docutils literal notranslate"><span class="pre">FileWrapper.pk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.FileWrapper.save"><code class="docutils literal notranslate"><span class="pre">FileWrapper.save()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.FileWrapper.size"><code class="docutils literal notranslate"><span class="pre">FileWrapper.size</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.FileWrapper.url"><code class="docutils literal notranslate"><span class="pre">FileWrapper.url</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.FileWrapper.uuid"><code class="docutils literal notranslate"><span class="pre">FileWrapper.uuid</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.PrivateCacheMixin"><code class="docutils literal notranslate"><span class="pre">PrivateCacheMixin</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.PrivateCacheMixin.__init__"><code class="docutils literal notranslate"><span class="pre">PrivateCacheMixin.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.PrivateCacheMixin.cache_value"><code class="docutils literal notranslate"><span class="pre">PrivateCacheMixin.cache_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.PrivateCacheMixin.get_cached_value"><code class="docutils literal notranslate"><span class="pre">PrivateCacheMixin.get_cached_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.PrivateCacheMixin.invalidate_cache_value"><code class="docutils literal notranslate"><span class="pre">PrivateCacheMixin.invalidate_cache_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.PrivateCacheMixin.invalidate_caches"><code class="docutils literal notranslate"><span class="pre">PrivateCacheMixin.invalidate_caches()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.PrivateCacheMixin.is_cached"><code class="docutils literal notranslate"><span class="pre">PrivateCacheMixin.is_cached()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.TrackedFileWrapper"><code class="docutils literal notranslate"><span class="pre">TrackedFileWrapper</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.TrackedFileWrapper.__init__"><code class="docutils literal notranslate"><span class="pre">TrackedFileWrapper.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.TrackedFileWrapper.add"><code class="docutils literal notranslate"><span class="pre">TrackedFileWrapper.add()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.TrackedFileWrapper.all"><code class="docutils literal notranslate"><span class="pre">TrackedFileWrapper.all</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.TrackedFileWrapper.current_file"><code class="docutils literal notranslate"><span class="pre">TrackedFileWrapper.current_file</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.TrackedFileWrapper.delete"><code class="docutils literal notranslate"><span class="pre">TrackedFileWrapper.delete()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.TrackedFileWrapper.delete_all"><code class="docutils literal notranslate"><span class="pre">TrackedFileWrapper.delete_all()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.TrackedFileWrapper.set_as_current"><code class="docutils literal notranslate"><span class="pre">TrackedFileWrapper.set_as_current()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

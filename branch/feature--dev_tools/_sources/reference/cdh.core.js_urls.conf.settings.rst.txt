@@ -1,0 +1,7 @@
+cdh.core.js\_urls.conf.settings module
+======================================
+
+.. automodule:: cdh.core.js_urls.conf.settings
+   :members:
+   :undoc-members:
+   :show-inheritance:

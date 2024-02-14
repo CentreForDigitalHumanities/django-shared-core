@@ -1,0 +1,7 @@
+cdh.files.db.fields module
+==========================
+
+.. automodule:: cdh.files.db.fields
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,18 @@
+cdh.vue3.components.uu\_list package
+====================================
+
+.. automodule:: cdh.vue3.components.uu_list
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.vue3.components.uu_list.columns
+   cdh.vue3.components.uu_list.paginator
+   cdh.vue3.components.uu_list.serializers
+   cdh.vue3.components.uu_list.views

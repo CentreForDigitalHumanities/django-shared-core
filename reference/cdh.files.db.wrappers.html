@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cdh.files.db.wrappers module &mdash; Django Shared Core 3.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="cdh.files.forms package" href="cdh.files.forms.html" />
+    <link rel="prev" title="cdh.files.db.models module" href="cdh.files.db.models.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Django Shared Core
+          </a>
+              <div class="version">
+                3.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">cdh</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="cdh.html">cdh package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="cdh.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="cdh.core.html">cdh.core package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="cdh.files.html">cdh.files package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.integration_platform.html">cdh.integration_platform package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.rest.html">cdh.rest package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.systemmessages.html">cdh.systemmessages package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.vue.html">cdh.vue package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Django Shared Core</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">cdh</a> &raquo;</li>
+          <li><a href="cdh.html">cdh package</a> &raquo;</li>
+          <li><a href="cdh.files.html">cdh.files package</a> &raquo;</li>
+          <li><a href="cdh.files.db.html">cdh.files.db package</a> &raquo;</li>
+      <li>cdh.files.db.wrappers module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/reference/cdh.files.db.wrappers.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-cdh.files.db.wrappers">
+<span id="cdh-files-db-wrappers-module"></span><h1>cdh.files.db.wrappers module<a class="headerlink" href="#module-cdh.files.db.wrappers" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.FileWrapper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.files.db.wrappers.</span></span><span class="sig-name descname"><span class="pre">FileWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/wrappers.html#FileWrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.wrappers.FileWrapper" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">File</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.FileWrapper.DEFAULT_CHUNK_SIZE">
+<span class="sig-name descname"><span class="pre">DEFAULT_CHUNK_SIZE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">65536</span></em><a class="headerlink" href="#cdh.files.db.wrappers.FileWrapper.DEFAULT_CHUNK_SIZE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.FileWrapper.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/wrappers.html#FileWrapper.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.wrappers.FileWrapper.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.FileWrapper.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/wrappers.html#FileWrapper.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.wrappers.FileWrapper.close" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.FileWrapper.closed">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">closed</span></span><a class="headerlink" href="#cdh.files.db.wrappers.FileWrapper.closed" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.FileWrapper.content_type">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">content_type</span></span><a class="headerlink" href="#cdh.files.db.wrappers.FileWrapper.content_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.FileWrapper.created_by">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">created_by</span></span><a class="headerlink" href="#cdh.files.db.wrappers.FileWrapper.created_by" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.FileWrapper.created_on">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">created_on</span></span><a class="headerlink" href="#cdh.files.db.wrappers.FileWrapper.created_on" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.FileWrapper.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/wrappers.html#FileWrapper.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.wrappers.FileWrapper.delete" title="Permalink to this definition"></a></dt>
+<dd><p>Deletes the file on disk. If save = True, the metadata object will
+also be deleted. Note: only delete the metadata object if no other DB
+object is referencing it, otherwise you’ll get nasty Integrity
+errors!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>save</strong> – Whether to also delete the metadata in the DB, defaults
+to True</p></li>
+<li><p><strong>force</strong> – Whether to force a deletion if multiple DB objects still
+refer to it, defaults to False</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.FileWrapper.field">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">field</span></span><a class="headerlink" href="#cdh.files.db.wrappers.FileWrapper.field" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.FileWrapper.file">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">file</span></span><a class="headerlink" href="#cdh.files.db.wrappers.FileWrapper.file" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.FileWrapper.get_content_type_display">
+<span class="sig-name descname"><span class="pre">get_content_type_display</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/wrappers.html#FileWrapper.get_content_type_display"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.wrappers.FileWrapper.get_content_type_display" title="Permalink to this definition"></a></dt>
+<dd><p>Shows the label of the <a class="reference internal" href="#cdh.files.db.wrappers.FileWrapper.content_type" title="cdh.files.db.wrappers.FileWrapper.content_type"><code class="xref py py-attr docutils literal notranslate"><span class="pre">content_type</span></code></a>. See <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/instances/#django.db.models.Model.get_FOO_display" title="(in Django v4.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_FOO_display()</span></code></a> for more information.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.FileWrapper.id">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#cdh.files.db.wrappers.FileWrapper.id" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.FileWrapper.modified_on">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">modified_on</span></span><a class="headerlink" href="#cdh.files.db.wrappers.FileWrapper.modified_on" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.FileWrapper.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#cdh.files.db.wrappers.FileWrapper.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.FileWrapper.name_on_disk">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name_on_disk</span></span><a class="headerlink" href="#cdh.files.db.wrappers.FileWrapper.name_on_disk" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.FileWrapper.open">
+<span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rb'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/wrappers.html#FileWrapper.open"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.wrappers.FileWrapper.open" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.FileWrapper.path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">path</span></span><a class="headerlink" href="#cdh.files.db.wrappers.FileWrapper.path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.FileWrapper.pk">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pk</span></span><a class="headerlink" href="#cdh.files.db.wrappers.FileWrapper.pk" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.FileWrapper.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/wrappers.html#FileWrapper.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.wrappers.FileWrapper.save" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.FileWrapper.size">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">size</span></span><a class="headerlink" href="#cdh.files.db.wrappers.FileWrapper.size" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.FileWrapper.url">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">url</span></span><a class="headerlink" href="#cdh.files.db.wrappers.FileWrapper.url" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.FileWrapper.uuid">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#cdh.files.db.wrappers.FileWrapper.uuid" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.PrivateCacheMixin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.files.db.wrappers.</span></span><span class="sig-name descname"><span class="pre">PrivateCacheMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/wrappers.html#PrivateCacheMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.wrappers.PrivateCacheMixin" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.PrivateCacheMixin.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/wrappers.html#PrivateCacheMixin.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.wrappers.PrivateCacheMixin.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.PrivateCacheMixin.cache_value">
+<span class="sig-name descname"><span class="pre">cache_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/wrappers.html#PrivateCacheMixin.cache_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.wrappers.PrivateCacheMixin.cache_value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.PrivateCacheMixin.get_cached_value">
+<span class="sig-name descname"><span class="pre">get_cached_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/wrappers.html#PrivateCacheMixin.get_cached_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.wrappers.PrivateCacheMixin.get_cached_value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.PrivateCacheMixin.invalidate_cache_value">
+<span class="sig-name descname"><span class="pre">invalidate_cache_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/wrappers.html#PrivateCacheMixin.invalidate_cache_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.wrappers.PrivateCacheMixin.invalidate_cache_value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.PrivateCacheMixin.invalidate_caches">
+<span class="sig-name descname"><span class="pre">invalidate_caches</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/wrappers.html#PrivateCacheMixin.invalidate_caches"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.wrappers.PrivateCacheMixin.invalidate_caches" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.PrivateCacheMixin.is_cached">
+<span class="sig-name descname"><span class="pre">is_cached</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/wrappers.html#PrivateCacheMixin.is_cached"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.wrappers.PrivateCacheMixin.is_cached" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.TrackedFileWrapper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.files.db.wrappers.</span></span><span class="sig-name descname"><span class="pre">TrackedFileWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.djangoproject.com/en/stable/topics/db/managers/#django.db.models.Manager" title="(in Django v4.1)"><span class="pre">Manager</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.TrackedFileField" title="cdh.files.db.fields.TrackedFileField"><span class="pre">TrackedFileField</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/wrappers.html#TrackedFileWrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.wrappers.TrackedFileWrapper" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.files.db.wrappers.PrivateCacheMixin" title="cdh.files.db.wrappers.PrivateCacheMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrivateCacheMixin</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.TrackedFileWrapper.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.djangoproject.com/en/stable/topics/db/managers/#django.db.models.Manager" title="(in Django v4.1)"><span class="pre">Manager</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cdh.files.db.fields.html#cdh.files.db.fields.TrackedFileField" title="cdh.files.db.fields.TrackedFileField"><span class="pre">TrackedFileField</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/wrappers.html#TrackedFileWrapper.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.wrappers.TrackedFileWrapper.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.TrackedFileWrapper.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/uuid.html#uuid.UUID" title="(in Python v3.11)"><span class="pre">UUID</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#cdh.files.db.wrappers.FileWrapper" title="cdh.files.db.wrappers.FileWrapper"><span class="pre">FileWrapper</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.BaseFile" title="cdh.files.db.models.BaseFile"><span class="pre">BaseFile</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/cdh/files/db/wrappers.html#TrackedFileWrapper.add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.wrappers.TrackedFileWrapper.add" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.TrackedFileWrapper.all">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">all</span></span><a class="headerlink" href="#cdh.files.db.wrappers.TrackedFileWrapper.all" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.TrackedFileWrapper.current_file">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">current_file</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cdh.files.db.wrappers.FileWrapper" title="cdh.files.db.wrappers.FileWrapper"><span class="pre">FileWrapper</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cdh.files.db.wrappers.TrackedFileWrapper.current_file" title="Permalink to this definition"></a></dt>
+<dd><p>Tries to retrieve the file representing the ‘current’ value of
+this field.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.TrackedFileWrapper.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/uuid.html#uuid.UUID" title="(in Python v3.11)"><span class="pre">UUID</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#cdh.files.db.wrappers.FileWrapper" title="cdh.files.db.wrappers.FileWrapper"><span class="pre">FileWrapper</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.BaseFile" title="cdh.files.db.models.BaseFile"><span class="pre">BaseFile</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/cdh/files/db/wrappers.html#TrackedFileWrapper.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.wrappers.TrackedFileWrapper.delete" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.TrackedFileWrapper.delete_all">
+<span class="sig-name descname"><span class="pre">delete_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/cdh/files/db/wrappers.html#TrackedFileWrapper.delete_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.wrappers.TrackedFileWrapper.delete_all" title="Permalink to this definition"></a></dt>
+<dd><p>Delete all files currently tracked</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.wrappers.TrackedFileWrapper.set_as_current">
+<span class="sig-name descname"><span class="pre">set_as_current</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/uuid.html#uuid.UUID" title="(in Python v3.11)"><span class="pre">UUID</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#cdh.files.db.wrappers.FileWrapper" title="cdh.files.db.wrappers.FileWrapper"><span class="pre">FileWrapper</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="cdh.files.db.models.html#cdh.files.db.models.BaseFile" title="cdh.files.db.models.BaseFile"><span class="pre">BaseFile</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/cdh/files/db/wrappers.html#TrackedFileWrapper.set_as_current"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.wrappers.TrackedFileWrapper.set_as_current" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cdh.files.db.models.html" class="btn btn-neutral float-left" title="cdh.files.db.models module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cdh.files.forms.html" class="btn btn-neutral float-right" title="cdh.files.forms package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

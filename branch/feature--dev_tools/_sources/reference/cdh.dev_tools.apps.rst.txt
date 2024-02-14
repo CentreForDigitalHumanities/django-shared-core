@@ -1,0 +1,7 @@
+cdh.dev\_tools.apps module
+==========================
+
+.. automodule:: cdh.dev_tools.apps
+   :members:
+   :undoc-members:
+   :show-inheritance:

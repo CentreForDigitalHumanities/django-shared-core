@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cdh.core.templatetags.transformat &mdash; Django Shared Core 3.0 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> Django Shared Core
+          </a>
+              <div class="version">
+                3.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">cdh</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Django Shared Core</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>cdh.core.templatetags.transformat</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for cdh.core.templatetags.transformat</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django.template</span> <span class="kn">import</span> <span class="n">Library</span><span class="p">,</span> <span class="n">Node</span><span class="p">,</span> <span class="n">TemplateSyntaxError</span><span class="p">,</span> <span class="n">Variable</span><span class="p">,</span> <span class="n">VariableDoesNotExist</span>
+<span class="kn">from</span> <span class="nn">django.template.base</span> <span class="kn">import</span>  <span class="n">render_value_in_context</span>
+<span class="kn">from</span> <span class="nn">django.utils.safestring</span> <span class="kn">import</span> <span class="n">SafeData</span><span class="p">,</span> <span class="n">mark_safe</span>
+
+<span class="n">register</span> <span class="o">=</span> <span class="n">Library</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="FormattedTranslateNode"><a class="viewcode-back" href="../../../../reference/cdh.core.templatetags.transformat.html#cdh.core.templatetags.transformat.FormattedTranslateNode">[docs]</a><span class="k">class</span> <span class="nc">FormattedTranslateNode</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+<div class="viewcode-block" id="FormattedTranslateNode.__init__"><a class="viewcode-back" href="../../../../reference/cdh.core.templatetags.transformat.html#cdh.core.templatetags.transformat.FormattedTranslateNode.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_expression</span><span class="p">,</span> <span class="n">noop</span><span class="p">,</span> <span class="n">formatvalues</span><span class="p">,</span> <span class="n">asvar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">message_context</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">noop</span> <span class="o">=</span> <span class="n">noop</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">formatvalues</span> <span class="o">=</span> <span class="n">formatvalues</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">asvar</span> <span class="o">=</span> <span class="n">asvar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message_context</span> <span class="o">=</span> <span class="n">message_context</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_expression</span> <span class="o">=</span> <span class="n">filter_expression</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filter_expression</span><span class="o">.</span><span class="n">var</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filter_expression</span><span class="o">.</span><span class="n">var</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">filter_expression</span><span class="o">.</span><span class="n">var</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filter_expression</span><span class="o">.</span><span class="n">is_var</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="FormattedTranslateNode.render"><a class="viewcode-back" href="../../../../reference/cdh.core.templatetags.transformat.html#cdh.core.templatetags.transformat.FormattedTranslateNode.render">[docs]</a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_expression</span><span class="o">.</span><span class="n">var</span><span class="o">.</span><span class="n">translate</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">noop</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">message_context</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filter_expression</span><span class="o">.</span><span class="n">var</span><span class="o">.</span><span class="n">message_context</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">message_context</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">context</span><span class="p">))</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_expression</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">render_value_in_context</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+        <span class="c1"># Restore percent signs. Percent signs in template text are doubled</span>
+        <span class="c1"># so they are not interpreted as string format flags.</span>
+        <span class="n">is_safe</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">SafeData</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%%</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+
+        <span class="n">formatvalues</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">formatvalue</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">formatvalues</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">variable</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">formatvalue</span><span class="p">)</span>
+                <span class="n">formatvalues</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">variable</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">context</span><span class="p">))</span>
+            <span class="k">except</span> <span class="n">VariableDoesNotExist</span><span class="p">:</span>
+                <span class="n">formatvalues</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">formatvalue</span><span class="p">)</span>
+
+        <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">formatvalues</span><span class="p">)</span>
+
+        <span class="n">value</span> <span class="o">=</span> <span class="n">mark_safe</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">if</span> <span class="n">is_safe</span> <span class="k">else</span> <span class="n">value</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">asvar</span><span class="p">:</span>
+            <span class="n">context</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">asvar</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">value</span></div></div>
+
+
+<div class="viewcode-block" id="do_translate_format"><a class="viewcode-back" href="../../../../reference/cdh.core.templatetags.transformat.html#cdh.core.templatetags.transformat.do_translate_format">[docs]</a><span class="nd">@register</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="s1">&#39;transformat&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">do_translate_format</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This tag is a modified version of the trans tag. In addition to doing all the things the trans tag does, it also</span>
+<span class="sd">    performs a str.format() on the translation. The values for the format call can be added to the tag as additional</span>
+<span class="sd">    parameters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">bits</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split_contents</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">TemplateSyntaxError</span><span class="p">(</span><span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; takes at least one argument&quot;</span> <span class="o">%</span> <span class="n">bits</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">message_string</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">compile_filter</span><span class="p">(</span><span class="n">bits</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">remaining</span> <span class="o">=</span> <span class="n">bits</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+
+    <span class="n">noop</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">asvar</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">message_context</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">invalid_context</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;as&#39;</span><span class="p">,</span> <span class="s1">&#39;noop&#39;</span><span class="p">}</span>
+    <span class="n">formatvalues</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">while</span> <span class="n">remaining</span><span class="p">:</span>
+        <span class="n">option</span> <span class="o">=</span> <span class="n">remaining</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TemplateSyntaxError</span><span class="p">(</span>
+                <span class="s2">&quot;The &#39;</span><span class="si">%s</span><span class="s2">&#39; option was specified more than once.&quot;</span> <span class="o">%</span> <span class="n">option</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">option</span> <span class="o">==</span> <span class="s1">&#39;noop&#39;</span><span class="p">:</span>
+            <span class="n">noop</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">option</span> <span class="o">==</span> <span class="s1">&#39;context&#39;</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">remaining</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">TemplateSyntaxError</span><span class="p">(</span>
+                    <span class="s2">&quot;No argument provided to the &#39;</span><span class="si">%s</span><span class="s2">&#39; tag for the context option.&quot;</span> <span class="o">%</span> <span class="n">bits</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">invalid_context</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">TemplateSyntaxError</span><span class="p">(</span>
+                    <span class="s2">&quot;Invalid argument &#39;</span><span class="si">%s</span><span class="s2">&#39; provided to the &#39;</span><span class="si">%s</span><span class="s2">&#39; tag for the context option&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">bits</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                <span class="p">)</span>
+            <span class="n">message_context</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">compile_filter</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">option</span> <span class="o">==</span> <span class="s1">&#39;as&#39;</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">remaining</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">TemplateSyntaxError</span><span class="p">(</span>
+                    <span class="s2">&quot;No argument provided to the &#39;</span><span class="si">%s</span><span class="s2">&#39; tag for the as option.&quot;</span> <span class="o">%</span> <span class="n">bits</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="p">)</span>
+            <span class="n">asvar</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">formatvalues</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+
+        <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">FormattedTranslateNode</span><span class="p">(</span><span class="n">message_string</span><span class="p">,</span> <span class="n">noop</span><span class="p">,</span> <span class="n">formatvalues</span><span class="p">,</span> <span class="n">asvar</span><span class="p">,</span> <span class="n">message_context</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

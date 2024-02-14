@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.systemmessages.models &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../_static/theme.css" type="text/css"/>
+        <script src="../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../../../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../../../_static/doctools.js?v=888ff710"></script>
+                    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.systemmessages.models</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.systemmessages.models</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.db.models</span> <span class="kn">import</span> <span class="n">Q</span>
+<span class="kn">from</span> <span class="nn">django.db.models.functions</span> <span class="kn">import</span> <span class="n">Now</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="kn">import</span> <span class="n">gettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
+
+
+<div class="viewcode-block" id="SystemMessageManager">
+<a class="viewcode-back" href="../../../reference/cdh.systemmessages.models.html#cdh.systemmessages.models.SystemMessageManager">[docs]</a>
+<span class="k">class</span> <span class="nc">SystemMessageManager</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Manager</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SystemMessageManager.get_current_messages">
+<a class="viewcode-back" href="../../../reference/cdh.systemmessages.models.html#cdh.systemmessages.models.SystemMessageManager.get_current_messages">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_current_messages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a QS prefiltered to honor the not_before and not_after</span>
+<span class="sd">        fields&quot;&quot;&quot;</span>
+        <span class="n">qs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_queryset</span><span class="p">()</span>
+
+        <span class="n">qs</span> <span class="o">=</span> <span class="n">qs</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">not_before</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span><span class="n">not_before__lt</span><span class="o">=</span><span class="n">Now</span><span class="p">()))</span>
+        <span class="n">qs</span> <span class="o">=</span> <span class="n">qs</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">not_after</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span><span class="n">not_after__gt</span><span class="o">=</span><span class="n">Now</span><span class="p">()))</span>
+
+        <span class="k">return</span> <span class="n">qs</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="SystemMessage">
+<a class="viewcode-back" href="../../../reference/cdh.systemmessages.models.html#cdh.systemmessages.models.SystemMessage">[docs]</a>
+<span class="k">class</span> <span class="nc">SystemMessage</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+
+    <span class="n">objects</span> <span class="o">=</span> <span class="n">SystemMessageManager</span><span class="p">()</span>
+
+    <span class="n">PRIMARY</span> <span class="o">=</span> <span class="s2">&quot;primary&quot;</span>
+    <span class="n">SECONDARY</span> <span class="o">=</span> <span class="s2">&quot;secondary&quot;</span>
+    <span class="n">SUCCESS</span> <span class="o">=</span> <span class="s2">&quot;success&quot;</span>
+    <span class="n">DANGER</span> <span class="o">=</span> <span class="s2">&quot;danger&quot;</span>
+    <span class="n">WARNING</span> <span class="o">=</span> <span class="s2">&quot;warning&quot;</span>
+    <span class="n">INFO</span> <span class="o">=</span> <span class="s2">&quot;info&quot;</span>
+    <span class="n">LIGHT</span> <span class="o">=</span> <span class="s2">&quot;light&quot;</span>
+    <span class="n">DARK</span> <span class="o">=</span> <span class="s2">&quot;dark&quot;</span>
+
+    <span class="n">COLORS</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">PRIMARY</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;systemmessage.color.primary&#39;</span><span class="p">)),</span>
+        <span class="p">(</span><span class="n">SECONDARY</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;systemmessage.color.secondary&#39;</span><span class="p">)),</span>
+        <span class="p">(</span><span class="n">SUCCESS</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;systemmessage.color.success&#39;</span><span class="p">)),</span>
+        <span class="p">(</span><span class="n">DANGER</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;systemmessage.color.danger&#39;</span><span class="p">)),</span>
+        <span class="p">(</span><span class="n">WARNING</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;systemmessage.color.warning&#39;</span><span class="p">)),</span>
+        <span class="p">(</span><span class="n">INFO</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;systemmessage.color.info&#39;</span><span class="p">)),</span>
+        <span class="p">(</span><span class="n">LIGHT</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;systemmessage.color.light&#39;</span><span class="p">)),</span>
+        <span class="p">(</span><span class="n">DARK</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;systemmessage.color.dark&#39;</span><span class="p">)),</span>
+    <span class="p">)</span>
+
+    <span class="n">message</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;systemmessage.message&#39;</span><span class="p">),</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;systemmessage.message.help_text&#39;</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;systemmessage.color&#39;</span><span class="p">),</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;systemmessage.color.help_text&#39;</span><span class="p">),</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="n">COLORS</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">not_before</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;systemmessage.not_before&#39;</span><span class="p">),</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;systemmessage.not_before.help_text&#39;</span><span class="p">),</span>
+        <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">not_after</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;systemmessage.not_after&#39;</span><span class="p">),</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;systemmessage.not_after.help_text&#39;</span><span class="p">),</span>
+        <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">css_class</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;alert alert-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+cdh.systemmessages package
+==========================
+
+.. automodule:: cdh.systemmessages
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.systemmessages.templatetags
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.systemmessages.admin
+   cdh.systemmessages.apps
+   cdh.systemmessages.forms
+   cdh.systemmessages.models
+   cdh.systemmessages.translation

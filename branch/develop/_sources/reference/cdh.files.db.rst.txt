@@ -1,0 +1,19 @@
+cdh.files.db package
+====================
+
+.. automodule:: cdh.files.db
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.files.db.descriptors
+   cdh.files.db.fields
+   cdh.files.db.manager
+   cdh.files.db.models
+   cdh.files.db.wrappers

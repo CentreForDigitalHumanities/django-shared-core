@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.core.js_urls.serializer &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../../_static/theme.css" type="text/css"/>
+        <script src="../../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../../../../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+                    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.core.js_urls.serializer</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.core.js_urls.serializer</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    JS URLs serializer</span>
+<span class="sd">    ==================</span>
+
+<span class="sd">    This module defiine helper functions allowing to convert the URLs that are associated with the</span>
+<span class="sd">    names or namespaces defined in the settings to JSON. The resulting JSON will be used by a</span>
+<span class="sd">    Javascript module to provide reverse-like functionality.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urljoin</span>
+
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">get_resolver</span>
+
+<span class="kn">from</span> <span class="nn">.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">.utils.compat</span> <span class="kn">import</span> <span class="n">RegexPattern</span><span class="p">,</span> <span class="n">RoutePattern</span><span class="p">,</span> <span class="n">URLPattern</span><span class="p">,</span> <span class="n">URLResolver</span>
+<span class="kn">from</span> <span class="nn">.utils.text</span> <span class="kn">import</span> <span class="n">replace</span>
+
+
+<span class="n">url_arg_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(\(.*?\))&#39;</span><span class="p">)</span>
+<span class="n">url_kwarg_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(\(\?P\&lt;(.*?)\&gt;.*?\))&#39;</span><span class="p">)</span>
+<span class="n">url_optional_char_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(?:\w|/)(?:\?|\*)&#39;</span><span class="p">)</span>
+<span class="n">url_optional_group_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\(\?\:.*\)(?:\?|\*)&#39;</span><span class="p">)</span>
+<span class="n">url_path_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&lt;(.*?)&gt;&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="get_urls_as_json">
+<a class="viewcode-back" href="../../../../reference/cdh.core.js_urls.serializer.html#cdh.core.js_urls.serializer.get_urls_as_json">[docs]</a>
+<span class="k">def</span> <span class="nf">get_urls_as_json</span><span class="p">(</span><span class="n">resolver</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Returns the URLs associated with an URL resover as JSON.</span>
+
+<span class="sd">    This function will traverse the tree of URLs of an URL resolver in order to return a JSON</span>
+<span class="sd">    containing the correspondance between fully qualified URL names and the related paths. Only URLs</span>
+<span class="sd">    that are configured to be serialized are included in the final JSON.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">resolver</span> <span class="o">=</span> <span class="n">resolver</span> <span class="ow">or</span> <span class="n">get_resolver</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">_parse_resolver</span><span class="p">(</span><span class="n">resolver</span><span class="p">)))</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">_parse_resolver</span><span class="p">(</span><span class="n">resolver</span><span class="p">,</span> <span class="n">current_namespace</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">url_prefix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include_all</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">current_namespace</span> <span class="ow">and</span> <span class="n">resolver</span><span class="o">.</span><span class="n">namespace</span><span class="p">:</span>
+        <span class="n">ns</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">current_namespace</span><span class="p">,</span> <span class="n">resolver</span><span class="o">.</span><span class="n">namespace</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">current_namespace</span><span class="p">:</span>
+        <span class="n">ns</span> <span class="o">=</span> <span class="n">current_namespace</span>
+    <span class="k">elif</span> <span class="n">resolver</span><span class="o">.</span><span class="n">namespace</span><span class="p">:</span>
+        <span class="n">ns</span> <span class="o">=</span> <span class="n">resolver</span><span class="o">.</span><span class="n">namespace</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ns</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="c1"># Include all if parameter is true, the namespace has been added to URLS, or URLS is empty</span>
+    <span class="n">include_all</span> <span class="o">=</span> <span class="n">include_all</span> <span class="ow">or</span> <span class="p">(</span><span class="n">ns</span> <span class="ow">in</span> <span class="n">settings</span><span class="o">.</span><span class="n">URLS</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">URLS</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+
+    <span class="n">urls</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">url_pattern</span> <span class="ow">in</span> <span class="n">resolver</span><span class="o">.</span><span class="n">url_patterns</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">url_pattern</span><span class="p">,</span> <span class="n">URLResolver</span><span class="p">):</span>
+            <span class="n">new_url_prefix</span> <span class="o">=</span> <span class="n">_prepare_url_part</span><span class="p">(</span><span class="n">url_pattern</span><span class="p">)</span>
+            <span class="n">new_url_prefix</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">new_url_prefix</span> <span class="k">if</span> <span class="n">url_prefix</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span>
+                <span class="n">urljoin</span><span class="p">(</span><span class="n">url_prefix</span> <span class="ow">or</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="n">new_url_prefix</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">urls</span> <span class="o">=</span> <span class="n">urls</span> <span class="o">+</span> <span class="n">_parse_resolver</span><span class="p">(</span>
+                <span class="n">url_pattern</span><span class="p">,</span>
+                <span class="n">current_namespace</span><span class="o">=</span><span class="n">ns</span><span class="p">,</span>
+                <span class="n">url_prefix</span><span class="o">=</span><span class="n">new_url_prefix</span><span class="p">,</span>
+                <span class="n">include_all</span><span class="o">=</span><span class="n">include_all</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">url_pattern</span><span class="p">,</span> <span class="n">URLPattern</span><span class="p">)</span> <span class="ow">and</span> <span class="n">url_pattern</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="n">url_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">url_pattern</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">if</span> <span class="n">ns</span> <span class="k">else</span> <span class="n">url_pattern</span><span class="o">.</span><span class="n">name</span>
+            <span class="k">if</span> <span class="n">url_name</span> <span class="ow">in</span> <span class="n">settings</span><span class="o">.</span><span class="n">URLS</span> <span class="ow">or</span> <span class="n">include_all</span><span class="p">:</span>
+                <span class="n">full_url</span> <span class="o">=</span> <span class="n">_prepare_url_part</span><span class="p">(</span><span class="n">url_pattern</span><span class="p">)</span>
+                <span class="n">urls</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">url_name</span><span class="p">,</span> <span class="n">urljoin</span><span class="p">(</span><span class="n">url_prefix</span> <span class="ow">or</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="n">full_url</span><span class="p">)))</span>
+
+    <span class="k">return</span> <span class="n">urls</span>
+
+
+<span class="k">def</span> <span class="nf">_prepare_url_part</span><span class="p">(</span><span class="n">url_pattern</span><span class="p">):</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">url_pattern</span><span class="p">,</span> <span class="s1">&#39;regex&#39;</span><span class="p">):</span>  <span class="c1"># pragma: no cover, NOTE: Django &lt; 2.0 compatibility</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">url_pattern</span><span class="o">.</span><span class="n">regex</span><span class="o">.</span><span class="n">pattern</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">url_pattern</span><span class="o">.</span><span class="n">pattern</span><span class="p">,</span> <span class="n">RegexPattern</span><span class="p">):</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">url_pattern</span><span class="o">.</span><span class="n">pattern</span><span class="o">.</span><span class="n">_regex</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">url_pattern</span><span class="o">.</span><span class="n">pattern</span><span class="p">,</span> <span class="n">RoutePattern</span><span class="p">):</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">url_pattern</span><span class="o">.</span><span class="n">pattern</span><span class="o">.</span><span class="n">_route</span>
+
+    <span class="n">final_url</span> <span class="o">=</span> <span class="n">replace</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;^&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;$&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)])</span>
+
+    <span class="c1"># Removes optional groups from the URL pattern.</span>
+    <span class="n">optional_group_matches</span> <span class="o">=</span> <span class="n">url_optional_group_re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">final_url</span><span class="p">)</span>
+    <span class="n">final_url</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">replace</span><span class="p">(</span><span class="n">final_url</span><span class="p">,</span> <span class="p">[(</span><span class="n">el</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">optional_group_matches</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">optional_group_matches</span> <span class="k">else</span> <span class="n">final_url</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Removes optional characters from the URL pattern.</span>
+    <span class="n">optional_char_matches</span> <span class="o">=</span> <span class="n">url_optional_char_re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">final_url</span><span class="p">)</span>
+    <span class="n">final_url</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">replace</span><span class="p">(</span><span class="n">final_url</span><span class="p">,</span> <span class="p">[(</span><span class="n">el</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">optional_char_matches</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">optional_char_matches</span> <span class="k">else</span> <span class="n">final_url</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Identifies named URL arguments inside the URL pattern.</span>
+    <span class="n">kwarg_matches</span> <span class="o">=</span> <span class="n">url_kwarg_re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">final_url</span><span class="p">)</span>
+    <span class="n">final_url</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">replace</span><span class="p">(</span><span class="n">final_url</span><span class="p">,</span> <span class="p">[(</span><span class="n">el</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;&lt;</span><span class="si">{}</span><span class="s1">&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">el</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">kwarg_matches</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">kwarg_matches</span> <span class="k">else</span> <span class="n">final_url</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Identifies unnamed URL arguments inside the URL pattern.</span>
+    <span class="n">args_matches</span> <span class="o">=</span> <span class="n">url_arg_re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">final_url</span><span class="p">)</span>
+    <span class="n">final_url</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">replace</span><span class="p">(</span><span class="n">final_url</span><span class="p">,</span> <span class="p">[(</span><span class="n">el</span><span class="p">,</span> <span class="s1">&#39;&lt;&gt;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">args_matches</span><span class="p">])</span> <span class="k">if</span> <span class="n">args_matches</span> <span class="k">else</span> <span class="n">final_url</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Identifies path expression and associated converters inside the URL pattern.</span>
+    <span class="n">path_matches</span> <span class="o">=</span> <span class="n">url_path_re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">final_url</span><span class="p">)</span>
+    <span class="n">final_url</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">replace</span><span class="p">(</span><span class="n">final_url</span><span class="p">,</span> <span class="p">[(</span><span class="n">el</span><span class="p">,</span> <span class="n">el</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">path_matches</span><span class="p">])</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">path_matches</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">kwarg_matches</span> <span class="ow">or</span> <span class="n">args_matches</span><span class="p">))</span> <span class="k">else</span> <span class="n">final_url</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">final_url</span>
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

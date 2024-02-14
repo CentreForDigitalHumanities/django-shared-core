@@ -1,0 +1,7 @@
+cdh.core.templatetags.cdh\_filters module
+=========================================
+
+.. automodule:: cdh.core.templatetags.cdh_filters
+   :members:
+   :undoc-members:
+   :show-inheritance:

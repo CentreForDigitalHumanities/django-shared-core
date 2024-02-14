@@ -1,0 +1,7 @@
+cdh.vue.templatetags.vue\_tags module
+=====================================
+
+.. automodule:: cdh.vue.templatetags.vue_tags
+   :members:
+   :undoc-members:
+   :show-inheritance:

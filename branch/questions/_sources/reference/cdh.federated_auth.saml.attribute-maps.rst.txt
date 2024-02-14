@@ -1,0 +1,17 @@
+cdh.federated\_auth.saml.attribute\-maps package
+================================================
+
+.. automodule:: cdh.federated_auth.saml.attribute-maps
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.federated_auth.saml.attribute-maps.cdh
+   cdh.federated_auth.saml.attribute-maps.django_saml_uri
+   cdh.federated_auth.saml.attribute-maps.saml_uri

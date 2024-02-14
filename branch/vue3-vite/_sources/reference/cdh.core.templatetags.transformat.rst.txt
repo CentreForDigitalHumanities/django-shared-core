@@ -1,0 +1,7 @@
+cdh.core.templatetags.transformat module
+========================================
+
+.. automodule:: cdh.core.templatetags.transformat
+   :members:
+   :undoc-members:
+   :show-inheritance:

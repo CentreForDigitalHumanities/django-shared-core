@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.core.forms &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../_static/theme.css" type="text/css"/>
+        <script src="../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../../../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../../../_static/doctools.js?v=888ff710"></script>
+                    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.core.forms</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.core.forms</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+<span class="kn">from</span> <span class="nn">django.core.exceptions</span> <span class="kn">import</span> <span class="n">ValidationError</span>
+<span class="kn">from</span> <span class="nn">django.forms.widgets</span> <span class="kn">import</span> <span class="n">CheckboxInput</span><span class="p">,</span> <span class="n">CheckboxSelectMultiple</span><span class="p">,</span> \
+    <span class="n">DateInput</span><span class="p">,</span> <span class="n">MultiWidget</span><span class="p">,</span> <span class="n">NumberInput</span><span class="p">,</span> <span class="n">RadioSelect</span><span class="p">,</span> <span class="n">Select</span><span class="p">,</span> <span class="n">TextInput</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="kn">import</span> <span class="n">gettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
+
+<span class="kn">from</span> <span class="nn">cdh.core.file_loading</span> <span class="kn">import</span> <span class="n">add_js_file</span>
+
+
+<div class="viewcode-block" id="TemplatedFormMixin">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.TemplatedFormMixin">[docs]</a>
+<span class="k">class</span> <span class="nc">TemplatedFormMixin</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mixin for Django Form to enable the UU-Form styling</span>
+
+<span class="sd">    :param str form_template: the form_template to use</span>
+<span class="sd">    :param bool show_help_column: if False, the help column will be removed on</span>
+<span class="sd">                                  every field</span>
+<span class="sd">    :param bool always_show_help_column: if False, the help column will be</span>
+<span class="sd">                                         removed on fields that don&#39;t have help</span>
+<span class="sd">                                         texts</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;cdh.core/form_template.html&#39;</span>
+    <span class="c1"># If False, it will hide the help column on every field</span>
+    <span class="n">show_help_column</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1"># If False, it will hide the help column on fields without a help text</span>
+    <span class="n">always_show_help_column</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1"># If False, it will supress the is-valid feedback on submit</span>
+    <span class="n">show_valid_fields</span> <span class="o">=</span> <span class="kc">True</span>
+
+<div class="viewcode-block" id="TemplatedFormMixin.get_context">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.TemplatedFormMixin.get_context">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_context</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_context</span><span class="p">()</span>
+
+        <span class="n">form_was_changed</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">changed_data</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">field</span><span class="p">,</span> <span class="n">errors</span> <span class="ow">in</span> <span class="n">context</span><span class="p">[</span><span class="s1">&#39;fields&#39;</span><span class="p">]:</span>
+            <span class="c1"># Fix for fields that do not set this attr</span>
+            <span class="k">if</span> <span class="s1">&#39;class&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">field</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
+                <span class="n">field</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+            <span class="n">field</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="s1">&#39; form-control&#39;</span>
+
+            <span class="k">if</span> <span class="n">errors</span><span class="p">:</span>
+                <span class="n">field</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;valid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;is-invalid&#39;</span>
+                <span class="n">field</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="s1">&#39; is-invalid&#39;</span>
+            <span class="k">elif</span> <span class="n">form_was_changed</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_valid_fields</span><span class="p">:</span>
+                <span class="c1"># Only add if the data on the form was changed, as that would</span>
+                <span class="c1"># indicate a validation step gone wrong.</span>
+                <span class="n">field</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="s1">&#39; is-valid&#39;</span>
+                <span class="n">field</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;valid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;is-valid&#39;</span>
+
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;show_help_column&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_help_column</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;always_show_help_column&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">always_show_help_column</span>
+
+        <span class="k">return</span> <span class="n">context</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="TemplatedForm">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.TemplatedForm">[docs]</a>
+<span class="k">class</span> <span class="nc">TemplatedForm</span><span class="p">(</span><span class="n">TemplatedFormMixin</span><span class="p">,</span> <span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extension of the default Form to enable the UU-Form styling</span>
+
+<span class="sd">    Uses :class:`.TemplatedFormMixin`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="TemplatedModelForm">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.TemplatedModelForm">[docs]</a>
+<span class="k">class</span> <span class="nc">TemplatedModelForm</span><span class="p">(</span><span class="n">TemplatedFormMixin</span><span class="p">,</span> <span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extension of the default Form to enable the UU-Form styling</span>
+
+<span class="sd">    Uses :class:`.TemplatedFormMixin`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="BootstrapSelect">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.BootstrapSelect">[docs]</a>
+<span class="k">class</span> <span class="nc">BootstrapSelect</span><span class="p">(</span><span class="n">Select</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override of Django&#39;s version to use the right Bootstrap classes&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BootstrapSelect.get_context">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.BootstrapSelect.get_context">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">attrs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;class&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">:</span>
+            <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="s1">&#39;form-control&#39;</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]:</span>
+            <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+                <span class="s1">&#39;form-control&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;form-select&#39;</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="s1">&#39; form-select&#39;</span>
+
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_context</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">attrs</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="BootstrapCheckboxInput">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.BootstrapCheckboxInput">[docs]</a>
+<span class="k">class</span> <span class="nc">BootstrapCheckboxInput</span><span class="p">(</span><span class="n">CheckboxInput</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override of Django&#39;s version to use the right Bootstrap classes&quot;&quot;&quot;</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s2">&quot;cdh.core/forms/widgets/bootstrap_checkbox.html&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="BootstrapRadioSelect">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.BootstrapRadioSelect">[docs]</a>
+<span class="k">class</span> <span class="nc">BootstrapRadioSelect</span><span class="p">(</span><span class="n">RadioSelect</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override of Django&#39;s version to use the right Bootstrap classes&quot;&quot;&quot;</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s2">&quot;cdh.core/forms/widgets/bootstrap_radio.html&quot;</span>
+    <span class="n">option_template_name</span> <span class="o">=</span> <span class="s2">&quot;cdh.core/forms/widgets/bootstrap_radio_option.html&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="BootstrapCheckboxSelectMultiple">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.BootstrapCheckboxSelectMultiple">[docs]</a>
+<span class="k">class</span> <span class="nc">BootstrapCheckboxSelectMultiple</span><span class="p">(</span><span class="n">CheckboxSelectMultiple</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override of Django&#39;s version to use the right Bootstrap classes&quot;&quot;&quot;</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s2">&quot;cdh.core/forms/widgets/bootstrap_radio.html&quot;</span>
+    <span class="n">option_template_name</span> <span class="o">=</span> <span class="s2">&quot;cdh.core/forms/widgets/bootstrap_radio_option.html&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="PasswordField">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.PasswordField">[docs]</a>
+<span class="k">class</span> <span class="nc">PasswordField</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override of Django&#39;s version to use the right HTML5 input&quot;&quot;&quot;</span>
+    <span class="n">widget</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">PasswordInput</span></div>
+
+
+
+<div class="viewcode-block" id="ColorInput">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.ColorInput">[docs]</a>
+<span class="k">class</span> <span class="nc">ColorInput</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override of Django&#39;s version to use the right HTML5 input&quot;&quot;&quot;</span>
+    <span class="n">input_type</span> <span class="o">=</span> <span class="s1">&#39;color&#39;</span></div>
+
+
+
+<div class="viewcode-block" id="ColorField">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.ColorField">[docs]</a>
+<span class="k">class</span> <span class="nc">ColorField</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override of Django&#39;s version to use the right HTML5 input&quot;&quot;&quot;</span>
+    <span class="n">widget</span> <span class="o">=</span> <span class="n">ColorInput</span></div>
+
+
+
+<div class="viewcode-block" id="TelephoneInput">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.TelephoneInput">[docs]</a>
+<span class="k">class</span> <span class="nc">TelephoneInput</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override of Django&#39;s version to use the right HTML5 input&quot;&quot;&quot;</span>
+    <span class="n">input_type</span> <span class="o">=</span> <span class="s1">&#39;tel&#39;</span></div>
+
+
+
+<div class="viewcode-block" id="TelephoneField">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.TelephoneField">[docs]</a>
+<span class="k">class</span> <span class="nc">TelephoneField</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override of Django&#39;s version to use the right HTML5 input&quot;&quot;&quot;</span>
+    <span class="n">widget</span> <span class="o">=</span> <span class="n">TelephoneInput</span></div>
+
+
+
+<div class="viewcode-block" id="DateInput">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.DateInput">[docs]</a>
+<span class="k">class</span> <span class="nc">DateInput</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">DateInput</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override of Django&#39;s version to use the right HTML5 input&quot;&quot;&quot;</span>
+    <span class="n">input_type</span> <span class="o">=</span> <span class="s1">&#39;date&#39;</span></div>
+
+
+
+<div class="viewcode-block" id="DateField">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.DateField">[docs]</a>
+<span class="k">class</span> <span class="nc">DateField</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">DateField</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override of Django&#39;s version to use the right HTML5 input&quot;&quot;&quot;</span>
+    <span class="n">widget</span> <span class="o">=</span> <span class="n">DateInput</span></div>
+
+
+
+<div class="viewcode-block" id="TimeInput">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.TimeInput">[docs]</a>
+<span class="k">class</span> <span class="nc">TimeInput</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">TimeInput</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override of Django&#39;s version to use the right HTML5 input&quot;&quot;&quot;</span>
+    <span class="n">input_type</span> <span class="o">=</span> <span class="s1">&#39;time&#39;</span></div>
+
+
+
+<div class="viewcode-block" id="TimeField">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.TimeField">[docs]</a>
+<span class="k">class</span> <span class="nc">TimeField</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">TimeField</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override of Django&#39;s version to use the right HTML5 input&quot;&quot;&quot;</span>
+    <span class="n">widget</span> <span class="o">=</span> <span class="n">TimeInput</span></div>
+
+
+
+<div class="viewcode-block" id="DateTimeInput">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.DateTimeInput">[docs]</a>
+<span class="k">class</span> <span class="nc">DateTimeInput</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">DateTimeInput</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override of Django&#39;s version to use the right HTML5 input&quot;&quot;&quot;</span>
+    <span class="n">input_type</span> <span class="o">=</span> <span class="s1">&#39;datetime-local&#39;</span></div>
+
+
+
+<div class="viewcode-block" id="DateTimeField">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.DateTimeField">[docs]</a>
+<span class="k">class</span> <span class="nc">DateTimeField</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override of Django&#39;s version to use the right HTML5 input&quot;&quot;&quot;</span>
+    <span class="n">widget</span> <span class="o">=</span> <span class="n">DateTimeInput</span></div>
+
+
+
+<div class="viewcode-block" id="BootstrapMultiWidgetMixin">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.BootstrapMultiWidgetMixin">[docs]</a>
+<span class="k">class</span> <span class="nc">BootstrapMultiWidgetMixin</span><span class="p">:</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;cdh.core/forms/widgets/bootstrap_multiwidget.html&#39;</span>
+
+<div class="viewcode-block" id="BootstrapMultiWidgetMixin.get_context">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.BootstrapMultiWidgetMixin.get_context">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">attrs</span><span class="p">):</span>
+        <span class="n">subwidgets</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="s1">&#39;subwidgets&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
+            <span class="n">subwidgets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;subwidgets&#39;</span><span class="p">]</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_context</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">attrs</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">subwidget_name</span><span class="p">,</span> <span class="n">subwidget_attrs</span> <span class="ow">in</span> <span class="n">subwidgets</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">subwidget_name</span> <span class="ow">in</span> <span class="n">context</span><span class="p">[</span><span class="s1">&#39;widget&#39;</span><span class="p">][</span><span class="s1">&#39;subwidgets&#39;</span><span class="p">]:</span>
+                <span class="n">context</span><span class="p">[</span><span class="s1">&#39;widget&#39;</span><span class="p">][</span><span class="s1">&#39;subwidgets&#39;</span><span class="p">][</span><span class="s1">&#39;attrs&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                    <span class="n">subwidget_attrs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">context</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="BootstrapMultiWidget">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.BootstrapMultiWidget">[docs]</a>
+<span class="k">class</span> <span class="nc">BootstrapMultiWidget</span><span class="p">(</span><span class="n">BootstrapMultiWidgetMixin</span><span class="p">,</span> <span class="n">MultiWidget</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="SplitDateTimeWidget">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.SplitDateTimeWidget">[docs]</a>
+<span class="k">class</span> <span class="nc">SplitDateTimeWidget</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">SplitDateTimeWidget</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override of Django SplitDateTimeWidget to use HTML5 fields&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SplitDateTimeWidget.__init__">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.SplitDateTimeWidget.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">date_format</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">time_format</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">date_attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">time_attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">widgets</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">DateInput</span><span class="p">(</span>
+                <span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span> <span class="k">if</span> <span class="n">date_attrs</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">date_attrs</span><span class="p">,</span>
+                <span class="nb">format</span><span class="o">=</span><span class="n">date_format</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">TimeInput</span><span class="p">(</span>
+                <span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span> <span class="k">if</span> <span class="n">time_attrs</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">time_attrs</span><span class="p">,</span>
+                <span class="nb">format</span><span class="o">=</span><span class="n">time_format</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">forms</span><span class="o">.</span><span class="n">MultiWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widgets</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="BootstrapSplitDateTimeWidget">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.BootstrapSplitDateTimeWidget">[docs]</a>
+<span class="k">class</span> <span class="nc">BootstrapSplitDateTimeWidget</span><span class="p">(</span><span class="n">BootstrapMultiWidgetMixin</span><span class="p">,</span>
+                                   <span class="n">SplitDateTimeWidget</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="BootstrapSplitDateTimeField">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.BootstrapSplitDateTimeField">[docs]</a>
+<span class="k">class</span> <span class="nc">BootstrapSplitDateTimeField</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">SplitDateTimeField</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override of Django SplitDateTimeField to use bootstrap multiwidget&quot;&quot;&quot;</span>
+    <span class="n">widget</span> <span class="o">=</span> <span class="n">BootstrapSplitDateTimeWidget</span></div>
+
+
+
+<div class="viewcode-block" id="SplitDateTimeField">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.SplitDateTimeField">[docs]</a>
+<span class="k">class</span> <span class="nc">SplitDateTimeField</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">SplitDateTimeField</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override of Django SplitDateTimeField to use HTML5 fields&quot;&quot;&quot;</span>
+    <span class="n">widget</span> <span class="o">=</span> <span class="n">SplitDateTimeWidget</span></div>
+
+
+
+<div class="viewcode-block" id="MonthInput">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.MonthInput">[docs]</a>
+<span class="k">class</span> <span class="nc">MonthInput</span><span class="p">(</span><span class="n">TextInput</span><span class="p">):</span>
+    <span class="n">input_type</span> <span class="o">=</span> <span class="s1">&#39;month&#39;</span>
+
+<div class="viewcode-block" id="MonthInput.__init__">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.MonthInput.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">attrs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;pattern&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;[0-9]</span><span class="si">{4}</span><span class="s2">-[0-9]{1,2}&quot;</span>
+        <span class="k">if</span> <span class="s1">&#39;placeholder&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">:</span>
+            <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;placeholder&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;yyyy-mm&#39;</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">attrs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MonthInput.format_value">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.MonthInput.format_value">[docs]</a>
+    <span class="k">def</span> <span class="nf">format_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">cdh.core.fields.month_fields</span> <span class="kn">import</span> <span class="n">Month</span>
+
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="ow">or</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">date</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Month</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="SplitMonthInput">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.SplitMonthInput">[docs]</a>
+<span class="k">class</span> <span class="nc">SplitMonthInput</span><span class="p">(</span><span class="n">BootstrapMultiWidget</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SplitMonthInput.__init__">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.SplitMonthInput.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">month_attrs</span> <span class="o">=</span> <span class="n">attrs</span> <span class="k">if</span> <span class="n">attrs</span> <span class="k">else</span> <span class="p">{}</span>
+
+        <span class="n">year_attrs</span> <span class="o">=</span> <span class="n">attrs</span> <span class="k">if</span> <span class="n">attrs</span> <span class="k">else</span> <span class="p">{}</span>
+        <span class="n">year_attrs</span><span class="p">[</span><span class="s1">&#39;placeholder&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;core:fields:month:year_placeholder&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">year_attrs</span><span class="p">,</span> <span class="s1">&#39;year_min&#39;</span><span class="p">):</span>
+            <span class="n">year_attrs</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">year_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;year_min&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">year_attrs</span><span class="p">,</span> <span class="s1">&#39;year_max&#39;</span><span class="p">):</span>
+            <span class="n">year_attrs</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">year_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;year_max&#39;</span><span class="p">)</span>
+
+        <span class="n">widgets</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;month&#39;</span><span class="p">:</span> <span class="n">BootstrapSelect</span><span class="p">(</span>
+                <span class="n">attrs</span><span class="o">=</span><span class="n">month_attrs</span><span class="p">,</span>
+                <span class="n">choices</span><span class="o">=</span><span class="p">(</span>
+                    <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;core:fields:month:month_placeholder&#39;</span><span class="p">)),</span>
+                    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;core:fields:month:january&#39;</span><span class="p">)),</span>
+                    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;core:fields:month:february&#39;</span><span class="p">)),</span>
+                    <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;core:fields:month:march&#39;</span><span class="p">)),</span>
+                    <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;core:fields:month:april&#39;</span><span class="p">)),</span>
+                    <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;core:fields:month:may&#39;</span><span class="p">)),</span>
+                    <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;core:fields:month:june&#39;</span><span class="p">)),</span>
+                    <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;core:fields:month:july&#39;</span><span class="p">)),</span>
+                    <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;core:fields:month:august&#39;</span><span class="p">)),</span>
+                    <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;core:fields:month:september&#39;</span><span class="p">)),</span>
+                    <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;core:fields:month:october&#39;</span><span class="p">)),</span>
+                    <span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;core:fields:month:november&#39;</span><span class="p">)),</span>
+                    <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;core:fields:month:december&#39;</span><span class="p">)),</span>
+                <span class="p">),</span>
+            <span class="p">),</span>
+            <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="n">NumberInput</span><span class="p">(</span>
+                <span class="n">attrs</span><span class="o">=</span><span class="n">year_attrs</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">}</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">widgets</span><span class="p">,</span> <span class="n">attrs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SplitMonthInput.decompress">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.SplitMonthInput.decompress">[docs]</a>
+    <span class="k">def</span> <span class="nf">decompress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">month</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">year</span><span class="p">)]</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="BootstrapMonthField">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.BootstrapMonthField">[docs]</a>
+<span class="k">class</span> <span class="nc">BootstrapMonthField</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">DateField</span><span class="p">):</span>
+    <span class="n">widget</span> <span class="o">=</span> <span class="n">MonthInput</span>
+
+<div class="viewcode-block" id="BootstrapMonthField.__init__">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.BootstrapMonthField.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">year_min</span><span class="o">=</span><span class="mi">1970</span><span class="p">,</span> <span class="n">year_max</span><span class="o">=</span><span class="mi">9999</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># We can only do this stuff if we are sure what widget we are using</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">,</span> <span class="n">MonthInput</span><span class="p">):</span>
+            <span class="c1"># This could be done in widget_attrs, but the other widget cannot</span>
+            <span class="c1"># be done there, so I prefer to keep them together</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">year_min</span><span class="si">}</span><span class="s2">-01&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">year_max</span><span class="si">}</span><span class="s2">-12&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">,</span> <span class="n">SplitMonthInput</span><span class="p">):</span>
+            <span class="c1"># We have to manually set these attrs to the right widget,</span>
+            <span class="c1"># as MultiWidget has not other way to set these</span>
+            <span class="n">month_widget</span><span class="p">,</span> <span class="n">year_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">widgets</span>
+            <span class="n">year_widget</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">year_min</span>
+            <span class="n">year_widget</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">year_max</span></div>
+
+
+<div class="viewcode-block" id="BootstrapMonthField.to_python">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.BootstrapMonthField.to_python">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_python</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># MonthInput returns a string</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">year</span><span class="p">,</span> <span class="n">month</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">maxsplit</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+                <span class="n">year</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">year</span><span class="p">)</span>
+                <span class="n">month</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">month</span><span class="p">)</span>
+                <span class="c1"># Validate the month is in a valid range</span>
+                <span class="k">if</span> <span class="n">month</span> <span class="o">&gt;</span> <span class="mi">12</span> <span class="ow">or</span> <span class="n">month</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">error_messages</span><span class="p">[</span><span class="s2">&quot;invalid&quot;</span><span class="p">],</span> <span class="n">code</span><span class="o">=</span><span class="s2">&quot;invalid&quot;</span>
+                    <span class="p">)</span>
+            <span class="c1"># Catches both the int conversions, and the cases where splitting</span>
+            <span class="c1"># doesn&#39;t work</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">error_messages</span><span class="p">[</span><span class="s2">&quot;invalid&quot;</span><span class="p">],</span> <span class="n">code</span><span class="o">=</span><span class="s2">&quot;invalid&quot;</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># SplitMonthInput returns a list of [month, year]</span>
+            <span class="n">month</span><span class="p">,</span> <span class="n">year</span> <span class="o">=</span> <span class="n">value</span>
+
+            <span class="k">if</span> <span class="n">month</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">year</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">month</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="ow">or</span> <span class="n">year</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">year</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">year</span><span class="p">)</span>
+                <span class="n">month</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">month</span><span class="p">)</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">error_messages</span><span class="p">[</span><span class="s2">&quot;invalid&quot;</span><span class="p">],</span> <span class="n">code</span><span class="o">=</span><span class="s2">&quot;invalid&quot;</span>
+                <span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">month</span> <span class="ow">and</span> <span class="n">year</span><span class="p">:</span>
+                <span class="c1"># Local import to avoid circular imports</span>
+                <span class="kn">from</span> <span class="nn">cdh.core.fields.month_fields</span> <span class="kn">import</span> <span class="n">Month</span>
+
+                <span class="k">return</span> <span class="n">Month</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">error_messages</span><span class="p">[</span><span class="s2">&quot;invalid&quot;</span><span class="p">],</span> <span class="n">code</span><span class="o">=</span><span class="s2">&quot;invalid&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">error_messages</span><span class="p">[</span><span class="s2">&quot;invalid&quot;</span><span class="p">],</span> <span class="n">code</span><span class="o">=</span><span class="s2">&quot;invalid&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="TinyMCEWidget">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.TinyMCEWidget">[docs]</a>
+<span class="k">class</span> <span class="nc">TinyMCEWidget</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Widget</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A TinyMCE widget for HTML editting&quot;&quot;&quot;</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s2">&quot;cdh.core/forms/widgets/tinymce.html&quot;</span>
+
+<div class="viewcode-block" id="TinyMCEWidget.__init__">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.TinyMCEWidget.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">menubar</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="n">plugins</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">toolbar</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;undo redo casechange blocks bold &#39;</span>
+                                     <span class="s1">&#39;italic underline link bullist numlist&#39;</span>
+                                     <span class="s1">&#39; | code&#39;</span><span class="p">,</span>
+            <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        All parameters should have sensible defaults.</span>
+
+<span class="sd">        :param bool menubar: if the TinyMCE menubar needs to be shown.</span>
+<span class="sd">                             Probably not</span>
+<span class="sd">        :param plugins: a list of TinyMCE plugins to load</span>
+<span class="sd">        :param str plugins: a TinyMCE toolbar definition</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">plugins</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">plugins</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="s1">&#39;link&#39;</span><span class="p">,</span> <span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;visualblocks&#39;</span><span class="p">,</span> <span class="s1">&#39;wordcount&#39;</span><span class="p">,</span> <span class="s1">&#39;lists&#39;</span><span class="p">,</span> <span class="s1">&#39;code&#39;</span><span class="p">,</span>
+            <span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">menubar</span> <span class="o">=</span> <span class="n">menubar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plugins</span> <span class="o">=</span> <span class="n">plugins</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toolbar</span> <span class="o">=</span> <span class="n">toolbar</span>
+
+        <span class="n">add_js_file</span><span class="p">(</span><span class="s1">&#39;cdh.core/js/tinymce/tinymce.min.js&#39;</span><span class="p">)</span>
+        <span class="n">add_js_file</span><span class="p">(</span><span class="s1">&#39;cdh.core/js/tinymce/tinymce-jquery.min.js&#39;</span><span class="p">)</span>
+        <span class="n">add_js_file</span><span class="p">(</span><span class="s1">&#39;cdh.core/js/tinymce/shim.js&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TinyMCEWidget.get_context">
+<a class="viewcode-back" href="../../../reference/cdh.core.forms.html#cdh.core.forms.TinyMCEWidget.get_context">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_context</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;menubar&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">menubar</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;plugins&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plugins</span><span class="p">)</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;toolbar&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolbar</span>
+
+        <span class="k">return</span> <span class="n">context</span></div>
+</div>
+
+
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>
