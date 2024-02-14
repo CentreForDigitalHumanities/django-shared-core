@@ -5,7 +5,7 @@
   "author": "Hum IT Portal Development & ILS Labs",
   "license": "Apache-2.0",
   "dependencies": {
-    "uu-bootstrap": "git+ssh://git@github.com/DH-IT-Portal-Development/bootstrap-theme.git#1.4.0"
+    "uu-bootstrap": "git+ssh://git@github.com/DH-IT-Portal-Development/bootstrap-theme.git#1.5.0-alpha.1"
   },
   "scripts": {
     "build-css": "yarn _build-css src/cdh/core/static/cdh.core/css/bootstrap.css --style=compressed",
