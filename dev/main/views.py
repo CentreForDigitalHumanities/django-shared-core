@@ -1,11 +1,14 @@
+from django.urls import reverse
 from django.views import generic
 from django.contrib.messages import debug, info, success, warning, error
 
 from cdh.core.mail import BaseEmailPreviewView
+from cdh.core.views import RedirectActionView
 from .emails import ExampleCustomTemplateEmail
 from .forms import CustomEmailForm, CustomTemplateFormStylesForm, \
     FormStylesForm, \
-    JqueryUIFormStylesForm
+    JqueryUIFormStylesForm, MonthFieldTestForm
+from .models import MonthFieldTest
 
 
 class HomeView(generic.TemplateView):
@@ -93,3 +96,27 @@ class CustomTemplateFormsStylesView(generic.FormView):
 class JqueryUIFormStylesView(generic.FormView):
     form_class = JqueryUIFormStylesForm
     template_name = 'main/jqueryui_styles_form.html'
+
+
+class MonthFieldTestView(generic.UpdateView):
+    model = MonthFieldTest
+    form_class = MonthFieldTestForm
+    template_name = 'main/month_field_test.html'
+
+    def get_object(self, queryset=None):
+        if MonthFieldTest.objects.count() == 0:
+            MonthFieldTest.objects.create()
+
+        return MonthFieldTest.objects.first()
+
+    def get_success_url(self):
+        return reverse('main:month_field_test')
+
+
+class MonthFieldClearView(RedirectActionView):
+
+    def action(self, request):
+        MonthFieldTest.objects.first().delete()
+
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse('main:month_field_test')

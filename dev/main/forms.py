@@ -1,28 +1,24 @@
 from django import forms
 from django.urls import reverse_lazy
 from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
 
 from cdh.core import fields as core_fields
-from cdh.core.forms import TemplatedForm
+from cdh.core.forms import SplitMonthInput, TemplatedForm, TemplatedModelForm
 from cdh.core.mail import EmailContentEditWidget
 from cdh.files.forms import FileField, TrackedFileField
 from main.emails import ExampleCustomTemplateEmail
+from main.models import MonthFieldTest
 
 
 class FormStylesForm(forms.Form):
     text = forms.CharField()
 
-    textarea = forms.CharField(
-        widget=forms.Textarea
-    )
+    textarea = forms.CharField(widget=forms.Textarea)
 
-    django_date = forms.DateField(
-        help_text="Using django's version of the field"
-    )
+    django_date = forms.DateField(help_text="Using django's version of the field")
 
-    django_time = forms.TimeField(
-        help_text="Using django's version of the field"
-    )
+    django_time = forms.TimeField(help_text="Using django's version of the field")
 
     django_datetime = forms.DateTimeField(
         help_text="Using django's version of the field"
@@ -32,13 +28,9 @@ class FormStylesForm(forms.Form):
         help_text="Using django's version of the field"
     )
 
-    core_date = core_fields.DateField(
-        help_text="Using core's version of the field"
-    )
+    core_date = core_fields.DateField(help_text="Using core's version of the field")
 
-    core_time = core_fields.TimeField(
-        help_text="Using core's version of the field"
-    )
+    core_time = core_fields.TimeField(help_text="Using core's version of the field")
 
     core_datetime = core_fields.DateTimeField(
         help_text="Using core's version of the field"
@@ -50,27 +42,31 @@ class FormStylesForm(forms.Form):
 
     checkbox = forms.BooleanField()
 
-    choice = forms.ChoiceField(choices=[
-        (1, "Train"),
-        (2, "Bus"),
-        (3, "Aeroplane"),
-        (4, "Bike"),
-        (5, "Feet"),
-        (6, "Magical Unicorn"),
-        (6, "Broom"),
-        (6, "Thestrals"),
-    ])
+    choice = forms.ChoiceField(
+        choices=[
+            (1, "Train"),
+            (2, "Bus"),
+            (3, "Aeroplane"),
+            (4, "Bike"),
+            (5, "Feet"),
+            (6, "Magical Unicorn"),
+            (6, "Broom"),
+            (6, "Thestrals"),
+        ]
+    )
 
-    typed_choice = forms.TypedChoiceField(choices=[
-        (1, "Train"),
-        (2, "Bus"),
-        (3, "Aeroplane"),
-        (4, "Bike"),
-        (5, "Feet"),
-        (6, "Magical Unicorn"),
-        (6, "Broom"),
-        (6, "Thestrals"),
-    ])
+    typed_choice = forms.TypedChoiceField(
+        choices=[
+            (1, "Train"),
+            (2, "Bus"),
+            (3, "Aeroplane"),
+            (4, "Bike"),
+            (5, "Feet"),
+            (6, "Magical Unicorn"),
+            (6, "Broom"),
+            (6, "Thestrals"),
+        ]
+    )
 
     radio = forms.TypedChoiceField(
         choices=[
@@ -83,7 +79,7 @@ class FormStylesForm(forms.Form):
             (6, "Broom"),
             (6, "Thestrals"),
         ],
-        widget=forms.RadioSelect
+        widget=forms.RadioSelect,
     )
 
     integer = forms.IntegerField()
@@ -116,6 +112,9 @@ class FormStylesForm(forms.Form):
 
 
 class CustomTemplateFormStylesForm(TemplatedForm):
+    info_header = core_fields.TemplatedFormTextField(
+        header=_("People involved"), classes=""
+    )
 
     text = forms.CharField(
         label="Onderzoeksprojectnaam",
@@ -126,25 +125,31 @@ class CustomTemplateFormStylesForm(TemplatedForm):
         label="Eindverantwoordelijke",
     )
 
+    date_header = core_fields.TemplatedFormTextField(
+        header=_("Project duration"), header_element="h4"
+    )
+
     date_start = core_fields.DateField(
         label="Begin Datum",
         help_text="Op deze datum wordt de verwerking actief in het register "
-                  "van verwerkingen"
+        "van verwerkingen",
     )
 
     date_end = core_fields.DateField(
         label="Eind Datum",
-        help_text=mark_safe("Dit is de datum waarop de resultaten worden "
-                            "gepubliceerd."
-                            "<br/>"
-                            "Op deze datum gaat de archiveringstermijn van de "
-                            "onderzoeksdata in")
+        help_text=mark_safe(
+            "Dit is de datum waarop de resultaten worden "
+            "gepubliceerd."
+            "<br/>"
+            "Op deze datum gaat de archiveringstermijn van de "
+            "onderzoeksdata in"
+        ),
     )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for visible in self.visible_fields():
-            visible.field.widget.attrs['class'] = 'form-control'
+            visible.field.widget.attrs["class"] = "form-control"
 
 
 class JqueryUIFormStylesForm(forms.Form):
@@ -152,7 +157,6 @@ class JqueryUIFormStylesForm(forms.Form):
 
 
 class CustomEmailForm(TemplatedForm):
-
     sender = forms.CharField()
 
     banner = forms.CharField()
@@ -161,11 +165,20 @@ class CustomEmailForm(TemplatedForm):
         label="Mail content",
         help_text=ExampleCustomTemplateEmail.help_text(),
         widget=EmailContentEditWidget(
-            reverse_lazy('main:custom_email_form_preview'),
-            sender_field='sender',
-            banner_field='banner',
-            footer_field='footer',
+            reverse_lazy("main:custom_email_form_preview"),
+            sender_field="sender",
+            banner_field="banner",
+            footer_field="footer",
         ),
     )
 
     footer = forms.CharField()
+
+
+class MonthFieldTestForm(TemplatedModelForm):
+    show_valid_fields = False
+
+    class Meta:
+        model = MonthFieldTest
+        fields = ["single_month_field", "split_month_field"]
+        widgets = {"split_month_field": SplitMonthInput}

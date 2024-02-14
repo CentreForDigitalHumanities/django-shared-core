@@ -7,7 +7,7 @@ include-package-data = true
 
 [project]
 name = "cdh-django-core"
-description = "A Django apps library for DH-IT & ILS Labs projects"
+description = "A Django apps library for CDH projects"
 version = "3.1.0"
 readme = "README.md"
 authors = [
@@ -51,7 +51,7 @@ core = [
     "Django >=4.0,<5.0",
 ]
 federated-auth = [
-    "djangosaml2",
+    "djangosaml2 <1.7",
 ]
 files = [
     "python-magic",

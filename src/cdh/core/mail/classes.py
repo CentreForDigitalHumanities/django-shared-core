@@ -430,7 +430,14 @@ class CTEVarDef:
     - Provide a default value when rendering the preview
     """
 
-    def __init__(self, name: str, help_text: str = None, preview_value=None):
+    def __init__(
+            self,
+            name: str,
+            help_text: str = None,
+            preview_value=None,
+            safe: bool = False,
+            **kwargs
+    ):
         """
         :param str name: The variable name
         :param help_text: a short description of what this var will output
@@ -438,10 +445,17 @@ class CTEVarDef:
         :type help_text: str or None
         :param preview_value: a placeholder value that will be inserted when
                               rendering the preview (optional)
+        :param safe: if the contents of the var should be marked safe.
+        :type safe: bool
+        :param kwargs: Any other parameter passed to the class. Not used in
+                       default implementations, but can be used for custom ones
+        :type kwargs: dict
         """
         self.name = name
         self.help_text = help_text
         self.preview_value = preview_value
+        self.safe = safe
+        self.kwargs = kwargs
 
 
 class CTETagPackage:
@@ -663,6 +677,11 @@ class BaseCustomTemplateEmail(BaseEmail):
                 # more specifc context, and we don't want to overwrite those.
                 if var.name not in context or not context[var.name]:
                     context[var.name] = var.preview_value
+
+        # Mark any vars as safe if configured to do so
+        for var in self.user_variable_defs:
+            if var.name in context and var.safe:
+                context[var.name] = mark_safe(context[var.name])
 
         return template.render(
             Context(context)

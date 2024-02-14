@@ -89,17 +89,9 @@ class EncryptedNumberMixin(EncryptedMixin):
 
     @cached_property
     def validators(self):
-        # These validators can't be added at field initialization time since
-        # they're based on values retrieved from `connection`.
-        range_validators = []
-        internal_type = self.__class__.__name__[9:]
-        min_value, max_value = django.db.connection.ops.integer_field_range(
-            internal_type)
-        if min_value is not None:
-            range_validators.append(validators.MinValueValidator(min_value))
-        if max_value is not None:
-            range_validators.append(validators.MaxValueValidator(max_value))
-        return super(EncryptedNumberMixin, self).validators + range_validators
+        # Encrypted fields are stored as textfields, so they don't really have
+        # min-max limits like normal numbers. Just don't go crazy ;)
+        return []
 
 
 class EncryptedIntegerField(EncryptedNumberMixin,

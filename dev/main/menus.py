@@ -36,6 +36,11 @@ Menu.add_item("main", MenuItem(_('main:menu:core'),
                                        reverse('main:custom_email_form'),
                                        exact_url=True,
                                    ),
+                                   MenuItem(
+                                       _('main:menu:core:month_field'),
+                                       reverse('main:month_field_test'),
+                                       exact_url=True,
+                                   ),
                                ]
                                ))
 

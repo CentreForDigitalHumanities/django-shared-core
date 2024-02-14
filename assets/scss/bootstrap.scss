@@ -25,3 +25,12 @@ $open-sans-font-dir: '/static/cdh.core/fonts/open-sans/';
 .dt, .datatables {
     @extend .table;
 }
+
+// Bootstrap expects the feedback to be a child of the input group.
+// This is nigh-impossible in Django due to how widgets work, thus it is
+// placed after the input group. This adds some rules to make them display
+.input-group {
+    & ~ .invalid-feedback, & ~ .valid-feedback {
+        display: block;
+    }
+}

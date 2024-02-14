@@ -1,16 +1,21 @@
 {% extends 'base/base.html' %}
 
 {% block header_title %}
-    CSS Test form - {{ block.super }}
+    Month Field test - {{ block.super }}
 {% endblock %}
 
 {% block content %}
     <div class="uu-container">
         <div class="col-12">
-            <h1>Custom form template</h1>
-            <p>Note: this required Django 4+</p>
+            <h1>Month Field test</h1>
 
-            <form method="post" class="uu-form uu-form-no-gap" enctype="multipart/form-data">
+            <p>
+                <strong>Current value</strong>
+                <a href="{% url 'main:month_field_test_clear' %}">Clear</a><br/>
+                {{ object }}
+            </p>
+
+            <form method="post" class="uu-form" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form }}
                 <div class="uu-container">
