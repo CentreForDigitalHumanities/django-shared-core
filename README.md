@@ -9,7 +9,7 @@ Documentation provided here: https://centrefordigitalhumanities.github.io/django
 ## Currently targeting:
 - Python 3.9
 - Python 3.10
-- Django 4.0
+- Django 4.2/5.0
 
 Tests are run using these versions; Some apps have lower requirements, but are 
 not tested against these lower versions. check the app collection below for
@@ -53,7 +53,7 @@ Requires Django >= 4;
 Helper app to connect a Django application as a Service Provider to a Federated
 Authentication realm. Currently only supports SAML.
 
-Requires Django >= 2;
+Requires Django >= 4.1;
 
 ### Files (``cdh.files``)
 
@@ -70,7 +70,7 @@ Required Django >= 4.
 Ready-to-use API clients for the UU's integration platform.
 
 Requires ``cdh.rest``;
-Requires Django >= 3;
+Requires Django >= 4;
 
 ### Rest (``cdh.rest``)
 
@@ -80,14 +80,14 @@ JWT authentication support and other helpfull snippits.
 Client code contains a full Django-ORM inspired REST client, for easy
 (de)serialization and transactions with REST APIs.
 
-Requires Django >= 3;
+Requires Django >= 4;
 
 ### System messages (``cdh.systemmessages``)
 
 Simple app to quickly add a 'system message' system to your app, useful for
 temporary announcements. 
 
-Requires Django >= 2;
+Requires Django >= 4;
 
 ### Vue (``cdh.vue``)
 
@@ -96,14 +96,14 @@ Requires Django >= 2;
 Helper app to (more) easily integrate small(-ish) Vue 2 components in your Django
 templates.
 
-Requires Django >= 3;
+Requires Django >= 4;
 
 ### Vue 3 (``cdh.vue3``)
 
 Helper app to (more) easily integrate small(-ish) Vue 3 components in your Django
 templates.
 
-Requires Django >= 2;
+Requires Django >= 4;
 
 # Included libraries
 These libraries have been completely integrated into this codebase
