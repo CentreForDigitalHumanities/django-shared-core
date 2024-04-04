@@ -1,7 +1,7 @@
 from typing import Optional, Tuple
 
 from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.contrib.auth.views import RedirectURLMixin
+from django.contrib.auth.views import SuccessURLAllowedHostsMixin
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, resolve_url
@@ -11,18 +11,16 @@ from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import ContextMixin, TemplateResponseMixin
 
-from djangosaml2.views import (
-    LogoutInitView as DjangoSaml2LogoutInitView,
-    _get_subject_id,
-)
+from djangosaml2.views import LogoutInitView as DjangoSaml2LogoutInitView, \
+    _get_subject_id
 
-CONTACT_PERSON = "contact_person"
-CONTACT_TYPE = "contact_type"
-CONTACT_TYPE_TECHNICAL = "contact_type"
+CONTACT_PERSON = 'contact_person'
+CONTACT_TYPE = 'contact_type'
+CONTACT_TYPE_TECHNICAL = 'contact_type'
 
-GIVEN_NAME = "given_name"
-SURNAME = "sur_name"
-EMAIL = "email_address"
+GIVEN_NAME = 'given_name'
+SURNAME = 'sur_name'
+EMAIL = 'email_address'
 
 
 def _get_contact_dict() -> Optional[dict]:
@@ -44,10 +42,8 @@ def _get_contact_dict() -> Optional[dict]:
         if len(contact_people) >= 1:
             for contact_person in contact_people:
                 # If we have a match, return it
-                if (
-                    CONTACT_TYPE in contact_person
-                    and contact_person[CONTACT_TYPE] == CONTACT_TYPE_TECHNICAL
-                ):
+                if CONTACT_TYPE in contact_person \
+                   and contact_person[CONTACT_TYPE] == CONTACT_TYPE_TECHNICAL:
                     return contact_person
 
             # If no technical contact info was found, return the first as a
@@ -98,25 +94,26 @@ def login_error(request, exception=None, status=403, **kwargs):
     contact_name, contact_email = _get_contact_info()
 
     context = {
-        "exception": exception,
-        "contact_name": contact_name,
-        "contact_email": contact_email,
+        'exception': exception,
+        'contact_name': contact_name,
+        'contact_email': contact_email,
     }
     return render(
-        request, "djangosaml2/login_error.html", context=context, status=status
+        request,
+        'djangosaml2/login_error.html',
+        context=context,
+        status=status
     )
 
 
-class LogoutInitView(
-    RedirectURLMixin, TemplateResponseMixin, ContextMixin, DjangoSaml2LogoutInitView
-):
+class LogoutInitView(SuccessURLAllowedHostsMixin, TemplateResponseMixin,
+                     ContextMixin, DjangoSaml2LogoutInitView):
     """Custom LogoutInitView to handle logout requests for non-SAML users.
     Basically merges Django's LogoutView with DjangoSaml2's LogoutInitView
     """
-
     next_page = None
     redirect_field_name = REDIRECT_FIELD_NAME
-    template_name = "registration/logged_out.html"
+    template_name = 'registration/logged_out.html'
     extra_context = None
 
     def get(self, request, *args, **kwargs):
@@ -138,14 +135,12 @@ class LogoutInitView(
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         current_site = get_current_site(self.request)
-        context.update(
-            {
-                "site": current_site,
-                "site_name": current_site.name,
-                "title": _("Logged out"),
-                **(self.extra_context or {}),
-            }
-        )
+        context.update({
+            'site': current_site,
+            'site_name': current_site.name,
+            'title': _('Logged out'),
+            **(self.extra_context or {})
+        })
         return context
 
     def get_next_page(self):
@@ -156,12 +151,11 @@ class LogoutInitView(
         else:
             next_page = self.next_page
 
-        if (
-            self.redirect_field_name in self.request.POST
-            or self.redirect_field_name in self.request.GET
-        ):
+        if (self.redirect_field_name in self.request.POST or
+                self.redirect_field_name in self.request.GET):
             next_page = self.request.POST.get(
-                self.redirect_field_name, self.request.GET.get(self.redirect_field_name)
+                self.redirect_field_name,
+                self.request.GET.get(self.redirect_field_name)
             )
             url_is_safe = url_has_allowed_host_and_scheme(
                 url=next_page,
