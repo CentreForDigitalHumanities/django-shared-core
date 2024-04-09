@@ -2,8 +2,13 @@ from typing import Optional
 
 from cdh.core.file_loading import add_js_file
 from cdh.core.forms import TinyMCEWidget
+from deprecated.sphinx import deprecated
 
 
+@deprecated(
+    version='3.2',
+    reason="Replaced by cdh.mail"
+)
 class EmailContentEditWidget(TinyMCEWidget):
     """A custom widget to handle editing custom email templates using TinyMCE.
 
