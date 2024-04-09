@@ -73,6 +73,16 @@ Ready-to-use API clients for the UU's integration platform.
 Requires ``cdh.rest``;
 Requires Django >= 3;
 
+### Mail (``cdh.mail``)
+
+Helper app to send emails with Django, both in-code and as user defined/written. Supports generating plain/html
+emails from templates without having to define separate templates for each.
+
+Replaces `cdh.core.mail`.
+
+Requires Django >= 4.2;
+Soft-requires `cdh.core`, when using the mail-editor widget.
+
 ### Rest (``cdh.rest``)
 
 Contains code for both server and client roles. Server code contains some mixins,
