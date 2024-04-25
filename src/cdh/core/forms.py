@@ -374,6 +374,122 @@ class SplitDateTimeField(forms.SplitDateTimeField):
     widget = SplitDateTimeWidget
 
 
+class BootstrapDateInput(forms.DateInput):
+    class Media:
+        js = [
+            'cdh.core/js/datepicker-full.js',
+            'cdh.core/js/widget/datepicker.js',
+        ]
+        css = {
+            'all': ['cdh.core/css/vanillajs-datepicker.css',],
+        }
+
+    def __init__(self, attrs=None):
+        if attrs is None:
+            attrs = {}
+        if 'class' not in attrs:
+            attrs['class'] = ''
+
+        if 'placeholder' not in attrs:
+            attrs['placeholder'] = 'dd-mm-yyyy'
+
+        attrs['class'] += ' bootstrap-datepicker'
+        super().__init__(attrs=attrs, format='%d-%m-%Y')
+
+
+    def value_from_datadict(self, data, files, name):
+        val = data.get(name)
+
+        try:
+            # Transform the date to the format Django expects (ISO)
+            day, month, year = val.split('-')
+            return f"{year}-{month}-{day}"
+        except (ValueError, AttributeError):
+            return None
+
+
+class BootstrapSplitDateInput(BootstrapMultiWidget):
+    """A widget for a date input, split into three fields"""
+
+    def __init__(self, attrs=None):
+        day_attrs = attrs if attrs else {}
+
+        day_attrs['min'] = 1
+        day_attrs['max'] = 31
+
+        month_attrs = attrs if attrs else {}
+
+        year_attrs = attrs if attrs else {}
+        year_attrs['placeholder'] = _('core:fields:month:year_placeholder')
+        if hasattr(year_attrs, 'year_min'):
+            year_attrs['min'] = year_attrs.get('year_min')
+        if hasattr(year_attrs, 'year_max'):
+            year_attrs['max'] = year_attrs.get('year_max')
+
+        widgets = {
+            'day': NumberInput(
+                attrs=day_attrs,
+            ),
+            'month': BootstrapSelect(
+                attrs=month_attrs,
+                choices=(
+                    ('', _('core:fields:month:month_placeholder')),
+                    (1, _('core:fields:month:january')),
+                    (2, _('core:fields:month:february')),
+                    (3, _('core:fields:month:march')),
+                    (4, _('core:fields:month:april')),
+                    (5, _('core:fields:month:may')),
+                    (6, _('core:fields:month:june')),
+                    (7, _('core:fields:month:july')),
+                    (8, _('core:fields:month:august')),
+                    (9, _('core:fields:month:september')),
+                    (10, _('core:fields:month:october')),
+                    (11, _('core:fields:month:november')),
+                    (12, _('core:fields:month:december')),
+                ),
+            ),
+            'year': NumberInput(
+                attrs=year_attrs,
+            ),
+        }
+        super().__init__(widgets, attrs)
+
+    def value_from_datadict(self, data, files, name):
+        processed_data = [
+            widget.value_from_datadict(data, files, name + widget_name)
+            for widget_name, widget in zip(self.widgets_names, self.widgets)
+        ]
+
+        day, month, year = processed_data
+
+        try:
+            day = int(day) if day else None
+            month = int(month) if month else None
+            year = int(year) if year else None
+        except ValueError:
+            return None
+
+        if day and month and year:
+            return f"{year}-{month:02d}-{day:02d}"
+
+        return None
+
+    def decompress(self, value):
+        if value:
+            if isinstance(value, str):
+                try:
+                    year, month, day = value.split('-', maxsplit=2)
+                    return [int(day), int(month), int(year)]
+                except ValueError:
+                    pass
+            elif isinstance(value, list):
+                return value
+            elif isinstance(value, date) or isinstance(value, datetime):
+                return [int(value.day), int(value.month), int(value.year)]
+
+        return [None, None, None]
+
+
 class MonthInput(TextInput):
     input_type = "month"
 
