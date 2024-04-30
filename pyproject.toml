@@ -33,7 +33,7 @@ documentation = "https://centrefordigitalhumanities.github.io/django-shared-core
 
 [project.optional-dependencies]
 all = [
-    "cdh-django-core[recommended,core,federated-auth,files,rest,vue]"
+    "cdh-django-core[recommended,core,mail,federated-auth,files,rest,vue]"
 ]
 recommended = [
     "django-modeltranslation",
@@ -49,6 +49,9 @@ core = [
     "django-csp",
     "cryptography",
     "Django >=4.0,<5.1",
+]
+mail = [
+    "Django >=4.2,<5.1",
 ]
 federated-auth = [
     "djangosaml2",

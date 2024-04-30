@@ -1,16 +1,11 @@
-from typing import List, Optional, Tuple
+from typing import List, Optional, Tuple, Union
 
-from deprecated.sphinx import deprecated
 from django.conf import settings
 from django.core.mail import get_connection
 
-from cdh.core.mail import TemplateEmail
+from .classes import TemplateEmail
 
 
-@deprecated(
-    version='3.2',
-    reason="Replaced by cdh.mail"
-)
 def send_template_email(
         recipient_list: List[str],
         subject: str,
@@ -21,6 +16,7 @@ def send_template_email(
         plain_context: Optional[dict] = None,
         html_context: Optional[dict] = None,
         language: str = 'nl',
+        fail_silently: Union[bool, None] = None
 ) -> int:
     """
     Light wrapper for :class:`.TemplateEmail`.
@@ -39,6 +35,8 @@ def send_template_email(
     :param dict html_context: additional context data for the HTML template
     :param dict plain_context: additional context data for the plain template
     :param str language: the langauge code used during rendering
+    :param bool fail_silently: whether errors during sending should be
+                               suppressed. If not provided, defaults to CDH_EMAIL_FAIL_SILENTLY
     :returns: the number of emails send
     :rtype: int
     :raises ValueError: if no template at all was supplied
@@ -60,16 +58,13 @@ def send_template_email(
         context=template_context,
         plain_context=plain_context,
         html_context=html_context,
-        language=language
+        language=language,
+        fail_silently=fail_silently,
     )
 
     return email.send()
 
 
-@deprecated(
-    version='3.2',
-    reason="Replaced by cdh.mail"
-)
 def send_mass_personalised_mass_mail(
         datatuple: List[Tuple[str, dict, List[str]]],
         template_context: dict,
@@ -79,6 +74,7 @@ def send_mass_personalised_mass_mail(
         plain_context: dict = None,
         html_context: dict = None,
         language: str = 'nl',
+        fail_silently: Union[bool, None] = None,
 ) -> int:
     """
     Given a datatuple of (subject, personal_context, recipient_list),
@@ -102,6 +98,8 @@ def send_mass_personalised_mass_mail(
     :param dict html_context: additional context data for the HTML template
     :param dict plain_context: additional context data for the plain template
     :param str language: the langauge code used during rendering
+    :param bool fail_silently: whether errors during sending should be
+                               suppressed. If not provided, defaults to CDH_EMAIL_FAIL_SILENTLY
     :returns: the number of emails send
     :rtype: int
     :raises ValueError: if no template at all was supplied
@@ -130,7 +128,8 @@ def send_mass_personalised_mass_mail(
         plain_context=plain_context,
         html_context=html_context,
         connection=connection,
-        language=language
+        language=language,
+        fail_silently=fail_silently,
     )
 
     for subject, personal_context, recipient_list in datatuple:
@@ -157,10 +156,6 @@ def send_mass_personalised_mass_mail(
     return sent
 
 
-@deprecated(
-    version='3.2',
-    reason="Replaced by cdh.mail"
-)
 def send_mass_personalised_custom_mail(
         datatuple: List[Tuple[str, dict, List[str]]],
         email_class,
@@ -173,6 +168,7 @@ def send_mass_personalised_custom_mail(
         plain_context: dict = None,
         html_context: dict = None,
         language: str = 'nl',
+        fail_silently: Union[bool, None] = None,
 ) -> int:
     """
     Given a datatuple of (subject, personal_context, recipient_list),
@@ -207,6 +203,8 @@ def send_mass_personalised_custom_mail(
     :param dict html_context: additional context data for the HTML template
     :param dict plain_context: additional context data for the plain template
     :param str language: the langauge code used during rendering
+    :param bool fail_silently: whether errors during sending should be
+                               suppressed. If not provided, defaults to CDH_EMAIL_FAIL_SILENTLY
     :returns: the number of emails send
     :rtype: int
     """
@@ -233,7 +231,8 @@ def send_mass_personalised_custom_mail(
         plain_context=plain_context,
         html_context=html_context,
         connection=connection,
-        language=language
+        language=language,
+        fail_silently=fail_silently,
     )
 
     for subject, personal_context, recipient_list in datatuple:

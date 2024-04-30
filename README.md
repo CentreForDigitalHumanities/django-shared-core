@@ -9,7 +9,7 @@ Documentation provided here: https://centrefordigitalhumanities.github.io/django
 ## Currently targeting:
 - Python 3.9 (Django 4 only)
 - Python 3.11
-- Django 4.0-4.2
+- Django 4.2 (lower versions might work, but unsupported)
 - Django 5.0
 
 Tests are run using these versions; Some apps have lower requirements, but are 
@@ -54,7 +54,7 @@ Requires Django >= 4;
 Helper app to connect a Django application as a Service Provider to a Federated
 Authentication realm. Currently only supports SAML.
 
-Requires Django >= 2;
+Requires Django >= 4.1;
 
 ### Files (``cdh.files``)
 
@@ -72,6 +72,16 @@ Ready-to-use API clients for the UU's integration platform.
 
 Requires ``cdh.rest``;
 Requires Django >= 3;
+
+### Mail (``cdh.mail``)
+
+Helper app to send emails with Django, both in-code and as user defined/written. Supports generating plain/html
+emails from templates without having to define separate templates for each.
+
+Replaces `cdh.core.mail`.
+
+Requires Django >= 4.2;
+Soft-requires `cdh.core`, when using the mail-editor widget.
 
 ### Rest (``cdh.rest``)
 

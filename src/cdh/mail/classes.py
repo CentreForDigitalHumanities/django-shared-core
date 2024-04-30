@@ -4,26 +4,22 @@ from email.mime.base import MIMEBase
 from functools import lru_cache
 from typing import Dict, List, Optional, Tuple, Union
 
-from deprecated.sphinx import deprecated
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.template import Context, Engine, Template
+from django.template.exceptions import TemplateDoesNotExist
 from django.template.loader import get_template, render_to_string
-from django.template.loader_tags import BlockNode
+from django.template.loader_tags import BlockNode, ExtendsNode
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from django.utils import translation
 from django.utils.functional import keep_lazy_text
 from django.utils.html import _strip_once
 
-from cdh.core.settings import CDH_EMAIL_THEME_SETTINGS, \
-    CDH_EMAIL_PLAIN_FALLBACK_TEMPLATE, CDH_EMAIL_HTML_FALLBACK_TEMPLATE
+from .logger import logger
+from .settings import CDH_EMAIL_THEME_SETTINGS, CDH_EMAIL_PLAIN_FALLBACK_TEMPLATE, CDH_EMAIL_HTML_FALLBACK_TEMPLATE, CDH_EMAIL_FAIL_SILENTLY
 
 
-@deprecated(
-    version='3.2',
-    reason="Replaced by cdh.mail"
-)
 @keep_lazy_text
 def _strip_tags(value) -> str:
     """Return the given HTML with all tags stripped, and leading/trailing
@@ -64,10 +60,6 @@ def _strip_tags(value) -> str:
     return ret.strip()
 
 
-@deprecated(
-    version='3.2',
-    reason="Replaced by cdh.mail"
-)
 class BaseEmail(ABC):
     """Base class for all email classes.
 
@@ -121,7 +113,9 @@ class BaseEmail(ABC):
             theme_settings: Optional[Dict] = None,
 
             html_fallback_template: str = CDH_EMAIL_HTML_FALLBACK_TEMPLATE,
-            plain_fallback_template: str = CDH_EMAIL_PLAIN_FALLBACK_TEMPLATE
+            plain_fallback_template: str = CDH_EMAIL_PLAIN_FALLBACK_TEMPLATE,
+
+            fail_silently: Union[bool, None] = None,
     ):
         """
         :param to: a list of recipients, can be plain email or formatted ("John
@@ -160,6 +154,9 @@ class BaseEmail(ABC):
         :param str plain_fallback_template: the base template for plain text emails
                                             used for generating a plain text version
                                             of an HTML email
+
+        :param bool fail_silently: whether errors during sending should be
+                                   suppressed. If not provided, defaults to CDH_EMAIL_FAIL_SILENTLY
         """
         if not isinstance(to, list):
             to = [to]
@@ -176,6 +173,10 @@ class BaseEmail(ABC):
         self.context = context or {}
         self.plain_context = plain_context or {}
         self.html_context = html_context or {}
+
+        self.fail_silently = fail_silently
+        if fail_silently is None:
+            self.fail_silently = CDH_EMAIL_FAIL_SILENTLY
 
         self.theme_settings = CDH_EMAIL_THEME_SETTINGS.copy()
         if theme_settings:
@@ -212,7 +213,7 @@ class BaseEmail(ABC):
         else:
             self.attachments.append((filename, content, mimetype))
 
-    def send(self, connection=None, fail_silently=True) -> int:
+    def send(self, connection=None, fail_silently=None) -> int:
         """Sends the email
 
         If sending multiple emails in a row, it's recommended to create a
@@ -225,30 +226,43 @@ class BaseEmail(ABC):
         :return: number of emails sent
         :rtype: int
         """
-        old_lang = translation.get_language()
-        translation.activate(self.language)
+        try:
+            if fail_silently is None:
+                fail_silently = self.fail_silently
 
-        email = EmailMultiAlternatives(
-            to=self.to,
-            subject=self.subject,
-            from_email=self.from_email,
-            reply_to=self.reply_to,
-            cc=self.cc,
-            bcc=self.bcc,
-            body=self._get_plain_body(),
-            connection=connection,
-            attachments=self.attachments,
-            headers=self.headers,
-        )
+            old_lang = translation.get_language()
+            translation.activate(self.language)
 
-        email.attach_alternative(
-            self._get_html_body(),
-            'text/html'
-        )
+            email = EmailMultiAlternatives(
+                to=self.to,
+                subject=self.subject,
+                from_email=self.from_email,
+                reply_to=self.reply_to,
+                cc=self.cc,
+                bcc=self.bcc,
+                body=self._get_plain_body(),
+                connection=connection,
+                attachments=self.attachments,
+                headers=self.headers,
+            )
 
-        translation.activate(old_lang)
+            if html_body := self._get_html_body():
+                email.attach_alternative(
+                    html_body,
+                    'text/html'
+                )
 
-        return email.send(fail_silently)
+            translation.activate(old_lang)
+
+            return email.send(fail_silently)
+
+        except Exception as e:
+            if not fail_silently:
+                logger.error("Error during mail compose", exc_info=True)
+                raise e
+            # Log the error as critical if we're failing silently, to trigger some alarms
+            logger.critical("Error during mail compose", exc_info=True)
+
 
     def _get_plain_context(self) -> dict:
         context = self.context.copy()
@@ -276,10 +290,6 @@ class BaseEmail(ABC):
         pass
 
 
-@deprecated(
-    version='3.2',
-    reason="Replaced by cdh.mail"
-)
 class TemplateEmail(BaseEmail):
     """Regular Django template files based emails
 
@@ -336,6 +346,8 @@ class TemplateEmail(BaseEmail):
         :param str plain_fallback_template: the base template for plain text emails
                                             used for generating a plain text version
                                             of an HTML email
+        :param bool fail_silently: whether errors during sending should be
+                                   suppressed. If not provided, defaults to CDH_EMAIL_FAIL_SILENTLY
         """
         super().__init__(*args, **kwargs)
         if html_template is None and plain_template is None:
@@ -358,21 +370,46 @@ class TemplateEmail(BaseEmail):
             'content': None,
             'footer':  None,
         }
-        html_template = get_template(self.html_template)
-
         try:
-            base = list(html_template.template)[0].nodelist
-        except IndexError:
-            raise Exception("Invalid mail html template loaded!")
+            html_template = get_template(self.html_template)
+        except TemplateDoesNotExist as e:
+            logger.error(f"Could not find HTML template ({self.html_template}) for email. Skipping block extraction.")
 
-        for node in base:
-            if isinstance(node, BlockNode) and node.name in ['sender',
-                                                             'banner',
-                                                             'content',
-                                                             'footer']:
-                self._html_blocks[node.name] = node
+            if not self.fail_silently:
+                raise e
+
+            return self._html_blocks
+
+        self._html_blocks.update(self._resolve_html_blocks(html_template.template))
 
         return self._html_blocks
+
+    def _resolve_html_blocks(self, template: Template):
+        """"
+        Recursively resolve all blocks in a template and its parents, excluding the top-level template.
+        """
+        blocks = {}
+
+        for node in template.nodelist:
+            # Append the block to the dict if the node has (resolved) blocks
+            if hasattr(node, 'blocks'):
+                blocks.update(node.blocks)
+
+            # If we encounter an ExtendsNode, we need to resolve the parent and add its blocks
+            # Note: as the 'root' template is not an ExtendsNode, it will be skipped. This is by design, as
+            # the blocks we're interested in are empty in the root template. (And thus need to be ignored)
+            if isinstance(node, ExtendsNode):
+                try:
+                    context = Context({})
+                    context.template = template
+                    blocks.update(self._resolve_html_blocks(node.get_parent(context)))
+                except Exception as e:
+                    logger.error("Error resolving parent email template", exc_info=True)
+
+                    if not self.fail_silently:
+                        raise e
+
+        return blocks
 
     def _get_html_context(self) -> dict:
         context = super()._get_html_context()
@@ -393,28 +430,42 @@ class TemplateEmail(BaseEmail):
 
         # If we don't have a Plain template, we're going to build our own!
         if self._has_html_body():
-            # Render the content blocks individually and strip the HTML tags
-            # from them
-            blocks = {
-                name: "\n"+_strip_tags(
-                    node.render(
-                        Context(self._get_plain_context())
-                    )
-                )
-                for name, node in self._get_html_blocks().items() if node
-            }
+            try:
+                # Build a render context Django can use
+                render_context = Context(self._get_plain_context())
+                # Needed because Django's render requires these for metadata
+                render_context.template = get_template(self.html_template)
+                render_context.template.engine = Engine.get_default()
 
-            return render_to_string(
-                self.plain_fallback_template,
-                blocks
-            ).strip()
+                # Render the content blocks individually and strip the HTML tags
+                # from them
+                blocks = {
+                    name: "\n"+_strip_tags(
+                        node.render(
+                            render_context
+                        )
+                    )
+                    for name, node in self._get_html_blocks().items() if node
+                }
+
+                return render_to_string(
+                    self.plain_fallback_template,
+                    blocks
+                ).strip()
+            except Exception as e:
+                logger.error("Error during plain text email generation", exc_info=True)
+
+                if not self.fail_silently:
+                    raise e
+
+                return None
 
         return None
 
     def _has_html_body(self) -> bool:
         return self.html_template is not None
 
-    def _get_html_body(self) -> str:
+    def _get_html_body(self) -> Union[str, None]:
         context = self._get_html_context()
         if self._has_html_body():
             return render_to_string(
@@ -422,23 +473,27 @@ class TemplateEmail(BaseEmail):
                 context
             )
 
-        # If we don't have an HTML template, we're going to build our own!
-        # And paste in the plain content
-        engine = Engine.get_default()
-        template = engine.from_string(
-            "{% extends '" + self.html_fallback_template + "' %}"
-            "{% block content %}{{ plain_content|linebreaks }}{% endblock %}"
-        )
+        try:
+            # If we don't have an HTML template, we're going to build our own!
+            # And paste in the plain content
+            engine = Engine.get_default()
+            template = engine.from_string(
+                "{% extends '" + self.html_fallback_template + "' %}"
+                "{% block content %}{{ plain_content|linebreaks }}{% endblock %}"
+            )
 
-        context['plain_content'] = self._get_plain_body()
+            context['plain_content'] = self._get_plain_body()
+        except Exception as e:
+            logger.error("Error during HTML email generation", exc_info=True)
+
+            if not self.fail_silently:
+                raise e
+
+            return None
 
         return template.render(Context(context))
 
 
-@deprecated(
-    version='3.2',
-    reason="Replaced by cdh.mail"
-)
 class CTEVarDef:
     """Descriptor class for user-usable variables in a Custom Template Email
 
@@ -475,10 +530,6 @@ class CTEVarDef:
         self.kwargs = kwargs
 
 
-@deprecated(
-    version='3.2',
-    reason="Replaced by cdh.mail"
-)
 class CTETagPackage:
     """Configuration class for loading template tag packages
 
@@ -508,10 +559,6 @@ class CTETagPackage:
         self.tags = tags
 
 
-@deprecated(
-    version='3.2',
-    reason="Replaced by cdh.mail"
-)
 class BaseCustomTemplateEmail(BaseEmail):
     """Email class for sending HTML emails using user supplied HTML templates
 
@@ -597,7 +644,7 @@ class BaseCustomTemplateEmail(BaseEmail):
 
         if cls.user_variable_defs:
             help_text += "<strong>"
-            help_text += _('core.mail.custom.help_text.variables')
+            help_text += _('cdh.mail.custom.help_text.variables')
             help_text += "</strong><br/>"
 
             for var in cls.user_variable_defs:
@@ -610,7 +657,7 @@ class BaseCustomTemplateEmail(BaseEmail):
             if cls.user_variable_defs:
                 help_text += "<br/>"
             help_text += "<strong>"
-            help_text += _('core.mail.custom.help_text.tags')
+            help_text += _('cdh.mail.custom.help_text.tags')
             help_text += "</strong><br/>"
 
             for package in cls.template_tag_packages:
@@ -708,15 +755,31 @@ class BaseCustomTemplateEmail(BaseEmail):
             if var.name in context and var.safe:
                 context[var.name] = mark_safe(context[var.name])
 
-        return template.render(
-            Context(context)
-        )
+        try:
+            return template.render(
+                Context(context)
+            )
+        except Exception as e:
+            logger.error("Error during HTML email generation", exc_info=True)
+
+            if not self.fail_silently:
+                raise e
+
+            return ""
 
     def _get_plain_part(self, content: str) -> str:
-        ret = self._get_template_from_string(content).render(
-            Context(self._get_plain_context())
-        )
-        return "\n" + _strip_tags(ret)
+        try:
+            ret = self._get_template_from_string(content).render(
+                Context(self._get_plain_context())
+            )
+            return "\n" + _strip_tags(ret)
+        except Exception as e:
+            logger.error("Error during plain-text-part email generation", exc_info=True)
+
+            if not self.fail_silently:
+                raise e
+
+            return ""
 
     def _get_plain_body(self) -> str:
         context = {
@@ -730,7 +793,15 @@ class BaseCustomTemplateEmail(BaseEmail):
         if self._has_footer:
             context['footer'] = self._get_plain_part(self.footer)
 
-        return render_to_string(
-            self.plain_fallback_template,
-            context
-        ).strip()
+        try:
+            return render_to_string(
+                self.plain_fallback_template,
+                context
+            ).strip()
+        except Exception as e:
+            logger.error("Error during plain text email generation", exc_info=True)
+
+            if not self.fail_silently:
+                raise e
+
+            return ""

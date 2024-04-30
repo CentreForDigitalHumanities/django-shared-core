@@ -1,12 +1,7 @@
-from deprecated.sphinx import deprecated
 from django.http import HttpResponse
 from django.views import generic
 
 
-@deprecated(
-    version='3.2',
-    reason="Replaced by cdh.mail"
-)
 class BaseEmailPreviewView(generic.View):
     """Base view for viewing previews of custom emails
 
