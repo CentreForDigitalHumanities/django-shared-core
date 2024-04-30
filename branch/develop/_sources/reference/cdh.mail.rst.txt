@@ -1,0 +1,22 @@
+cdh.mail package
+================
+
+.. automodule:: cdh.mail
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.mail.admin
+   cdh.mail.apps
+   cdh.mail.classes
+   cdh.mail.logger
+   cdh.mail.settings
+   cdh.mail.utils
+   cdh.mail.views
+   cdh.mail.widgets

@@ -1,0 +1,7 @@
+cdh.rest.client.resources.base module
+=====================================
+
+.. automodule:: cdh.rest.client.resources.base
+   :members:
+   :undoc-members:
+   :show-inheritance:

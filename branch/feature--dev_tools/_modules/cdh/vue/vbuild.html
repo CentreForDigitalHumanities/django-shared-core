@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.vue.vbuild &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../_static/theme.css" type="text/css"/>
+        <script src="../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+                    <script src="../../../_static/doctools.js"></script>
+                    <script src="../../../_static/sphinx_highlight.js"></script>
+            <script src="../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.vue.vbuild</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.vue.vbuild</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="kn">import</span> <span class="nn">vbuild</span>
+
+
+<div class="viewcode-block" id="VBuild"><a class="viewcode-back" href="../../../reference/cdh.vue.vbuild.html#cdh.vue.vbuild.VBuild">[docs]</a><span class="k">class</span> <span class="nc">VBuild</span><span class="p">(</span><span class="n">vbuild</span><span class="o">.</span><span class="n">VBuild</span><span class="p">):</span>
+<div class="viewcode-block" id="VBuild.__init__"><a class="viewcode-back" href="../../../reference/cdh.vue.vbuild.html#cdh.vue.vbuild.VBuild.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">component</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Create a VBuild class, by providing a :</span>
+<span class="sd">                filename: which will be used to name the component, and create the namespace for the template</span>
+<span class="sd">                content: the string buffer which contains the sfc/vue component</span>
+
+<span class="sd">                Overridden to provide change some behaviour. (Like, not using a full path as unique....)</span>
+
+<span class="sd">                DOES NOT SUPPORT PYTHON MODULES</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">vbuild</span><span class="o">.</span><span class="n">VBuildException</span><span class="p">(</span><span class="s2">&quot;Component </span><span class="si">%s</span><span class="s2"> should be named&quot;</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">component</span> <span class="o">=</span> <span class="n">component</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>  <span class="c1"># only py2, transform</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="o">==</span> <span class="n">vbuild</span><span class="o">.</span><span class="n">unicode</span><span class="p">:</span>  <span class="c1"># filename to the same type</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span>  <span class="c1"># of content to avoid</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># troubles with implicit</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span>  <span class="c1"># ascii conversions (regex)</span>
+
+        <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filename</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">unique</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">name</span>
+
+        <span class="n">tplId</span> <span class="o">=</span> <span class="s2">&quot;tpl-&quot;</span> <span class="o">+</span> <span class="n">unique</span>
+        <span class="n">dataId</span> <span class="o">=</span> <span class="s2">&quot;data-&quot;</span> <span class="o">+</span> <span class="n">unique</span>
+
+        <span class="n">vp</span> <span class="o">=</span> <span class="n">vbuild</span><span class="o">.</span><span class="n">VueParser</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">vp</span><span class="o">.</span><span class="n">html</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">vbuild</span><span class="o">.</span><span class="n">VBuildException</span><span class="p">(</span><span class="s2">&quot;Component </span><span class="si">%s</span><span class="s2"> doesn&#39;t have a template&quot;</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">html</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^&lt;([\w-]+)&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;&lt;\1 </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">dataId</span><span class="p">,</span> <span class="n">vp</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_html</span> <span class="o">=</span> <span class="p">[(</span><span class="n">tplId</span><span class="p">,</span> <span class="n">html</span><span class="p">)]</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_styles</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">style</span> <span class="ow">in</span> <span class="n">vp</span><span class="o">.</span><span class="n">styles</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_styles</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">style</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">style</span> <span class="ow">in</span> <span class="n">vp</span><span class="o">.</span><span class="n">scopedStyles</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_styles</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;*[</span><span class="si">%s</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="n">dataId</span><span class="p">,</span> <span class="n">style</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span>
+
+            <span class="c1"># and set self._script !</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_script</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">_VueJs</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">tplId</span><span class="p">,</span> <span class="n">vp</span><span class="o">.</span><span class="n">script</span> <span class="ow">and</span> <span class="n">vp</span><span class="o">.</span><span class="n">script</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+                <span class="p">]</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">vbuild</span><span class="o">.</span><span class="n">VBuildException</span><span class="p">(</span>
+                    <span class="s2">&quot;JS Component </span><span class="si">%s</span><span class="s2"> contains a bad script&quot;</span> <span class="o">%</span> <span class="n">filename</span>
+                <span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">script</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Return JS (js of embbeded components), after transScript&quot;&quot;&quot;</span>
+        <span class="n">scripts</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">topological_sort</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_script</span><span class="p">))</span>
+        <span class="n">js</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">code</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">scripts</span><span class="p">])</span>
+        <span class="n">isPyComp</span> <span class="o">=</span> <span class="s2">&quot;_pyfunc_op_instantiate(&quot;</span> <span class="ow">in</span> <span class="n">js</span>  <span class="c1"># in fact : contains</span>
+        <span class="n">isLibInside</span> <span class="o">=</span> <span class="s2">&quot;var _pyfunc_op_instantiate&quot;</span> <span class="ow">in</span> <span class="n">js</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">vbuild</span><span class="o">.</span><span class="n">fullPyComp</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">and</span> <span class="n">isPyComp</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">isLibInside</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">pscript</span>
+            <span class="k">return</span> <span class="n">vbuild</span><span class="o">.</span><span class="n">transScript</span><span class="p">(</span><span class="n">pscript</span><span class="o">.</span><span class="n">get_full_std_lib</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">js</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">vbuild</span><span class="o">.</span><span class="n">transScript</span><span class="p">(</span><span class="n">js</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">_VueJs</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Wrapper object for the JS part of a component</span>
+
+<span class="sd">    This object is new in our implementation, and implements sort capability.</span>
+<span class="sd">    On creation time, the instance tries to figure out which other components</span>
+<span class="sd">    this depends on by executing a regex that searches for import statements.</span>
+
+<span class="sd">    These dependencies are then used by the __lt__ implementation to see if</span>
+<span class="sd">    this module is a dependency of the other, making it necessary to load it</span>
+<span class="sd">    earlier. If so, sorted() will place this before the other module!</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">IMPORT_RE</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^import (\w+) from \S+$(?m)&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">template_id</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="s2">&quot;#&quot;</span> <span class="o">+</span> <span class="n">template_id</span>
+
+        <span class="k">if</span> <span class="n">code</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">js</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">p1</span> <span class="o">=</span> <span class="n">code</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;{&quot;</span><span class="p">)</span>
+            <span class="n">p2</span> <span class="o">=</span> <span class="n">code</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s2">&quot;}&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">p1</span> <span class="o">&lt;=</span> <span class="n">p2</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">js</span> <span class="o">=</span> <span class="n">code</span><span class="p">[</span><span class="n">p1</span><span class="p">:</span> <span class="n">p2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Can&#39;t find valid content inside &#39;{&#39; and &#39;}&#39;&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dependencies</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">_VueJs</span><span class="o">.</span><span class="n">IMPORT_RE</span><span class="p">,</span> <span class="n">code</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;_VueJS: </span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dependencies</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;var </span><span class="si">{name}</span><span class="s2"> = Vue.component(&#39;</span><span class="si">{name}</span><span class="s2">&#39;, </span><span class="si">{code}</span><span class="s2">);&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">code</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">js</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;{&quot;</span><span class="p">,</span> <span class="s2">&quot;{</span><span class="se">\n</span><span class="s2">  template:&#39;</span><span class="si">%s</span><span class="s2">&#39;,&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="p">)</span>
+
+
+<div class="viewcode-block" id="topological_sort"><a class="viewcode-back" href="../../../reference/cdh.vue.vbuild.html#cdh.vue.vbuild.topological_sort">[docs]</a><span class="k">def</span> <span class="nf">topological_sort</span><span class="p">(</span><span class="n">items</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">_VueJs</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sorts dependencies using a topological sort algorithm.</span>
+<span class="sd">    In other words, makes sure that for any _VueJS, it ensures it&#39;s</span>
+<span class="sd">    dependencies have been added before it&quot;&quot;&quot;</span>
+    <span class="c1"># Set of all items that have been added already</span>
+    <span class="n">already_provided</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">while</span> <span class="n">items</span><span class="p">:</span>
+        <span class="n">remaining_items</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+            <span class="c1"># Are all dependencies of this item provided already?</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">dependencies</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">already_provided</span><span class="p">):</span>
+                <span class="c1"># Then yield it, and mark this item as provided</span>
+                <span class="k">yield</span> <span class="n">item</span>
+                <span class="n">already_provided</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># If not, retry later</span>
+                <span class="n">remaining_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+        <span class="n">items</span> <span class="o">=</span> <span class="n">remaining_items</span></div>
+
+
+<div class="viewcode-block" id="render"><a class="viewcode-back" href="../../../reference/cdh.vue.vbuild.html#cdh.vue.vbuild.render">[docs]</a><span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="n">component</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Helpers to render VBuild&#39;s instances by providing filenames or pattern (glob&#39;s style)&quot;&quot;&quot;</span>
+    <span class="n">isPattern</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;*&quot;</span> <span class="ow">in</span> <span class="n">f</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;?&quot;</span> <span class="ow">in</span> <span class="n">f</span><span class="p">)</span>
+
+    <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">component</span><span class="o">.</span><span class="n">get_files</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+    <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">if</span> <span class="n">isPattern</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">files</span><span class="p">]</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="n">files</span><span class="p">))</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">ll</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s2">&quot;r+&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+                <span class="n">content</span> <span class="o">=</span> <span class="n">fid</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">IOError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">vbuild</span><span class="o">.</span><span class="n">VBuildException</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="n">ll</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">VBuild</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">component</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">ll</span><span class="p">)</span></div>
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

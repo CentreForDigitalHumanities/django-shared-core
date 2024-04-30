@@ -1,0 +1,7 @@
+cdh.systemmessages.templatetags.systemmessages module
+=====================================================
+
+.. automodule:: cdh.systemmessages.templatetags.systemmessages
+   :members:
+   :undoc-members:
+   :show-inheritance:

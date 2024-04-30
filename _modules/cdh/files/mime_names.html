@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cdh.files.mime_names &mdash; Django Shared Core 3.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Django Shared Core
+          </a>
+              <div class="version">
+                3.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">cdh</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Django Shared Core</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>cdh.files.mime_names</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for cdh.files.mime_names</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django.utils.text</span> <span class="kn">import</span> <span class="n">gettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="n">_names</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># Application</span>
+    <span class="s1">&#39;application/octet-stream&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Unspecified binary data&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/json&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;JSON data&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/pgp-encrypted&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;PGP encrypted file&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/pgp-signature&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;PGP signature&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/rss+xml&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;RSS feed&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/rtf&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Rich text file&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/x-msaccess&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Microsoft Access file&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/csv&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Character-Separated Values (CSV) file&#39;</span><span class="p">),</span>  <span class="c1"># Yes we&#39;re</span>
+    <span class="c1"># aware it&#39;s &#39;Comma-Separated&#39;, but there are enough CSV files that use a</span>
+    <span class="c1"># different character...</span>
+
+    <span class="c1"># Start MS BS</span>
+    <span class="c1"># Word BS</span>
+    <span class="s1">&#39;application/msword&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Microsoft Word document&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.ms-word.document.macroenabled.12&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Microsoft Word document&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.openxmlformats-officedocument.wordprocessingml.document&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Microsoft Word document&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.ms-word.template.macroenabled.12&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Microsoft Word template&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.openxmlformats-officedocument.wordprocessingml.template&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Microsoft Word template&#39;</span><span class="p">),</span>
+    <span class="c1"># Excel BS</span>
+    <span class="s1">&#39;application/vnd.openxmlformats-officedocument.spreadsheetml.template&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Microsoft Excel template&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.ms-excel.template.macroenabled.12l&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Microsoft Excel template&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.ms-excel&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Microsoft Excel spreadsheet&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Microsoft Excel spreadsheet&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.ms-excel.macroenabled.12&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Microsoft Excel spreadsheet&#39;</span><span class="p">),</span>
+    <span class="c1"># Powerpoint BS</span>
+    <span class="s1">&#39;application/vnd.ms-powerpoint&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Powerpoint presentation&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.ms-powerpoint.presentation.macroenabled.12&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Powerpoint presentation&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.ms-powerpoint.slideshow.macroenabled.12&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Powerpoint presentation&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.openxmlformats-officedocument.presentationml.presentation&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Powerpoint presentation&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.openxmlformats-officedocument.presentationml.slidedown&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Powerpoint presentation&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.openxmlformats-officedocument.presentationml.slide&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Powerpoint slide&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.ms-powerpoint.slide.macroenabled.12&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Powerpoint slide&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.openxmlformats-officedocument.presentationml.template&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Powerpoint template&#39;</span><span class="p">),</span>
+    <span class="c1"># Misc MS office</span>
+    <span class="s1">&#39;application/onenote&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Microsoft OneNote&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/x-mswrite&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Microsoft Wordpad document&#39;</span><span class="p">),</span>
+    <span class="c1"># End MS BS</span>
+    <span class="c1"># Begin OpenDocument/OpenOffice</span>
+    <span class="s1">&#39;application/vnd.oasis.opendocument.database&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OpenDocument Database&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.oasis.opendocument.formula&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OpenDocument formula&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.sun.xml.math&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OpenDocument formula&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.oasis.opendocument.formula-template&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OpenDocument formula template&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.oasis.opendocument.graphics&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OpenDocument graphic&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.sun.xml.draw&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OpenDocument graphic&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.oasis.opendocument.graphics-template&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OpenDocument graphic template&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.sun.xml.draw.template&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OpenDocument graphic template&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.oasis.opendocument.image&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OpenDocument image&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.oasis.opendocument.image-template&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OpenDocument image template&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.oasis.opendocument.presentation&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OpenDocument presentation&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.sun.xml.impress&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OpenDocument presentation&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.oasis.opendocument.presentation-template&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OpenDocument presentation template&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.sun.xml.impress.template&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OpenDocument presentation template&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.oasis.opendocument.spreadsheet&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OpenDocument spreadsheet&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.sun.xml.calc&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OpenDocument spreadsheet&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.oasis.opendocument.spreadsheet-template&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OpenDocument spreadsheet template&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.sun.xml.calc.template&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OpenDocument spreadsheet template&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.oasis.opendocument.text&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OpenDocument document&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.sun.xml.writer&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OpenDocument document&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.oasis.opendocument.text-template&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OpenDocument document template&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/vnd.sun.xml.writer.template&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OpenDocument document template&#39;</span><span class="p">),</span>
+    <span class="c1"># End OpenDocument/OpenOffice</span>
+    <span class="s1">&#39;application/x-debian-package&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Debian package&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/x-font-otf&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OTF font&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/x-font-ttf&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;TTF font&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/x-font-woff&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;WOFF font&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/x-bzip&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;BZip file archive&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/x-bzip2&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;BZip2 file archive&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/x-gtar&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;GNU Tar file&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/x-latex&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;LaTeX file&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/x-tex&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;TeX file&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/x-shar&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Shell archive&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/x-rar-compressed&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;RAR file archive&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/x-7z-compressed&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;7-Zip file archive&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/zip&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Zip file archive&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/x-vcalendar&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;vCalendar&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/x-vcard&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;vCard&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;application/xml&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;XML file&#39;</span><span class="p">),</span>
+
+    <span class="c1"># Audio</span>
+    <span class="s1">&#39;audio/mp3&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;MP3 audio&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;audio/mp4&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;MP4 audio&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;audio/ogg&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OGG audio&#39;</span><span class="p">),</span>
+
+    <span class="c1"># Images</span>
+    <span class="s1">&#39;image/bmp&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Bitmap image&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;image/jpeg&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;JPEG image&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;image/psr.btf&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;BTIF image&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;image/png&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;PNG image&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;image/svg+xml&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;SVG image&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;image/webp&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;WebP image&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;image/vnd.xiff&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;eXtended Image File Format (XIFF)&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;image/x-icon&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Icon image&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;image/vnd.adobe.photoshop&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Photoshop image&#39;</span><span class="p">),</span>
+
+    <span class="c1"># Text based</span>
+    <span class="s1">&#39;text/plain&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Text file&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;text/calendar&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;iCalender file&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;text/x-c&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;C source file&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;text/x-python&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Python source file&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;text/css&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Cascading Style Sheets (CSS) file&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;text/csv&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Character-Separated Values (CSV) file&#39;</span><span class="p">),</span>  <span class="c1"># Yes we&#39;re</span>
+    <span class="c1"># aware it&#39;s &#39;Comma-Separated&#39;, but there are enough CSV files that use a</span>
+    <span class="c1"># different character...</span>
+    <span class="s1">&#39;text/richtext&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Richt text file&#39;</span><span class="p">),</span>
+
+    <span class="c1"># Video</span>
+    <span class="s1">&#39;video/h261&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;H.261 video&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;video/h263&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;H.263 video&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;video/h264&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;H.264 video&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;video/mpeg&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;MPEG video&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;video/mp4&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;MP4 video&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;video/ogg&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;OGG video&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;video/x-m4v&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;M4V video&#39;</span><span class="p">),</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="get_name_from_mime"><a class="viewcode-back" href="../../../reference/cdh.files.mime_names.html#cdh.files.mime_names.get_name_from_mime">[docs]</a><span class="k">def</span> <span class="nf">get_name_from_mime</span><span class="p">(</span>
+        <span class="n">mime</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">default</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">callable</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Returns a human friendly name for a given MIME type.</span>
+<span class="sd">    Note: the DB of mime-types is a VERY small subset of all possible types. If</span>
+<span class="sd">    a MIME isn&#39;t in the DB, this function will return the MIME (or a</span>
+<span class="sd">    different default if supplied)</span>
+
+<span class="sd">    :param mime: a MIME which needs a human friendly name</span>
+<span class="sd">    :param default: either a string or a callable which is used to provide a</span>
+<span class="sd">                    value if the MIME is not known. A callable must accept 1</span>
+<span class="sd">                    parameter (which will be the MIME as supplied).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">mime</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mime</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">mime</span><span class="p">)</span><span class="si">}</span><span class="s2"> for parameter &#39;mime&#39;&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">callable</span><span class="p">(</span>
+        <span class="n">default</span>
+    <span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Unsupported type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">default</span><span class="p">)</span><span class="si">}</span><span class="s2"> for parameter &#39;default&#39;&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">default</span> <span class="o">=</span> <span class="n">mime</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="n">_names</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">mime</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">default</span><span class="p">):</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">default</span><span class="p">(</span><span class="n">mime</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">default</span>
+
+    <span class="k">return</span> <span class="n">name</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+cdh.rest.apps module
+====================
+
+.. automodule:: cdh.rest.apps
+   :members:
+   :undoc-members:
+   :show-inheritance:

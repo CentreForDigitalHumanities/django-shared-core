@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.federated_auth.saml.views &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../../_static/theme.css" type="text/css"/>
+        <script src="../../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../../../../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+                    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.federated_auth.saml.views</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.federated_auth.saml.views</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="kn">import</span> <span class="n">REDIRECT_FIELD_NAME</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.views</span> <span class="kn">import</span> <span class="n">RedirectURLMixin</span>
+<span class="kn">from</span> <span class="nn">django.contrib.sites.shortcuts</span> <span class="kn">import</span> <span class="n">get_current_site</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponseRedirect</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span><span class="p">,</span> <span class="n">resolve_url</span>
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">auth</span>
+<span class="kn">from</span> <span class="nn">django.utils.http</span> <span class="kn">import</span> <span class="n">url_has_allowed_host_and_scheme</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="kn">import</span> <span class="n">gettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
+<span class="kn">from</span> <span class="nn">django.views.generic.base</span> <span class="kn">import</span> <span class="n">ContextMixin</span><span class="p">,</span> <span class="n">TemplateResponseMixin</span>
+
+<span class="kn">from</span> <span class="nn">djangosaml2.views</span> <span class="kn">import</span> <span class="n">LogoutInitView</span> <span class="k">as</span> <span class="n">DjangoSaml2LogoutInitView</span><span class="p">,</span> \
+    <span class="n">_get_subject_id</span>
+
+<span class="n">CONTACT_PERSON</span> <span class="o">=</span> <span class="s1">&#39;contact_person&#39;</span>
+<span class="n">CONTACT_TYPE</span> <span class="o">=</span> <span class="s1">&#39;contact_type&#39;</span>
+<span class="n">CONTACT_TYPE_TECHNICAL</span> <span class="o">=</span> <span class="s1">&#39;contact_type&#39;</span>
+
+<span class="n">GIVEN_NAME</span> <span class="o">=</span> <span class="s1">&#39;given_name&#39;</span>
+<span class="n">SURNAME</span> <span class="o">=</span> <span class="s1">&#39;sur_name&#39;</span>
+<span class="n">EMAIL</span> <span class="o">=</span> <span class="s1">&#39;email_address&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">_get_contact_dict</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Tries to find a contact info dict from the SAML_CONFIG in the settings</span>
+
+<span class="sd">    If only one dict of contact details is defined, it will always return</span>
+<span class="sd">    that set.</span>
+<span class="sd">    If multiple dicts are defined, it will try to find the dict with</span>
+<span class="sd">    &#39;contact_type&#39; set to &#39;technical&#39;. If none matches, it will return the first</span>
+<span class="sd">    dict in the list.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">CONTACT_PERSON</span> <span class="ow">in</span> <span class="n">settings</span><span class="o">.</span><span class="n">SAML_CONFIG</span><span class="p">:</span>
+        <span class="n">contact_people</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">SAML_CONFIG</span><span class="p">[</span><span class="n">CONTACT_PERSON</span><span class="p">]</span>
+
+        <span class="c1"># If only one defined, use that</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">contact_people</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">contact_people</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># If more are defined, try to search for the technical contact</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">contact_people</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">contact_person</span> <span class="ow">in</span> <span class="n">contact_people</span><span class="p">:</span>
+                <span class="c1"># If we have a match, return it</span>
+                <span class="k">if</span> <span class="n">CONTACT_TYPE</span> <span class="ow">in</span> <span class="n">contact_person</span> \
+                   <span class="ow">and</span> <span class="n">contact_person</span><span class="p">[</span><span class="n">CONTACT_TYPE</span><span class="p">]</span> <span class="o">==</span> <span class="n">CONTACT_TYPE_TECHNICAL</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">contact_person</span>
+
+            <span class="c1"># If no technical contact info was found, return the first as a</span>
+            <span class="c1"># fallback</span>
+            <span class="k">return</span> <span class="n">contact_people</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="k">def</span> <span class="nf">_get_contact_info</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extracts the contact name and contact email from a contact_person set</span>
+
+<span class="sd">    It will concat given_name and sur_name if possible. If none is provided, but</span>
+<span class="sd">    an e-mail address was, it will use the e-mail address as the contact_name.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">contact_name</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">contact_email</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># If we could get info from settings</span>
+    <span class="c1"># Note: uses walrus operator, google if not familiar ;)</span>
+    <span class="k">if</span> <span class="n">contact_person</span> <span class="o">:=</span> <span class="n">_get_contact_dict</span><span class="p">():</span>
+
+        <span class="k">if</span> <span class="n">GIVEN_NAME</span> <span class="ow">in</span> <span class="n">contact_person</span> <span class="ow">and</span> <span class="n">contact_person</span><span class="p">[</span><span class="n">GIVEN_NAME</span><span class="p">]:</span>
+            <span class="n">contact_name</span> <span class="o">=</span> <span class="n">contact_person</span><span class="p">[</span><span class="n">GIVEN_NAME</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">SURNAME</span> <span class="ow">in</span> <span class="n">contact_person</span> <span class="ow">and</span> <span class="n">contact_person</span><span class="p">[</span><span class="n">SURNAME</span><span class="p">]:</span>
+            <span class="c1"># If given name is not set. Should not happen, but you never know</span>
+            <span class="k">if</span> <span class="n">contact_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">contact_name</span> <span class="o">=</span> <span class="n">contact_person</span><span class="p">[</span><span class="n">SURNAME</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">contact_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">contact_name</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">contact_person</span><span class="p">[</span><span class="n">SURNAME</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="k">if</span> <span class="n">EMAIL</span> <span class="ow">in</span> <span class="n">contact_person</span> <span class="ow">and</span> <span class="n">contact_person</span><span class="p">[</span><span class="n">EMAIL</span><span class="p">]:</span>
+            <span class="n">contact_email</span> <span class="o">=</span> <span class="n">contact_person</span><span class="p">[</span><span class="n">EMAIL</span><span class="p">]</span>
+
+        <span class="c1"># If we only have an email, fill in the email as the name</span>
+        <span class="c1"># This makes the template a bit simpler</span>
+        <span class="k">if</span> <span class="n">contact_name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">contact_email</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">contact_name</span> <span class="o">=</span> <span class="n">contact_email</span>
+
+    <span class="k">return</span> <span class="n">contact_name</span><span class="p">,</span> <span class="n">contact_email</span>
+
+
+<div class="viewcode-block" id="login_error">
+<a class="viewcode-back" href="../../../../reference/cdh.federated_auth.saml.views.html#cdh.federated_auth.saml.views.login_error">[docs]</a>
+<span class="k">def</span> <span class="nf">login_error</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">exception</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">403</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Custom ACS error view, adding contact details to context for custom</span>
+<span class="sd">    templates</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">contact_name</span><span class="p">,</span> <span class="n">contact_email</span> <span class="o">=</span> <span class="n">_get_contact_info</span><span class="p">()</span>
+
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;exception&#39;</span><span class="p">:</span> <span class="n">exception</span><span class="p">,</span>
+        <span class="s1">&#39;contact_name&#39;</span><span class="p">:</span> <span class="n">contact_name</span><span class="p">,</span>
+        <span class="s1">&#39;contact_email&#39;</span><span class="p">:</span> <span class="n">contact_email</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span>
+        <span class="n">request</span><span class="p">,</span>
+        <span class="s1">&#39;djangosaml2/login_error.html&#39;</span><span class="p">,</span>
+        <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">,</span>
+        <span class="n">status</span><span class="o">=</span><span class="n">status</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="LogoutInitView">
+<a class="viewcode-back" href="../../../../reference/cdh.federated_auth.saml.views.html#cdh.federated_auth.saml.views.LogoutInitView">[docs]</a>
+<span class="k">class</span> <span class="nc">LogoutInitView</span><span class="p">(</span><span class="n">RedirectURLMixin</span><span class="p">,</span> <span class="n">TemplateResponseMixin</span><span class="p">,</span>
+                     <span class="n">ContextMixin</span><span class="p">,</span> <span class="n">DjangoSaml2LogoutInitView</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Custom LogoutInitView to handle logout requests for non-SAML users.</span>
+<span class="sd">    Basically merges Django&#39;s LogoutView with DjangoSaml2&#39;s LogoutInitView</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">next_page</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">redirect_field_name</span> <span class="o">=</span> <span class="n">REDIRECT_FIELD_NAME</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;registration/logged_out.html&#39;</span>
+    <span class="n">extra_context</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="LogoutInitView.get">
+<a class="viewcode-back" href="../../../../reference/cdh.federated_auth.saml.views.html#cdh.federated_auth.saml.views.LogoutInitView.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">subject_id</span> <span class="o">=</span> <span class="n">_get_subject_id</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">saml_session</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">subject_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># No saml session present, doing local logout</span>
+            <span class="n">auth</span><span class="o">.</span><span class="n">logout</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+            <span class="n">next_page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_next_page</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">next_page</span><span class="p">:</span>
+                <span class="c1"># Redirect to this page until the session has been cleared.</span>
+                <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="n">next_page</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">render_to_response</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">())</span>
+
+        <span class="c1"># SAML session present, proceeding to do SSO logout</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LogoutInitView.get_context_data">
+<a class="viewcode-back" href="../../../../reference/cdh.federated_auth.saml.views.html#cdh.federated_auth.saml.views.LogoutInitView.get_context_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">current_site</span> <span class="o">=</span> <span class="n">get_current_site</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">)</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+            <span class="s1">&#39;site&#39;</span><span class="p">:</span> <span class="n">current_site</span><span class="p">,</span>
+            <span class="s1">&#39;site_name&#39;</span><span class="p">:</span> <span class="n">current_site</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Logged out&#39;</span><span class="p">),</span>
+            <span class="o">**</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">extra_context</span> <span class="ow">or</span> <span class="p">{})</span>
+        <span class="p">})</span>
+        <span class="k">return</span> <span class="n">context</span></div>
+
+
+<div class="viewcode-block" id="LogoutInitView.get_next_page">
+<a class="viewcode-back" href="../../../../reference/cdh.federated_auth.saml.views.html#cdh.federated_auth.saml.views.LogoutInitView.get_next_page">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_next_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_page</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">next_page</span> <span class="o">=</span> <span class="n">resolve_url</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">next_page</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">settings</span><span class="o">.</span><span class="n">LOGOUT_REDIRECT_URL</span><span class="p">:</span>
+            <span class="n">next_page</span> <span class="o">=</span> <span class="n">resolve_url</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">LOGOUT_REDIRECT_URL</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">next_page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_page</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">redirect_field_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span> <span class="ow">or</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">redirect_field_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="p">):</span>
+            <span class="n">next_page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">redirect_field_name</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">redirect_field_name</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">url_is_safe</span> <span class="o">=</span> <span class="n">url_has_allowed_host_and_scheme</span><span class="p">(</span>
+                <span class="n">url</span><span class="o">=</span><span class="n">next_page</span><span class="p">,</span>
+                <span class="n">allowed_hosts</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_success_url_allowed_hosts</span><span class="p">(),</span>
+                <span class="n">require_https</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">is_secure</span><span class="p">(),</span>
+            <span class="p">)</span>
+            <span class="c1"># Security check -- Ensure the user-originating redirection URL is</span>
+            <span class="c1"># safe.</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">url_is_safe</span><span class="p">:</span>
+                <span class="n">next_page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">path</span>
+        <span class="k">return</span> <span class="n">next_page</span></div>
+</div>
+
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

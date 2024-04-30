@@ -1,0 +1,7 @@
+cdh.core.templatetags.include\_if\_exists module
+================================================
+
+.. automodule:: cdh.core.templatetags.include_if_exists
+   :members:
+   :undoc-members:
+   :show-inheritance:

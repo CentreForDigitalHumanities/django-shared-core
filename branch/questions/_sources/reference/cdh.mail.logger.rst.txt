@@ -1,0 +1,7 @@
+cdh.mail.logger module
+======================
+
+.. automodule:: cdh.mail.logger
+   :members:
+   :undoc-members:
+   :show-inheritance:

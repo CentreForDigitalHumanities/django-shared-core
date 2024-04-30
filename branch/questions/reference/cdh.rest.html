@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.rest package &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../_static/theme.css" type="text/css"/>
+        <script src="../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../_static/doctools.js?v=9a2dae69"></script>
+                    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../genindex.html"/>
+            <link rel="search" title="Search" href="../search.html"/>
+            <link rel="next" title="cdh.rest.client package" href="cdh.rest.client.html"/>
+            <link rel="prev" title="cdh.questions.views module" href="cdh.questions.views.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="index.html"
+           >
+           cdh
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           cdh package
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.rest package</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <section id="module-cdh.rest">
+<span id="cdh-rest-package"></span><h1>cdh.rest package<a class="headerlink" href="#module-cdh.rest" title="Link to this heading">¶</a></h1>
+<p>This module contains an abstraction layer for REST API calls.</p>
+<p>It defines the ::class:Resource and ::class:Collection classes, as well as
+several resources fields in ::mod:fields.</p>
+<p>A collection is a list of resources. Collections can only be retrieved at the
+moment.</p>
+<p>A resources is a single entity, which contains fields. A resources can be
+retrieved on it’s own, or through a collection.</p>
+<p>Through the means of fields, both Resources and Collections can be parts of
+Resources. A collection can only hold a certain resources.</p>
+<p>In a less abstract way: a resources is a JSON object, a collection is a JSON list
+and fields are JSON fields.</p>
+<p>For implementation details, see the :class:Resource and :class:Collection
+classes.</p>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cdh.rest.client.html">cdh.rest.client package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cdh.rest.client.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.rest.client.clients.html">cdh.rest.client.clients package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cdh.rest.client.clients.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.rest.client.collections.html">cdh.rest.client.collections package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cdh.rest.client.collections.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.rest.client.resources.html">cdh.rest.client.resources package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cdh.rest.client.resources.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cdh.rest.client.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.rest.client.fields.html">cdh.rest.client.fields module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cdh.rest.client.fields.html#cdh.rest.client.fields.BasicTypeField"><code class="docutils literal notranslate"><span class="pre">BasicTypeField</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.rest.client.fields.html#cdh.rest.client.fields.BoolField"><code class="docutils literal notranslate"><span class="pre">BoolField</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.rest.client.fields.html#cdh.rest.client.fields.CollectionField"><code class="docutils literal notranslate"><span class="pre">CollectionField</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.rest.client.fields.html#cdh.rest.client.fields.DateField"><code class="docutils literal notranslate"><span class="pre">DateField</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.rest.client.fields.html#cdh.rest.client.fields.DateTimeField"><code class="docutils literal notranslate"><span class="pre">DateTimeField</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.rest.client.fields.html#cdh.rest.client.fields.FloatField"><code class="docutils literal notranslate"><span class="pre">FloatField</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.rest.client.fields.html#cdh.rest.client.fields.IntegerField"><code class="docutils literal notranslate"><span class="pre">IntegerField</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.rest.client.fields.html#cdh.rest.client.fields.ResourceField"><code class="docutils literal notranslate"><span class="pre">ResourceField</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.rest.client.fields.html#cdh.rest.client.fields.TextField"><code class="docutils literal notranslate"><span class="pre">TextField</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.rest.client.fields.html#cdh.rest.client.fields.TimeField"><code class="docutils literal notranslate"><span class="pre">TimeField</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.rest.client.logging.html">cdh.rest.client.logging module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.rest.client.operations.html">cdh.rest.client.operations module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cdh.rest.client.operations.html#cdh.rest.client.operations.Operations"><code class="docutils literal notranslate"><span class="pre">Operations</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.rest.client.registry.html">cdh.rest.client.registry module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cdh.rest.server.html">cdh.rest.server package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cdh.rest.server.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.rest.server.authenticators.html">cdh.rest.server.authenticators module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cdh.rest.server.authenticators.html#cdh.rest.server.authenticators.JwtAuthentication"><code class="docutils literal notranslate"><span class="pre">JwtAuthentication</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.rest.server.permissions.html">cdh.rest.server.permissions module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cdh.rest.server.permissions.html#cdh.rest.server.permissions.IsPermittedClient"><code class="docutils literal notranslate"><span class="pre">IsPermittedClient</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.rest.server.serializers.html">cdh.rest.server.serializers module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cdh.rest.server.serializers.html#cdh.rest.server.serializers.ModelDisplaySerializer"><code class="docutils literal notranslate"><span class="pre">ModelDisplaySerializer</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.rest.server.settings.html">cdh.rest.server.settings module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.rest.server.token.html">cdh.rest.server.token module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.rest.server.token_algorithms.html">cdh.rest.server.token_algorithms module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cdh.rest.server.token_algorithms.html#cdh.rest.server.token_algorithms.Algorithms"><code class="docutils literal notranslate"><span class="pre">Algorithms</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cdh.rest.apps.html">cdh.rest.apps module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cdh.rest.apps.html#cdh.rest.apps.CdhRestClientConfig"><code class="docutils literal notranslate"><span class="pre">CdhRestClientConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.rest.apps.html#cdh.rest.apps.CdhRestClientConfig.default_auto_field"><code class="docutils literal notranslate"><span class="pre">CdhRestClientConfig.default_auto_field</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.rest.apps.html#cdh.rest.apps.CdhRestClientConfig.name"><code class="docutils literal notranslate"><span class="pre">CdhRestClientConfig.name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cdh.rest.exceptions.html">cdh.rest.exceptions module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cdh.rest.exceptions.html#cdh.rest.exceptions.ApiError"><code class="docutils literal notranslate"><span class="pre">ApiError</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.rest.exceptions.html#cdh.rest.exceptions.ApiError.__init__"><code class="docutils literal notranslate"><span class="pre">ApiError.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cdh.rest.exceptions.html#cdh.rest.exceptions.Forbidden"><code class="docutils literal notranslate"><span class="pre">Forbidden</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.rest.exceptions.html#cdh.rest.exceptions.Forbidden.__init__"><code class="docutils literal notranslate"><span class="pre">Forbidden.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cdh.rest.exceptions.html#cdh.rest.exceptions.OperationNotEnabled"><code class="docutils literal notranslate"><span class="pre">OperationNotEnabled</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="cdh.rest.exceptions.html#cdh.rest.exceptions.Unauthorized"><code class="docutils literal notranslate"><span class="pre">Unauthorized</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.rest.exceptions.html#cdh.rest.exceptions.Unauthorized.__init__"><code class="docutils literal notranslate"><span class="pre">Unauthorized.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cdh.rest.logging.html">cdh.rest.logging module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdh.rest.mixins.html">cdh.rest.mixins module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cdh.rest.mixins.html#cdh.rest.mixins.ClientResourceSetupMixin"><code class="docutils literal notranslate"><span class="pre">ClientResourceSetupMixin</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.rest.mixins.html#cdh.rest.mixins.ClientResourceSetupMixin.__init__"><code class="docutils literal notranslate"><span class="pre">ClientResourceSetupMixin.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.rest.mixins.html#cdh.rest.mixins.ClientResourceSetupMixin.ready"><code class="docutils literal notranslate"><span class="pre">ClientResourceSetupMixin.ready()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.rest.mixins.html#cdh.rest.mixins.ClientResourceSetupMixin.resource_module"><code class="docutils literal notranslate"><span class="pre">ClientResourceSetupMixin.resource_module</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

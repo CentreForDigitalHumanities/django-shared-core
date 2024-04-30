@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cdh.rest.client.collections.collections module &mdash; Django Shared Core 3.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="cdh.rest.client.collections.options module" href="cdh.rest.client.collections.options.html" />
+    <link rel="prev" title="cdh.rest.client.collections package" href="cdh.rest.client.collections.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Django Shared Core
+          </a>
+              <div class="version">
+                3.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">cdh</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="cdh.html">cdh package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="cdh.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="cdh.core.html">cdh.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.files.html">cdh.files package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.integration_platform.html">cdh.integration_platform package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="cdh.rest.html">cdh.rest package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.systemmessages.html">cdh.systemmessages package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.vue.html">cdh.vue package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Django Shared Core</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">cdh</a> &raquo;</li>
+          <li><a href="cdh.html">cdh package</a> &raquo;</li>
+          <li><a href="cdh.rest.html">cdh.rest package</a> &raquo;</li>
+          <li><a href="cdh.rest.client.html">cdh.rest.client package</a> &raquo;</li>
+          <li><a href="cdh.rest.client.collections.html">cdh.rest.client.collections package</a> &raquo;</li>
+      <li>cdh.rest.client.collections.collections module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/reference/cdh.rest.client.collections.collections.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-cdh.rest.client.collections.collections">
+<span id="cdh-rest-client-collections-collections-module"></span><h1>cdh.rest.client.collections.collections module<a class="headerlink" href="#module-cdh.rest.client.collections.collections" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.rest.client.collections.collections.FloatCollection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.rest.client.collections.collections.</span></span><span class="sig-name descname"><span class="pre">FloatCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/rest/client/collections/collections.html#FloatCollection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.collections.collections.FloatCollection" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">_TypeCollection</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.rest.client.collections.collections.FloatCollection.client">
+<span class="sig-name descname"><span class="pre">client</span></span><a class="headerlink" href="#cdh.rest.client.collections.collections.FloatCollection.client" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.rest.client.collections.collections.FloatCollection.type">
+<span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#cdh.rest.client.collections.collections.FloatCollection.type" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.rest.client.collections.collections.IntegerCollection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.rest.client.collections.collections.</span></span><span class="sig-name descname"><span class="pre">IntegerCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/rest/client/collections/collections.html#IntegerCollection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.collections.collections.IntegerCollection" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">_TypeCollection</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.rest.client.collections.collections.IntegerCollection.client">
+<span class="sig-name descname"><span class="pre">client</span></span><a class="headerlink" href="#cdh.rest.client.collections.collections.IntegerCollection.client" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.rest.client.collections.collections.IntegerCollection.type">
+<span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#cdh.rest.client.collections.collections.IntegerCollection.type" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.rest.client.collections.collections.ResourceCollection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.rest.client.collections.collections.</span></span><span class="sig-name descname"><span class="pre">ResourceCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/rest/client/collections/collections.html#ResourceCollection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.collections.collections.ResourceCollection" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">_CollectionMixin</span></code></p>
+<p>This class can be extended to describe a JSON object collection.
+A resources collection does not have fields of its own, one needs to
+specify the resources contained in the collection instead. At the moment, a
+collection can only hold one type of resources and cannot hold different
+collections.</p>
+<p>A collection can be connected to an API endpoint by specifying the path
+at which this resources can be retrieved. This is done by setting the path
+variable in the inline Meta class.This is optional however.</p>
+<p>At the moment, only get operations are supported for collections. You can
+choose plain GET or emulate GET over a POST request for more security.</p>
+<p>Note: you are not able to change the contents of a collection, as this
+would imply you can update the collection in the API. This class have been
+locked down to discourage people from trying to do so.</p>
+<p>For a detailed overview of these operations, please see their corresponding
+client methods. (Found in client.py, or by calling help on Resource.client).</p>
+<p>Available Meta variables:
+- resources (required): The resources class contained in this collection
+- path (optional): Specifies the REST endpoint location for this resources.</p>
+<blockquote>
+<div><p>Required for client operations. One might leave this unconfigured if the
+resources in question is part of a different resources/collection and does
+not have it’s own endpoint.
+Please note that the API host will be joined to the path. Please specify
+a path relative to the host value supplied in settings.py</p>
+</div></blockquote>
+<ul>
+<li><p>path_variables (optional): A list of variable names that are to be
+included in the path. If a variable name corresponds to a field name, the
+value of said field will be used, otherwise the value will be retrieved
+from the kwargs of the client method call.
+To specify where in the path these variables should be used, one can add
+‘{variable_name}’ in the path variable. For example:</p>
+<p>::code: python</p>
+<blockquote>
+<div><dl class="simple">
+<dt>class Meta:</dt><dd><p>path = “/item/{pk}/”
+path_variables = [‘pk’]</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>operation (optional): Whether to use GET or GET_OVER_POST
+Defaults to GET. Does not affect anything if no path is specified.</p></li>
+<li><p>client_class (optional): You can use this variable to specify a different
+client.</p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.rest.client.collections.collections.ResourceCollection.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/rest/client/collections/collections.html#ResourceCollection.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.collections.collections.ResourceCollection.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.rest.client.collections.collections.ResourceCollection.to_api">
+<span class="sig-name descname"><span class="pre">to_api</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a></span></span><a class="reference internal" href="../_modules/cdh/rest/client/collections/collections.html#ResourceCollection.to_api"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.collections.collections.ResourceCollection.to_api" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the data in this collection as a list, to be converted to
+a form the API understands.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.rest.client.collections.collections.StringCollection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.rest.client.collections.collections.</span></span><span class="sig-name descname"><span class="pre">StringCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/rest/client/collections/collections.html#StringCollection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.collections.collections.StringCollection" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">_TypeCollection</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.rest.client.collections.collections.StringCollection.client">
+<span class="sig-name descname"><span class="pre">client</span></span><a class="headerlink" href="#cdh.rest.client.collections.collections.StringCollection.client" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.rest.client.collections.collections.StringCollection.type">
+<span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#cdh.rest.client.collections.collections.StringCollection.type" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cdh.rest.client.collections.html" class="btn btn-neutral float-left" title="cdh.rest.client.collections package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cdh.rest.client.collections.options.html" class="btn btn-neutral float-right" title="cdh.rest.client.collections.options module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+cdh.dev\_tools.shell package
+============================
+
+.. automodule:: cdh.dev_tools.shell
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.dev_tools.shell.logger

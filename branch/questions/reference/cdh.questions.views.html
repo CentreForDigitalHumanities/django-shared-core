@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.questions.views module &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../_static/theme.css" type="text/css"/>
+        <script src="../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../_static/doctools.js?v=9a2dae69"></script>
+                    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../genindex.html"/>
+            <link rel="search" title="Search" href="../search.html"/>
+            <link rel="next" title="cdh.rest package" href="cdh.rest.html"/>
+            <link rel="prev" title="cdh.questions.tests module" href="cdh.questions.tests.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="index.html"
+           >
+           cdh
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.html"
+           >
+           cdh package
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.questions.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           cdh.questions package
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.questions.views module</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <section id="module-cdh.questions.views">
+<span id="cdh-questions-views-module"></span><h1>cdh.questions.views module<a class="headerlink" href="#module-cdh.questions.views" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.questions.views.BlueprintMixin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.questions.views.</span></span><span class="sig-name descname"><span class="pre">BlueprintMixin</span></span><a class="reference internal" href="../_modules/cdh/questions/views.html#BlueprintMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.BlueprintMixin" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Provide a blueprint to this view, instantiated from its object</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.questions.views.BlueprintMixin.blueprint">
+<span class="sig-name descname"><span class="pre">blueprint</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cdh.questions.views.BlueprintMixin.blueprint" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.questions.views.BlueprintMixin.blueprint_class">
+<span class="sig-name descname"><span class="pre">blueprint_class</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cdh.questions.views.BlueprintMixin.blueprint_class" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.questions.views.BlueprintMixin.blueprint_pk_kwarg">
+<span class="sig-name descname"><span class="pre">blueprint_pk_kwarg</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'blueprint_pk'</span></em><a class="headerlink" href="#cdh.questions.views.BlueprintMixin.blueprint_pk_kwarg" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.questions.views.BlueprintMixin.get_blueprint">
+<span class="sig-name descname"><span class="pre">get_blueprint</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/questions/views.html#BlueprintMixin.get_blueprint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.BlueprintMixin.get_blueprint" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.questions.views.BlueprintMixin.get_blueprint_object">
+<span class="sig-name descname"><span class="pre">get_blueprint_object</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/questions/views.html#BlueprintMixin.get_blueprint_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.BlueprintMixin.get_blueprint_object" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.questions.views.BlueprintMixin.get_context_data">
+<span class="sig-name descname"><span class="pre">get_context_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/questions/views.html#BlueprintMixin.get_context_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.BlueprintMixin.get_context_data" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionCreateView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.questions.views.</span></span><span class="sig-name descname"><span class="pre">QuestionCreateView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/questions/views.html#QuestionCreateView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.QuestionCreateView" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.questions.views.QuestionView" title="cdh.questions.views.QuestionView"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuestionView</span></code></a>, <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/class-based-views/generic-editing/#django.views.generic.edit.CreateView" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">CreateView</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionCreateView.get_form_kwargs">
+<span class="sig-name descname"><span class="pre">get_form_kwargs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/questions/views.html#QuestionCreateView.get_form_kwargs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.QuestionCreateView.get_form_kwargs" title="Link to this definition">¶</a></dt>
+<dd><p>Send extra question data to question class</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionCreateView.pk_url_kwarg">
+<span class="sig-name descname"><span class="pre">pk_url_kwarg</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'question_pk'</span></em><a class="headerlink" href="#cdh.questions.views.QuestionCreateView.pk_url_kwarg" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionCreateView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/questions/views.html#QuestionCreateView.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.QuestionCreateView.post" title="Link to this definition">¶</a></dt>
+<dd><p>Handle POST requests: instantiate a form instance with the passed
+POST variables and then check if it’s valid.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionCreateView.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'questions/question_detail.html'</span></em><a class="headerlink" href="#cdh.questions.views.QuestionCreateView.template_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionDeleteView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.questions.views.</span></span><span class="sig-name descname"><span class="pre">QuestionDeleteView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/questions/views.html#QuestionDeleteView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.QuestionDeleteView" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.questions.views.QuestionView" title="cdh.questions.views.QuestionView"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuestionView</span></code></a>, <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/class-based-views/generic-editing/#django.views.generic.edit.DeleteView" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DeleteView</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionDeleteView.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'questions/question_detail.html'</span></em><a class="headerlink" href="#cdh.questions.views.QuestionDeleteView.template_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionDisplayView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.questions.views.</span></span><span class="sig-name descname"><span class="pre">QuestionDisplayView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/questions/views.html#QuestionDisplayView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.QuestionDisplayView" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/class-based-views/base/#django.views.generic.base.TemplateView" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TemplateView</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionDisplayView.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'questions/question_detail.html'</span></em><a class="headerlink" href="#cdh.questions.views.QuestionDisplayView.template_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionEditView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.questions.views.</span></span><span class="sig-name descname"><span class="pre">QuestionEditView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/questions/views.html#QuestionEditView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.QuestionEditView" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.questions.views.QuestionView" title="cdh.questions.views.QuestionView"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuestionView</span></code></a>, <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/class-based-views/generic-editing/#django.views.generic.edit.UpdateView" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">UpdateView</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionEditView.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/questions/views.html#QuestionEditView.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.QuestionEditView.get" title="Link to this definition">¶</a></dt>
+<dd><p>Handle GET requests: instantiate a blank version of the form.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionEditView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/questions/views.html#QuestionEditView.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.QuestionEditView.post" title="Link to this definition">¶</a></dt>
+<dd><p>Handle POST requests: instantiate a form instance with the passed
+POST variables and then check if it’s valid.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionEditView.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cdh.questions/question_detail.html'</span></em><a class="headerlink" href="#cdh.questions.views.QuestionEditView.template_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionFromURLMixin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.questions.views.</span></span><span class="sig-name descname"><span class="pre">QuestionFromURLMixin</span></span><a class="reference internal" href="../_modules/cdh/questions/views.html#QuestionFromURLMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.QuestionFromURLMixin" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.questions.views.SingleQuestionMixin" title="cdh.questions.views.SingleQuestionMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleQuestionMixin</span></code></a></p>
+<p>If you want to reuse a certain view for multiple questions, mix in
+this class and provide it with a question_dict to get the question class
+from a URL arg.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionFromURLMixin.get_question_class">
+<span class="sig-name descname"><span class="pre">get_question_class</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/questions/views.html#QuestionFromURLMixin.get_question_class"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.QuestionFromURLMixin.get_question_class" title="Link to this definition">¶</a></dt>
+<dd><p>Placeholder for subclasses</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionFromURLMixin.question_class_kwarg">
+<span class="sig-name descname"><span class="pre">question_class_kwarg</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'question'</span></em><a class="headerlink" href="#cdh.questions.views.QuestionFromURLMixin.question_class_kwarg" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionFromURLMixin.question_dict">
+<span class="sig-name descname"><span class="pre">question_dict</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cdh.questions.views.QuestionFromURLMixin.question_dict" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.questions.views.</span></span><span class="sig-name descname"><span class="pre">QuestionView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/questions/views.html#QuestionView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.QuestionView" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.questions.views.SingleQuestionMixin" title="cdh.questions.views.SingleQuestionMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleQuestionMixin</span></code></a>, <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/class-based-views/base/#django.views.generic.base.TemplateView" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TemplateView</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionView.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/questions/views.html#QuestionView.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.QuestionView.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionView.get_form_kwargs">
+<span class="sig-name descname"><span class="pre">get_form_kwargs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/questions/views.html#QuestionView.get_form_kwargs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.QuestionView.get_form_kwargs" title="Link to this definition">¶</a></dt>
+<dd><p>Send extra question data to question class</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionView.get_object">
+<span class="sig-name descname"><span class="pre">get_object</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/questions/views.html#QuestionView.get_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.QuestionView.get_object" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the object that the question is about.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionView.get_success_url">
+<span class="sig-name descname"><span class="pre">get_success_url</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/questions/views.html#QuestionView.get_success_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.QuestionView.get_success_url" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionView.parent_pk_arg">
+<span class="sig-name descname"><span class="pre">parent_pk_arg</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pk'</span></em><a class="headerlink" href="#cdh.questions.views.QuestionView.parent_pk_arg" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionView.question_class">
+<span class="sig-name descname"><span class="pre">question_class</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cdh.questions.views.QuestionView.question_class" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionView.question_pk_kwarg">
+<span class="sig-name descname"><span class="pre">question_pk_kwarg</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'question_pk'</span></em><a class="headerlink" href="#cdh.questions.views.QuestionView.question_pk_kwarg" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.questions.views.QuestionView.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'questions/question_detail.html'</span></em><a class="headerlink" href="#cdh.questions.views.QuestionView.template_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.questions.views.SingleQuestionMixin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.questions.views.</span></span><span class="sig-name descname"><span class="pre">SingleQuestionMixin</span></span><a class="reference internal" href="../_modules/cdh/questions/views.html#SingleQuestionMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.SingleQuestionMixin" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.questions.views.SingleQuestionMixin.get_context_data">
+<span class="sig-name descname"><span class="pre">get_context_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/questions/views.html#SingleQuestionMixin.get_context_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.SingleQuestionMixin.get_context_data" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.questions.views.SingleQuestionMixin.get_form_class">
+<span class="sig-name descname"><span class="pre">get_form_class</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/questions/views.html#SingleQuestionMixin.get_form_class"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.SingleQuestionMixin.get_form_class" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.questions.views.SingleQuestionMixin.get_question">
+<span class="sig-name descname"><span class="pre">get_question</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/questions/views.html#SingleQuestionMixin.get_question"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.SingleQuestionMixin.get_question" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.questions.views.SingleQuestionMixin.get_question_class">
+<span class="sig-name descname"><span class="pre">get_question_class</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/questions/views.html#SingleQuestionMixin.get_question_class"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.SingleQuestionMixin.get_question_class" title="Link to this definition">¶</a></dt>
+<dd><p>Placeholder for subclasses</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.questions.views.SingleQuestionMixin.get_question_object">
+<span class="sig-name descname"><span class="pre">get_question_object</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/questions/views.html#SingleQuestionMixin.get_question_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.questions.views.SingleQuestionMixin.get_question_object" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.questions.views.SingleQuestionMixin.question">
+<span class="sig-name descname"><span class="pre">question</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cdh.questions.views.SingleQuestionMixin.question" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.questions.views.SingleQuestionMixin.question_class">
+<span class="sig-name descname"><span class="pre">question_class</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cdh.questions.views.SingleQuestionMixin.question_class" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.questions.views.SingleQuestionMixin.question_pk_kwarg">
+<span class="sig-name descname"><span class="pre">question_pk_kwarg</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'question_pk'</span></em><a class="headerlink" href="#cdh.questions.views.SingleQuestionMixin.question_pk_kwarg" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

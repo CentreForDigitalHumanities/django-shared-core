@@ -1,0 +1,7 @@
+cdh.vue3.apps module
+====================
+
+.. automodule:: cdh.vue3.apps
+   :members:
+   :undoc-members:
+   :show-inheritance:

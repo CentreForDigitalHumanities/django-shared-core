@@ -1,0 +1,7 @@
+cdh.core.templatetags.datatables module
+=======================================
+
+.. automodule:: cdh.core.templatetags.datatables
+   :members:
+   :undoc-members:
+   :show-inheritance:

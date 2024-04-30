@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.core.management.commands.makemessages &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../../../_static/theme.css" type="text/css"/>
+        <script src="../../../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../../../../../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../../../../../_static/doctools.js?v=9a2dae69"></script>
+                    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../../../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.core.management.commands.makemessages</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.core.management.commands.makemessages</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django.core.management.commands.makemessages</span> <span class="kn">import</span> <span class="n">Command</span> <span class="k">as</span> <span class="n">C</span><span class="p">,</span> <span class="n">BuildFile</span> <span class="k">as</span> <span class="n">BF</span><span class="p">,</span> <span class="n">prepare_js_for_gettext</span>
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+
+<div class="viewcode-block" id="templatize">
+<a class="viewcode-back" href="../../../../../reference/cdh.core.management.commands.makemessages.html#cdh.core.management.commands.makemessages.templatize">[docs]</a>
+<span class="k">def</span> <span class="nf">templatize</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function overrides part of the original templetize function used by BuildFile below, by sligtly modifying</span>
+<span class="sd">    the inline_re variable to include the transformat tag.</span>
+<span class="sd">    :param src:</span>
+<span class="sd">    :param kwargs:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">django.utils.translation.template</span> <span class="k">as</span> <span class="nn">template</span>
+
+    <span class="n">template</span><span class="o">.</span><span class="n">inline_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+        <span class="c1"># Match the trans &#39;some text&#39; part</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;^\s*trans(?:format|late)?\s+((?:&quot;[^&quot;]*?&quot;)|(?:&#39;[^&#39;]*?&#39;))&quot;&quot;&quot;</span>
+        <span class="c1"># Match and ignore optional filters</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;(?:\s*\|\s*[^\s:]+(?::(?:[^\s&#39;&quot;:]+|(?:&quot;[^&quot;]*?&quot;)|(?:&#39;[^&#39;]*?&#39;)))?)*&quot;&quot;&quot;</span>
+        <span class="c1"># Match the optional context part</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;(\s+.*context\s+((?:&quot;[^&quot;]*?&quot;)|(?:&#39;[^&#39;]*?&#39;)))?\s*&quot;&quot;&quot;</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">template</span><span class="o">.</span><span class="n">templatize</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="BuildFile">
+<a class="viewcode-back" href="../../../../../reference/cdh.core.management.commands.makemessages.html#cdh.core.management.commands.makemessages.BuildFile">[docs]</a>
+<span class="k">class</span> <span class="nc">BuildFile</span><span class="p">(</span><span class="n">BF</span><span class="p">):</span>
+
+<div class="viewcode-block" id="BuildFile.preprocess">
+<a class="viewcode-back" href="../../../../../reference/cdh.core.management.commands.makemessages.html#cdh.core.management.commands.makemessages.BuildFile.preprocess">[docs]</a>
+    <span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Preprocess (if necessary) a translatable file before passing it to</span>
+<span class="sd">        xgettext GNU gettext utility.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_templatized</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="n">src_data</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">domain</span> <span class="o">==</span> <span class="s1">&#39;djangojs&#39;</span><span class="p">:</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="n">prepare_js_for_gettext</span><span class="p">(</span><span class="n">src_data</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">domain</span> <span class="o">==</span> <span class="s1">&#39;django&#39;</span><span class="p">:</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="n">templatize</span><span class="p">(</span><span class="n">src_data</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">work_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Command">
+<a class="viewcode-back" href="../../../../../reference/cdh.core.management.commands.makemessages.html#cdh.core.management.commands.makemessages.Command">[docs]</a>
+<span class="k">class</span> <span class="nc">Command</span><span class="p">(</span><span class="n">C</span><span class="p">):</span>
+    <span class="n">build_file_class</span> <span class="o">=</span> <span class="n">BuildFile</span></div>
+
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

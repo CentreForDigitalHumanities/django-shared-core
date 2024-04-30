@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.vue.rest.fancylist_api_view module &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../_static/theme.css" type="text/css"/>
+        <script src="../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../_static/doctools.js?v=9a2dae69"></script>
+                    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../genindex.html"/>
+            <link rel="search" title="Search" href="../search.html"/>
+            <link rel="next" title="cdh.vue.templatetags package" href="cdh.vue.templatetags.html"/>
+            <link rel="prev" title="cdh.vue.rest package" href="cdh.vue.rest.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="index.html"
+           >
+           cdh
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.html"
+           >
+           cdh package
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.vue.html"
+           >
+           cdh.vue package
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.vue.rest.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           cdh.vue.rest package
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.vue.rest.fancylist_api_view module</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <section id="module-cdh.vue.rest.fancylist_api_view">
+<span id="cdh-vue-rest-fancylist-api-view-module"></span><h1>cdh.vue.rest.fancylist_api_view module<a class="headerlink" href="#module-cdh.vue.rest.fancylist_api_view" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListApiView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.vue.rest.fancylist_api_view.</span></span><span class="sig-name descname"><span class="pre">FancyListApiView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/vue/rest/fancylist_api_view.html#FancyListApiView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericAPIView</span></code></p>
+<p>Implements an API List view to use for FancyList lists.</p>
+<p>Spits out data in the format used by the FancyList constructor method</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListApiView.FilterDefinition">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FilterDefinition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/vue/rest/fancylist_api_view.html#FancyListApiView.FilterDefinition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.FilterDefinition" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Defines a filter for a field.</p>
+<p>Options for a filter are automatically generated by Vue</p>
+<p>Field should be given as a string, in the format
+{attribute}(.{subattribute})*</p>
+<p>(read, just like you would access an attribute of an object in Python,
+but sans the object itself and as a string).</p>
+<p>For example:
+“subObject.created”</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>field</strong> (<em>{str}</em>) – the field that is sortable</p></li>
+<li><p><strong>display_name</strong> (<em>{str}</em>) – Text that should be displayed on the button</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListApiView.FilterDefinition.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/vue/rest/fancylist_api_view.html#FancyListApiView.FilterDefinition.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.FilterDefinition.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListApiView.SortDefinition">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SortDefinition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">asc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/vue/rest/fancylist_api_view.html#FancyListApiView.SortDefinition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.SortDefinition" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Defines a sort option for a field</p>
+<p>Field should be given as a string, in the format
+{attribute}(.{subattribute})*</p>
+<p>(read, just like you would access an attribute of an object in Python,
+but sans the object itself and as a string).</p>
+<p>For example:
+“subObject.title”</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>field</strong> (<em>{str}</em>) – the field that is sortable</p></li>
+<li><p><strong>label</strong> (<em>{str}</em>) – The text to display in the dropdown. Direction
+arrows are added automatically</p></li>
+<li><p><strong>default</strong> (<em>{&quot;asc&quot;</em><em>|</em><em>&quot;desc&quot;</em><em>|</em><em>None}</em>) – <p>If not None, this direction will be
+the sort applied upon load. If multiple defs are set as default,
+the first one encountered will be used</p>
+</p></li>
+<li><p><strong>asc</strong> (<em>{bool}</em>) – whether sorting ascendingly is supported</p></li>
+<li><p><strong>desc</strong> (<em>{bool}</em>) – whether sorting descendingly is supported</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListApiView.SortDefinition.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">asc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/vue/rest/fancylist_api_view.html#FancyListApiView.SortDefinition.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.SortDefinition.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListApiView.SortDefinition.serialize">
+<span class="sig-name descname"><span class="pre">serialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.12)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/vue/rest/fancylist_api_view.html#FancyListApiView.SortDefinition.serialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.SortDefinition.serialize" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListApiView.context">
+<span class="sig-name descname"><span class="pre">context</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.context" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListApiView.default_items_per_page">
+<span class="sig-name descname"><span class="pre">default_items_per_page</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.default_items_per_page" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListApiView.default_sort">
+<span class="sig-name descname"><span class="pre">default_sort</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.default_sort" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListApiView.filter_definitions">
+<span class="sig-name descname"><span class="pre">filter_definitions</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.filter_definitions" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListApiView.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/vue/rest/fancylist_api_view.html#FancyListApiView.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.get" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListApiView.get_context">
+<span class="sig-name descname"><span class="pre">get_context</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.12)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/cdh/vue/rest/fancylist_api_view.html#FancyListApiView.get_context"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.get_context" title="Link to this definition">¶</a></dt>
+<dd><p>Returns any data accessible by all items in the Vue template</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListApiView.get_default_items_per_page">
+<span class="sig-name descname"><span class="pre">get_default_items_per_page</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/cdh/vue/rest/fancylist_api_view.html#FancyListApiView.get_default_items_per_page"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.get_default_items_per_page" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the default number of items to be displayed on a page.</p>
+<p>Value must be an element in num_items_options</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListApiView.get_default_sort">
+<span class="sig-name descname"><span class="pre">get_default_sort</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.12)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/cdh/vue/rest/fancylist_api_view.html#FancyListApiView.get_default_sort"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.get_default_sort" title="Link to this definition">¶</a></dt>
+<dd><p>Return the default sort. Should be a tuple of (field, direction).
+Where direction is either ‘asc’ or ‘desc’.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListApiView.get_filter_definitions">
+<span class="sig-name descname"><span class="pre">get_filter_definitions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.FilterDefinition" title="cdh.vue.rest.fancylist_api_view.FancyListApiView.FilterDefinition"><span class="pre">FilterDefinition</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/cdh/vue/rest/fancylist_api_view.html#FancyListApiView.get_filter_definitions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.get_filter_definitions" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a list of filter definitions. See FilterDefinition for more
+info.</p>
+<p>If an empty list is returned, filters will be disabled.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListApiView.get_items">
+<span class="sig-name descname"><span class="pre">get_items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/vue/rest/fancylist_api_view.html#FancyListApiView.get_items"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.get_items" title="Link to this definition">¶</a></dt>
+<dd><p>Get serialized items from QS through the serializer</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListApiView.get_num_items_options">
+<span class="sig-name descname"><span class="pre">get_num_items_options</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/cdh/vue/rest/fancylist_api_view.html#FancyListApiView.get_num_items_options"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.get_num_items_options" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the possible items per page options</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListApiView.get_searchable_fields">
+<span class="sig-name descname"><span class="pre">get_searchable_fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/cdh/vue/rest/fancylist_api_view.html#FancyListApiView.get_searchable_fields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.get_searchable_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a list of path strings of fields that can be searched
+through.</p>
+<p>If an empty list is returned, all fields are searchable</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListApiView.get_show_controls">
+<span class="sig-name descname"><span class="pre">get_show_controls</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/cdh/vue/rest/fancylist_api_view.html#FancyListApiView.get_show_controls"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.get_show_controls" title="Link to this definition">¶</a></dt>
+<dd><p>If False, all controls will be hidden. (Search, sort on, items per
+page and filters)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListApiView.get_sort_definitions">
+<span class="sig-name descname"><span class="pre">get_sort_definitions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.SortDefinition" title="cdh.vue.rest.fancylist_api_view.FancyListApiView.SortDefinition"><span class="pre">SortDefinition</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/cdh/vue/rest/fancylist_api_view.html#FancyListApiView.get_sort_definitions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.get_sort_definitions" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a list of sort definitions. See SortDefinition for more info.</p>
+<p>If an empty list is returned, the sort box will be hidden and the
+sort of the QuerySet is used.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListApiView.num_items_options">
+<span class="sig-name descname"><span class="pre">num_items_options</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[5,</span> <span class="pre">10,</span> <span class="pre">25,</span> <span class="pre">50]</span></em><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.num_items_options" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListApiView.searchable_fields">
+<span class="sig-name descname"><span class="pre">searchable_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.searchable_fields" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListApiView.show_controls">
+<span class="sig-name descname"><span class="pre">show_controls</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.show_controls" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListApiView.sort_definitions">
+<span class="sig-name descname"><span class="pre">sort_definitions</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListApiView.sort_definitions" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListPaginator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.vue.rest.fancylist_api_view.</span></span><span class="sig-name descname"><span class="pre">FancyListPaginator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">view</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/vue/rest/fancylist_api_view.html#FancyListPaginator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListPaginator" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PageNumberPagination</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListPaginator.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">view</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/vue/rest/fancylist_api_view.html#FancyListPaginator.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListPaginator.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListPaginator.get_paginated_response">
+<span class="sig-name descname"><span class="pre">get_paginated_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/vue/rest/fancylist_api_view.html#FancyListPaginator.get_paginated_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListPaginator.get_paginated_response" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListPaginator.page_size">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">page_size</span></span><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListPaginator.page_size" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.vue.rest.fancylist_api_view.FancyListPaginator.page_size_query_param">
+<span class="sig-name descname"><span class="pre">page_size_query_param</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'page_size'</span></em><a class="headerlink" href="#cdh.vue.rest.fancylist_api_view.FancyListPaginator.page_size_query_param" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

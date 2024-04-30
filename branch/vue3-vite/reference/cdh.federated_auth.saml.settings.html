@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.federated_auth.saml.settings module &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../_static/theme.css" type="text/css"/>
+        <script src="../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../_static/doctools.js?v=888ff710"></script>
+                    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../genindex.html"/>
+            <link rel="search" title="Search" href="../search.html"/>
+            <link rel="next" title="cdh.federated_auth.saml.views module" href="cdh.federated_auth.saml.views.html"/>
+            <link rel="prev" title="cdh.federated_auth.saml.attribute-maps.saml_uri module" href="cdh.federated_auth.saml.attribute-maps.saml_uri.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="index.html"
+           >
+           cdh
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.html"
+           >
+           cdh package
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.federated_auth.html"
+           >
+           cdh.federated_auth package
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.federated_auth.saml.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           cdh.federated_auth.saml package
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.federated_auth.saml.settings module</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <section id="module-cdh.federated_auth.saml.settings">
+<span id="cdh-federated-auth-saml-settings-module"></span><h1>cdh.federated_auth.saml.settings module<a class="headerlink" href="#module-cdh.federated_auth.saml.settings" title="Link to this heading">¶</a></h1>
+<p>SAML settings for Django settings.py</p>
+<p>Import the contents of this module in your <code class="docutils literal notranslate"><span class="pre">settings.py</span></code> to easily setup SAML
+for your Django app. This module contains all needed settings for a basic
+SAML setup, you might need to change some settings for your app.</p>
+<p>Basic usage:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">cdh.federated_auth.saml.settings</span> <span class="kn">import</span> <span class="o">*</span>
+
+    <span class="n">SAML_CONFIG</span> <span class="o">=</span> <span class="n">create_saml_config</span><span class="p">(</span>
+        <span class="n">base_url</span><span class="o">=</span><span class="s1">&#39;https://sp.example.org/&#39;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;My awesome app&#39;</span><span class="p">,</span>
+        <span class="n">key_file</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s1">&#39;private.key&#39;</span><span class="p">),</span>
+        <span class="n">cert_file</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s1">&#39;public.cert&#39;</span><span class="p">),</span>
+        <span class="n">idp_metadata</span><span class="o">=</span><span class="s1">&#39;https://idp.example.org/metadata/&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Any overrides go here</span>
+
+<span class="k">except</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Could not load SAML settings&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will set up a minimal DjangoSAML2 setup. Please refer to the source code
+for all settings and to the docstring <a class="reference internal" href="#cdh.federated_auth.saml.settings.create_saml_config" title="cdh.federated_auth.saml.settings.create_saml_config"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_saml_config()</span></code></a> for more info.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>You will also need to add additional config elsewhere in your app, not
+described here. Please refer to the general CDH SAML setup guide for more
+info.</p>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="cdh.federated_auth.saml.settings.create_saml_config">
+<span class="sig-prename descclassname"><span class="pre">cdh.federated_auth.saml.settings.</span></span><span class="sig-name descname"><span class="pre">create_saml_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cert_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">idp_metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url_prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'saml/'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contact_person</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contact_given_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Humanities</span> <span class="pre">IT'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contact_sur_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contact_email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'dh-it&#64;uu.nl'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">required_attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optional_attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_id_format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'urn:oasis:names:tc:SAML:2.0:nameid-format:transient'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_id_allow_create</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attribute_map_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_authn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_unsolicited</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">want_response_signed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authn_requests_signed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logout_requests_signed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">want_assertions_signed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_overrides</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/federated_auth/saml/settings.html#create_saml_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.federated_auth.saml.settings.create_saml_config" title="Link to this definition">¶</a></dt>
+<dd><p>A function to generate the <cite>SAML_CONFIG</cite> setting</p>
+<p>Keyword arguments are optional. Most arguments are named after the PySAML2
+config keys, it is recommended you consult the PySAML2 docs as well:
+<a class="reference external" href="https://pysaml2.readthedocs.io/en/latest/howto/config.html">https://pysaml2.readthedocs.io/en/latest/howto/config.html</a></p>
+<section id="url-generation">
+<h2>URL generation<a class="headerlink" href="#url-generation" title="Link to this heading">¶</a></h2>
+<p>This function generates a lot of URLs for you, so it’s important your make
+sure your values for <cite>base_url</cite> and <cite>url_prefix</cite> is correct. For example:
+If your SP’s metadata is located at ‘<a class="reference external" href="https://sp.example.org/saml/metadata">https://sp.example.org/saml/metadata</a>’
+‘<a class="reference external" href="https://sp.example.org/">https://sp.example.org/</a>’ is your <cite>base_url</cite> and ‘saml/’ is your
+<cite>url_prefix</cite>.</p>
+</section>
+<section id="nameid">
+<h2>NameID<a class="headerlink" href="#nameid" title="Link to this heading">¶</a></h2>
+<p>The SAML protocol uses a NameID to identify users/sessions. The ID itself is
+often a (pseudo)random string or a hash. You have the option to use
+persistent or transient NameIDs, which can be set using the
+<cite>name_id_format</cite> keyword argument.</p>
+<p>When using persistent NameIDs, the IdP will (try to) use the same ID every
+time a particular user logs in. Transient IDs will be unique for every
+session, thus a user will receive a new one every time they log in.
+Persistent IDs are recommended when using the NameID as the primary
+identifier, transient is recommended otherwise. The pro’s and cons of
+both approaches are out of scope for this docstring.</p>
+<p>Please note that not all IdPs guarantee that persistent ID’s will never
+change, so please contact your IdP’s contact to ask if they do before using
+it as the primary identifier.</p>
+<p>Example minimal usage:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">SAML_CONFIG</span> <span class="o">=</span> <span class="n">create_saml_config</span><span class="p">(</span>
+  <span class="n">base_url</span><span class="o">=</span><span class="s1">&#39;https://sp.example.org/&#39;</span><span class="p">,</span>
+  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;My awesome app&#39;</span><span class="p">,</span>
+  <span class="n">key_file</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s1">&#39;private.key&#39;</span><span class="p">),</span>
+  <span class="n">cert_file</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s1">&#39;public.cert&#39;</span><span class="p">),</span>
+  <span class="n">idp_metadata</span><span class="o">=</span><span class="s1">&#39;https://idp.example.org/metadata/&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="required-params">
+<h2>Required params:<a class="headerlink" href="#required-params" title="Link to this heading">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">param name<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Human-readable name of this SP (e.g. My Awesome App)</p>
+</dd>
+<dt class="field-even">param base_url<span class="colon">:</span></dt>
+<dd class="field-even"><p>The base URL of the SP, including protocol.
+(e.g. <a class="reference external" href="https://sp.example.org/">https://sp.example.org/</a>)</p>
+</dd>
+<dt class="field-odd">param key_file<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The location of your private key of the SSL cert on the
+filesystem.</p>
+</dd>
+<dt class="field-even">param cert_file<span class="colon">:</span></dt>
+<dd class="field-even"><p>The location of your SSL cert on the filesystem</p>
+</dd>
+<dt class="field-odd">param idp_metadata<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The URL of the IDP’s metadata
+(e.g. <a class="reference external" href="https://idp.example.org/metadata/">https://idp.example.org/metadata/</a>)</p>
+</dd>
+</dl>
+</section>
+<section id="optional-params">
+<h2>Optional params:<a class="headerlink" href="#optional-params" title="Link to this heading">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">param url_prefix<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The URL prefix for all SAML views. Defaults to ‘saml’.
+It should be the same as the path that is used in the
+urlpatterns when including the SAML urlpatterns.
+See above for more information</p>
+</dd>
+<dt class="field-even">param entity_id<span class="colon">:</span></dt>
+<dd class="field-even"><p>The entity ID of the SP, by convention the URL of the SP’s
+metadata. If omitted, it will be autogenerated using
+<cite>base_url</cite> and <cite>url_prefix</cite>.</p>
+</dd>
+<dt class="field-odd">param contact_person<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of dicts, containing the contact information
+for this SP. If not set, it will be generated using
+<cite>contact_given_name</cite>, <cite>contact_sur_name</cite> and
+<cite>contact_email</cite>. Please consult the PySAML2 docs for
+the exact format</p>
+</dd>
+<dt class="field-even">param contact_given_name<span class="colon">:</span></dt>
+<dd class="field-even"><p>The first name of the technical contact (or
+the department name). Ignored if
+<cite>contact_person</cite> is set</p>
+</dd>
+<dt class="field-odd">param contact_sur_name<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The surname of the technical contact (or empty).
+Ignored if <cite>contact_person</cite> is set</p>
+</dd>
+<dt class="field-even">param contact_email<span class="colon">:</span></dt>
+<dd class="field-even"><p>The email of the technical contact. Ignored if
+<cite>contact_person</cite> is set</p>
+</dd>
+<dt class="field-odd">param required_attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of attributes that are needed for
+successful authentication in the SP. If not set,
+defaults to: <cite>givenName</cite>, <cite>uuprefixedsn</cite>,
+<cite>uushortid</cite>, <cite>mail</cite></p>
+</dd>
+<dt class="field-even">param optional_attributes<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of attributes that the SP would like
+to have. Not required and defaults to an
+empty list</p>
+</dd>
+<dt class="field-odd">param name_id_format<span class="colon">:</span></dt>
+<dd class="field-odd"><p>NAMEID_FORMAT_PERSISTENT or NAMEID_FORMAT_TRANSIENT.
+Defaults to transient.</p>
+</dd>
+<dt class="field-even">param name_id_allow_create<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sets the default value for AllowCreate on
+login requests. Defaults to True.
+Only applicable to persistent NameID’s. Note:
+best to leave this value alone if you are 
+unsure.</p>
+</dd>
+<dt class="field-odd">param attribute_map_dir<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The location of the PySAML2 SAML attribute files.
+If omitted, the library-provided files are used.</p>
+</dd>
+<dt class="field-even">param force_authn<span class="colon">:</span></dt>
+<dd class="field-even"><p>If set to ‘True’, a user must always authenticate when
+logging into your SP. When set to ‘False’, existing
+sessions on the IdP may be used instead. (In other
+words, if a user has just logged into a different SP,
+the IdP may skip authentication and log the user in
+directly). Defaults to False.</p>
+</dd>
+<dt class="field-odd">param allow_unsolicited<span class="colon">:</span></dt>
+<dd class="field-odd"><p>If the SP accepts login attempts it has not itself
+initiated. Defaults to <cite>False</cite>. This happens if
+a different SP initiates the login for this SP.</p>
+</dd>
+<dt class="field-even">param want_response_signed<span class="colon">:</span></dt>
+<dd class="field-even"><p>False, it errors on UU IdP’s if True.</p>
+</dd>
+<dt class="field-odd">param authn_requests_signed<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Defaults to True per UU requirements.</p>
+</dd>
+<dt class="field-even">param logout_requests_signed<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether logout requests need to be signed.</p>
+</dd>
+<dt class="field-odd">param want_assertions_signed<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Defaults to True per UU requirements.</p>
+</dd>
+<dt class="field-even">param debug<span class="colon">:</span></dt>
+<dd class="field-even"><p>Enables detailed debug output if set to true.</p>
+</dd>
+<dt class="field-odd">param config_overrides<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dict that will be merged with the final output
+before returning. Can be used to override some data
+in the resulting SAML_CONFIG that cannot be changed
+using any of the provided arguments.
+Please consider opening an issue/a PR to add the
+required argument first, it might benefit other
+users as well!</p>
+</dd>
+<dt class="field-even">return<span class="colon">:</span></dt>
+<dd class="field-even"><p>The computed value of <cite>SAML_CONFIG</cite></p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

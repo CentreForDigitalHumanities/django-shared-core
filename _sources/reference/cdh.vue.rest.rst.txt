@@ -1,0 +1,15 @@
+cdh.vue.rest package
+====================
+
+.. automodule:: cdh.vue.rest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.vue.rest.fancylist_api_view

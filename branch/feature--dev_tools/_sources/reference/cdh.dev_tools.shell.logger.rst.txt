@@ -1,0 +1,7 @@
+cdh.dev\_tools.shell.logger module
+==================================
+
+.. automodule:: cdh.dev_tools.shell.logger
+   :members:
+   :undoc-members:
+   :show-inheritance:

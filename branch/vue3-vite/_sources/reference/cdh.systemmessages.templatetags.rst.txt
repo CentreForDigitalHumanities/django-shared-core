@@ -1,0 +1,15 @@
+cdh.systemmessages.templatetags package
+=======================================
+
+.. automodule:: cdh.systemmessages.templatetags
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.systemmessages.templatetags.systemmessages

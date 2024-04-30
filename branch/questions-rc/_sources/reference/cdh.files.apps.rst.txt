@@ -1,0 +1,7 @@
+cdh.files.apps module
+=====================
+
+.. automodule:: cdh.files.apps
+   :members:
+   :undoc-members:
+   :show-inheritance:

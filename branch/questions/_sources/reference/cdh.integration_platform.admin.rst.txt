@@ -1,0 +1,7 @@
+cdh.integration\_platform.admin module
+======================================
+
+.. automodule:: cdh.integration_platform.admin
+   :members:
+   :undoc-members:
+   :show-inheritance:

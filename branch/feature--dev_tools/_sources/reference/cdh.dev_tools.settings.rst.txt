@@ -1,0 +1,7 @@
+cdh.dev\_tools.settings module
+==============================
+
+.. automodule:: cdh.dev_tools.settings
+   :members:
+   :undoc-members:
+   :show-inheritance:

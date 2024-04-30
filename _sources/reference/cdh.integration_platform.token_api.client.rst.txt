@@ -1,0 +1,7 @@
+cdh.integration\_platform.token\_api.client module
+==================================================
+
+.. automodule:: cdh.integration_platform.token_api.client
+   :members:
+   :undoc-members:
+   :show-inheritance:

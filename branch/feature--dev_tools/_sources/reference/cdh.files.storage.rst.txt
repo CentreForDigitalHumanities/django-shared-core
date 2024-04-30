@@ -1,0 +1,7 @@
+cdh.files.storage module
+========================
+
+.. automodule:: cdh.files.storage
+   :members:
+   :undoc-members:
+   :show-inheritance:

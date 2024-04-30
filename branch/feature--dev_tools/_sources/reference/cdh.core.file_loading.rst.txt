@@ -1,0 +1,7 @@
+cdh.core.file\_loading module
+=============================
+
+.. automodule:: cdh.core.file_loading
+   :members:
+   :undoc-members:
+   :show-inheritance:

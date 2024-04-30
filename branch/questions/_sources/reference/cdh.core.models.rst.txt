@@ -1,0 +1,7 @@
+cdh.core.models module
+======================
+
+.. automodule:: cdh.core.models
+   :members:
+   :undoc-members:
+   :show-inheritance:

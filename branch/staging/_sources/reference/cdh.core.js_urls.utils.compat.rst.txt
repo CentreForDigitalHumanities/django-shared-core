@@ -1,0 +1,7 @@
+cdh.core.js\_urls.utils.compat module
+=====================================
+
+.. automodule:: cdh.core.js_urls.utils.compat
+   :members:
+   :undoc-members:
+   :show-inheritance:

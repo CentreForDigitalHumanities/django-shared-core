@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cdh.core.utils.mail module &mdash; Django Shared Core 3.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="cdh.core.views package" href="cdh.core.views.html" />
+    <link rel="prev" title="cdh.core.utils.general module" href="cdh.core.utils.general.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Django Shared Core
+          </a>
+              <div class="version">
+                3.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">cdh</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="cdh.html">cdh package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="cdh.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="cdh.core.html">cdh.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.files.html">cdh.files package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.integration_platform.html">cdh.integration_platform package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.rest.html">cdh.rest package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.systemmessages.html">cdh.systemmessages package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.vue.html">cdh.vue package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Django Shared Core</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">cdh</a> &raquo;</li>
+          <li><a href="cdh.html">cdh package</a> &raquo;</li>
+          <li><a href="cdh.core.html">cdh.core package</a> &raquo;</li>
+          <li><a href="cdh.core.utils.html">cdh.core.utils package</a> &raquo;</li>
+      <li>cdh.core.utils.mail module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/reference/cdh.core.utils.mail.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-cdh.core.utils.mail">
+<span id="cdh-core-utils-mail-module"></span><h1>cdh.core.utils.mail module<a class="headerlink" href="#module-cdh.core.utils.mail" title="Permalink to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="cdh.core.utils.mail.send_personalised_mass_mail">
+<span class="sig-prename descclassname"><span class="pre">cdh.core.utils.mail.</span></span><span class="sig-name descname"><span class="pre">send_personalised_mass_mail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datatuple</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">template_context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plain_context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">html_context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'nl'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/cdh/core/utils/mail.html#send_personalised_mass_mail"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.utils.mail.send_personalised_mass_mail" title="Permalink to this definition"></a></dt>
+<dd><p>Given a datatuple of (subject, personal_context, recipient_list),
+send each message to each recipient list.</p>
+<p>personal_context and template_context will be merged together to create
+a personalised email.</p>
+<p>html_context and plain_context can be used to override something in the
+regular template_context for either the html version of the plain text
+version. (Note: you can also add a key that does not exist in
+template_context)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>datatuple</strong> – A tuple of tuples: (subject, personal_context, recipient_list)</p></li>
+<li><p><strong>template</strong> – Template name, without extension</p></li>
+<li><p><strong>template_context</strong> – Any context variables for the templates</p></li>
+<li><p><strong>from_email</strong> – FROM header. If absent, settings.FROM_EMAIL will be used</p></li>
+<li><p><strong>html_context</strong> – Optional dict with context specifically for HTML</p></li>
+<li><p><strong>plain_context</strong> – Optional dict with context specifically for plaintext</p></li>
+<li><p><strong>language</strong> – Which language Django should use when creating the mail</p></li>
+</ul>
+</dd>
+</dl>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 3.0: </span>Replaced by cdh.core.mail package</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cdh.core.utils.mail.send_template_email">
+<span class="sig-prename descclassname"><span class="pre">cdh.core.utils.mail.</span></span><span class="sig-name descname"><span class="pre">send_template_email</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recipient_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">subject</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">template_context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plain_context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">html_context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'nl'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/cdh/core/utils/mail.html#send_template_email"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.utils.mail.send_template_email" title="Permalink to this definition"></a></dt>
+<dd><p>Light wrapper for Django’s send_mail function. The main addition: this
+function handles the template rendering for you. Just specify the template
+name (without extensions).</p>
+<p>Note: both a HTML and a plain text version of the template should exist!</p>
+<p>For example:
+app/test.html
+app/test.txt</p>
+<p>Function call: send_template_email(template=’app/test’, <a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs)</p>
+<p>html_context and plain_context can be used to override something in the
+regular template_context for either the html version of the plain text
+version. (Note: you can also add a key that does not exist in
+template_context)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>recipient_list</strong> – A list of recipients</p></li>
+<li><p><strong>subject</strong> – Email subject</p></li>
+<li><p><strong>template</strong> – Template name, without extension</p></li>
+<li><p><strong>template_context</strong> – Any context variables for the templates</p></li>
+<li><p><strong>from_email</strong> – FROM header. If absent, settings.FROM_EMAIL will be used</p></li>
+<li><p><strong>html_context</strong> – Optional dict with context specifically for HTML</p></li>
+<li><p><strong>plain_context</strong> – Optional dict with context specifically for plaintext</p></li>
+<li><p><strong>language</strong> – Which language Django should use when creating the mail</p></li>
+</ul>
+</dd>
+</dl>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 3.0: </span>Replaced by cdh.core.mail package</p>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cdh.core.utils.general.html" class="btn btn-neutral float-left" title="cdh.core.utils.general module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cdh.core.views.html" class="btn btn-neutral float-right" title="cdh.core.views package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

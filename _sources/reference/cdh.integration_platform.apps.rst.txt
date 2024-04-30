@@ -1,0 +1,7 @@
+cdh.integration\_platform.apps module
+=====================================
+
+.. automodule:: cdh.integration_platform.apps
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+cdh.core.hashers module
+=======================
+
+.. automodule:: cdh.core.hashers
+   :members:
+   :undoc-members:
+   :show-inheritance:

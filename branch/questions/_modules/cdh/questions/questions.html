@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.questions.questions &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../_static/theme.css" type="text/css"/>
+        <script src="../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../../../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+                    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.questions.questions</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.questions.questions</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+
+<span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+<span class="kn">from</span> <span class="nn">django.template</span> <span class="kn">import</span> <span class="n">Context</span>
+<span class="kn">from</span> <span class="nn">django.template.loader</span> <span class="kn">import</span> <span class="n">get_template</span>
+<span class="kn">from</span> <span class="nn">django.views</span> <span class="kn">import</span> <span class="n">generic</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">reverse</span>
+<span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">utils</span>
+
+<div class="viewcode-block" id="Question">
+<a class="viewcode-back" href="../../../reference/cdh.questions.questions.html#cdh.questions.questions.Question">[docs]</a>
+<span class="k">class</span> <span class="nc">Question</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+    <span class="n">segment_template</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Question.__init__">
+<a class="viewcode-back" href="../../../reference/cdh.questions.questions.html#cdh.questions.questions.Question.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">question_data</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;question_data&quot;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_fields_to_segments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields_list</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">fields_list</span><span class="p">:</span>
+            <span class="n">fields_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Meta</span><span class="o">.</span><span class="n">fields</span>
+
+        <span class="n">segments</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields_list</span><span class="p">:</span>
+            <span class="n">segments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_field_to_segment</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">segments</span>
+
+    <span class="k">def</span> <span class="nf">_field_to_segment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
+
+        <span class="n">segment</span> <span class="o">=</span> <span class="n">Segment</span><span class="p">()</span>
+        <span class="n">segment</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="s1">&#39;form_field&#39;</span>
+        <span class="n">segment</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">field</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">segment_template</span><span class="p">:</span>
+            <span class="n">segment</span><span class="o">.</span><span class="n">template_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">segment_template</span>
+        <span class="n">segment</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;form_field&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;field&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="p">[</span><span class="n">field</span><span class="p">],</span>
+            <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">brify</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">())</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="p">})</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;instance&quot;</span><span class="p">):</span>
+            <span class="n">value_display</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instance</span><span class="p">,</span> <span class="s2">&quot;get_&quot;</span> <span class="o">+</span> <span class="n">field</span> <span class="o">+</span> <span class="s2">&quot;_display&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">value_display</span><span class="p">:</span>
+                <span class="n">segment</span><span class="o">.</span><span class="n">context</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value_display</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">segment</span></div>
+
+
+
+<div class="viewcode-block" id="brify">
+<a class="viewcode-back" href="../../../reference/cdh.questions.questions.html#cdh.questions.questions.brify">[docs]</a>
+<span class="k">def</span> <span class="nf">brify</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">s</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;br /&gt;&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">safestring</span><span class="o">.</span><span class="n">mark_safe</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="DisplayQuestion">
+<a class="viewcode-back" href="../../../reference/cdh.questions.questions.html#cdh.questions.questions.DisplayQuestion">[docs]</a>
+<span class="k">class</span> <span class="nc">DisplayQuestion</span><span class="p">():</span>
+
+<div class="viewcode-block" id="DisplayQuestion.__init__">
+<a class="viewcode-back" href="../../../reference/cdh.questions.questions.html#cdh.questions.questions.DisplayQuestion.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Segment">
+<a class="viewcode-back" href="../../../reference/cdh.questions.questions.html#cdh.questions.questions.Segment">[docs]</a>
+<span class="k">class</span> <span class="nc">Segment</span><span class="p">:</span>
+
+    <span class="n">default_template_name</span> <span class="o">=</span> <span class="s1">&#39;cdh.questions/tags/question_segments.html&#39;</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Segment.__init__">
+<a class="viewcode-back" href="../../../reference/cdh.questions.questions.html#cdh.questions.questions.Segment.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="c1"># This context gets changed to a Context object later</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;segment&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Segment.get_template">
+<a class="viewcode-back" href="../../../reference/cdh.questions.questions.html#cdh.questions.questions.Segment.get_template">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_template</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">template_name</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">template_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_template_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="n">get_template</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">template_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span></div>
+
+
+<div class="viewcode-block" id="Segment.render">
+<a class="viewcode-back" href="../../../reference/cdh.questions.questions.html#cdh.questions.questions.Segment.render">[docs]</a>
+    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_template</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">context</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">dict</span><span class="p">:</span>
+            <span class="n">context</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">context</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="BlueprintQuestion">
+<a class="viewcode-back" href="../../../reference/cdh.questions.questions.html#cdh.questions.questions.BlueprintQuestion">[docs]</a>
+<span class="k">class</span> <span class="nc">BlueprintQuestion</span><span class="p">(</span><span class="n">Question</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Question class that accepts a blueprint keyword argument&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BlueprintQuestion.__init__">
+<a class="viewcode-back" href="../../../reference/cdh.questions.questions.html#cdh.questions.questions.BlueprintQuestion.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blueprint</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;blueprint&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="SubheaderSegment">
+<a class="viewcode-back" href="../../../reference/cdh.questions.questions.html#cdh.questions.questions.SubheaderSegment">[docs]</a>
+<span class="k">class</span> <span class="nc">SubheaderSegment</span><span class="p">(</span><span class="n">Segment</span><span class="p">):</span>
+
+    <span class="nb">type</span> <span class="o">=</span> <span class="s1">&#39;subheader&#39;</span></div>
+
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

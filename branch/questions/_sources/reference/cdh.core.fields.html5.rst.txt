@@ -1,0 +1,7 @@
+cdh.core.fields.html5 module
+============================
+
+.. automodule:: cdh.core.fields.html5
+   :members:
+   :undoc-members:
+   :show-inheritance:

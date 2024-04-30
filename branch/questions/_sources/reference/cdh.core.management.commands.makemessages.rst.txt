@@ -1,0 +1,7 @@
+cdh.core.management.commands.makemessages module
+================================================
+
+.. automodule:: cdh.core.management.commands.makemessages
+   :members:
+   :undoc-members:
+   :show-inheritance:

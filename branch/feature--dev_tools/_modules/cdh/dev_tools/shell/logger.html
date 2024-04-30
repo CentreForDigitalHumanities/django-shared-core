@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.dev_tools.shell.logger &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../../_static/theme.css" type="text/css"/>
+        <script src="../../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+                    <script src="../../../../_static/doctools.js"></script>
+                    <script src="../../../../_static/sphinx_highlight.js"></script>
+            <script src="../../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.dev_tools.shell.logger</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.dev_tools.shell.logger</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Helper functions to attach loggers to a Django shell.</span>
+
+<span class="sd">It&#39;s not hard to do, but a pain to type in.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="n">_handlers</span> <span class="o">=</span> <span class="p">[]</span>
+
+
+<div class="viewcode-block" id="CustomFormatter"><a class="viewcode-back" href="../../../../reference/cdh.dev_tools.shell.logger.html#cdh.dev_tools.shell.logger.CustomFormatter">[docs]</a><span class="k">class</span> <span class="nc">CustomFormatter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Custom formatter to log with colors&quot;&quot;&quot;</span>
+
+    <span class="n">gray</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\x1b</span><span class="s2">[37;20m&quot;</span>
+    <span class="n">yellow</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\x1b</span><span class="s2">[33;20m&quot;</span>
+    <span class="n">red</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\x1b</span><span class="s2">[31;20m&quot;</span>
+    <span class="n">bold_red</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\x1b</span><span class="s2">[31;1m&quot;</span>
+    <span class="n">reset</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\x1b</span><span class="s2">[0m&quot;</span>
+    <span class="nb">format</span> <span class="o">=</span> <span class="s2">&quot;[</span><span class="si">%(asctime)s</span><span class="s2">] |</span><span class="si">%(name)s</span><span class="s2">| </span><span class="si">%(levelname)-8s</span><span class="s2"> </span><span class="si">%(message)s</span><span class="s2"> - {</span><span class="si">%(filename)s</span><span class="s2">:</span><span class="si">%(lineno)d</span><span class="s2">}&quot;</span> <span class="c1"># NoQA</span>
+
+<div class="viewcode-block" id="CustomFormatter.__init__"><a class="viewcode-back" href="../../../../reference/cdh.dev_tools.shell.logger.html#cdh.dev_tools.shell.logger.CustomFormatter.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">format</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">format</span> <span class="o">=</span> <span class="nb">format</span></div>
+
+    <span class="n">FORMATS</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">:</span> <span class="n">gray</span> <span class="o">+</span> <span class="nb">format</span> <span class="o">+</span> <span class="n">reset</span><span class="p">,</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">:</span> <span class="n">gray</span> <span class="o">+</span> <span class="nb">format</span> <span class="o">+</span> <span class="n">reset</span><span class="p">,</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">:</span> <span class="n">yellow</span> <span class="o">+</span> <span class="nb">format</span> <span class="o">+</span> <span class="n">reset</span><span class="p">,</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">:</span> <span class="n">red</span> <span class="o">+</span> <span class="nb">format</span> <span class="o">+</span> <span class="n">reset</span><span class="p">,</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">:</span> <span class="n">bold_red</span> <span class="o">+</span> <span class="nb">format</span> <span class="o">+</span> <span class="n">reset</span>
+    <span class="p">}</span>
+
+<div class="viewcode-block" id="CustomFormatter.format"><a class="viewcode-back" href="../../../../reference/cdh.dev_tools.shell.logger.html#cdh.dev_tools.shell.logger.CustomFormatter.format">[docs]</a>    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+        <span class="n">log_fmt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FORMATS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">levelno</span><span class="p">)</span>
+        <span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="n">log_fmt</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">record</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="attach_logger_to_shell"><a class="viewcode-back" href="../../../../reference/cdh.dev_tools.shell.logger.html#cdh.dev_tools.shell.logger.attach_logger_to_shell">[docs]</a><span class="k">def</span> <span class="nf">attach_logger_to_shell</span><span class="p">(</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">log_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">level</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;DEBUG&#39;</span><span class="p">,</span>
+        <span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Attaches a given logger to the shell, by default using stdout and logger</span>
+<span class="sd">    level DEBUG.</span>
+
+<span class="sd">    :param name: The name of the logger to attach. None to get all (NOT</span>
+<span class="sd">    RECOMMENDED)</span>
+<span class="sd">    :param log_format: (Optional) a custom log format if the default is not</span>
+<span class="sd">    nice enough</span>
+<span class="sd">    :param level: (Optional) minimum logging level to log. Defaults to DEBUG</span>
+<span class="sd">    :param stream: (Optional) the output to log to. Must be an IO stream.</span>
+<span class="sd">    Defaults to stdout</span>
+<span class="sd">    :return: The created handler (can be used to detach it specifically later)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+
+    <span class="n">handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+    <span class="n">handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+    <span class="n">formatter</span> <span class="o">=</span> <span class="n">CustomFormatter</span><span class="p">(</span><span class="n">log_format</span><span class="p">)</span>
+    <span class="n">handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+
+    <span class="n">_handlers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">handler</span></div>
+
+
+<div class="viewcode-block" id="detach_logger"><a class="viewcode-back" href="../../../../reference/cdh.dev_tools.shell.logger.html#cdh.dev_tools.shell.logger.detach_logger">[docs]</a><span class="k">def</span> <span class="nf">detach_logger</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Detaches all handlers for a given logger. Will not remove handlers</span>
+<span class="sd">    that weren&#39;t added by attach_logger_to_shell</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">handler</span> <span class="ow">in</span> <span class="n">_handlers</span><span class="p">:</span>
+        <span class="n">detach_handler</span><span class="p">(</span><span class="n">handler</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="detach_handler"><a class="viewcode-back" href="../../../../reference/cdh.dev_tools.shell.logger.html#cdh.dev_tools.shell.logger.detach_handler">[docs]</a><span class="k">def</span> <span class="nf">detach_handler</span><span class="p">(</span><span class="n">handler</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Detaches a given handler for a given logger. Will not remove handlers</span>
+<span class="sd">    that weren&#39;t added by attach_logger_to_shell&quot;&quot;&quot;</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">handler</span> <span class="ow">in</span> <span class="n">logger</span><span class="o">.</span><span class="n">handlers</span> <span class="ow">and</span> <span class="n">handler</span> <span class="ow">in</span> <span class="n">_handlers</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">removeHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+
+        <span class="n">_handlers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span></div>
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

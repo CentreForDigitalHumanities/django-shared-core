@@ -1,0 +1,24 @@
+cdh package
+===========
+
+.. automodule:: cdh
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.core
+   cdh.federated_auth
+   cdh.files
+   cdh.integration_platform
+   cdh.mail
+   cdh.questions
+   cdh.rest
+   cdh.systemmessages
+   cdh.vue
+   cdh.vue3

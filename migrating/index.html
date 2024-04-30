@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Migrating &mdash; Django Shared Core 3.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="cdh" href="../reference/index.html" />
+    <link rel="prev" title="Introduction" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Django Shared Core
+          </a>
+              <div class="version">
+                3.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Migrating</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">3.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#required">Required</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#namespace-change">Namespace change</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rest-client">REST Client</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rest-serializers">REST Serializers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bootstrap-update">Bootstrap update</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#recommended">Recommended</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#switch-to-new-mailing-code">Switch to new mailing code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app-specific-base-template">App-specific base template</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mailing">Mailing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#optional">Optional</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#custom-scss-setup">Custom SCSS setup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#installed-apps-import-order"><code class="docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code> import order</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#status-indicator">‘Status’ indicator</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">cdh</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Django Shared Core</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Migrating</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/migrating/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="migrating">
+<h1>Migrating<a class="headerlink" href="#migrating" title="Permalink to this heading"></a></h1>
+<p>Starting from version 3.0, this file tracks any changes one needs to
+make to update to the listed version. Please note that this does not
+include all new features of a given release.</p>
+<p>There are three kinds of changes: - Required: stuff won’t work
+(correctly) if you don’t do this - Recommended: stuff won’t work in a
+future version if you don’t do this - Optional: changes that are not
+(and wil not be) necessary, but is recommended to use anyway</p>
+<section id="id1">
+<h2>3.0<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<section id="required">
+<h3>Required<a class="headerlink" href="#required" title="Permalink to this heading"></a></h3>
+<section id="namespace-change">
+<h4>Namespace change<a class="headerlink" href="#namespace-change" title="Permalink to this heading"></a></h4>
+<p>3.0 moves all apps from the <code class="docutils literal notranslate"><span class="pre">uil</span></code> namespace to the <code class="docutils literal notranslate"><span class="pre">cdh</span></code> namespace.
+It should be enough just to replace all <code class="docutils literal notranslate"><span class="pre">uil.*</span></code> imports to <code class="docutils literal notranslate"><span class="pre">cdh.*</span></code>.</p>
+<p>Please remember to update the <code class="docutils literal notranslate"><span class="pre">MIDDLEWARE</span></code> and <code class="docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code>
+settings and the url config imports as well.</p>
+</section>
+<section id="rest-client">
+<h4>REST Client<a class="headerlink" href="#rest-client" title="Permalink to this heading"></a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">uil.rest_client</span></code> has been replaced in favor of <code class="docutils literal notranslate"><span class="pre">cdh.rest</span></code>, which
+also includes code for REST servers.</p>
+<p>In practice, migrating should be as simple as replacing
+<code class="docutils literal notranslate"><span class="pre">uil.rest_client</span></code> imports with <code class="docutils literal notranslate"><span class="pre">cdh.rest.client</span></code>. (The base package
+does not import anything.)</p>
+</section>
+<section id="rest-serializers">
+<h4>REST Serializers<a class="headerlink" href="#rest-serializers" title="Permalink to this heading"></a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">uil.core.rest.serializers</span></code> has been moved to
+<code class="docutils literal notranslate"><span class="pre">cdh.rest.server.serializers</span></code>.</p>
+</section>
+<section id="bootstrap-update">
+<h4>Bootstrap update<a class="headerlink" href="#bootstrap-update" title="Permalink to this heading"></a></h4>
+<p>We now use a completely new CSS stack, based upon Bootstrap 5. This
+brings several breaking changes. Please see <a class="reference external" href="https://dh-it-portal-development.github.io/bootstrap-theme/migrating/">the migration
+documentation</a>.</p>
+<p>In addition, table based forms now need the <code class="docutils literal notranslate"><span class="pre">.table</span></code> class to be
+applied to the <code class="docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code></p>
+</section>
+</section>
+<section id="recommended">
+<h3>Recommended<a class="headerlink" href="#recommended" title="Permalink to this heading"></a></h3>
+<section id="switch-to-new-mailing-code">
+<h4>Switch to new mailing code<a class="headerlink" href="#switch-to-new-mailing-code" title="Permalink to this heading"></a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">cdh.core.utils.mail_utils</span></code> has been deprecated, switch to
+<code class="docutils literal notranslate"><span class="pre">cdh.core.mail</span></code> instead. Either use the utils functions, which have a
+similar API to the old methods, or use the new class based method, which
+offer more customization options.</p>
+<p>See the docstrings of both for more information.</p>
+</section>
+<section id="app-specific-base-template">
+<h4>App-specific base template<a class="headerlink" href="#app-specific-base-template" title="Permalink to this heading"></a></h4>
+<p>For both future compatibility and more customization options, it’s
+recommended to create your own app-specific base template by extending one of
+two base templates included in the library.</p>
+<p>Due to the deprecation of (most) <code class="docutils literal notranslate"><span class="pre">include_if_exists</span></code> subtemplates, this will
+become mandatory in version 4.0. (See sub-templates below)</p>
+<section id="minimal-template">
+<h5>Minimal template<a class="headerlink" href="#minimal-template" title="Permalink to this heading"></a></h5>
+<p>A new base template <code class="docutils literal notranslate"><span class="pre">base/minimal.html</span></code> sets up <code class="docutils literal notranslate"><span class="pre">&lt;head&gt;</span></code> and empty
+blocks for <code class="docutils literal notranslate"><span class="pre">uu-header</span></code>, <code class="docutils literal notranslate"><span class="pre">uu-navbar</span></code>, <code class="docutils literal notranslate"><span class="pre">uu-content</span></code> and
+<code class="docutils literal notranslate"><span class="pre">uu-footer</span></code>.</p>
+<p>This template allows for full customization of a <code class="docutils literal notranslate"><span class="pre">UU</span> <span class="pre">layout</span></code> page, but
+provides no layout of it’s own. so it’s best to consult <a class="reference external" href="https://dh-it-portal-development.github.io/bootstrap-theme/uu-layout/">the UU layout
+documentation</a>.</p>
+<p>Use this template if you’re going to implement your own header <strong>and</strong>
+footer.</p>
+<p>Please note that this template has no Django Messages support out of the
+box, so you’ll need to add this on your own to <code class="docutils literal notranslate"><span class="pre">uu-content</span></code>. You can
+use the <code class="docutils literal notranslate"><span class="pre">{%</span> <span class="pre">display_messages</span> <span class="pre">messages</span> <span class="pre">%}</span></code> template tag to do so (load
+using <code class="docutils literal notranslate"><span class="pre">{%</span> <span class="pre">load</span> <span class="pre">messages</span> <span class="pre">%}</span></code>.</p>
+</section>
+<section id="base-template">
+<h5>‘Base’ template<a class="headerlink" href="#base-template" title="Permalink to this heading"></a></h5>
+<p>The existing <code class="docutils literal notranslate"><span class="pre">base/base.html</span></code> has been re-implemented on top of
+<code class="docutils literal notranslate"><span class="pre">base/minimal.html</span></code>. Generally it’s recommended to use this as your
+base template unless you want to modify more than one of the four base
+blocks.</p>
+</section>
+<section id="sub-templates">
+<h5>Sub-templates<a class="headerlink" href="#sub-templates" title="Permalink to this heading"></a></h5>
+<p>Several <code class="docutils literal notranslate"><span class="pre">include_if_exists</span></code> sub-templates are deprecated and will be
+removed in version 4.0. Instead, your app-specific template should
+extend the (new) corresponding content blocks:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">base/site_title.html</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">header_title</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">base/site_html_head.html</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">html_head</span></code>[1]</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">base/site_header.html</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">site_header</span></code> (<code class="docutils literal notranslate"><span class="pre">base.html</span></code> only)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">base/login_header.html</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">login_header</span></code> (<code class="docutils literal notranslate"><span class="pre">base.html</span></code> only)</p></li>
+</ul>
+<p>[1] This block is widely used to add page specific JS/CSS. Thus, you’ll
+need to add <code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">block.super</span> <span class="pre">}}</span></code> on those pages to preserve the content
+of the original block.</p>
+<p>Alternatively, you can load in global app-specific CSS and JS files by
+using <code class="docutils literal notranslate"><span class="pre">add_js_file</span></code> and <code class="docutils literal notranslate"><span class="pre">add_css_file</span></code> from
+<code class="docutils literal notranslate"><span class="pre">cdh.core.file_loading</span></code>. (Recommended usage is adding these calls to
+the <code class="docutils literal notranslate"><span class="pre">ready</span></code> method of your Django App Config <code class="docutils literal notranslate"><span class="pre">apps.py</span></code>)</p>
+</section>
+</section>
+<section id="mailing">
+<h4>Mailing<a class="headerlink" href="#mailing" title="Permalink to this heading"></a></h4>
+<p>The methods in <code class="docutils literal notranslate"><span class="pre">cdh.core.utils.mail_utils</span></code> are deprecated and will be
+removed in a future version. Its replacement is <code class="docutils literal notranslate"><span class="pre">cdh.core.mail</span></code>, see
+the documentation in those files for specific implementation details. In
+general, you can use the util functions for simple cases, or switch to
+the <code class="docutils literal notranslate"><span class="pre">Email</span></code> classes for more functionality.</p>
+<p>Plain text templates can be used without modification. HTML emails will
+need to extend the mail template, and use the content block to fill the
+template.</p>
+<p>This new implementation does not require both plain and HTML templates,
+and will automatically generate the missing one. However, keep in mind
+that hyperlinks are stripped to plain text when generating a plain text
+version. (Thus: if you have links, also have the full link as text
+somewhere. Or use both plain and html templates.)</p>
+</section>
+</section>
+<section id="optional">
+<h3>Optional<a class="headerlink" href="#optional" title="Permalink to this heading"></a></h3>
+<section id="custom-scss-setup">
+<h4>Custom SCSS setup<a class="headerlink" href="#custom-scss-setup" title="Permalink to this heading"></a></h4>
+<p>The new bootstrap theme is built using SCSS. For ease of use, this library
+supplies a pre-built version that is enabled by default.</p>
+<p>If you require overrides which cannot be done using the CSS vars, you can create
+your own SCSS setup. The easiest way to get started is probably to copy both
+<code class="docutils literal notranslate"><span class="pre">package.json</span></code> and the <code class="docutils literal notranslate"><span class="pre">scss</span></code> folder to your project.</p>
+<p>Then, change the build commands to output the generated CSS into one of your
+Django app’s <code class="docutils literal notranslate"><span class="pre">static/cdh.core</span></code> folder. (Note: you might need to play around
+with your app loading order to make sure your local version overrides the
+provided ones)</p>
+</section>
+<section id="installed-apps-import-order">
+<h4><code class="docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code> import order<a class="headerlink" href="#installed-apps-import-order" title="Permalink to this heading"></a></h4>
+<p>3.0 introduces some overrides for Django Admin and Django Impersonate
+templates.</p>
+<p>To ensure proper overriding of said templates, it’s recommended to move
+all <code class="docutils literal notranslate"><span class="pre">cdh.*</span></code> apps to the top of <code class="docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code>.</p>
+</section>
+<section id="status-indicator">
+<h4>‘Status’ indicator<a class="headerlink" href="#status-indicator" title="Permalink to this heading"></a></h4>
+<p>The updated base template will add warnings to the header if you’re</p>
+<ul class="simple">
+<li><p>Running in debug mode (Local Development Server)</p></li>
+<li><p>Impersonating a user (Impersonating user - {user})</p></li>
+<li><p>Running on an acceptation server (Acceptation Server)</p></li>
+</ul>
+<p>The first two work out of the box, but for the acceptation warning to
+work you’ll need to:</p>
+<ul class="simple">
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">'cdh.core.context_processors.acceptation'</span></code> to the
+<code class="docutils literal notranslate"><span class="pre">context_processors</span></code> settings in <code class="docutils literal notranslate"><span class="pre">TEMPLATES</span></code></p></li>
+<li><p>Create a new <code class="docutils literal notranslate"><span class="pre">ACCEPTATION</span></code> boolean setting (recommended to place
+next to <code class="docutils literal notranslate"><span class="pre">DEBUG</span></code>)</p></li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../reference/index.html" class="btn btn-neutral float-right" title="cdh" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

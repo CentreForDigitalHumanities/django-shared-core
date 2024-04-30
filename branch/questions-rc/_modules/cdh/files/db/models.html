@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.files.db.models &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../../_static/theme.css" type="text/css"/>
+        <script src="../../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+                    <script src="../../../../_static/doctools.js"></script>
+                    <script src="../../../../_static/sphinx_highlight.js"></script>
+            <script src="../../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.files.db.models</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.files.db.models</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.utils.functional</span> <span class="kn">import</span> <span class="n">cached_property</span>
+
+<span class="kn">from</span> <span class="nn">cdh.files.db</span> <span class="kn">import</span> <span class="n">manager</span>
+<span class="kn">from</span> <span class="nn">cdh.files.db.wrappers</span> <span class="kn">import</span> <span class="n">FileWrapper</span>
+
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;cdh.files&#39;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">_FileWrapperDict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Instance-local dict. Normally you&#39;d just set a var in your __init__,</span>
+<span class="sd">    but Django models don&#39;t like custom __init__&#39;s. &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">instance</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="s1">&#39;_file_wrapper_cache&#39;</span><span class="p">):</span>
+            <span class="n">instance</span><span class="o">.</span><span class="n">_file_wrapper_cache</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">return</span> <span class="n">instance</span><span class="o">.</span><span class="n">_file_wrapper_cache</span>
+
+    <span class="k">def</span> <span class="fm">__set__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">instance</span><span class="o">.</span><span class="n">_file_wrapper_cache</span> <span class="o">=</span> <span class="n">value</span>
+
+
+<div class="viewcode-block" id="BaseFile"><a class="viewcode-back" href="../../../../reference/cdh.files.db.models.html#cdh.files.db.models.BaseFile">[docs]</a><span class="k">class</span> <span class="nc">BaseFile</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">abstract</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="n">objects</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">FileManager</span><span class="p">()</span>
+
+    <span class="c1"># Human-facing PK; Also acts as the filename on disk</span>
+    <span class="n">uuid</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">UUIDField</span><span class="p">(</span>
+        <span class="s2">&quot;Universally Unique IDentifier&quot;</span><span class="p">,</span>
+        <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">,</span>
+        <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">original_filename</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+
+    <span class="n">content_type</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+    <span class="n">created_by</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">AUTH_USER_MODEL</span><span class="p">,</span>
+        <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">SET_NULL</span><span class="p">,</span>
+        <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">created_on</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">modified_on</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">_file_wrappers</span> <span class="o">=</span> <span class="n">_FileWrapperDict</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_num_child_instances</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">related_object</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">related_objects</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">related_object</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">related_object</span><span class="o">.</span><span class="n">related_name</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">related_manager</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">related_object</span><span class="o">.</span><span class="n">related_name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">related_manager</span><span class="p">:</span>
+                <span class="n">qs</span> <span class="o">=</span> <span class="n">related_manager</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+                <span class="n">qs</span><span class="o">.</span><span class="n">_result_cache</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">out</span> <span class="o">+=</span> <span class="n">qs</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_child_instances</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">related_object</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">related_objects</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">related_object</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">related_object</span><span class="o">.</span><span class="n">related_name</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">related_manager</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">related_object</span><span class="o">.</span><span class="n">related_name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">related_manager</span><span class="p">:</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">related_manager</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">_related_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">related_object</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">related_objects</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">related_object</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">related_object</span><span class="o">.</span><span class="n">field</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">related_object</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_child_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">related_object</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">related_objects</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">related_object</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">related_object</span><span class="o">.</span><span class="n">field</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">related_manager</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">related_object</span><span class="o">.</span><span class="n">related_name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">related_manager</span> <span class="ow">and</span> <span class="n">related_manager</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">related_object</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">out</span>
+
+<div class="viewcode-block" id="BaseFile.has_file_wrapper"><a class="viewcode-back" href="../../../../reference/cdh.files.db.models.html#cdh.files.db.models.BaseFile.has_file_wrapper">[docs]</a>    <span class="k">def</span> <span class="nf">has_file_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file_wrappers</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file_wrappers</span><span class="p">[</span><span class="n">field</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="BaseFile.get_file_wrapper"><a class="viewcode-back" href="../../../../reference/cdh.files.db.models.html#cdh.files.db.models.BaseFile.get_file_wrapper">[docs]</a>    <span class="k">def</span> <span class="nf">get_file_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">only_existing</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">cdh.files.db</span> <span class="kn">import</span> <span class="n">FileField</span>
+        <span class="k">if</span> <span class="n">field</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="n">FileField</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid field (e.g. not None or subclass of &quot;</span>
+                             <span class="s2">&quot;FileField)&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file_wrappers</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">field</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># If we only want FWs for existing relations,</span>
+                <span class="c1"># check _child_fields</span>
+                <span class="c1"># Otherwise, check _related_fields</span>
+                <span class="k">if</span> <span class="n">only_existing</span> <span class="ow">and</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_child_fields</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;This field is not known to be attached to this File &quot;</span>
+                        <span class="s2">&quot;instance&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">only_existing</span> <span class="ow">and</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_related_fields</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;This field is not known to be attached to this File &quot;</span>
+                        <span class="s2">&quot;class&quot;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_file_wrappers</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="n">FileWrapper</span><span class="p">(</span>
+                <span class="n">file_instance</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+                <span class="n">field</span><span class="o">=</span><span class="n">field</span><span class="p">,</span>
+                <span class="n">original_filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">original_filename</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file_wrappers</span><span class="p">[</span><span class="n">field</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="BaseFile.set_file_wrapper"><a class="viewcode-back" href="../../../../reference/cdh.files.db.models.html#cdh.files.db.models.BaseFile.set_file_wrapper">[docs]</a>    <span class="k">def</span> <span class="nf">set_file_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
+        <span class="c1"># Local import to prevent cycles</span>
+        <span class="kn">from</span> <span class="nn">cdh.files.db</span> <span class="kn">import</span> <span class="n">FileField</span>
+        <span class="c1"># The &#39;None&#39; variant should never be set from outside this class</span>
+        <span class="c1"># As wel as non-FileWrapper&#39;s</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">field</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">FileField</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot set non-field keys&quot;</span><span class="p">)</span>
+
+        <span class="c1"># The &#39;None&#39; variant should never be set from outside this class</span>
+        <span class="c1"># As wel as non-FileWrapper&#39;s</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">FileWrapper</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Value is None or not a (subclass of) &quot;</span>
+                             <span class="s2">&quot;FileWrapper!&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file_wrappers</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="BaseFile.clear_file_wrapper"><a class="viewcode-back" href="../../../../reference/cdh.files.db.models.html#cdh.files.db.models.BaseFile.clear_file_wrapper">[docs]</a>    <span class="k">def</span> <span class="nf">clear_file_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
+        <span class="c1"># Local import to prevent cycles</span>
+        <span class="kn">from</span> <span class="nn">cdh.files.db</span> <span class="kn">import</span> <span class="n">FileField</span>
+        <span class="k">if</span> <span class="n">field</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">FileField</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot delete non-field keys&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file_wrappers</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="BaseFile.clear_file_wrappers"><a class="viewcode-back" href="../../../../reference/cdh.files.db.models.html#cdh.files.db.models.BaseFile.clear_file_wrappers">[docs]</a>    <span class="k">def</span> <span class="nf">clear_file_wrappers</span><span class="p">(</span><span class="bp">self</span><span class="p">,):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file_wrappers</span> <span class="o">=</span> <span class="p">{}</span></div></div>
+
+
+<div class="viewcode-block" id="File"><a class="viewcode-back" href="../../../../reference/cdh.files.db.models.html#cdh.files.db.models.File">[docs]</a><span class="k">class</span> <span class="nc">File</span><span class="p">(</span><span class="n">BaseFile</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

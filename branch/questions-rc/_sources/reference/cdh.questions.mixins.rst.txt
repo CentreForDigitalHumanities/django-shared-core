@@ -1,0 +1,7 @@
+cdh.questions.mixins module
+===========================
+
+.. automodule:: cdh.questions.mixins
+   :members:
+   :undoc-members:
+   :show-inheritance:

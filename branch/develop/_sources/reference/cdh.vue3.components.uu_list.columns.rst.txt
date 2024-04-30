@@ -1,0 +1,7 @@
+cdh.vue3.components.uu\_list.columns module
+===========================================
+
+.. automodule:: cdh.vue3.components.uu_list.columns
+   :members:
+   :undoc-members:
+   :show-inheritance:

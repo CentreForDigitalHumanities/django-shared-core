@@ -1,0 +1,7 @@
+cdh.federated\_auth.saml.attribute\-maps.cdh module
+===================================================
+
+.. automodule:: cdh.federated_auth.saml.attribute-maps.cdh
+   :members:
+   :undoc-members:
+   :show-inheritance:

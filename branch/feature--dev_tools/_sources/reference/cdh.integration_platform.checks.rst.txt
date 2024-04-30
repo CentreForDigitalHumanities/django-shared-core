@@ -1,0 +1,7 @@
+cdh.integration\_platform.checks module
+=======================================
+
+.. automodule:: cdh.integration_platform.checks
+   :members:
+   :undoc-members:
+   :show-inheritance:

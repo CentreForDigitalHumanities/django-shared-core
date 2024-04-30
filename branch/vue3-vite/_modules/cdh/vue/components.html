@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.vue.components &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../_static/theme.css" type="text/css"/>
+        <script src="../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../../../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../../../_static/doctools.js?v=888ff710"></script>
+                    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.vue.components</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.vue.components</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span>
+
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.contrib.staticfiles</span> <span class="kn">import</span> <span class="n">finders</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">django.apps</span> <span class="kn">import</span> <span class="n">apps</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">apps</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<div class="viewcode-block" id="VueComponent">
+<a class="viewcode-back" href="../../../reference/cdh.vue.components.html#cdh.vue.components.VueComponent">[docs]</a>
+<span class="k">class</span> <span class="nc">VueComponent</span><span class="p">:</span>
+
+<div class="viewcode-block" id="VueComponent.__init__">
+<a class="viewcode-back" href="../../../reference/cdh.vue.components.html#cdh.vue.components.VueComponent.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">location</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">subcomponents</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">depends</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="k">if</span> <span class="n">subcomponents</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">subcomponents</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;subcomponents/*.vue&#39;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subcomponents</span> <span class="o">=</span> <span class="n">subcomponents</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">finders</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depends</span> <span class="o">=</span> <span class="n">depends</span></div>
+
+
+<div class="viewcode-block" id="VueComponent.get_files">
+<a class="viewcode-back" href="../../../reference/cdh.vue.components.html#cdh.vue.components.VueComponent.get_files">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_files</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="n">locations</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_dir</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">sub</span> <span class="k">for</span> <span class="n">sub</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">subcomponents</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">depends</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">dependency</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">depends</span><span class="p">:</span>
+                <span class="n">component</span> <span class="o">=</span> <span class="n">Vue</span><span class="o">.</span><span class="n">get_component</span><span class="p">(</span><span class="n">dependency</span><span class="p">)</span>
+                <span class="c1"># locations.extend(component.get_files())</span>
+                <span class="n">locations</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">get_files</span><span class="p">()</span> <span class="o">+</span> <span class="n">locations</span>
+
+        <span class="k">return</span> <span class="n">locations</span></div>
+</div>
+
+
+
+<span class="k">class</span> <span class="nc">_VueRegistry</span><span class="p">:</span>
+    <span class="n">__instance</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">getInstance</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Static access method. &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">_VueRegistry</span><span class="o">.</span><span class="n">__instance</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">_VueRegistry</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">_VueRegistry</span><span class="o">.</span><span class="n">__instance</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Virtually private constructor. &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">_VueRegistry</span><span class="o">.</span><span class="n">__instance</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;This class is a singleton!&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_VueRegistry</span><span class="o">.</span><span class="n">__instance</span> <span class="o">=</span> <span class="bp">self</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_components</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loaded</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">_load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">app_names</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">INSTALLED_APPS</span>
+        <span class="k">if</span> <span class="n">apps</span><span class="p">:</span>
+            <span class="n">app_names</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">app_config</span><span class="o">.</span><span class="n">name</span>
+                <span class="k">for</span> <span class="n">app_config</span> <span class="ow">in</span> <span class="n">apps</span><span class="o">.</span><span class="n">get_app_configs</span><span class="p">()</span>
+            <span class="p">]</span>
+
+        <span class="c1"># loop through our INSTALLED_APPS</span>
+        <span class="k">for</span> <span class="n">app</span> <span class="ow">in</span> <span class="n">app_names</span><span class="p">:</span>
+            <span class="c1"># skip any django apps</span>
+            <span class="k">if</span> <span class="n">app</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;django.&quot;</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="n">vue_module</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.vue&#39;</span> <span class="o">%</span> <span class="n">app</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="nb">__import__</span><span class="p">(</span><span class="n">vue_module</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">add_component</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">:</span> <span class="n">VueComponent</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_components</span><span class="p">[</span><span class="n">component</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">component</span>
+
+    <span class="k">def</span> <span class="nf">get_component</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VueComponent</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loaded</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_load</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_components</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_components</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is not a registered Vue component!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">get_components</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">VueComponent</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loaded</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_load</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_components</span>
+
+
+<span class="n">Vue</span> <span class="o">=</span> <span class="n">_VueRegistry</span><span class="p">()</span>
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

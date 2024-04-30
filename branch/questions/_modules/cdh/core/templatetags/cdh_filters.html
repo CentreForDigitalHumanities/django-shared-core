@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.core.templatetags.cdh_filters &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../../_static/theme.css" type="text/css"/>
+        <script src="../../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../../../../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+                    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.core.templatetags.cdh_filters</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.core.templatetags.cdh_filters</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">template</span>
+<span class="kn">from</span> <span class="nn">django.apps</span> <span class="kn">import</span> <span class="n">apps</span>
+<span class="kn">from</span> <span class="nn">django.utils.safestring</span> <span class="kn">import</span> <span class="n">mark_safe</span>
+
+<span class="n">register</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Library</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="zip_lists">
+<a class="viewcode-back" href="../../../../reference/cdh.core.templatetags.cdh_filters.html#cdh.core.templatetags.cdh_filters.zip_lists">[docs]</a>
+<span class="nd">@register</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;zip&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">zip_lists</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="SetVarNode">
+<a class="viewcode-back" href="../../../../reference/cdh.core.templatetags.cdh_filters.html#cdh.core.templatetags.cdh_filters.SetVarNode">[docs]</a>
+<span class="k">class</span> <span class="nc">SetVarNode</span><span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">Node</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is a very simple node that just assigns a given value to a given variable in the template context</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SetVarNode.__init__">
+<a class="viewcode-back" href="../../../../reference/cdh.core.templatetags.cdh_filters.html#cdh.core.templatetags.cdh_filters.SetVarNode.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var_name</span><span class="p">,</span> <span class="n">var_value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_name</span> <span class="o">=</span> <span class="n">var_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_value</span> <span class="o">=</span> <span class="n">var_value</span></div>
+
+
+<div class="viewcode-block" id="SetVarNode.render">
+<a class="viewcode-back" href="../../../../reference/cdh.core.templatetags.cdh_filters.html#cdh.core.templatetags.cdh_filters.SetVarNode.render">[docs]</a>
+    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">context</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">var_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_value</span>
+
+        <span class="k">return</span> <span class="sa">u</span><span class="s2">&quot;&quot;</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="set_var">
+<a class="viewcode-back" href="../../../../reference/cdh.core.templatetags.cdh_filters.html#cdh.core.templatetags.cdh_filters.set_var">[docs]</a>
+<span class="nd">@register</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;set&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">set_var</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    {% set some_var = &#39;123&#39; %}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">parts</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split_contents</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">template</span><span class="o">.</span><span class="n">TemplateSyntaxError</span><span class="p">(</span><span class="s2">&quot;&#39;set&#39; tag must be of the form: {</span><span class="si">% s</span><span class="s2">et &lt;var_name&gt; = &lt;var_value&gt; %}&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">SetVarNode</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">parts</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span></div>
+
+
+
+<div class="viewcode-block" id="CounterNode">
+<a class="viewcode-back" href="../../../../reference/cdh.core.templatetags.cdh_filters.html#cdh.core.templatetags.cdh_filters.CounterNode">[docs]</a>
+<span class="k">class</span> <span class="nc">CounterNode</span><span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">Node</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CounterNode.__init__">
+<a class="viewcode-back" href="../../../../reference/cdh.core.templatetags.cdh_filters.html#cdh.core.templatetags.cdh_filters.CounterNode.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">=</span> <span class="n">action</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_get_counter_key</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the key for this counter object in the render_context&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;counter_</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CounterNode.render">
+<a class="viewcode-back" href="../../../../reference/cdh.core.templatetags.cdh_filters.html#cdh.core.templatetags.cdh_filters.CounterNode.render">[docs]</a>
+    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_counter_key</span><span class="p">()</span>
+
+        <span class="c1"># Storing it in render_context makes sure we are thread-safe</span>
+        <span class="c1"># The documentation uses &#39;self&#39; as a key, but that only refers</span>
+        <span class="c1"># to that occurrence of the tag. We want a tag to reference to a</span>
+        <span class="c1"># thread-global counter, so we use a custom made key</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">render_context</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="s1">&#39;create&#39;</span><span class="p">:</span>
+            <span class="n">context</span><span class="o">.</span><span class="n">render_context</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="s1">&#39;store&#39;</span><span class="p">:</span>
+            <span class="n">context</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">render_context</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="s1">&#39;increment&#39;</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)):</span>
+                <span class="n">context</span><span class="o">.</span><span class="n">render_context</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">increment</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">render_context</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Counter">
+<a class="viewcode-back" href="../../../../reference/cdh.core.templatetags.cdh_filters.html#cdh.core.templatetags.cdh_filters.Counter">[docs]</a>
+<span class="k">class</span> <span class="nc">Counter</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Very simple counter used in the counter tag</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Counter.__init__">
+<a class="viewcode-back" href="../../../../reference/cdh.core.templatetags.cdh_filters.html#cdh.core.templatetags.cdh_filters.Counter.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">other</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">other</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="k">def</span> <span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">other</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="k">def</span> <span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">other</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">other</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+
+<div class="viewcode-block" id="Counter.increment">
+<a class="viewcode-back" href="../../../../reference/cdh.core.templatetags.cdh_filters.html#cdh.core.templatetags.cdh_filters.Counter.increment">[docs]</a>
+    <span class="k">def</span> <span class="nf">increment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do not use in templates! (If you even can...)&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="mi">1</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="counter">
+<a class="viewcode-back" href="../../../../reference/cdh.core.templatetags.cdh_filters.html#cdh.core.templatetags.cdh_filters.counter">[docs]</a>
+<span class="nd">@register</span><span class="o">.</span><span class="n">tag</span>
+<span class="k">def</span> <span class="nf">counter</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a counter, optionally with a starting number. By default it starts</span>
+<span class="sd">    counting at 0.</span>
+
+<span class="sd">    Usage:</span>
+
+<span class="sd">    To create:</span>
+<span class="sd">    {% counter NAME create %}</span>
+<span class="sd">    or</span>
+<span class="sd">    {% counter NAME create STARTING_VALUE %} (to specify the starting value,</span>
+<span class="sd">    must be an int or int in a string)</span>
+
+<span class="sd">    To increment:</span>
+<span class="sd">    {% counter NAME increment (VALUE) %}</span>
+<span class="sd">    (VALUE is optional, and can be used to increment the counter by the given</span>
+<span class="sd">    value).</span>
+
+<span class="sd">    To display the value:</span>
+<span class="sd">    {% counter NAME value %}</span>
+
+<span class="sd">    Alternatively, you can store the current value in a template variable:</span>
+<span class="sd">    {% counter NAME store %}</span>
+<span class="sd">    It&#39;s value will be stored into a variable called NAME.</span>
+<span class="sd">    Note: this might not be thread-safe!</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">parts</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split_contents</span><span class="p">()</span>
+
+    <span class="c1"># We expect two or three arguments</span>
+    <span class="k">if</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">template</span><span class="o">.</span><span class="n">TemplateSyntaxError</span><span class="p">(</span><span class="s2">&quot;&#39;counter&#39; tag must be of the &quot;</span>
+                                           <span class="s2">&quot;form: {</span><span class="si">% c</span><span class="s2">ounter &lt;name&gt; &lt;action&gt; (&quot;</span>
+                                           <span class="s2">&quot;value&gt;) %}&quot;</span><span class="p">)</span>
+
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="n">parts</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+    <span class="p">}</span>
+
+    <span class="c1"># If we have 4 parts, the third part should be interpreted as &#39;value&#39;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="c1"># Try to parse it to an int, throw a syntax error if we can&#39;t</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">template</span><span class="o">.</span><span class="n">TemplateSyntaxError</span><span class="p">(</span><span class="s2">&quot;Counter value is not an integer! &quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">CounterNode</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="show_selected">
+<a class="viewcode-back" href="../../../../reference/cdh.core.templatetags.cdh_filters.html#cdh.core.templatetags.cdh_filters.show_selected">[docs]</a>
+<span class="nd">@register</span><span class="o">.</span><span class="n">filter</span>
+<span class="k">def</span> <span class="nf">show_selected</span><span class="p">(</span><span class="n">selected_values</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a unordered list of with all possible values for a model,</span>
+<span class="sd">    with the selected ones in bold.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="s1">&#39;&lt;ul&gt;&#39;</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">selected_values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">selected_values</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="s1">&#39;&lt;li&gt;&lt;strong&gt;</span><span class="si">{}</span><span class="s1">&lt;/strong&gt;&lt;/li&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="s1">&#39;&lt;li&gt;</span><span class="si">{}</span><span class="s1">&lt;/li&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
+    <span class="n">result</span> <span class="o">+=</span> <span class="s1">&#39;&lt;/ul&gt;&#39;</span>
+    <span class="k">return</span> <span class="n">mark_safe</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+
+
+
+
+<div class="viewcode-block" id="show_all">
+<a class="viewcode-back" href="../../../../reference/cdh.core.templatetags.cdh_filters.html#cdh.core.templatetags.cdh_filters.show_all">[docs]</a>
+<span class="nd">@register</span><span class="o">.</span><span class="n">simple_tag</span>
+<span class="k">def</span> <span class="nf">show_all</span><span class="p">(</span><span class="n">app_label</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a unordered list of with all possible values for a model</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="s1">&#39;&lt;ul&gt;&#39;</span>
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">apps</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="n">app_label</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s1">&#39;&lt;li&gt;</span><span class="si">{}</span><span class="s1">&lt;/li&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
+    <span class="n">result</span> <span class="o">+=</span> <span class="s1">&#39;&lt;/ul&gt;&#39;</span>
+    <span class="k">return</span> <span class="n">mark_safe</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

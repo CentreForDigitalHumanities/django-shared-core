@@ -1,0 +1,16 @@
+cdh.core.management.commands package
+====================================
+
+.. automodule:: cdh.core.management.commands
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.core.management.commands.makemessages
+   cdh.core.management.commands.test_mail

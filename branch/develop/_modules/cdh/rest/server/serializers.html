@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.rest.server.serializers &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../../_static/theme.css" type="text/css"/>
+        <script src="../../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../../../../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+                    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.rest.server.serializers</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.rest.server.serializers</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+
+<span class="kn">from</span> <span class="nn">rest_framework.fields</span> <span class="kn">import</span> <span class="n">CharField</span>
+<span class="kn">from</span> <span class="nn">rest_framework.serializers</span> <span class="kn">import</span> <span class="n">ModelSerializer</span>
+<span class="kn">from</span> <span class="nn">rest_framework.settings</span> <span class="kn">import</span> <span class="n">api_settings</span>
+<span class="kn">from</span> <span class="nn">rest_framework.utils</span> <span class="kn">import</span> <span class="n">model_meta</span>
+
+
+<div class="viewcode-block" id="ModelDisplaySerializer">
+<a class="viewcode-back" href="../../../../reference/cdh.rest.server.serializers.html#cdh.rest.server.serializers.ModelDisplaySerializer">[docs]</a>
+<span class="k">class</span> <span class="nc">ModelDisplaySerializer</span><span class="p">(</span><span class="n">ModelSerializer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extension of ModelSerializer which will automatically add the django</span>
+<span class="sd">    display method of a field, if present.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ModelDisplaySerializer.get_fields">
+<a class="viewcode-back" href="../../../../reference/cdh.rest.server.serializers.html#cdh.rest.server.serializers.ModelDisplaySerializer.get_fields">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the dict of field names -&gt; field instances that should be</span>
+<span class="sd">        used for `self.fields` when instantiating the serializer.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">url_field_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">url_field_name</span> <span class="o">=</span> <span class="n">api_settings</span><span class="o">.</span><span class="n">URL_FIELD_NAME</span>
+
+        <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Meta&#39;</span><span class="p">),</span> <span class="p">(</span>
+            <span class="s1">&#39;Class </span><span class="si">{serializer_class}</span><span class="s1"> missing &quot;Meta&quot; attribute&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">serializer_class</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Meta</span><span class="p">,</span> <span class="s1">&#39;model&#39;</span><span class="p">),</span> <span class="p">(</span>
+            <span class="s1">&#39;Class </span><span class="si">{serializer_class}</span><span class="s1"> missing &quot;Meta.model&quot; attribute&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">serializer_class</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">model_meta</span><span class="o">.</span><span class="n">is_abstract_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Meta</span><span class="o">.</span><span class="n">model</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s1">&#39;Cannot use ModelSerializer with Abstract Models.&#39;</span>
+            <span class="p">)</span>
+
+        <span class="n">declared_fields</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_declared_fields</span><span class="p">)</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Meta</span><span class="p">,</span> <span class="s1">&#39;model&#39;</span><span class="p">)</span>
+        <span class="n">depth</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Meta</span><span class="p">,</span> <span class="s1">&#39;depth&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">depth</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">depth</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;&#39;depth&#39; may not be negative.&quot;</span>
+            <span class="k">assert</span> <span class="n">depth</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;&#39;depth&#39; may not be greater than 10.&quot;</span>
+
+        <span class="c1"># Retrieve metadata about fields &amp; relationships on the model class.</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="n">model_meta</span><span class="o">.</span><span class="n">get_field_info</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="n">field_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_field_names</span><span class="p">(</span><span class="n">declared_fields</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
+
+        <span class="c1"># Determine any extra field arguments and hidden fields that</span>
+        <span class="c1"># should be included</span>
+        <span class="n">extra_kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_extra_kwargs</span><span class="p">()</span>
+        <span class="n">extra_kwargs</span><span class="p">,</span> <span class="n">hidden_fields</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_uniqueness_extra_kwargs</span><span class="p">(</span>
+            <span class="n">field_names</span><span class="p">,</span> <span class="n">declared_fields</span><span class="p">,</span> <span class="n">extra_kwargs</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Determine the fields that should be included on the serializer.</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="n">field_names</span><span class="p">:</span>
+            <span class="c1"># If the field is explicitly declared on the class then use that.</span>
+            <span class="k">if</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="n">declared_fields</span><span class="p">:</span>
+                <span class="n">fields</span><span class="p">[</span><span class="n">field_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">declared_fields</span><span class="p">[</span><span class="n">field_name</span><span class="p">]</span>
+                <span class="k">continue</span>
+
+            <span class="n">extra_field_kwargs</span> <span class="o">=</span> <span class="n">extra_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field_name</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="n">source</span> <span class="o">=</span> <span class="n">extra_field_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">source</span> <span class="o">==</span> <span class="s1">&#39;*&#39;</span><span class="p">:</span>
+                <span class="n">source</span> <span class="o">=</span> <span class="n">field_name</span>
+
+            <span class="c1"># Determine the serializer field class and keyword arguments.</span>
+            <span class="n">field_class</span><span class="p">,</span> <span class="n">field_kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_field</span><span class="p">(</span>
+                <span class="n">source</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">depth</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Include any kwargs defined in `Meta.extra_kwargs`</span>
+            <span class="n">field_kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_extra_kwargs</span><span class="p">(</span>
+                <span class="n">field_kwargs</span><span class="p">,</span> <span class="n">extra_field_kwargs</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Create the serializer field.</span>
+            <span class="n">fields</span><span class="p">[</span><span class="n">field_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">field_class</span><span class="p">(</span><span class="o">**</span><span class="n">field_kwargs</span><span class="p">)</span>
+
+            <span class="c1"># Try to add a get_x_display, if the model has one</span>
+            <span class="n">display_method</span> <span class="o">=</span> <span class="s2">&quot;get_</span><span class="si">{}</span><span class="s2">_display&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">display_method</span><span class="p">):</span>
+                <span class="n">fields</span><span class="p">[</span><span class="n">display_method</span><span class="p">]</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">()</span>
+
+        <span class="c1"># Add in any hidden fields.</span>
+        <span class="n">fields</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">hidden_fields</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">fields</span></div>
+</div>
+
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

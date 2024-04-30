@@ -1,0 +1,7 @@
+cdh.rest.client.logging module
+==============================
+
+.. automodule:: cdh.rest.client.logging
+   :members:
+   :undoc-members:
+   :show-inheritance:

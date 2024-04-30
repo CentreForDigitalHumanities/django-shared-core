@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.core.mail.classes module &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../_static/theme.css" type="text/css"/>
+        <script src="../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../_static/doctools.js?v=9a2dae69"></script>
+                    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../genindex.html"/>
+            <link rel="search" title="Search" href="../search.html"/>
+            <link rel="next" title="cdh.core.mail.utils module" href="cdh.core.mail.utils.html"/>
+            <link rel="prev" title="cdh.core.mail package" href="cdh.core.mail.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="index.html"
+           >
+           cdh
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.html"
+           >
+           cdh package
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.core.html"
+           >
+           cdh.core package
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.core.mail.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           cdh.core.mail package
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.core.mail.classes module</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <section id="module-cdh.core.mail.classes">
+<span id="cdh-core-mail-classes-module"></span><h1>cdh.core.mail.classes module<a class="headerlink" href="#module-cdh.core.mail.classes" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.mail.classes.BaseCustomTemplateEmail">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.mail.classes.</span></span><span class="sig-name descname"><span class="pre">BaseCustomTemplateEmail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/mail/classes.html#BaseCustomTemplateEmail"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.mail.classes.BaseCustomTemplateEmail" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.core.mail.classes.BaseEmail" title="cdh.core.mail.classes.BaseEmail"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEmail</span></code></a></p>
+<p>Email class for sending HTML emails using user supplied HTML templates</p>
+<p>DO NOT USE THIS CLASS FOR ‘HARDCODED’ EMAILS. Use <a class="reference internal" href="#cdh.core.mail.classes.TemplateEmail" title="cdh.core.mail.classes.TemplateEmail"><code class="xref py py-class docutils literal notranslate"><span class="pre">TemplateEmail</span></code></a>
+instead.</p>
+<p>BE CAREFUL WHAT YOU EXPOSE TO THE USER. This method itself is safe, as
+everything is run in a sandbox. However, template tags can have (nasty)
+side effects outside the sandbox. Also, some vars might just expose more
+than you thought.</p>
+<p>Unlike TemplateEmail, this class should be extended and not be used
+directly. It uses class variables, which should not be set on an instance
+level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_variable_defs</strong> (list of <a class="reference internal" href="#cdh.core.mail.classes.CTEVarDef" title="cdh.core.mail.classes.CTEVarDef"><code class="xref py py-class docutils literal notranslate"><span class="pre">CTEVarDef</span></code></a>) – a list of user usable variables</p></li>
+<li><p><strong>template_tag_packages</strong> (list of <a class="reference internal" href="#cdh.core.mail.classes.CTETagPackage" title="cdh.core.mail.classes.CTETagPackage"><code class="xref py py-class docutils literal notranslate"><span class="pre">CTETagPackage</span></code></a>) – a list of template tag packages to load</p></li>
+</ul>
+</dd>
+</dl>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 3.2: </span>Replaced by cdh.mail</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.mail.classes.BaseCustomTemplateEmail.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contents</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">banner</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">footer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/mail/classes.html#BaseCustomTemplateEmail.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.mail.classes.BaseCustomTemplateEmail.__init__" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>to</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – a list of recipients, can be plain email or formatted (“John
+Doe &lt;<a class="reference external" href="mailto:j&#46;doe&#37;&#52;&#48;example&#46;org">j<span>&#46;</span>doe<span>&#64;</span>example<span>&#46;</span>org</a>&gt;”)</p></li>
+<li><p><strong>subject</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the email subject</p></li>
+<li><p><strong>language</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the language used during rendering the email. Uses
+Django’s i18n framework</p></li>
+<li><p><strong>from_email</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><em>None</em>) – the From: email address. Uses settings.EMAIL_FROM if
+omitted</p></li>
+<li><p><strong>headers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a><em> or </em><em>None</em>) – any additional SMTP headers to be used</p></li>
+<li><p><strong>attachments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em> of </em><em>MimeBase</em><em> or </em><em>Tuple</em>) – a list of email attachments to be sent along.</p></li>
+<li><p><strong>cc</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><em>None</em>) – a list of recipients to put as CC:</p></li>
+<li><p><strong>bcc</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><em>None</em>) – a list of recipients to put ad BCC:</p></li>
+<li><p><strong>reply_to</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><em>None</em>) – an email to be set as REPLY_TO: (not set if left empty)</p></li>
+<li><p><strong>context</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – any template context needed for both the templates</p></li>
+<li><p><strong>html_context</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – any template context needed by the HTML template,
+will override values in context if both have them</p></li>
+<li><p><strong>plain_context</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – any template context needed by the plain
+template, will override values in context if
+both have them.</p></li>
+<li><p><strong>theme_settings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – a dict of overrides for the styling of the
+HTML email does not need to contain all
+values, only the ones you want to override.</p></li>
+<li><p><strong>html_fallback_template</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the base template for HTML emails used
+for generating an HTML version of a
+plain text email</p></li>
+<li><p><strong>plain_fallback_template</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the base template for plain text emails
+used for generating a plain text version
+of an HTML email</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.mail.classes.BaseCustomTemplateEmail.help_text">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">help_text</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/cdh/core/mail/classes.html#BaseCustomTemplateEmail.help_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.mail.classes.BaseCustomTemplateEmail.help_text" title="Link to this definition">¶</a></dt>
+<dd><p>A (marked_safe) string describing which vars and tags can be used
+in this template. Intended to be used as a formfield help_text</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.mail.classes.BaseCustomTemplateEmail.render_preview">
+<span class="sig-name descname"><span class="pre">render_preview</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/mail/classes.html#BaseCustomTemplateEmail.render_preview"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.mail.classes.BaseCustomTemplateEmail.render_preview" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a rendered HTML document as would be sent as the HTML
+content.</p>
+<p>Uses the variable defaults as defined if nothing was supplied through
+the context param.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.mail.classes.BaseCustomTemplateEmail.template_tag_packages">
+<span class="sig-name descname"><span class="pre">template_tag_packages</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cdh.core.mail.classes.CTETagPackage" title="cdh.core.mail.classes.CTETagPackage"><span class="pre">CTETagPackage</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#cdh.core.mail.classes.BaseCustomTemplateEmail.template_tag_packages" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.mail.classes.BaseCustomTemplateEmail.user_variable_defs">
+<span class="sig-name descname"><span class="pre">user_variable_defs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cdh.core.mail.classes.CTEVarDef" title="cdh.core.mail.classes.CTEVarDef"><span class="pre">CTEVarDef</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#cdh.core.mail.classes.BaseCustomTemplateEmail.user_variable_defs" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.mail.classes.BaseEmail">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.mail.classes.</span></span><span class="sig-name descname"><span class="pre">BaseEmail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/mail/classes.html#BaseEmail"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.mail.classes.BaseEmail" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a></p>
+<p>Base class for all email classes.</p>
+<p>These params mostly correspond to Django’s Message, so read those docs
+for more details</p>
+<p>About render/template contexts:
+When not supplied with both an HTML and a plain text email, the missing one
+will be automatically generated. However, it will not use render contexts
+of the other variant. For example, if you leave the plain text version to
+be automatically generated, the plain text version will use plain_context
+and not html_context.</p>
+<p>About theme settings:
+The HTML template has some styling configuration to tweak the appearance of
+the email. You can specify any changes on this class, but in most cases it’s
+better to apply app-wide changes using the CDH_EMAIL_THEME_SETTINGS config
+value in settings.py</p>
+<p>About fallback templates:
+These templates are used when generating a missing variant. For example,
+if you supply a plain text template only, html_fallback_template will
+be used as the base template for the generated HTML version.
+When your app uses a custom base template, it’s best to set this template
+globally using the settings.py settings. It’s provided on the class only
+if your app uses multiple base templates.</p>
+<p>HTML base templates MUST have a block called ‘content’ and are encouraged to
+have ‘sender’, ‘banner’ and ‘footer’ blocks.
+Plain base templates use template vars instead of blocks, but the same
+requirements apply on those vars as well.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 3.2: </span>Replaced by cdh.mail</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.mail.classes.BaseEmail.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subject</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'nl'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.12)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/email.mime.html#email.mime.base.MIMEBase" title="(in Python v3.12)"><span class="pre">MIMEBase</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.12)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bcc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reply_to</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.12)"><span class="pre">Dict</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plain_context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.12)"><span class="pre">Dict</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">html_context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.12)"><span class="pre">Dict</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theme_settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.12)"><span class="pre">Dict</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">html_fallback_template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'cdh.core/mail_template.html'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plain_fallback_template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'cdh.core/plain_mail_fallback.txt'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/mail/classes.html#BaseEmail.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.mail.classes.BaseEmail.__init__" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>to</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – a list of recipients, can be plain email or formatted (“John
+Doe &lt;<a class="reference external" href="mailto:j&#46;doe&#37;&#52;&#48;example&#46;org">j<span>&#46;</span>doe<span>&#64;</span>example<span>&#46;</span>org</a>&gt;”)</p></li>
+<li><p><strong>subject</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the email subject</p></li>
+<li><p><strong>language</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the language used during rendering the email. Uses
+Django’s i18n framework</p></li>
+<li><p><strong>from_email</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><em>None</em>) – the From: email address. Uses settings.EMAIL_FROM if
+omitted</p></li>
+<li><p><strong>headers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a><em> or </em><em>None</em>) – any additional SMTP headers to be used</p></li>
+<li><p><strong>attachments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em> of </em><em>MimeBase</em><em> or </em><em>Tuple</em>) – a list of email attachments to be sent along.</p></li>
+<li><p><strong>cc</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><em>None</em>) – a list of recipients to put as CC:</p></li>
+<li><p><strong>bcc</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><em>None</em>) – a list of recipients to put ad BCC:</p></li>
+<li><p><strong>reply_to</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><em>None</em>) – an email to be set as REPLY_TO: (not set if left empty)</p></li>
+<li><p><strong>context</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – any template context needed for both the templates</p></li>
+<li><p><strong>html_context</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – any template context needed by the HTML template,
+will override values in context if both have them</p></li>
+<li><p><strong>plain_context</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – any template context needed by the plain
+template, will override values in context if
+both have them.</p></li>
+<li><p><strong>theme_settings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – a dict of overrides for the styling of the
+HTML email does not need to contain all
+values, only the ones you want to override.</p></li>
+<li><p><strong>html_fallback_template</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the base template for HTML emails used
+for generating an HTML version of a
+plain text email</p></li>
+<li><p><strong>plain_fallback_template</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the base template for plain text emails
+used for generating a plain text version
+of an HTML email</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.mail.classes.BaseEmail.apply_theme_settings">
+<span class="sig-name descname"><span class="pre">apply_theme_settings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theme_settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/cdh/core/mail/classes.html#BaseEmail.apply_theme_settings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.mail.classes.BaseEmail.apply_theme_settings" title="Link to this definition">¶</a></dt>
+<dd><p>Applies theme settings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>theme_settings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – a dict of overrides for the styling
+of the HTML email does not need to
+contain all values, only the ones you
+want to override.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.mail.classes.BaseEmail.attach">
+<span class="sig-name descname"><span class="pre">attach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mimetype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/cdh/core/mail/classes.html#BaseEmail.attach"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.mail.classes.BaseEmail.attach" title="Link to this definition">¶</a></dt>
+<dd><p>Attach a new attachment to this email</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><em>MIMEBase</em>) – either a string of the filename, or a MIMEBase object
+representing the entire file</p></li>
+<li><p><strong>content</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><em>None</em>) – If filename is a string, the contents of the file.
+Ignored otherwise</p></li>
+<li><p><strong>mimetype</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><em>None</em>) – If filename is a string, the mimetype of the file.
+Ignored otherwise</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.mail.classes.BaseEmail.send">
+<span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fail_silently</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/cdh/core/mail/classes.html#BaseEmail.send"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.mail.classes.BaseEmail.send" title="Link to this definition">¶</a></dt>
+<dd><p>Sends the email</p>
+<p>If sending multiple emails in a row, it’s recommended to create a
+connection yourself and use them on all emails for performance reasons.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>connection</strong> – a Django email backend to send the mail with. If
+omitted, the default backend will be used</p></li>
+<li><p><strong>fail_silently</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – whether errors during sending should be
+suppressed</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>number of emails sent</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.mail.classes.CTETagPackage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.mail.classes.</span></span><span class="sig-name descname"><span class="pre">CTETagPackage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/mail/classes.html#CTETagPackage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.mail.classes.CTETagPackage" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Configuration class for loading template tag packages</p>
+<p>This class serves two roles:
+- Providing information for loading template tag packages in the template
+- Provide information for help text generation</p>
+<p>All packages need to be importable by the Django rendering engine</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 3.2: </span>Replaced by cdh.mail</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.mail.classes.CTETagPackage.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.12)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/mail/classes.html#CTETagPackage.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.mail.classes.CTETagPackage.__init__" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>package</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the name of the package to load</p></li>
+<li><p><strong>tags</strong> – a list of 3-tuples; The tuple should contain:
+- The name of the usable tag inside the package
+- A list of arguments that tag accepts
+- A help string explaining what the tag does</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.mail.classes.CTEVarDef">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.mail.classes.</span></span><span class="sig-name descname"><span class="pre">CTEVarDef</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/mail/classes.html#CTEVarDef"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.mail.classes.CTEVarDef" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Descriptor class for user-usable variables in a Custom Template Email</p>
+<p>This class serves two roles:
+- Provide information for help text generation
+- Provide a default value when rendering the preview</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 3.2: </span>Replaced by cdh.mail</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.mail.classes.CTEVarDef.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">help_text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preview_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">safe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/mail/classes.html#CTEVarDef.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.mail.classes.CTEVarDef.__init__" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The variable name</p></li>
+<li><p><strong>help_text</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><em>None</em>) – a short description of what this var will output
+(optional)</p></li>
+<li><p><strong>preview_value</strong> – a placeholder value that will be inserted when
+rendering the preview (optional)</p></li>
+<li><p><strong>safe</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – if the contents of the var should be marked safe.</p></li>
+<li><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Any other parameter passed to the class. Not used in
+default implementations, but can be used for custom ones</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.mail.classes.TemplateEmail">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.mail.classes.</span></span><span class="sig-name descname"><span class="pre">TemplateEmail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/mail/classes.html#TemplateEmail"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.mail.classes.TemplateEmail" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.core.mail.classes.BaseEmail" title="cdh.core.mail.classes.BaseEmail"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEmail</span></code></a></p>
+<p>Regular Django template files based emails</p>
+<p>One of the two templates is required. If one is missing, it will be
+generated from the other.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 3.2: </span>Replaced by cdh.mail</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.mail.classes.TemplateEmail.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">html_template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plain_template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/mail/classes.html#TemplateEmail.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.mail.classes.TemplateEmail.__init__" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>html_template</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the HTML template to send</p></li>
+<li><p><strong>plain_template</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the plain text template to send</p></li>
+<li><p><strong>to</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – a list of recipients, can be plain email or formatted (“John
+Doe &lt;<a class="reference external" href="mailto:j&#46;doe&#37;&#52;&#48;example&#46;org">j<span>&#46;</span>doe<span>&#64;</span>example<span>&#46;</span>org</a>&gt;”)</p></li>
+<li><p><strong>subject</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the email subject</p></li>
+<li><p><strong>language</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the language used during rendering the email. Uses
+Django’s i18n framework</p></li>
+<li><p><strong>from_email</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><em>None</em>) – the From: email address. Uses settings.EMAIL_FROM if
+omitted</p></li>
+<li><p><strong>headers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a><em> or </em><em>None</em>) – any additional SMTP headers to be used</p></li>
+<li><p><strong>attachments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em> of </em><em>MimeBase</em><em> or </em><em>Tuple</em>) – a list of email attachments to be sent along.</p></li>
+<li><p><strong>cc</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><em>None</em>) – a list of recipients to put as CC:</p></li>
+<li><p><strong>bcc</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><em>None</em>) – a list of recipients to put ad BCC:</p></li>
+<li><p><strong>reply_to</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><em>None</em>) – an email to be set as REPLY_TO: (not set if left empty)</p></li>
+<li><p><strong>context</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – any template context needed for both the templates</p></li>
+<li><p><strong>html_context</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – any template context needed by the HTML template,
+will override values in context if both have them</p></li>
+<li><p><strong>plain_context</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – any template context needed by the plain
+template, will override values in context if
+both have them.</p></li>
+<li><p><strong>theme_settings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – a dict of overrides for the styling of the
+HTML email does not need to contain all
+values, only the ones you want to override.</p></li>
+<li><p><strong>html_fallback_template</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the base template for HTML emails used
+for generating an HTML version of a
+plain text email</p></li>
+<li><p><strong>plain_fallback_template</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the base template for plain text emails
+used for generating a plain text version
+of an HTML email</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+cdh.mail.settings module
+========================
+
+.. automodule:: cdh.mail.settings
+   :members:
+   :undoc-members:
+   :show-inheritance:

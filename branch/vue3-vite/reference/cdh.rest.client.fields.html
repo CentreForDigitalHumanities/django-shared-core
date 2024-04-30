@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.rest.client.fields module &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../_static/theme.css" type="text/css"/>
+        <script src="../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../_static/doctools.js?v=888ff710"></script>
+                    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../genindex.html"/>
+            <link rel="search" title="Search" href="../search.html"/>
+            <link rel="next" title="cdh.rest.client.logging module" href="cdh.rest.client.logging.html"/>
+            <link rel="prev" title="cdh.rest.client.resources.resource module" href="cdh.rest.client.resources.resource.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="index.html"
+           >
+           cdh
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.html"
+           >
+           cdh package
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.rest.html"
+           >
+           cdh.rest package
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.rest.client.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           cdh.rest.client package
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.rest.client.fields module</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <section id="module-cdh.rest.client.fields">
+<span id="cdh-rest-client-fields-module"></span><h1>cdh.rest.client.fields module<a class="headerlink" href="#module-cdh.rest.client.fields" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.BasicTypeField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.rest.client.fields.</span></span><span class="sig-name descname"><span class="pre">BasicTypeField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/rest/client/fields.html#BasicTypeField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.fields.BasicTypeField" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">_BaseField</span></code></p>
+<p>Abstract class used by simple types like bool, str and int.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.BasicTypeField.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/rest/client/fields.html#BasicTypeField.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.fields.BasicTypeField.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>A field contains data within a REST resources.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>verbose_name</strong> – A code friendly name for this field, defaults to the variable name</p></li>
+<li><p><strong>default</strong> – A default value to be used when no value is given</p></li>
+<li><p><strong>choices</strong> – Optional, used to restrict the values in this field</p></li>
+<li><p><strong>name</strong> – A human friendly name for this field, defaults to the variable name</p></li>
+<li><p><strong>null</strong> – If this field can be null</p></li>
+<li><p><strong>blank</strong> – If this field can be left blank</p></li>
+<li><p><strong>error_messages</strong> – Any custom error messages</p></li>
+<li><p><strong>validators</strong> – Any custom validators</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.BasicTypeField.basic_type">
+<span class="sig-name descname"><span class="pre">basic_type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cdh.rest.client.fields.BasicTypeField.basic_type" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.BasicTypeField.to_api">
+<span class="sig-name descname"><span class="pre">to_api</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><span class="pre">object</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/cdh/rest/client/fields.html#BasicTypeField.to_api"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.fields.BasicTypeField.to_api" title="Link to this definition">¶</a></dt>
+<dd><p>Cleans and validates values before casting them to the right
+API type</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.BoolField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.rest.client.fields.</span></span><span class="sig-name descname"><span class="pre">BoolField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/rest/client/fields.html#BoolField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.fields.BoolField" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.rest.client.fields.BasicTypeField" title="cdh.rest.client.fields.BasicTypeField"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasicTypeField</span></code></a></p>
+<p>Field containing a boolean</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.BoolField.basic_type">
+<span class="sig-name descname"><span class="pre">basic_type</span></span><a class="headerlink" href="#cdh.rest.client.fields.BoolField.basic_type" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.CollectionField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.rest.client.fields.</span></span><span class="sig-name descname"><span class="pre">CollectionField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/rest/client/fields.html#CollectionField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.fields.CollectionField" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">_BaseField</span></code></p>
+<p>Field referencing a collection</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.CollectionField.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/rest/client/fields.html#CollectionField.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.fields.CollectionField.__init__" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collection</strong> – The collection to use</p></li>
+<li><p><strong>kwargs</strong> – See ::class:BaseField for other options</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.CollectionField.to_api">
+<span class="sig-name descname"><span class="pre">to_api</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cdh.rest.client.collections.collections.html#cdh.rest.client.collections.collections.ResourceCollection" title="cdh.rest.client.collections.collections.ResourceCollection"><span class="pre">ResourceCollection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_TypeCollection</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/rest/client/fields.html#CollectionField.to_api"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.fields.CollectionField.to_api" title="Link to this definition">¶</a></dt>
+<dd><p>Transforms the collection into a list, and chains the call to it’s
+children.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.CollectionField.to_python">
+<span class="sig-name descname"><span class="pre">to_python</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/rest/client/fields.html#CollectionField.to_python"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.fields.CollectionField.to_python" title="Link to this definition">¶</a></dt>
+<dd><p>Creates a collection object from the supplied list</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.DateField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.rest.client.fields.</span></span><span class="sig-name descname"><span class="pre">DateField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><span class="pre">object</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><span class="pre">object</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">null</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blank</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_messages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validators</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/rest/client/fields.html#DateField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.fields.DateField" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.rest.client.fields.DateTimeField" title="cdh.rest.client.fields.DateTimeField"><code class="xref py py-class docutils literal notranslate"><span class="pre">DateTimeField</span></code></a></p>
+<p>Field that parses a ISO-formatted date-string</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.DateField.type">
+<span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#cdh.rest.client.fields.DateField.type" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.date" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">date</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.DateTimeField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.rest.client.fields.</span></span><span class="sig-name descname"><span class="pre">DateTimeField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><span class="pre">object</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><span class="pre">object</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">null</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blank</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_messages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validators</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/rest/client/fields.html#DateTimeField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.fields.DateTimeField" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">_BaseField</span></code></p>
+<p>Field that parses a ISO-formatted datetime-string</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.DateTimeField.to_api">
+<span class="sig-name descname"><span class="pre">to_api</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.12)"><span class="pre">datetime</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/cdh/rest/client/fields.html#DateTimeField.to_api"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.fields.DateTimeField.to_api" title="Link to this definition">¶</a></dt>
+<dd><p>This method should return a python datatype that can be deserialized
+properly primarily by the json module.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.DateTimeField.to_python">
+<span class="sig-name descname"><span class="pre">to_python</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.12)"><span class="pre">datetime</span></a></span></span><a class="reference internal" href="../_modules/cdh/rest/client/fields.html#DateTimeField.to_python"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.fields.DateTimeField.to_python" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the python version of the supplied value. By default, it’s
+the same as the value supplied, but this can be overridden by fields
+to provide a conversion to a different datatype</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.DateTimeField.type">
+<span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#cdh.rest.client.fields.DateTimeField.type" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.FloatField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.rest.client.fields.</span></span><span class="sig-name descname"><span class="pre">FloatField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/rest/client/fields.html#FloatField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.fields.FloatField" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.rest.client.fields.BasicTypeField" title="cdh.rest.client.fields.BasicTypeField"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasicTypeField</span></code></a></p>
+<p>Field containing a float</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.FloatField.basic_type">
+<span class="sig-name descname"><span class="pre">basic_type</span></span><a class="headerlink" href="#cdh.rest.client.fields.FloatField.basic_type" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.IntegerField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.rest.client.fields.</span></span><span class="sig-name descname"><span class="pre">IntegerField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/rest/client/fields.html#IntegerField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.fields.IntegerField" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.rest.client.fields.BasicTypeField" title="cdh.rest.client.fields.BasicTypeField"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasicTypeField</span></code></a></p>
+<p>Field containing an int</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.IntegerField.basic_type">
+<span class="sig-name descname"><span class="pre">basic_type</span></span><a class="headerlink" href="#cdh.rest.client.fields.IntegerField.basic_type" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.ResourceField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.rest.client.fields.</span></span><span class="sig-name descname"><span class="pre">ResourceField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resource</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/rest/client/fields.html#ResourceField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.fields.ResourceField" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">_BaseField</span></code></p>
+<p>Field referencing a resources</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.ResourceField.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resource</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/rest/client/fields.html#ResourceField.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.fields.ResourceField.__init__" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>resource</strong> – The resources to use</p></li>
+<li><p><strong>kwargs</strong> – See ::class:BaseField for other options</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.ResourceField.to_api">
+<span class="sig-name descname"><span class="pre">to_api</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cdh.rest.client.resources.resource.html#cdh.rest.client.resources.resource.Resource" title="cdh.rest.client.resources.resource.Resource"><span class="pre">Resource</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/rest/client/fields.html#ResourceField.to_api"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.fields.ResourceField.to_api" title="Link to this definition">¶</a></dt>
+<dd><p>Transforms the resources into a dict, and chains the call to it’s
+children.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.ResourceField.to_python">
+<span class="sig-name descname"><span class="pre">to_python</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/rest/client/fields.html#ResourceField.to_python"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.fields.ResourceField.to_python" title="Link to this definition">¶</a></dt>
+<dd><p>Creates a resources object from the supplied dict</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.TextField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.rest.client.fields.</span></span><span class="sig-name descname"><span class="pre">TextField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/rest/client/fields.html#TextField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.fields.TextField" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.rest.client.fields.BasicTypeField" title="cdh.rest.client.fields.BasicTypeField"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasicTypeField</span></code></a></p>
+<p>Field containing a string</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.TextField.basic_type">
+<span class="sig-name descname"><span class="pre">basic_type</span></span><a class="headerlink" href="#cdh.rest.client.fields.TextField.basic_type" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.TimeField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.rest.client.fields.</span></span><span class="sig-name descname"><span class="pre">TimeField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><span class="pre">object</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><span class="pre">object</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">null</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blank</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_messages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validators</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/rest/client/fields.html#TimeField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.rest.client.fields.TimeField" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.rest.client.fields.DateTimeField" title="cdh.rest.client.fields.DateTimeField"><code class="xref py py-class docutils literal notranslate"><span class="pre">DateTimeField</span></code></a></p>
+<p>Field that parses a ISO-formatted date-string</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.rest.client.fields.TimeField.type">
+<span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#cdh.rest.client.fields.TimeField.type" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.time" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">time</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+cdh.integration\_platform.settings module
+=========================================
+
+.. automodule:: cdh.integration_platform.settings
+   :members:
+   :undoc-members:
+   :show-inheritance:

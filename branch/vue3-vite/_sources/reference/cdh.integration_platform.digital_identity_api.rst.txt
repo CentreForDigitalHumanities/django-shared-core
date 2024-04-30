@@ -1,0 +1,16 @@
+cdh.integration\_platform.digital\_identity\_api package
+========================================================
+
+.. automodule:: cdh.integration_platform.digital_identity_api
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.integration_platform.digital_identity_api.client
+   cdh.integration_platform.digital_identity_api.resources

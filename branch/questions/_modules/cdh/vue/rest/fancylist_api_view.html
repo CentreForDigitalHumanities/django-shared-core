@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.vue.rest.fancylist_api_view &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../../_static/theme.css" type="text/css"/>
+        <script src="../../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../../../../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+                    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.vue.rest.fancylist_api_view</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.vue.rest.fancylist_api_view</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">pagination</span>
+<span class="kn">from</span> <span class="nn">rest_framework.filters</span> <span class="kn">import</span> <span class="n">SearchFilter</span><span class="p">,</span> <span class="n">OrderingFilter</span>
+<span class="kn">from</span> <span class="nn">rest_framework.generics</span> <span class="kn">import</span> <span class="n">GenericAPIView</span>
+<span class="kn">from</span> <span class="nn">rest_framework.response</span> <span class="kn">import</span> <span class="n">Response</span>
+
+
+<div class="viewcode-block" id="FancyListApiView">
+<a class="viewcode-back" href="../../../../reference/cdh.vue.rest.fancylist_api_view.html#cdh.vue.rest.fancylist_api_view.FancyListApiView">[docs]</a>
+<span class="k">class</span> <span class="nc">FancyListApiView</span><span class="p">(</span><span class="n">GenericAPIView</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Implements an API List view to use for FancyList lists.</span>
+
+<span class="sd">    Spits out data in the format used by the FancyList constructor method</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="FancyListApiView.SortDefinition">
+<a class="viewcode-back" href="../../../../reference/cdh.vue.rest.fancylist_api_view.html#cdh.vue.rest.fancylist_api_view.FancyListApiView.SortDefinition">[docs]</a>
+    <span class="k">class</span> <span class="nc">SortDefinition</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Defines a sort option for a field</span>
+
+<span class="sd">        Field should be given as a string, in the format</span>
+<span class="sd">        {attribute}(.{subattribute})*</span>
+
+<span class="sd">        (read, just like you would access an attribute of an object in Python,</span>
+<span class="sd">        but sans the object itself and as a string).</span>
+
+<span class="sd">        For example:</span>
+<span class="sd">        &quot;subObject.title&quot;</span>
+
+<span class="sd">        :param {str} field: the field that is sortable</span>
+<span class="sd">        :param {str} label: The text to display in the dropdown. Direction</span>
+<span class="sd">               arrows are added automatically</span>
+<span class="sd">        :param {&quot;asc&quot;|&quot;desc&quot;|None} default: If not None, this direction will be</span>
+<span class="sd">               the sort applied upon load. If multiple defs are set as default,</span>
+<span class="sd">               the first one encountered will be used</span>
+<span class="sd">        :param {bool} asc: whether sorting ascendingly is supported</span>
+<span class="sd">        :param {bool} desc: whether sorting descendingly is supported</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="FancyListApiView.SortDefinition.__init__">
+<a class="viewcode-back" href="../../../../reference/cdh.vue.rest.fancylist_api_view.html#cdh.vue.rest.fancylist_api_view.FancyListApiView.SortDefinition.__init__">[docs]</a>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span>
+                <span class="n">field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                <span class="n">label</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                <span class="n">asc</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="n">desc</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="n">field</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">asc</span> <span class="o">=</span> <span class="n">asc</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">desc</span> <span class="o">=</span> <span class="n">desc</span></div>
+
+
+<div class="viewcode-block" id="FancyListApiView.SortDefinition.serialize">
+<a class="viewcode-back" href="../../../../reference/cdh.vue.rest.fancylist_api_view.html#cdh.vue.rest.fancylist_api_view.FancyListApiView.SortDefinition.serialize">[docs]</a>
+        <span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]):</span>
+            <span class="n">_default</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">default</span> <span class="ow">and</span> <span class="n">default</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">:</span>
+                <span class="n">_default</span> <span class="o">=</span> <span class="n">default</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">,</span>
+                <span class="s1">&#39;asc&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">asc</span><span class="p">,</span>
+                <span class="s1">&#39;desc&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">desc</span><span class="p">,</span>
+                <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="n">_default</span><span class="p">,</span>
+            <span class="p">}</span></div>
+</div>
+
+
+<div class="viewcode-block" id="FancyListApiView.FilterDefinition">
+<a class="viewcode-back" href="../../../../reference/cdh.vue.rest.fancylist_api_view.html#cdh.vue.rest.fancylist_api_view.FancyListApiView.FilterDefinition">[docs]</a>
+    <span class="k">class</span> <span class="nc">FilterDefinition</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Defines a filter for a field.</span>
+
+<span class="sd">        Options for a filter are automatically generated by Vue</span>
+
+<span class="sd">        Field should be given as a string, in the format</span>
+<span class="sd">        {attribute}(.{subattribute})*</span>
+
+<span class="sd">        (read, just like you would access an attribute of an object in Python,</span>
+<span class="sd">        but sans the object itself and as a string).</span>
+
+<span class="sd">        For example:</span>
+<span class="sd">        &quot;subObject.created&quot;</span>
+
+<span class="sd">        :param {str} field: the field that is sortable</span>
+<span class="sd">        :param {str} display_name: Text that should be displayed on the button</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="FancyListApiView.FilterDefinition.__init__">
+<a class="viewcode-back" href="../../../../reference/cdh.vue.rest.fancylist_api_view.html#cdh.vue.rest.fancylist_api_view.FancyListApiView.FilterDefinition.__init__">[docs]</a>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">display_name</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="n">field</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">display_name</span> <span class="o">=</span> <span class="n">display_name</span></div>
+</div>
+
+
+    <span class="n">show_controls</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">searchable_fields</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">sort_definitions</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">filter_definitions</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">num_items_options</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">50</span><span class="p">]</span>
+    <span class="n">default_items_per_page</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">default_sort</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="FancyListApiView.get">
+<a class="viewcode-back" href="../../../../reference/cdh.vue.rest.fancylist_api_view.html#cdh.vue.rest.fancylist_api_view.FancyListApiView.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">({</span>
+            <span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_items</span><span class="p">(),</span>
+            <span class="s1">&#39;showControls&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_show_controls</span><span class="p">(),</span>
+            <span class="s1">&#39;context&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_context</span><span class="p">(),</span>
+            <span class="s1">&#39;searchableFields&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_searchable_fields</span><span class="p">(),</span>
+            <span class="s1">&#39;filterDefinitions&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_filter_definitions</span><span class="p">(),</span>
+            <span class="s1">&#39;numItemsOptions&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_num_items_options</span><span class="p">(),</span>
+            <span class="s1">&#39;defaultItemsPerPage&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_default_items_per_page</span><span class="p">(),</span>
+            <span class="s1">&#39;sortDefinitions&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_sort_definitions</span><span class="p">(),</span>
+        <span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="FancyListApiView.get_items">
+<a class="viewcode-back" href="../../../../reference/cdh.vue.rest.fancylist_api_view.html#cdh.vue.rest.fancylist_api_view.FancyListApiView.get_items">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get serialized items from QS through the serializer&quot;&quot;&quot;</span>
+        <span class="n">queryset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_queryset</span><span class="p">()</span>
+
+        <span class="n">serializer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_serializer</span><span class="p">(</span><span class="n">queryset</span><span class="p">,</span> <span class="n">many</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">serializer</span><span class="o">.</span><span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="FancyListApiView.get_show_controls">
+<a class="viewcode-back" href="../../../../reference/cdh.vue.rest.fancylist_api_view.html#cdh.vue.rest.fancylist_api_view.FancyListApiView.get_show_controls">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_show_controls</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;If False, all controls will be hidden. (Search, sort on, items per</span>
+<span class="sd">        page and filters)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_controls</span></div>
+
+
+<div class="viewcode-block" id="FancyListApiView.get_searchable_fields">
+<a class="viewcode-back" href="../../../../reference/cdh.vue.rest.fancylist_api_view.html#cdh.vue.rest.fancylist_api_view.FancyListApiView.get_searchable_fields">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_searchable_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a list of path strings of fields that can be searched</span>
+<span class="sd">        through.</span>
+
+<span class="sd">        If an empty list is returned, all fields are searchable</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">searchable_fields</span></div>
+
+
+<div class="viewcode-block" id="FancyListApiView.get_sort_definitions">
+<a class="viewcode-back" href="../../../../reference/cdh.vue.rest.fancylist_api_view.html#cdh.vue.rest.fancylist_api_view.FancyListApiView.get_sort_definitions">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_sort_definitions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;SortDefinition&#39;</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a list of sort definitions. See SortDefinition for more info.</span>
+
+<span class="sd">        If an empty list is returned, the sort box will be hidden and the</span>
+<span class="sd">        sort of the QuerySet is used.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort_definitions</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_get_sort_definitions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Serializes get_sort_definitions&quot;&quot;&quot;</span>
+        <span class="c1"># Cache value, as an override of get_default_sort can be heavy</span>
+        <span class="n">default_sort</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_default_sort</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">x</span><span class="o">.</span><span class="n">field</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">default_sort</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_sort_definitions</span><span class="p">()}</span>
+
+<div class="viewcode-block" id="FancyListApiView.get_context">
+<a class="viewcode-back" href="../../../../reference/cdh.vue.rest.fancylist_api_view.html#cdh.vue.rest.fancylist_api_view.FancyListApiView.get_context">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_context</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns any data accessible by all items in the Vue template&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span></div>
+
+
+<div class="viewcode-block" id="FancyListApiView.get_num_items_options">
+<a class="viewcode-back" href="../../../../reference/cdh.vue.rest.fancylist_api_view.html#cdh.vue.rest.fancylist_api_view.FancyListApiView.get_num_items_options">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_num_items_options</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the possible items per page options&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_items_options</span></div>
+
+
+<div class="viewcode-block" id="FancyListApiView.get_default_items_per_page">
+<a class="viewcode-back" href="../../../../reference/cdh.vue.rest.fancylist_api_view.html#cdh.vue.rest.fancylist_api_view.FancyListApiView.get_default_items_per_page">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_default_items_per_page</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the default number of items to be displayed on a page.</span>
+
+<span class="sd">        Value must be an element in num_items_options</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_items_per_page</span></div>
+
+
+<div class="viewcode-block" id="FancyListApiView.get_default_sort">
+<a class="viewcode-back" href="../../../../reference/cdh.vue.rest.fancylist_api_view.html#cdh.vue.rest.fancylist_api_view.FancyListApiView.get_default_sort">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_default_sort</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the default sort. Should be a tuple of (field, direction).</span>
+<span class="sd">        Where direction is either &#39;asc&#39; or &#39;desc&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_sort</span></div>
+
+
+<div class="viewcode-block" id="FancyListApiView.get_filter_definitions">
+<a class="viewcode-back" href="../../../../reference/cdh.vue.rest.fancylist_api_view.html#cdh.vue.rest.fancylist_api_view.FancyListApiView.get_filter_definitions">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_filter_definitions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;FilterDefinition&#39;</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a list of filter definitions. See FilterDefinition for more</span>
+<span class="sd">        info.</span>
+
+<span class="sd">        If an empty list is returned, filters will be disabled.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_definitions</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_get_filter_definitions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Serializes get_filter_definitions&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">x</span><span class="o">.</span><span class="n">field</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">display_name</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_filter_definitions</span><span class="p">()}</span></div>
+
+
+
+<div class="viewcode-block" id="FancyListPaginator">
+<a class="viewcode-back" href="../../../../reference/cdh.vue.rest.fancylist_api_view.html#cdh.vue.rest.fancylist_api_view.FancyListPaginator">[docs]</a>
+<span class="k">class</span> <span class="nc">FancyListPaginator</span><span class="p">(</span><span class="n">pagination</span><span class="o">.</span><span class="n">PageNumberPagination</span><span class="p">):</span>
+    <span class="n">page_size_query_param</span> <span class="o">=</span> <span class="s1">&#39;page_size&#39;</span>
+
+<div class="viewcode-block" id="FancyListPaginator.__init__">
+<a class="viewcode-back" href="../../../../reference/cdh.vue.rest.fancylist_api_view.html#cdh.vue.rest.fancylist_api_view.FancyListPaginator.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view</span> <span class="o">=</span> <span class="n">view</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">page_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">get_default_items_per_page</span><span class="p">()</span>
+
+<div class="viewcode-block" id="FancyListPaginator.get_paginated_response">
+<a class="viewcode-back" href="../../../../reference/cdh.vue.rest.fancylist_api_view.html#cdh.vue.rest.fancylist_api_view.FancyListPaginator.get_paginated_response">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_paginated_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">({</span>
+            <span class="s1">&#39;count&#39;</span><span class="p">:</span>               <span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">paginator</span><span class="o">.</span><span class="n">count</span><span class="p">,</span>
+            <span class="s1">&#39;default_page_size&#39;</span><span class="p">:</span>   <span class="bp">self</span><span class="o">.</span><span class="n">page_size</span><span class="p">,</span>
+            <span class="s1">&#39;items&#39;</span><span class="p">:</span>               <span class="n">data</span><span class="p">,</span>
+            <span class="s1">&#39;showControls&#39;</span><span class="p">:</span>        <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">get_show_controls</span><span class="p">(),</span>
+            <span class="s1">&#39;context&#39;</span><span class="p">:</span>             <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">get_context</span><span class="p">(),</span>
+            <span class="s1">&#39;searchableFields&#39;</span><span class="p">:</span>    <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">get_searchable_fields</span><span class="p">(),</span>
+            <span class="s1">&#39;filterDefinitions&#39;</span><span class="p">:</span>   <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">_get_filter_definitions</span><span class="p">(),</span>
+            <span class="s1">&#39;numItemsOptions&#39;</span><span class="p">:</span>     <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">get_num_items_options</span><span class="p">(),</span>
+            <span class="s1">&#39;defaultItemsPerPage&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">get_default_items_per_page</span><span class="p">(),</span>
+            <span class="s1">&#39;sortDefinitions&#39;</span><span class="p">:</span>     <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">_get_sort_definitions</span><span class="p">(),</span>
+        <span class="p">})</span></div>
+</div>
+
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

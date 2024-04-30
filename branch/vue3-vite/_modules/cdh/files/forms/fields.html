@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.files.forms.fields &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../../_static/theme.css" type="text/css"/>
+        <script src="../../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../../../../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+                    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.files.forms.fields</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.files.forms.fields</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django.core.exceptions</span> <span class="kn">import</span> <span class="n">ImproperlyConfigured</span><span class="p">,</span> <span class="n">ObjectDoesNotExist</span><span class="p">,</span> \
+    <span class="n">ValidationError</span>
+<span class="kn">from</span> <span class="nn">django.forms</span> <span class="kn">import</span> <span class="n">Field</span><span class="p">,</span> <span class="n">ModelChoiceField</span>
+<span class="kn">from</span> <span class="nn">django.forms.widgets</span> <span class="kn">import</span> <span class="n">FILE_INPUT_CONTRADICTION</span><span class="p">,</span> <span class="n">MultipleHiddenInput</span>
+<span class="kn">from</span> <span class="nn">django.utils.functional</span> <span class="kn">import</span> <span class="n">cached_property</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="kn">import</span> <span class="n">gettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
+
+<span class="kn">from</span> <span class="nn">.widgets</span> <span class="kn">import</span> <span class="n">SimpleFileInput</span><span class="p">,</span> <span class="n">TrackedFileInput</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">get_storage</span>
+<span class="kn">from</span> <span class="nn">..db.wrappers</span> <span class="kn">import</span> <span class="n">FileWrapper</span>
+
+
+<div class="viewcode-block" id="FileField">
+<a class="viewcode-back" href="../../../../reference/cdh.files.forms.fields.html#cdh.files.forms.fields.FileField">[docs]</a>
+<span class="k">class</span> <span class="nc">FileField</span><span class="p">(</span><span class="n">Field</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Form field for the cdh.files.db.FileField&quot;&quot;&quot;</span>
+    <span class="n">widget</span> <span class="o">=</span> <span class="n">SimpleFileInput</span>
+    <span class="n">default_error_messages</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;invalid&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;No file was submitted. Check the encoding type on the form.&quot;</span><span class="p">),</span>
+        <span class="s1">&#39;missing&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;No file was submitted.&quot;</span><span class="p">),</span>
+        <span class="s1">&#39;empty&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;The submitted file is empty.&quot;</span><span class="p">),</span>
+        <span class="s1">&#39;max_length&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span>
+            <span class="s1">&#39;Ensure this filename has at most </span><span class="si">%(max)d</span><span class="s1"> character (it has </span><span class="si">%(length)d</span><span class="s1">).&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Ensure this filename has at most </span><span class="si">%(max)d</span><span class="s1"> characters (it has </span><span class="si">%(length)d</span><span class="s1">).&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;max&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;contradiction&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Please either submit a file or check the clear checkbox, not both.&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+
+<div class="viewcode-block" id="FileField.__init__">
+<a class="viewcode-back" href="../../../../reference/cdh.files.forms.fields.html#cdh.files.forms.fields.FileField.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queryset</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_empty_file</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queryset</span> <span class="o">=</span> <span class="n">queryset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_length</span> <span class="o">=</span> <span class="n">max_length</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">allow_empty_file</span> <span class="o">=</span> <span class="n">allow_empty_file</span>
+        <span class="k">if</span> <span class="s1">&#39;limit_choices_to&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;limit_choices_to&#39;</span><span class="p">]</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">storage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">get_storage</span><span class="p">()</span>
+
+<div class="viewcode-block" id="FileField.to_python">
+<a class="viewcode-back" href="../../../../reference/cdh.files.forms.fields.html#cdh.files.forms.fields.FileField.to_python">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_python</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="c1"># Handle no incoming data</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">required</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">error_messages</span><span class="p">[</span><span class="s1">&#39;missing&#39;</span><span class="p">],</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;missing&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">data</span>
+
+        <span class="n">file</span><span class="p">,</span> <span class="n">uuid</span><span class="p">,</span> <span class="n">changed</span> <span class="o">=</span> <span class="n">data</span>
+
+        <span class="c1"># If we don&#39;t have a file or an UUID, we say we didn&#39;t get any data</span>
+        <span class="k">if</span> <span class="n">uuid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">empty_values</span> <span class="ow">and</span> <span class="n">file</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">empty_values</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># If nothing changed, stop processing</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">changed</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">data</span>
+
+        <span class="c1"># UploadedFile objects should have name and size attributes.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">file_name</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">file_size</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">size</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">error_messages</span><span class="p">[</span><span class="s1">&#39;invalid&#39;</span><span class="p">],</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;invalid&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_length</span><span class="p">:</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_length</span><span class="p">,</span> <span class="s1">&#39;length&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_name</span><span class="p">)}</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">error_messages</span><span class="p">[</span><span class="s1">&#39;max_length&#39;</span><span class="p">],</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;max_length&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">file_name</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">error_messages</span><span class="p">[</span><span class="s1">&#39;invalid&#39;</span><span class="p">],</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;invalid&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">allow_empty_file</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">file_size</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">error_messages</span><span class="p">[</span><span class="s1">&#39;empty&#39;</span><span class="p">],</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;empty&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="FileField.clean">
+<a class="viewcode-back" href="../../../../reference/cdh.files.forms.fields.html#cdh.files.forms.fields.FileField.clean">[docs]</a>
+    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">file</span><span class="p">,</span> <span class="n">uuid</span><span class="p">,</span> <span class="n">changed</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="c1"># Changed = True and file is None means the field value should be</span>
+        <span class="c1"># cleared; further validation is not needed.</span>
+        <span class="k">if</span> <span class="n">file</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">changed</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">required</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="c1"># If the field is required, clearing is not possible (the widget</span>
+            <span class="c1"># shouldn&#39;t return False data in that case anyway). False is not</span>
+            <span class="c1"># in self.empty_value; if a False value makes it this far</span>
+            <span class="c1"># it should be validated from here on out as None (so it will be</span>
+            <span class="c1"># caught by the required check).</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">file</span> <span class="ow">and</span> <span class="n">initial</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">initial</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">clean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="FileField.prepare_value">
+<a class="viewcode-back" href="../../../../reference/cdh.files.forms.fields.html#cdh.files.forms.fields.FileField.prepare_value">[docs]</a>
+    <span class="k">def</span> <span class="nf">prepare_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># If value is a data-tuple from get_value_from_datadict,</span>
+                <span class="c1"># try to use the UUID of that tuple to retrieve our model</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+                    <span class="c1"># Check if we actually have a UUID</span>
+                    <span class="k">if</span> <span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryset</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uuid</span><span class="o">=</span><span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                        <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">get_file_wrapper</span><span class="p">()</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># If not, return None</span>
+                        <span class="k">return</span> <span class="n">ret</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Otherwise, we assume we got a PK from the form</span>
+                    <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryset</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">get_file_wrapper</span><span class="p">()</span>
+            <span class="k">except</span> <span class="n">ObjectDoesNotExist</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ImproperlyConfigured</span><span class="p">(</span><span class="s2">&quot;This field somehow didn&#39;t get a &quot;</span>
+                                           <span class="s2">&quot;File-derived model?&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+
+<div class="viewcode-block" id="FileField.bound_data">
+<a class="viewcode-back" href="../../../../reference/cdh.files.forms.fields.html#cdh.files.forms.fields.FileField.bound_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">bound_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">initial</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">FILE_INPUT_CONTRADICTION</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">initial</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="FileField.has_changed">
+<a class="viewcode-back" href="../../../../reference/cdh.files.forms.fields.html#cdh.files.forms.fields.FileField.has_changed">[docs]</a>
+    <span class="k">def</span> <span class="nf">has_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">disabled</span> <span class="ow">and</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="TrackedFileField">
+<a class="viewcode-back" href="../../../../reference/cdh.files.forms.fields.html#cdh.files.forms.fields.TrackedFileField">[docs]</a>
+<span class="k">class</span> <span class="nc">TrackedFileField</span><span class="p">(</span><span class="n">ModelChoiceField</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A MultipleChoiceField whose choices are a model QuerySet.&quot;&quot;&quot;</span>
+    <span class="n">widget</span> <span class="o">=</span> <span class="n">TrackedFileInput</span>
+    <span class="n">hidden_widget</span> <span class="o">=</span> <span class="n">MultipleHiddenInput</span>
+    <span class="n">default_error_messages</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;invalid_list&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Enter a list of values.&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;invalid_choice&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Select a valid choice. </span><span class="si">%(value)s</span><span class="s1"> is not one of the&#39;</span>
+                            <span class="s1">&#39; available choices.&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;invalid_pk_value&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;“</span><span class="si">%(pk)s</span><span class="s1">” is not a valid value.&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+
+<div class="viewcode-block" id="TrackedFileField.__init__">
+<a class="viewcode-back" href="../../../../reference/cdh.files.forms.fields.html#cdh.files.forms.fields.TrackedFileField.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queryset</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">queryset</span><span class="p">,</span> <span class="n">empty_label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TrackedFileField.to_python">
+<a class="viewcode-back" href="../../../../reference/cdh.files.forms.fields.html#cdh.files.forms.fields.TrackedFileField.to_python">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_python</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">value</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_check_values</span><span class="p">(</span><span class="n">value</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="TrackedFileField.clean">
+<a class="viewcode-back" href="../../../../reference/cdh.files.forms.fields.html#cdh.files.forms.fields.TrackedFileField.clean">[docs]</a>
+    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prepare_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">required</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">value</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">error_messages</span><span class="p">[</span><span class="s1">&#39;required&#39;</span><span class="p">],</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;required&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">required</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">value</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryset</span><span class="o">.</span><span class="n">none</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">error_messages</span><span class="p">[</span><span class="s1">&#39;invalid_list&#39;</span><span class="p">],</span>
+                <span class="n">code</span><span class="o">=</span><span class="s1">&#39;invalid_list&#39;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="n">qs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_values</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="c1"># Since this overrides the inherited ModelChoiceField.clean</span>
+        <span class="c1"># we run custom validators here</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run_validators</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">qs</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_check_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Given a list of possible PK values, return a QuerySet of the</span>
+<span class="sd">        corresponding objects. Raise a ValidationError if a given value is</span>
+<span class="sd">        invalid (not a valid PK, not in the queryset, etc.)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_field_name</span> <span class="ow">or</span> <span class="s1">&#39;pk&#39;</span>
+        <span class="c1"># deduplicate given values to avoid creating many querysets or</span>
+        <span class="c1"># requiring the database backend deduplicate efficiently.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="c1"># list of lists isn&#39;t hashable, for example</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">error_messages</span><span class="p">[</span><span class="s1">&#39;invalid_list&#39;</span><span class="p">],</span>
+                <span class="n">code</span><span class="o">=</span><span class="s1">&#39;invalid_list&#39;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">for</span> <span class="n">pk</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">pk</span><span class="p">})</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">error_messages</span><span class="p">[</span><span class="s1">&#39;invalid_pk_value&#39;</span><span class="p">],</span>
+                    <span class="n">code</span><span class="o">=</span><span class="s1">&#39;invalid_pk_value&#39;</span><span class="p">,</span>
+                    <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;pk&#39;</span><span class="p">:</span> <span class="n">pk</span><span class="p">},</span>
+                <span class="p">)</span>
+        <span class="n">qs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">__in&#39;</span> <span class="o">%</span> <span class="n">key</span><span class="p">:</span> <span class="n">value</span><span class="p">})</span>
+        <span class="n">pks</span> <span class="o">=</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">qs</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pks</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">error_messages</span><span class="p">[</span><span class="s1">&#39;invalid_choice&#39;</span><span class="p">],</span>
+                    <span class="n">code</span><span class="o">=</span><span class="s1">&#39;invalid_choice&#39;</span><span class="p">,</span>
+                    <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">val</span><span class="p">},</span>
+                <span class="p">)</span>
+        <span class="k">return</span> <span class="n">qs</span>
+
+<div class="viewcode-block" id="TrackedFileField.prepare_value">
+<a class="viewcode-back" href="../../../../reference/cdh.files.forms.fields.html#cdh.files.forms.fields.TrackedFileField.prepare_value">[docs]</a>
+    <span class="k">def</span> <span class="nf">prepare_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">)</span> <span class="ow">and</span>
+                <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span>
+                <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s1">&#39;_meta&#39;</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_prepare_value</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">value</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_prepare_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">FileWrapper</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">value</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s1">&#39;_meta&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_field_name</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">serializable_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_field_name</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">pk</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">prepare_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TrackedFileField.has_changed">
+<a class="viewcode-back" href="../../../../reference/cdh.files.forms.fields.html#cdh.files.forms.fields.TrackedFileField.has_changed">[docs]</a>
+    <span class="k">def</span> <span class="nf">has_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">disabled</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">initial</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">initial</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">initial</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="n">initial_set</span> <span class="o">=</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">prepare_value</span><span class="p">(</span><span class="n">initial</span><span class="p">)}</span>
+        <span class="n">data_set</span> <span class="o">=</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">data_set</span> <span class="o">!=</span> <span class="n">initial_set</span></div>
+</div>
+
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

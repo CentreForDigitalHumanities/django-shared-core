@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.files.db.fields module &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../_static/theme.css" type="text/css"/>
+        <script src="../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+                    <script src="../_static/doctools.js"></script>
+                    <script src="../_static/sphinx_highlight.js"></script>
+            <script src="../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../genindex.html"/>
+            <link rel="search" title="Search" href="../search.html"/>
+            <link rel="next" title="cdh.files.db.manager module" href="cdh.files.db.manager.html"/>
+            <link rel="prev" title="cdh.files.db.descriptors module" href="cdh.files.db.descriptors.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="index.html"
+           >
+           cdh
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.html"
+           >
+           cdh package
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.files.html"
+           >
+           cdh.files package
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.files.db.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           cdh.files.db package
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.files.db.fields module</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <section id="module-cdh.files.db.fields">
+<span id="cdh-files-db-fields-module"></span><h1>cdh.files.db.fields module<a class="headerlink" href="#module-cdh.files.db.fields" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.files.db.fields.</span></span><span class="sig-name descname"><span class="pre">FileField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_delete</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_field</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db_constraint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename_generator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url_pattern</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.files.db.fields.FileFieldCacheMixin" title="cdh.files.db.fields.FileFieldCacheMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileFieldCacheMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignObject</span></code></p>
+<p>A replacement for Django’s FileField. To the programmer, a File-like
+object is exposed which they can use to interact with the files.</p>
+<p>The main advantages over Django’s FileField are:</p>
+<ul class="simple">
+<li><p>If a file is removed from a model, it’s actually also removed from disk
+automatically. Django’s version leaves it where it is, taking up space</p></li>
+<li><p>Files are not stored on disk using their original filename, an UUID is
+used instead as the filename. This makes guessing filenames next to
+impossible, providing a (small) layer of security.</p></li>
+<li><p>In addition, by default this system will store files in a non-web facing
+location. (Or at least it should be). Accessing these files should be done
+through a download view, allowing the programmer to add permission checks.</p></li>
+</ul>
+<p>Under the hood, it’s actually a modified ForeignKey to (a subclass of)
+File, which keeps track of the metadata. A custom descriptor is then used to
+wrap it in a FileWrapper instance, which provides a File-like interface and
+(alongside the descriptor and this field) handles the complicated DB
+interactions.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_delete</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_field</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db_constraint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename_generator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url_pattern</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>to</strong> – A File-like model.</p></li>
+<li><p><strong>on_delete</strong> – See Django docs for ForeignKey</p></li>
+<li><p><strong>to_field</strong> – The field on File one should link to. Only change
+this when using a different model in ‘to’ please</p></li>
+<li><p><strong>db_constraint</strong> – See Django docs for ForeignKey</p></li>
+<li><p><strong>filename_generator</strong> – A callable which, given a FileWrapper,
+will return a name for the file. Note that
+this isn’t saved anywhere! Changing the
+callable will change the name of all
+existing files</p></li>
+<li><p><strong>kwargs</strong> – See Django docs for ForeignKey</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.attr_class">
+<span class="sig-name descname"><span class="pre">attr_class</span></span><a class="headerlink" href="#cdh.files.db.fields.FileField.attr_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.FileWrapper" title="cdh.files.db.wrappers.FileWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileWrapper</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.check">
+<span class="sig-name descname"><span class="pre">check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.check" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.contribute_to_class">
+<span class="sig-name descname"><span class="pre">contribute_to_class</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.contribute_to_class"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.contribute_to_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register the field with the model class it belongs to.</p>
+<p>If private_only is True, create a separate instance of this field
+for every subclass of cls, even if cls is not an abstract model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.convert_empty_strings">
+<span class="sig-name descname"><span class="pre">convert_empty_strings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expression</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.convert_empty_strings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.convert_empty_strings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.db_check">
+<span class="sig-name descname"><span class="pre">db_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.db_check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.db_check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the database column check constraint for this field, for the
+provided connection. Works the same way as db_type() for the case that
+get_internal_type() does not map to a preexisting model field.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.db_parameters">
+<span class="sig-name descname"><span class="pre">db_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.db_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.db_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extension of db_type(), providing a range of different return values
+(type, checks). This will look at db_type(), allowing custom model
+fields to override it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.db_type">
+<span class="sig-name descname"><span class="pre">db_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.db_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.db_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the database column data type for this field, for the provided
+connection.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.deconstruct">
+<span class="sig-name descname"><span class="pre">deconstruct</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.deconstruct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.deconstruct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return enough information to recreate the field as a 4-tuple:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The name of the field on the model, if contribute_to_class() has
+been run.</p></li>
+<li><p>The import path of the field, including the class, e.g.
+django.db.models.IntegerField. This should be the most portable
+version, so less specific may be better.</p></li>
+<li><p>A list of positional arguments.</p></li>
+<li><p>A dict of keyword arguments.</p></li>
+</ul>
+</div></blockquote>
+<p>Note that the positional or keyword arguments must contain values of
+the following types (including inner values of collection types):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>None, bool, str, int, float, complex, set, frozenset, list, tuple,
+dict</p></li>
+<li><p>UUID</p></li>
+<li><p>datetime.datetime (naive), datetime.date</p></li>
+<li><p>top-level classes, top-level functions - will be referenced by their
+full import path</p></li>
+<li><p>Storage instances - these have their own deconstruct() method</p></li>
+</ul>
+</div></blockquote>
+<p>This is because the values here must be serialized into a text format
+(possibly new Python code, possibly JSON) and these are the only types
+with encoding handlers defined.</p>
+<p>There’s no need to return the exact way the field was instantiated this
+time, just ensure that the resulting field is the same - prefer keyword
+arguments over positional ones, and omit parameters with their default
+values.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.default_error_messages">
+<span class="sig-name descname"><span class="pre">default_error_messages</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'invalid':</span> <span class="pre">'%(model)s-instantie</span> <span class="pre">met</span> <span class="pre">%(field)s</span> <span class="pre">%(value)r</span> <span class="pre">bestaat</span> <span class="pre">niet.'}</span></em><a class="headerlink" href="#cdh.files.db.fields.FileField.default_error_messages" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Refererende</span> <span class="pre">sleutel</span> <span class="pre">(type</span> <span class="pre">wordt</span> <span class="pre">bepaald</span> <span class="pre">door</span> <span class="pre">gerelateerde</span> <span class="pre">veld)'</span></em><a class="headerlink" href="#cdh.files.db.fields.FileField.description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.descriptor_class">
+<span class="sig-name descname"><span class="pre">descriptor_class</span></span><a class="headerlink" href="#cdh.files.db.fields.FileField.descriptor_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="cdh.files.db.descriptors.html#cdh.files.db.descriptors.FileDescriptor" title="cdh.files.db.descriptors.FileDescriptor"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileDescriptor</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.empty_strings_allowed">
+<span class="sig-name descname"><span class="pre">empty_strings_allowed</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#cdh.files.db.fields.FileField.empty_strings_allowed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.formfield">
+<span class="sig-name descname"><span class="pre">formfield</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">using</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.formfield"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.formfield" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pass <code class="docutils literal notranslate"><span class="pre">limit_choices_to</span></code> to the field being constructed.</p>
+<p>Only passes it if there is a type that supports related fields.
+This is a similar strategy used to pass the <code class="docutils literal notranslate"><span class="pre">queryset</span></code> to the field
+being constructed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.forward_related_accessor_class">
+<span class="sig-name descname"><span class="pre">forward_related_accessor_class</span></span><a class="headerlink" href="#cdh.files.db.fields.FileField.forward_related_accessor_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="cdh.files.db.descriptors.html#cdh.files.db.descriptors.ForwardFileDescriptor" title="cdh.files.db.descriptors.ForwardFileDescriptor"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForwardFileDescriptor</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.get_attname">
+<span class="sig-name descname"><span class="pre">get_attname</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.get_attname"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.get_attname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.get_attname_column">
+<span class="sig-name descname"><span class="pre">get_attname_column</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.get_attname_column"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.get_attname_column" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.get_cache_name">
+<span class="sig-name descname"><span class="pre">get_cache_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.get_cache_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.get_cache_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.get_col">
+<span class="sig-name descname"><span class="pre">get_col</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alias</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_field</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.get_col"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.get_col" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.get_db_converters">
+<span class="sig-name descname"><span class="pre">get_db_converters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.get_db_converters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.get_db_converters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.get_db_prep_save">
+<span class="sig-name descname"><span class="pre">get_db_prep_save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.get_db_prep_save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.get_db_prep_save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return field’s value prepared for saving into a database.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.get_db_prep_value">
+<span class="sig-name descname"><span class="pre">get_db_prep_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prepared</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.get_db_prep_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.get_db_prep_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return field’s value prepared for interacting with the database backend.</p>
+<p>Used by the default implementations of get_db_prep_save().</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.get_default">
+<span class="sig-name descname"><span class="pre">get_default</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.get_default"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.get_default" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the to_field if the default value is an object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.get_prep_value">
+<span class="sig-name descname"><span class="pre">get_prep_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.get_prep_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.get_prep_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform preliminary non-db specific value checks and conversions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.get_reverse_path_info">
+<span class="sig-name descname"><span class="pre">get_reverse_path_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filtered_relation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.get_reverse_path_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.get_reverse_path_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get path from the related model to this field’s model.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.many_to_many">
+<span class="sig-name descname"><span class="pre">many_to_many</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#cdh.files.db.fields.FileField.many_to_many" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.many_to_one">
+<span class="sig-name descname"><span class="pre">many_to_one</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#cdh.files.db.fields.FileField.many_to_one" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.one_to_many">
+<span class="sig-name descname"><span class="pre">one_to_many</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#cdh.files.db.fields.FileField.one_to_many" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.one_to_one">
+<span class="sig-name descname"><span class="pre">one_to_one</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#cdh.files.db.fields.FileField.one_to_one" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.post_delete">
+<span class="sig-name descname"><span class="pre">post_delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.post_delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.post_delete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.post_save">
+<span class="sig-name descname"><span class="pre">post_save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.post_save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.post_save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle deletion of a file</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.pre_delete">
+<span class="sig-name descname"><span class="pre">pre_delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.pre_delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.pre_delete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.pre_save">
+<span class="sig-name descname"><span class="pre">pre_save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.pre_save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.pre_save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure we save our file when saving the model this field is
+attached to</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.rel_class">
+<span class="sig-name descname"><span class="pre">rel_class</span></span><a class="headerlink" href="#cdh.files.db.fields.FileField.rel_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">ManyToOneRel</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.resolve_related_fields">
+<span class="sig-name descname"><span class="pre">resolve_related_fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.resolve_related_fields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.resolve_related_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.target_field">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">target_field</span></span><a class="headerlink" href="#cdh.files.db.fields.FileField.target_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>When filtering against this relation, return the field on the remote
+model against which the filtering should happen.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.to_python">
+<span class="sig-name descname"><span class="pre">to_python</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.to_python"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.to_python" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the input value into the expected Python data type, raising
+django.core.exceptions.ValidationError if the data can’t be converted.
+Return the converted value. Subclasses should override this.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileField.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_instance</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileField.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileField.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate value and raise ValidationError if necessary. Subclasses
+should override this to provide validation logic.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileFieldCacheMixin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.files.db.fields.</span></span><span class="sig-name descname"><span class="pre">FileFieldCacheMixin</span></span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileFieldCacheMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileFieldCacheMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Provide an API for working with the model’s fields value cache.</p>
+<p>This is a modified version of Django’s FieldCacheMixin, which keeps track
+of the old</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileFieldCacheMixin.clear_cache">
+<span class="sig-name descname"><span class="pre">clear_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileFieldCacheMixin.clear_cache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileFieldCacheMixin.clear_cache" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileFieldCacheMixin.delete_cached_value">
+<span class="sig-name descname"><span class="pre">delete_cached_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileFieldCacheMixin.delete_cached_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileFieldCacheMixin.delete_cached_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileFieldCacheMixin.delete_value_from_cache">
+<span class="sig-name descname"><span class="pre">delete_value_from_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileFieldCacheMixin.delete_value_from_cache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileFieldCacheMixin.delete_value_from_cache" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileFieldCacheMixin.get_cache_name">
+<span class="sig-name descname"><span class="pre">get_cache_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileFieldCacheMixin.get_cache_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileFieldCacheMixin.get_cache_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileFieldCacheMixin.get_cached_value">
+<span class="sig-name descname"><span class="pre">get_cached_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default=&lt;object</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all=False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileFieldCacheMixin.get_cached_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileFieldCacheMixin.get_cached_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileFieldCacheMixin.in_cache">
+<span class="sig-name descname"><span class="pre">in_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileFieldCacheMixin.in_cache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileFieldCacheMixin.in_cache" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileFieldCacheMixin.is_cached">
+<span class="sig-name descname"><span class="pre">is_cached</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileFieldCacheMixin.is_cached"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileFieldCacheMixin.is_cached" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileFieldCacheMixin.set_cached_value">
+<span class="sig-name descname"><span class="pre">set_cached_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clear</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#FileFieldCacheMixin.set_cached_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.FileFieldCacheMixin.set_cached_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.fields.FileFieldCacheMixin.set_cls">
+<span class="sig-name descname"><span class="pre">set_cls</span></span><a class="headerlink" href="#cdh.files.db.fields.FileFieldCacheMixin.set_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="cdh.core.collections.html#cdh.core.collections.IndexedOrderedSet" title="cdh.core.collections.IndexedOrderedSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">IndexedOrderedSet</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.files.db.fields.TrackedFileField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.files.db.fields.</span></span><span class="sig-name descname"><span class="pre">TrackedFileField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">related_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">related_query_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_choices_to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db_constraint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db_table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">swappable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url_pattern</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#TrackedFileField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.TrackedFileField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.ManyToManyField" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManyToManyField</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.TrackedFileField.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">related_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">related_query_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_choices_to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db_constraint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db_table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">swappable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url_pattern</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#TrackedFileField.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.TrackedFileField.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.fields.TrackedFileField.attr_class">
+<span class="sig-name descname"><span class="pre">attr_class</span></span><a class="headerlink" href="#cdh.files.db.fields.TrackedFileField.attr_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="cdh.files.db.wrappers.html#cdh.files.db.wrappers.TrackedFileWrapper" title="cdh.files.db.wrappers.TrackedFileWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrackedFileWrapper</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.TrackedFileField.contribute_to_class">
+<span class="sig-name descname"><span class="pre">contribute_to_class</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#TrackedFileField.contribute_to_class"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.TrackedFileField.contribute_to_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register the field with the model class it belongs to.</p>
+<p>If private_only is True, create a separate instance of this field
+for every subclass of cls, even if cls is not an abstract model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.TrackedFileField.contribute_to_related_class">
+<span class="sig-name descname"><span class="pre">contribute_to_related_class</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">related</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#TrackedFileField.contribute_to_related_class"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.TrackedFileField.contribute_to_related_class" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.TrackedFileField.deconstruct">
+<span class="sig-name descname"><span class="pre">deconstruct</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#TrackedFileField.deconstruct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.TrackedFileField.deconstruct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return enough information to recreate the field as a 4-tuple:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The name of the field on the model, if contribute_to_class() has
+been run.</p></li>
+<li><p>The import path of the field, including the class, e.g.
+django.db.models.IntegerField. This should be the most portable
+version, so less specific may be better.</p></li>
+<li><p>A list of positional arguments.</p></li>
+<li><p>A dict of keyword arguments.</p></li>
+</ul>
+</div></blockquote>
+<p>Note that the positional or keyword arguments must contain values of
+the following types (including inner values of collection types):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>None, bool, str, int, float, complex, set, frozenset, list, tuple,
+dict</p></li>
+<li><p>UUID</p></li>
+<li><p>datetime.datetime (naive), datetime.date</p></li>
+<li><p>top-level classes, top-level functions - will be referenced by their
+full import path</p></li>
+<li><p>Storage instances - these have their own deconstruct() method</p></li>
+</ul>
+</div></blockquote>
+<p>This is because the values here must be serialized into a text format
+(possibly new Python code, possibly JSON) and these are the only types
+with encoding handlers defined.</p>
+<p>There’s no need to return the exact way the field was instantiated this
+time, just ensure that the resulting field is the same - prefer keyword
+arguments over positional ones, and omit parameters with their default
+values.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.fields.TrackedFileField.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'File</span> <span class="pre">field</span> <span class="pre">with</span> <span class="pre">history</span> <span class="pre">tracking'</span></em><a class="headerlink" href="#cdh.files.db.fields.TrackedFileField.description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.TrackedFileField.formfield">
+<span class="sig-name descname"><span class="pre">formfield</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">using</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#TrackedFileField.formfield"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.TrackedFileField.formfield" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pass <code class="docutils literal notranslate"><span class="pre">limit_choices_to</span></code> to the field being constructed.</p>
+<p>Only passes it if there is a type that supports related fields.
+This is a similar strategy used to pass the <code class="docutils literal notranslate"><span class="pre">queryset</span></code> to the field
+being constructed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.fields.TrackedFileField.rel_class">
+<span class="sig-name descname"><span class="pre">rel_class</span></span><a class="headerlink" href="#cdh.files.db.fields.TrackedFileField.rel_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#cdh.files.db.fields.TrackedFileRel" title="cdh.files.db.fields.TrackedFileRel"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrackedFileRel</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.TrackedFileField.value_from_object">
+<span class="sig-name descname"><span class="pre">value_from_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#TrackedFileField.value_from_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.TrackedFileField.value_from_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value of this field in the given model instance.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.files.db.fields.TrackedFileRel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.files.db.fields.</span></span><span class="sig-name descname"><span class="pre">TrackedFileRel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">related_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">related_query_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_choices_to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db_constraint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#TrackedFileRel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.TrackedFileRel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignObjectRel</span></code></p>
+<p>Used by ManyToManyField to store information about the relation.</p>
+<p><code class="docutils literal notranslate"><span class="pre">_meta.get_fields()</span></code> returns this class to provide access to the field
+flags for the reverse relation.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.TrackedFileRel.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">related_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">related_query_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_choices_to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db_constraint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#TrackedFileRel.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.TrackedFileRel.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.fields.TrackedFileRel.get_related_field">
+<span class="sig-name descname"><span class="pre">get_related_field</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#TrackedFileRel.get_related_field"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.TrackedFileRel.get_related_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the field in the ‘to’ object to which this relationship is tied.
+Provided for symmetry with ManyToOneRel.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.files.db.fields.TrackedFileRel.identity">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">identity</span></span><a class="headerlink" href="#cdh.files.db.fields.TrackedFileRel.identity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cdh.files.db.fields.create_tracked_file_intermediary_model">
+<span class="sig-prename descclassname"><span class="pre">cdh.files.db.fields.</span></span><span class="sig-name descname"><span class="pre">create_tracked_file_intermediary_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/fields.html#create_tracked_file_intermediary_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.fields.create_tracked_file_intermediary_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

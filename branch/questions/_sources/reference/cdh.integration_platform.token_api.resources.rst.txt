@@ -1,0 +1,7 @@
+cdh.integration\_platform.token\_api.resources module
+=====================================================
+
+.. automodule:: cdh.integration_platform.token_api.resources
+   :members:
+   :undoc-members:
+   :show-inheritance:

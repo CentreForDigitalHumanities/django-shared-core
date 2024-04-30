@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.vue3.components.uu_list.serializers &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../../../_static/theme.css" type="text/css"/>
+        <script src="../../../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../../../../../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../../../../../_static/doctools.js?v=9a2dae69"></script>
+                    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../../../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.vue3.components.uu_list.serializers</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.vue3.components.uu_list.serializers</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;A collection of serializer fields needed for the proper operation of some</span>
+<span class="sd">columns in the Data-Defined Visualizer variant of the UU-List.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">resolve_url</span>
+<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">serializers</span>
+
+
+<div class="viewcode-block" id="DDVLinkField">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.serializers.html#cdh.vue3.components.uu_list.serializers.DDVLinkField">[docs]</a>
+<span class="k">class</span> <span class="nc">DDVLinkField</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">Field</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;DDVLinkField is a custom DRF serializer, which will format its</span>
+<span class="sd">    output for use in DDVLink, DDVButton and DDVAction DDV columns.</span>
+
+<span class="sd">    When using this field for DDVLink or DDVButton, you can use this class as</span>
+<span class="sd">    the serializer.</span>
+<span class="sd">    DDVAction columns should use the DDVActionsField serializer instead.</span>
+
+<span class="sd">    Note: classes is ignored when using DDVLink; use the column classes</span>
+<span class="sd">    argument instead</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DDVLinkField.__init__">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.serializers.html#cdh.vue3.components.uu_list.serializers.DDVLinkField.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">text</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">callable</span><span class="p">],</span>
+        <span class="n">link</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">callable</span><span class="p">],</span>
+        <span class="n">link_attr</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">new_tab</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">check</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">classes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Init</span>
+
+<span class="sd">        &#39;The object&#39; will refer to &#39;the object currently being serialized&#39;.</span>
+
+<span class="sd">        :param text: The text on the action. Either a (trans)string or a</span>
+<span class="sd">                     callable, which accepts the object as a param and returns</span>
+<span class="sd">                     a string.</span>
+<span class="sd">        :type text: str | callable</span>
+<span class="sd">        :param link: The link the user should be navigated to when clicking</span>
+<span class="sd">                     the action. Either a string (both full urls as django</span>
+<span class="sd">                     named urls are supported) or a callable returning said</span>
+<span class="sd">                     string.</span>
+<span class="sd">        :type link: str | callable</span>
+<span class="sd">        :param link_attr: If supplied, the attribute given will be retrieved</span>
+<span class="sd">                          from the object and passed to the link resolver.</span>
+<span class="sd">                          Use this to supply things like the &#39;pk&#39; to django</span>
+<span class="sd">                          named urls.</span>
+<span class="sd">        :type link_attr: str</span>
+<span class="sd">        :param check: If supplied, this callable will be used to check if</span>
+<span class="sd">                      this action should be displayed for the current object.</span>
+<span class="sd">                      The callable should accept one parameter, the object.</span>
+<span class="sd">        :type check: callable</span>
+<span class="sd">        :param classes: Any CSS classes to be applied to the action root-element</span>
+<span class="sd">        :type classes: str</span>
+<span class="sd">        :param kwargs: see DRF Field</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">link</span> <span class="o">=</span> <span class="n">link</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">link_attr</span> <span class="o">=</span> <span class="n">link_attr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_tab</span> <span class="o">=</span> <span class="n">new_tab</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check</span> <span class="o">=</span> <span class="n">check</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes</span> <span class="o">=</span> <span class="n">classes</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;*&quot;</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;read_only&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DDVLinkField.to_representation">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.serializers.html#cdh.vue3.components.uu_list.serializers.DDVLinkField.to_representation">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">check</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">link_attr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">link_attr</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+
+        <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span>
+        <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="n">link</span> <span class="o">=</span> <span class="n">resolve_url</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">link</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;link&quot;</span><span class="p">:</span> <span class="n">link</span><span class="p">,</span>
+            <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">text</span><span class="p">,</span>
+            <span class="s2">&quot;classes&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">,</span>
+            <span class="s2">&quot;new_tab&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_tab</span><span class="p">,</span>
+        <span class="p">}</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="DDVActionDividerField">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.serializers.html#cdh.vue3.components.uu_list.serializers.DDVActionDividerField">[docs]</a>
+<span class="k">class</span> <span class="nc">DDVActionDividerField</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">Field</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This is a simple class to add dividers between actions in</span>
+<span class="sd">    DDVActionsField&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DDVActionDividerField.__init__">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.serializers.html#cdh.vue3.components.uu_list.serializers.DDVActionDividerField.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">check</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &#39;The object&#39; will refer to &#39;the object currently being serialized&#39;.</span>
+
+<span class="sd">        :param check: If supplied, this callable will be used to check if</span>
+<span class="sd">                      this action should be displayed for the current object.</span>
+<span class="sd">                      The callable should accept one parameter, the object.</span>
+<span class="sd">        :type check: callable</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check</span> <span class="o">=</span> <span class="n">check</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;*&quot;</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;read_only&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DDVActionDividerField.to_representation">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.serializers.html#cdh.vue3.components.uu_list.serializers.DDVActionDividerField.to_representation">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">check</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;divider&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="p">}</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="DDVActionsField">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.serializers.html#cdh.vue3.components.uu_list.serializers.DDVActionsField">[docs]</a>
+<span class="k">class</span> <span class="nc">DDVActionsField</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">Field</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A custom serializer to use for the DDVActions column.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DDVActionsField.__init__">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.serializers.html#cdh.vue3.components.uu_list.serializers.DDVActionsField.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">actions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">DDVLinkField</span><span class="p">,</span> <span class="n">DDVActionDividerField</span><span class="p">]],</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param actions: a list of items to add to the actions dropdown. If no</span>
+<span class="sd">                        actions are defined (after checks are run), the column</span>
+<span class="sd">                        will automagically hide itself for this object.</span>
+<span class="sd">        :type actions: DDVLinkField | DDVActionDividerField</span>
+<span class="sd">        :param kwargs: see DRF Field</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actions</span> <span class="o">=</span> <span class="n">actions</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;*&quot;</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;read_only&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DDVActionsField.bind">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.serializers.html#cdh.vue3.components.uu_list.serializers.DDVActionsField.bind">[docs]</a>
+    <span class="k">def</span> <span class="nf">bind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="p">:</span>
+            <span class="n">action</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">field_name</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">field_name</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DDVActionsField.to_representation">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.serializers.html#cdh.vue3.components.uu_list.serializers.DDVActionsField.to_representation">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">action_representation</span> <span class="o">:=</span> <span class="n">action</span><span class="o">.</span><span class="n">to_representation</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+                <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">action_representation</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">values</span></div>
+</div>
+
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

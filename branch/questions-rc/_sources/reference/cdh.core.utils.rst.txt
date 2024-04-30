@@ -1,0 +1,17 @@
+cdh.core.utils package
+======================
+
+.. automodule:: cdh.core.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.core.utils.enumerate_to
+   cdh.core.utils.general
+   cdh.core.utils.mail

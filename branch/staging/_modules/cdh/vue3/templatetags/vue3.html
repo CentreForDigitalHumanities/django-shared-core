@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.vue3.templatetags.vue3 &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../../_static/theme.css" type="text/css"/>
+        <script src="../../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../../../../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+                    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.vue3.templatetags.vue3</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.vue3.templatetags.vue3</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+
+<span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">template</span>
+<span class="kn">from</span> <span class="nn">django.utils.html</span> <span class="kn">import</span> <span class="n">format_html</span>
+<span class="kn">from</span> <span class="nn">django.utils.safestring</span> <span class="kn">import</span> <span class="n">mark_safe</span>
+
+<span class="n">register</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Library</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="VueJSONEncoder">
+<a class="viewcode-back" href="../../../../reference/cdh.vue3.templatetags.vue3.html#cdh.vue3.templatetags.vue3.VueJSONEncoder">[docs]</a>
+<span class="k">class</span> <span class="nc">VueJSONEncoder</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">JSONEncoder</span><span class="p">):</span>
+<div class="viewcode-block" id="VueJSONEncoder.encode">
+<a class="viewcode-back" href="../../../../reference/cdh.vue3.templatetags.vue3.html#cdh.vue3.templatetags.vue3.VueJSONEncoder.encode">[docs]</a>
+    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;_wrapped&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">_wrapped</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="VueJSONEncoder.default">
+<a class="viewcode-back" href="../../../../reference/cdh.vue3.templatetags.vue3.html#cdh.vue3.templatetags.vue3.VueJSONEncoder.default">[docs]</a>
+    <span class="k">def</span> <span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">time</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="prop_const">
+<a class="viewcode-back" href="../../../../reference/cdh.vue3.templatetags.vue3.html#cdh.vue3.templatetags.vue3.prop_const">[docs]</a>
+<span class="k">def</span> <span class="nf">prop_const</span><span class="p">(</span><span class="n">const</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">const</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">VueJSONEncoder</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="prop_variable">
+<a class="viewcode-back" href="../../../../reference/cdh.vue3.templatetags.vue3.html#cdh.vue3.templatetags.vue3.prop_variable">[docs]</a>
+<span class="k">def</span> <span class="nf">prop_variable</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">context</span><span class="p">),</span> <span class="bp">cls</span><span class="o">=</span><span class="n">VueJSONEncoder</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="prop_js">
+<a class="viewcode-back" href="../../../../reference/cdh.vue3.templatetags.vue3.html#cdh.vue3.templatetags.vue3.prop_js">[docs]</a>
+<span class="k">def</span> <span class="nf">prop_js</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">code</span></div>
+
+
+
+<div class="viewcode-block" id="event_prop">
+<a class="viewcode-back" href="../../../../reference/cdh.vue3.templatetags.vue3.html#cdh.vue3.templatetags.vue3.event_prop">[docs]</a>
+<span class="k">def</span> <span class="nf">event_prop</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">&#39;on&#39;</span> <span class="o">+</span> <span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">+</span> <span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span></div>
+
+
+
+<div class="viewcode-block" id="vue">
+<a class="viewcode-back" href="../../../../reference/cdh.vue3.templatetags.vue3.html#cdh.vue3.templatetags.vue3.vue">[docs]</a>
+<span class="nd">@register</span><span class="o">.</span><span class="n">tag</span>
+<span class="k">def</span> <span class="nf">vue</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split_contents</span><span class="p">()</span>
+
+    <span class="c1"># because we install components in a div by default, there&#39;s an option</span>
+    <span class="c1"># to specify an inline display style when required by adding the word</span>
+    <span class="c1"># &#39;inline&#39; in the tag argument list</span>
+    <span class="n">inline</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="s1">&#39;inline&#39;</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;inline&#39;</span><span class="p">)</span>
+        <span class="n">inline</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="c1"># in props we store (per prop) a fucntion that takes a context</span>
+    <span class="c1"># and returns the prop value.</span>
+    <span class="c1"># this is achieved by using partial() together with the prop_* functions</span>
+    <span class="c1"># defined above.</span>
+    <span class="n">props</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="n">component</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;:&#39;</span><span class="p">:</span>
+            <span class="c1"># prop binding</span>
+            <span class="k">if</span> <span class="s1">&#39;=&#39;</span> <span class="ow">in</span> <span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">]:</span>
+                    <span class="c1"># :prop=&quot;thing&quot;, treat thing as a javascript value</span>
+                    <span class="n">props</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">prop_js</span><span class="p">,</span> <span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># :prop=thing, treat thing as a python value</span>
+                    <span class="n">props</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">prop_variable</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span>
+                <span class="c1"># :prop, is the same as :prop=prop (treat prop as a python value)</span>
+                <span class="n">props</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">prop_variable</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="c1"># @event=&quot;thing&quot;, thing should be a javascript function</span>
+            <span class="n">props</span><span class="p">[</span><span class="n">event_prop</span><span class="p">(</span><span class="n">name</span><span class="p">)]</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">prop_js</span><span class="p">,</span> <span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">]:</span>
+                <span class="n">props</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">prop_const</span><span class="p">,</span> <span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">VueRenderer</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="n">inline</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="VueRenderer">
+<a class="viewcode-back" href="../../../../reference/cdh.vue3.templatetags.vue3.html#cdh.vue3.templatetags.vue3.VueRenderer">[docs]</a>
+<span class="k">class</span> <span class="nc">VueRenderer</span><span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">Node</span><span class="p">):</span>
+<div class="viewcode-block" id="VueRenderer.__init__">
+<a class="viewcode-back" href="../../../../reference/cdh.vue3.templatetags.vue3.html#cdh.vue3.templatetags.vue3.VueRenderer.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="n">inline</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">component</span> <span class="o">=</span> <span class="n">component</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">props</span> <span class="o">=</span> <span class="n">props</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inline</span> <span class="o">=</span> <span class="n">inline</span></div>
+
+
+<div class="viewcode-block" id="VueRenderer.render">
+<a class="viewcode-back" href="../../../../reference/cdh.vue3.templatetags.vue3.html#cdh.vue3.templatetags.vue3.VueRenderer.render">[docs]</a>
+    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">binding_defs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">prop</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">binding_defs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;data[&quot;</span><span class="si">{}</span><span class="s1">&quot;] = </span><span class="si">{}</span><span class="s1">;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prop</span><span class="p">,</span> <span class="n">value</span><span class="p">(</span><span class="n">context</span><span class="p">)))</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Failed binding proeprty &quot;</span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span>
+
+        <span class="n">binding</span> <span class="o">=</span> <span class="n">mark_safe</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">binding_defs</span><span class="p">))</span>
+
+        <span class="c1"># add a random suffix to container id, to avoid collisions</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_lowercase</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+        <span class="n">container</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="n">suffix</span><span class="p">])</span>
+
+        <span class="n">style</span> <span class="o">=</span> <span class="s1">&#39;display:inline&#39;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inline</span> <span class="k">else</span> <span class="s1">&#39;width:100%&#39;</span>
+
+        <span class="c1"># Retrieve the CSP nonce if present</span>
+        <span class="n">nonce</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="s1">&#39;request&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">request</span><span class="p">,</span>
+                                                   <span class="s1">&#39;csp_nonce&#39;</span><span class="p">):</span>
+            <span class="n">nonce</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">csp_nonce</span>
+
+        <span class="k">return</span> <span class="n">format_html</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            &lt;div id=&quot;{container}&quot; style=&quot;{style}&quot;&gt;&lt;/div&gt;</span>
+<span class="sd">            &lt;script nonce=&quot;{nonce}&quot;&gt;</span>
+<span class="sd">            (function() {{</span>
+<span class="sd">            let data = {{}};</span>
+<span class="sd">            {binding}</span>
+<span class="sd">                createApp({component}, data).mount(&#39;#{container}&#39;)</span>
+<span class="sd">            }})();</span>
+<span class="sd">            &lt;/script&gt;&#39;&#39;&#39;</span><span class="p">,</span>
+            <span class="n">binding</span><span class="o">=</span><span class="n">binding</span><span class="p">,</span>
+            <span class="n">component</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="p">,</span>
+            <span class="n">container</span><span class="o">=</span><span class="n">container</span><span class="p">,</span>
+            <span class="n">style</span><span class="o">=</span><span class="n">style</span><span class="p">,</span>
+            <span class="n">nonce</span><span class="o">=</span><span class="n">nonce</span><span class="p">,</span>
+        <span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+cdh.core.js\_urls package
+=========================
+
+.. automodule:: cdh.core.js_urls
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.core.js_urls.conf
+   cdh.core.js_urls.utils
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.core.js_urls.serializer
+   cdh.core.js_urls.views

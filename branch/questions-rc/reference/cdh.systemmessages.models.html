@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.systemmessages.models module &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../_static/theme.css" type="text/css"/>
+        <script src="../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+                    <script src="../_static/doctools.js"></script>
+                    <script src="../_static/sphinx_highlight.js"></script>
+            <script src="../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../genindex.html"/>
+            <link rel="search" title="Search" href="../search.html"/>
+            <link rel="next" title="cdh.systemmessages.translation module" href="cdh.systemmessages.translation.html"/>
+            <link rel="prev" title="cdh.systemmessages.forms module" href="cdh.systemmessages.forms.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="index.html"
+           >
+           cdh
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.html"
+           >
+           cdh package
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.systemmessages.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           cdh.systemmessages package
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.systemmessages.models module</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <section id="module-cdh.systemmessages.models">
+<span id="cdh-systemmessages-models-module"></span><h1>cdh.systemmessages.models module<a class="headerlink" href="#module-cdh.systemmessages.models" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.systemmessages.models.</span></span><span class="sig-name descname"><span class="pre">SystemMessage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">not_before</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">not_after</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/systemmessages/models.html#SystemMessage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/instances/#django.db.models.Model" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.BigAutoField" title="(in Django v4.1)"><em>BigAutoField</em></a>) – Primary key: ID</p></li>
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.TextField" title="(in Django v4.1)"><em>TextField</em></a>) – Systemmessage.message. systemmessage.message.help_text</p></li>
+<li><p><strong>message_nl</strong> (<em>TranslationTextField</em>) – Systemmessage.message [nl]. systemmessage.message.help_text</p></li>
+<li><p><strong>message_en</strong> (<em>TranslationTextField</em>) – Systemmessage.message [en]. systemmessage.message.help_text</p></li>
+<li><p><strong>color</strong> (<a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.CharField" title="(in Django v4.1)"><em>CharField</em></a>) – Systemmessage.color. systemmessage.color.help_text</p></li>
+<li><p><strong>not_before</strong> (<a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.DateTimeField" title="(in Django v4.1)"><em>DateTimeField</em></a>) – Systemmessage.not_before. systemmessage.not_before.help_text</p></li>
+<li><p><strong>not_after</strong> (<a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.DateTimeField" title="(in Django v4.1)"><em>DateTimeField</em></a>) – Systemmessage.not_after. systemmessage.not_after.help_text</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.COLORS">
+<span class="sig-name descname"><span class="pre">COLORS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(('primary',</span> <span class="pre">'systemmessage.color.primary'),</span> <span class="pre">('secondary',</span> <span class="pre">'systemmessage.color.secondary'),</span> <span class="pre">('success',</span> <span class="pre">'systemmessage.color.success'),</span> <span class="pre">('danger',</span> <span class="pre">'systemmessage.color.danger'),</span> <span class="pre">('warning',</span> <span class="pre">'systemmessage.color.warning'),</span> <span class="pre">('info',</span> <span class="pre">'systemmessage.color.info'),</span> <span class="pre">('light',</span> <span class="pre">'systemmessage.color.light'),</span> <span class="pre">('dark',</span> <span class="pre">'systemmessage.color.dark'))</span></em><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.COLORS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.DANGER">
+<span class="sig-name descname"><span class="pre">DANGER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'danger'</span></em><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.DANGER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.DARK">
+<span class="sig-name descname"><span class="pre">DARK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'dark'</span></em><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.DARK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/exceptions/#django.core.exceptions.ObjectDoesNotExist" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.INFO">
+<span class="sig-name descname"><span class="pre">INFO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'info'</span></em><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.INFO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.LIGHT">
+<span class="sig-name descname"><span class="pre">LIGHT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'light'</span></em><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.LIGHT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/exceptions/#django.core.exceptions.MultipleObjectsReturned" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.PRIMARY">
+<span class="sig-name descname"><span class="pre">PRIMARY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'primary'</span></em><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.PRIMARY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.SECONDARY">
+<span class="sig-name descname"><span class="pre">SECONDARY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'secondary'</span></em><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.SECONDARY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.SUCCESS">
+<span class="sig-name descname"><span class="pre">SUCCESS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'success'</span></em><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.SUCCESS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.WARNING">
+<span class="sig-name descname"><span class="pre">WARNING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'warning'</span></em><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.WARNING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.clean_fields">
+<span class="sig-name descname"><span class="pre">clean_fields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.clean_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clean all fields and raise a ValidationError containing a dict
+of all validation errors if any occur.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.color">
+<span class="sig-name descname"><span class="pre">color</span></span><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.CharField" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">CharField</span></code></a></p>
+<p>Systemmessage.color. systemmessage.color.help_text</p>
+<p>Choices:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">primary</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">secondary</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">success</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">danger</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">warning</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">info</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">light</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dark</span></code></p></li>
+</ul>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.css_class">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">css_class</span></span><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.css_class" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.get_color_display">
+<span class="sig-name descname"><span class="pre">get_color_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.CharField:</span> <span class="pre">color&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.get_color_display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows the label of the <a class="reference internal" href="#cdh.systemmessages.models.SystemMessage.color" title="cdh.systemmessages.models.SystemMessage.color"><code class="xref py py-attr docutils literal notranslate"><span class="pre">color</span></code></a>. See <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/instances/#django.db.models.Model.get_FOO_display" title="(in Django v4.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_FOO_display()</span></code></a> for more information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.get_deferred_fields">
+<span class="sig-name descname"><span class="pre">get_deferred_fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.get_deferred_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a set containing names of deferred fields for this instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.BigAutoField" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BigAutoField</span></code></a></p>
+<p>Primary key: ID</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.message">
+<span class="sig-name descname"><span class="pre">message</span></span><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>A descriptor used for the original translated field.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.message_en">
+<span class="sig-name descname"><span class="pre">message_en</span></span><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.message_en" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type: <code class="xref py py-class docutils literal notranslate"><span class="pre">TranslationTextField</span></code></p>
+<p>Systemmessage.message [en]. systemmessage.message.help_text</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.message_nl">
+<span class="sig-name descname"><span class="pre">message_nl</span></span><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.message_nl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type: <code class="xref py py-class docutils literal notranslate"><span class="pre">TranslationTextField</span></code></p>
+<p>Systemmessage.message [nl]. systemmessage.message.help_text</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.not_after">
+<span class="sig-name descname"><span class="pre">not_after</span></span><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.not_after" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.DateTimeField" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DateTimeField</span></code></a></p>
+<p>Systemmessage.not_after. systemmessage.not_after.help_text</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.not_before">
+<span class="sig-name descname"><span class="pre">not_before</span></span><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.not_before" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.DateTimeField" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DateTimeField</span></code></a></p>
+<p>Systemmessage.not_before. systemmessage.not_before.help_text</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;cdh.systemmessages.models.SystemMessageManager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessage.refresh_from_db">
+<span class="sig-name descname"><span class="pre">refresh_from_db</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">using</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cdh.systemmessages.models.SystemMessage.refresh_from_db" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reload field values from the database.</p>
+<p>By default, the reloading happens from the database this instance was
+loaded from, or by the read router if this instance wasn’t loaded from
+any database. The using parameter will override the default.</p>
+<p>Fields can be used to specify which fields to reload. The fields
+should be an iterable of field attnames. If fields is None, then
+all non-deferred fields are reloaded.</p>
+<p>When accessing deferred fields of an instance, the deferred loading
+of the field will call this method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessageManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.systemmessages.models.</span></span><span class="sig-name descname"><span class="pre">SystemMessageManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/systemmessages/models.html#SystemMessageManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.systemmessages.models.SystemMessageManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/topics/db/managers/#django.db.models.Manager" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Manager</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.systemmessages.models.SystemMessageManager.get_current_messages">
+<span class="sig-name descname"><span class="pre">get_current_messages</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/systemmessages/models.html#SystemMessageManager.get_current_messages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.systemmessages.models.SystemMessageManager.get_current_messages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a QS prefiltered to honor the not_before and not_after
+fields</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

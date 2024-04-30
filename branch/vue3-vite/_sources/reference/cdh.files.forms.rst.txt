@@ -1,0 +1,16 @@
+cdh.files.forms package
+=======================
+
+.. automodule:: cdh.files.forms
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.files.forms.fields
+   cdh.files.forms.widgets

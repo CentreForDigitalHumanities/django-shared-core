@@ -1,0 +1,7 @@
+cdh.files.db.descriptors module
+===============================
+
+.. automodule:: cdh.files.db.descriptors
+   :members:
+   :undoc-members:
+   :show-inheritance:

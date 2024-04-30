@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cdh.files.forms.fields module &mdash; Django Shared Core 3.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="cdh.files.forms.widgets module" href="cdh.files.forms.widgets.html" />
+    <link rel="prev" title="cdh.files.forms package" href="cdh.files.forms.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Django Shared Core
+          </a>
+              <div class="version">
+                3.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">cdh</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="cdh.html">cdh package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="cdh.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="cdh.core.html">cdh.core package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="cdh.files.html">cdh.files package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.integration_platform.html">cdh.integration_platform package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.rest.html">cdh.rest package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.systemmessages.html">cdh.systemmessages package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.vue.html">cdh.vue package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Django Shared Core</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">cdh</a> &raquo;</li>
+          <li><a href="cdh.html">cdh package</a> &raquo;</li>
+          <li><a href="cdh.files.html">cdh.files package</a> &raquo;</li>
+          <li><a href="cdh.files.forms.html">cdh.files.forms package</a> &raquo;</li>
+      <li>cdh.files.forms.fields module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/reference/cdh.files.forms.fields.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-cdh.files.forms.fields">
+<span id="cdh-files-forms-fields-module"></span><h1>cdh.files.forms.fields module<a class="headerlink" href="#module-cdh.files.forms.fields" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.files.forms.fields.FileField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.files.forms.fields.</span></span><span class="sig-name descname"><span class="pre">FileField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">queryset</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_empty_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/forms/fields.html#FileField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.forms.fields.FileField" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/fields/#django.forms.Field" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code></a></p>
+<p>Form field for the cdh.files.db.FileField</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.forms.fields.FileField.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">queryset</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_empty_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/forms/fields.html#FileField.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.forms.fields.FileField.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.forms.fields.FileField.bound_data">
+<span class="sig-name descname"><span class="pre">bound_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/forms/fields.html#FileField.bound_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.forms.fields.FileField.bound_data" title="Permalink to this definition"></a></dt>
+<dd><p>Return the value that should be shown for this field on render of a
+bound form, given the submitted POST data for the field and the initial
+data, if any.</p>
+<p>For most fields, this will simply be data; FileFields need to handle it
+a bit differently.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.forms.fields.FileField.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/forms/fields.html#FileField.clean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.forms.fields.FileField.clean" title="Permalink to this definition"></a></dt>
+<dd><p>Validate the given value and return its “cleaned” value as an
+appropriate Python object. Raise ValidationError for any errors.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.forms.fields.FileField.default_error_messages">
+<span class="sig-name descname"><span class="pre">default_error_messages</span></span><a class="headerlink" href="#cdh.files.forms.fields.FileField.default_error_messages" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.forms.fields.FileField.has_changed">
+<span class="sig-name descname"><span class="pre">has_changed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">initial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/forms/fields.html#FileField.has_changed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.forms.fields.FileField.has_changed" title="Permalink to this definition"></a></dt>
+<dd><p>Return True if data differs from initial.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.forms.fields.FileField.prepare_value">
+<span class="sig-name descname"><span class="pre">prepare_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/forms/fields.html#FileField.prepare_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.forms.fields.FileField.prepare_value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.forms.fields.FileField.storage">
+<span class="sig-name descname"><span class="pre">storage</span></span><a class="headerlink" href="#cdh.files.forms.fields.FileField.storage" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.forms.fields.FileField.to_python">
+<span class="sig-name descname"><span class="pre">to_python</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/forms/fields.html#FileField.to_python"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.forms.fields.FileField.to_python" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.forms.fields.FileField.widget">
+<span class="sig-name descname"><span class="pre">widget</span></span><a class="headerlink" href="#cdh.files.forms.fields.FileField.widget" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <a class="reference internal" href="cdh.files.forms.widgets.html#cdh.files.forms.widgets.SimpleFileInput" title="cdh.files.forms.widgets.SimpleFileInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleFileInput</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.files.forms.fields.TrackedFileField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.files.forms.fields.</span></span><span class="sig-name descname"><span class="pre">TrackedFileField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">queryset</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/forms/fields.html#TrackedFileField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.forms.fields.TrackedFileField" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/fields/#django.forms.ModelChoiceField" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelChoiceField</span></code></a></p>
+<p>A MultipleChoiceField whose choices are a model QuerySet.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.forms.fields.TrackedFileField.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">queryset</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/forms/fields.html#TrackedFileField.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.forms.fields.TrackedFileField.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.forms.fields.TrackedFileField.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/forms/fields.html#TrackedFileField.clean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.forms.fields.TrackedFileField.clean" title="Permalink to this definition"></a></dt>
+<dd><p>Validate the given value and return its “cleaned” value as an
+appropriate Python object. Raise ValidationError for any errors.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.forms.fields.TrackedFileField.default_error_messages">
+<span class="sig-name descname"><span class="pre">default_error_messages</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'invalid_choice':</span> <span class="pre">'Selecteer</span> <span class="pre">een</span> <span class="pre">geldige</span> <span class="pre">keuze.</span> <span class="pre">%(value)s</span> <span class="pre">is</span> <span class="pre">geen</span> <span class="pre">beschikbare</span> <span class="pre">keuze.',</span> <span class="pre">'invalid_list':</span> <span class="pre">'Voer</span> <span class="pre">een</span> <span class="pre">lijst</span> <span class="pre">met</span> <span class="pre">waarden</span> <span class="pre">in.',</span> <span class="pre">'invalid_pk_value':</span> <span class="pre">'‘%(pk)s’</span> <span class="pre">is</span> <span class="pre">geen</span> <span class="pre">geldige</span> <span class="pre">waarde.'}</span></em><a class="headerlink" href="#cdh.files.forms.fields.TrackedFileField.default_error_messages" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.forms.fields.TrackedFileField.has_changed">
+<span class="sig-name descname"><span class="pre">has_changed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">initial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/forms/fields.html#TrackedFileField.has_changed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.forms.fields.TrackedFileField.has_changed" title="Permalink to this definition"></a></dt>
+<dd><p>Return True if data differs from initial.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.forms.fields.TrackedFileField.hidden_widget">
+<span class="sig-name descname"><span class="pre">hidden_widget</span></span><a class="headerlink" href="#cdh.files.forms.fields.TrackedFileField.hidden_widget" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/widgets/#django.forms.MultipleHiddenInput" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleHiddenInput</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.forms.fields.TrackedFileField.prepare_value">
+<span class="sig-name descname"><span class="pre">prepare_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/forms/fields.html#TrackedFileField.prepare_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.forms.fields.TrackedFileField.prepare_value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.forms.fields.TrackedFileField.to_python">
+<span class="sig-name descname"><span class="pre">to_python</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/forms/fields.html#TrackedFileField.to_python"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.forms.fields.TrackedFileField.to_python" title="Permalink to this definition"></a></dt>
+<dd><p>Return a string.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.forms.fields.TrackedFileField.widget">
+<span class="sig-name descname"><span class="pre">widget</span></span><a class="headerlink" href="#cdh.files.forms.fields.TrackedFileField.widget" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <a class="reference internal" href="cdh.files.forms.widgets.html#cdh.files.forms.widgets.TrackedFileInput" title="cdh.files.forms.widgets.TrackedFileInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrackedFileInput</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cdh.files.forms.html" class="btn btn-neutral float-left" title="cdh.files.forms package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cdh.files.forms.widgets.html" class="btn btn-neutral float-right" title="cdh.files.forms.widgets module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

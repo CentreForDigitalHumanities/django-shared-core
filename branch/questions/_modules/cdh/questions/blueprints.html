@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.questions.blueprints &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../_static/theme.css" type="text/css"/>
+        <script src="../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../../../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+                    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.questions.blueprints</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.questions.blueprints</h1><div class="highlight"><pre>
+<span></span>
+<div class="viewcode-block" id="Blueprint">
+<a class="viewcode-back" href="../../../reference/cdh.questions.blueprints.html#cdh.questions.blueprints.Blueprint">[docs]</a>
+<span class="k">class</span> <span class="nc">Blueprint</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;A blueprint is a method for validating complicated models</span>
+<span class="sd">    with any number of submodels with interrelated requirements</span>
+<span class="sd">    and dependencies&#39;&#39;&#39;</span>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">starting_consumers</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">errors</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="Blueprint.__init__">
+<a class="viewcode-back" href="../../../reference/cdh.questions.blueprints.html#cdh.questions.blueprints.Blueprint.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blueprint_object</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object</span> <span class="o">=</span> <span class="n">blueprint_object</span></div>
+
+
+<div class="viewcode-block" id="Blueprint.start">
+<a class="viewcode-back" href="../../../reference/cdh.questions.blueprints.html#cdh.questions.blueprints.Blueprint.start">[docs]</a>
+    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">starting_consumers</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Blueprint.evaluate">
+<a class="viewcode-back" href="../../../reference/cdh.questions.blueprints.html#cdh.questions.blueprints.Blueprint.evaluate">[docs]</a>
+    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">consumers</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Evaluate all given consumers and their output.</span>
+
+<span class="sd">        This recursive function goes through the list</span>
+<span class="sd">        of consumers and presents them with this blueprint</span>
+<span class="sd">        object. The consumers look at the current state of</span>
+<span class="sd">        the blueprint to see if it satisfies their needs.</span>
+
+<span class="sd">        Consumers should return a list of new consumers to</span>
+<span class="sd">        append to the end of the list. This list may be empty.</span>
+
+<span class="sd">        While in this loop, consumers may modify</span>
+<span class="sd">        blueprint state by adding errors and appending to</span>
+<span class="sd">        desired_next.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># We&#39;ve run out of consumers. Finally.</span>
+        <span class="k">if</span> <span class="n">consumers</span> <span class="o">==</span> <span class="p">[]:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="c1"># Instantiate consumer with self</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">consumers</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># Run consumer logic, and add the list of consumers</span>
+        <span class="c1"># it returns to the list of consumers to be run</span>
+        <span class="n">next_consumers</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">consume</span><span class="p">()</span> <span class="o">+</span> <span class="n">consumers</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">consumers</span><span class="o">=</span><span class="n">next_consumers</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="BaseConsumer">
+<a class="viewcode-back" href="../../../reference/cdh.questions.blueprints.html#cdh.questions.blueprints.BaseConsumer">[docs]</a>
+<span class="k">class</span> <span class="nc">BaseConsumer</span><span class="p">:</span>
+
+<div class="viewcode-block" id="BaseConsumer.__init__">
+<a class="viewcode-back" href="../../../reference/cdh.questions.blueprints.html#cdh.questions.blueprints.BaseConsumer.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blueprint</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blueprint</span> <span class="o">=</span> <span class="n">blueprint</span></div>
+
+
+<div class="viewcode-block" id="BaseConsumer.consume">
+<a class="viewcode-back" href="../../../reference/cdh.questions.blueprints.html#cdh.questions.blueprints.BaseConsumer.consume">[docs]</a>
+    <span class="k">def</span> <span class="nf">consume</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a list of new consumers depending on</span>
+<span class="sd">        blueprint state.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[]</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="BaseQuestionConsumer">
+<a class="viewcode-back" href="../../../reference/cdh.questions.blueprints.html#cdh.questions.blueprints.BaseQuestionConsumer">[docs]</a>
+<span class="k">class</span> <span class="nc">BaseQuestionConsumer</span><span class="p">(</span><span class="n">BaseConsumer</span><span class="p">):</span>
+
+    <span class="n">question_class</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">question_data</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="BaseQuestionConsumer.__init__">
+<a class="viewcode-back" href="../../../reference/cdh.questions.blueprints.html#cdh.questions.blueprints.BaseQuestionConsumer.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instantiate</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="BaseQuestionConsumer.get_django_errors">
+<a class="viewcode-back" href="../../../reference/cdh.questions.blueprints.html#cdh.questions.blueprints.BaseQuestionConsumer.get_django_errors">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_django_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s2">&quot;Get Django form errors&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">question</span><span class="o">.</span><span class="n">errors</span></div>
+
+
+<div class="viewcode-block" id="BaseQuestionConsumer.get_question_data">
+<a class="viewcode-back" href="../../../reference/cdh.questions.blueprints.html#cdh.questions.blueprints.BaseQuestionConsumer.get_question_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_question_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s2">&quot;Placeholder to be overridden by subclass&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">question_data</span></div>
+
+
+<div class="viewcode-block" id="BaseQuestionConsumer.instantiate">
+<a class="viewcode-back" href="../../../reference/cdh.questions.blueprints.html#cdh.questions.blueprints.BaseQuestionConsumer.instantiate">[docs]</a>
+    <span class="k">def</span> <span class="nf">instantiate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the self.question instance with the correct question object.</span>
+<span class="sd">        Overwrite this function if the question does not use the default</span>
+<span class="sd">        blueprint object.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">question</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">question_class</span><span class="p">(</span>
+            <span class="n">instance</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">blueprint</span><span class="o">.</span><span class="n">object</span><span class="p">,</span>
+            <span class="n">blueprint</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">blueprint</span><span class="p">,</span>
+            <span class="n">question_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_question_data</span><span class="p">(),</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">question</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">empty_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">question</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">question</span>
+        <span class="n">empty</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">fields</span><span class="p">:</span>
+            <span class="n">fields</span> <span class="o">=</span> <span class="n">question</span><span class="o">.</span><span class="n">Meta</span><span class="o">.</span><span class="n">fields</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">question</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+                <span class="n">empty</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">empty</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">filled_in_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">question</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">question</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">fields</span><span class="p">:</span>
+            <span class="n">fields</span> <span class="o">=</span> <span class="n">question</span><span class="o">.</span><span class="n">Meta</span><span class="o">.</span><span class="n">fields</span>
+        <span class="k">for</span> <span class="n">empty_field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">empty_fields</span><span class="p">:</span>
+            <span class="n">fields</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">empty_field</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fields</span></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>
