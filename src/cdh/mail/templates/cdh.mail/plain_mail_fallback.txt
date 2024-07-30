@@ -1,0 +1,4 @@
+{% load i18n %}{% get_current_language as LANGUAGE_CODE %}{% if sender %}{% if LANGUAGE_CODE == 'en' %}{{ sender }} - Utrecht University{% else %}{{ sender }} - Universiteit Utrecht{% endif %}{% endif %}
+{% if banner %}{{ banner}}{% endif %}
+{{ content }}
+{% if footer %}{{ footer }}{% endif %}

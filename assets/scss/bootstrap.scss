@@ -34,3 +34,7 @@ $open-sans-font-dir: '/static/cdh.core/fonts/open-sans/';
         display: block;
     }
 }
+
+.select2 ~ .invalid-feedback, .select2 ~ .valid-feedback {
+    display: block;
+}
