@@ -23,7 +23,7 @@ classifiers = [
     "Operating System :: Linux",
 ]
 dependencies = [
-    "Django >=2.0,<5.1",
+    "Django >=4.2,<5.1",
     "Deprecated",
 ]
 
@@ -48,7 +48,7 @@ core = [
     "djangorestframework",
     "django-csp",
     "cryptography",
-    "Django >=4.0,<5.1",
+    "Django >=4.2,<5.1",
 ]
 mail = [
     "Django >=4.2,<5.1",
@@ -58,25 +58,25 @@ federated-auth = [
 ]
 files = [
     "python-magic",
-    "Django >=4.0,<5.1",
+    "Django >=4.2,<5.1",
 ]
 integration_platform = [
     "cdh-django-core[rest]",
-    "Django >=3.0,<5.1",
+    "Django >=4.2,<5.1",
 ]
 rest = [
     "requests",
     "PyJWT",
     "djangorestframework",
     "django-filter",
-    "Django >=3.0,<5.1",
+    "Django >=4.2,<5.1",
 ]
 vue = [
     "pyscss",
     "lesscpy",
     "closure",
     "vbuild",
-    "Django >=3.0,<5.1",
+    "Django >=4.2,<5.1",
 ]
 docs = [
     "sphinx",

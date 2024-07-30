@@ -1,6 +1,6 @@
 {
   "name": "django-shared-core",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "repository": "git@github.com:DH-IT-Portal-Development/django-shared-core.git",
   "author": "Hum IT Portal Development & ILS Labs",
   "license": "Apache-2.0",

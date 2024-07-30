@@ -9,7 +9,7 @@ Documentation provided here: https://centrefordigitalhumanities.github.io/django
 ## Currently targeting:
 - Python 3.9 (Django 4 only)
 - Python 3.11
-- Django 4.2 (lower versions might work, but unsupported)
+- Django 4.2
 - Django 5.0
 
 Tests are run using these versions; Some apps have lower requirements, but are 
@@ -24,7 +24,7 @@ Add the following line to your python requirements:
 
 ``cdh-django-core[all] @ git+https://github.com/CentreForDigitalHumanities/django-shared-core.git@<version>``
 
-Replacing ``<version>`` with the latest DSC release tag. (e.g. ``v3.1.0``).
+Replacing ``<version>`` with the latest DSC release tag. (e.g. ``v3.2.0``).
 
 This will install the entire library with all required dependencies.
 
@@ -47,14 +47,14 @@ the apps your project uses (sans ``cdh.``). For example:
 Base block for pure-Django projects, containing base templates, generic views,
 extra form/model fields and other miscellaneous code.
 
-Requires Django >= 4;
+Requires Django >= 4.2;
 
 ### Federated authentication (``cdh.federated_auth``)
 
 Helper app to connect a Django application as a Service Provider to a Federated
 Authentication realm. Currently only supports SAML.
 
-Requires Django >= 4.1;
+Requires Django >= 4.2;
 
 ### Files (``cdh.files``)
 
@@ -64,14 +64,14 @@ allows arbitrary metadata to be added and most-importantly makes sysadmins
 happy.
 
 Soft requirement on ``cdh.core``, can work standalone if needed.
-Required Django >= 4.
+Required Django >= 4.2.
 
 ### Integration platform (``cdh.integration_platform``)
 
 Ready-to-use API clients for the UU's integration platform.
 
 Requires ``cdh.rest``;
-Requires Django >= 3;
+Requires Django >= 4.2.
 
 ### Mail (``cdh.mail``)
 
@@ -80,7 +80,7 @@ emails from templates without having to define separate templates for each.
 
 Replaces `cdh.core.mail`.
 
-Requires Django >= 4.2;
+Requires Django >= 4.2.
 Soft-requires `cdh.core`, when using the mail-editor widget.
 
 ### Rest (``cdh.rest``)
@@ -91,14 +91,14 @@ JWT authentication support and other helpfull snippits.
 Client code contains a full Django-ORM inspired REST client, for easy
 (de)serialization and transactions with REST APIs.
 
-Requires Django >= 3;
+Requires Django >= 4.2;
 
 ### System messages (``cdh.systemmessages``)
 
 Simple app to quickly add a 'system message' system to your app, useful for
 temporary announcements. 
 
-Requires Django >= 2;
+Requires Django >= 4.2;
 
 ### Vue (``cdh.vue``)
 
@@ -107,14 +107,14 @@ Requires Django >= 2;
 Helper app to (more) easily integrate small(-ish) Vue 2 components in your Django
 templates.
 
-Requires Django >= 3;
+Requires Django >= 4.2;
 
 ### Vue 3 (``cdh.vue3``)
 
 Helper app to (more) easily integrate small(-ish) Vue 3 components in your Django
 templates.
 
-Requires Django >= 2;
+Requires Django >= 4.2;
 
 # Included libraries
 These libraries have been completely integrated into this codebase
