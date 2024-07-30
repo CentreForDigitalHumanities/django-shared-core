@@ -1,3 +1,5 @@
 $(() => {
-    $('.dsc-select2').select2();
+    $('.dsc-select2').select2({
+        width: '100%',
+    });
 })
