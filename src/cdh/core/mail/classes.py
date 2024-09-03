@@ -4,6 +4,7 @@ from email.mime.base import MIMEBase
 from functools import lru_cache
 from typing import Dict, List, Optional, Tuple, Union
 
+from deprecated.sphinx import deprecated
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.template import Context, Engine, Template
@@ -19,6 +20,10 @@ from cdh.core.settings import CDH_EMAIL_THEME_SETTINGS, \
     CDH_EMAIL_PLAIN_FALLBACK_TEMPLATE, CDH_EMAIL_HTML_FALLBACK_TEMPLATE
 
 
+@deprecated(
+    version='3.2',
+    reason="Replaced by cdh.mail"
+)
 @keep_lazy_text
 def _strip_tags(value) -> str:
     """Return the given HTML with all tags stripped, and leading/trailing
@@ -59,6 +64,10 @@ def _strip_tags(value) -> str:
     return ret.strip()
 
 
+@deprecated(
+    version='3.2',
+    reason="Replaced by cdh.mail"
+)
 class BaseEmail(ABC):
     """Base class for all email classes.
 
@@ -267,6 +276,10 @@ class BaseEmail(ABC):
         pass
 
 
+@deprecated(
+    version='3.2',
+    reason="Replaced by cdh.mail"
+)
 class TemplateEmail(BaseEmail):
     """Regular Django template files based emails
 
@@ -422,6 +435,10 @@ class TemplateEmail(BaseEmail):
         return template.render(Context(context))
 
 
+@deprecated(
+    version='3.2',
+    reason="Replaced by cdh.mail"
+)
 class CTEVarDef:
     """Descriptor class for user-usable variables in a Custom Template Email
 
@@ -458,6 +475,10 @@ class CTEVarDef:
         self.kwargs = kwargs
 
 
+@deprecated(
+    version='3.2',
+    reason="Replaced by cdh.mail"
+)
 class CTETagPackage:
     """Configuration class for loading template tag packages
 
@@ -487,6 +508,10 @@ class CTETagPackage:
         self.tags = tags
 
 
+@deprecated(
+    version='3.2',
+    reason="Replaced by cdh.mail"
+)
 class BaseCustomTemplateEmail(BaseEmail):
     """Email class for sending HTML emails using user supplied HTML templates
 

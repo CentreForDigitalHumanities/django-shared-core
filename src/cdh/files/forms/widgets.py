@@ -3,6 +3,12 @@ from django.utils.translation import gettext_lazy as _
 
 
 class SimpleFileInput(FileInput):
+    class Media:
+        js = ['cdh.files/widgets.js']
+        css = {
+            'screen': ['cdh.files/widgets.css']
+        }
+
     clear_checkbox_label = _('Clear')
     initial_text = _('Currently')
     input_text = _('Change')
@@ -59,6 +65,12 @@ class SimpleFileInput(FileInput):
 
 
 class TrackedFileInput(SimpleFileInput):
+    class Media:
+        js = ['cdh.files/widgets.js']
+        css = {
+            'screen': ['cdh.files/widgets.css']
+        }
+
     template_name = 'cdh.files/widgets/tracked_file.html'
 
     # Strings used in the template

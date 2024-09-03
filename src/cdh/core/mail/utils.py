@@ -1,11 +1,16 @@
 from typing import List, Optional, Tuple
 
+from deprecated.sphinx import deprecated
 from django.conf import settings
 from django.core.mail import get_connection
 
 from cdh.core.mail import TemplateEmail
 
 
+@deprecated(
+    version='3.2',
+    reason="Replaced by cdh.mail"
+)
 def send_template_email(
         recipient_list: List[str],
         subject: str,
@@ -61,6 +66,10 @@ def send_template_email(
     return email.send()
 
 
+@deprecated(
+    version='3.2',
+    reason="Replaced by cdh.mail"
+)
 def send_mass_personalised_mass_mail(
         datatuple: List[Tuple[str, dict, List[str]]],
         template_context: dict,
@@ -148,6 +157,10 @@ def send_mass_personalised_mass_mail(
     return sent
 
 
+@deprecated(
+    version='3.2',
+    reason="Replaced by cdh.mail"
+)
 def send_mass_personalised_custom_mail(
         datatuple: List[Tuple[str, dict, List[str]]],
         email_class,

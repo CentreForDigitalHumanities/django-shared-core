@@ -18,32 +18,32 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-handler404 = 'main.error_views.error_404'
-handler500 = 'main.error_views.error_500'
-handler403 = 'main.error_views.error_403'
-handler400 = 'main.error_views.error_400'
+handler404 = "main.error_views.error_404"
+handler500 = "main.error_views.error_500"
+handler403 = "main.error_views.error_403"
+handler400 = "main.error_views.error_400"
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('saml/', include('djangosaml2.urls')),
-    path('', include('main.urls')),
-    path('files/', include('dev_files.urls')),
-    path('integration_platform/', include('dev_integration_platform.urls')),
-
-    path('impersonate/', include('impersonate.urls')),
-    path('cdhcore/', include('cdh.core.urls')),
-    path('i18n/', include('django.conf.urls.i18n')),
+    path("admin/", admin.site.urls),
+    path("saml/", include("djangosaml2.urls")),
+    path("", include("main.urls")),
+    path("files/", include("dev_files.urls")),
+    path("vue/", include("dev_vue.urls")),
+    path("integration_platform/", include("dev_integration_platform.urls")),
+    path("impersonate/", include("impersonate.urls")),
+    path("cdhcore/", include("cdh.core.urls")),
+    path("i18n/", include("django.conf.urls.i18n")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT, show_indexes=True)
 
 
-admin.site.site_header = ''
-admin.site.site_title = ''
-admin.site.index_title = ''
+admin.site.site_header = ""
+admin.site.site_title = ""
+admin.site.index_title = ""
 
 
 if settings.DEBUG:
     import debug_toolbar
-    urlpatterns = [
-        path('__debug__/', include(debug_toolbar.urls)),
 
+    urlpatterns = [
+        path("__debug__/", include(debug_toolbar.urls)),
     ] + urlpatterns

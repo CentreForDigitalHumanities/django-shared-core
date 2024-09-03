@@ -32,7 +32,6 @@ ENABLE_DEBUG_TOOLBAR = True
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 INTERNAL_IPS = ['127.0.0.1']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,6 +39,7 @@ INSTALLED_APPS = [
     'cdh.core',
     'cdh.rest',
     'cdh.vue',
+    'cdh.vue3',
     'cdh.files',
     'cdh.integration_platform',
 
@@ -59,6 +59,7 @@ INSTALLED_APPS = [
 
     # DRF
     'rest_framework',
+    'django_filters',
 
     # Impersonate
     'impersonate',
@@ -70,6 +71,7 @@ INSTALLED_APPS = [
     'main',
     'dev_files',
     'dev_integration_platform',
+    'dev_vue',
 ]
 
 MIDDLEWARE = [
@@ -85,6 +87,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'csp.middleware.CSPMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend'
+    ],
+}
 
 if DEBUG and ENABLE_DEBUG_TOOLBAR:
     INSTALLED_APPS.append('debug_toolbar')
@@ -205,7 +213,7 @@ SESSION_COOKIE_AGE = 60 * 60 * 12  # 12 hours
 
 # Django CSP
 # http://django-csp.readthedocs.io/en/latest/index.html
-CSP_REPORT_ONLY = False
+CSP_REPORT_ONLY = True
 CSP_UPGRADE_INSECURE_REQUESTS = not DEBUG
 CSP_INCLUDE_NONCE_IN = ['script-src']
 

@@ -1,0 +1,13 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% load vue3 %}
+
+{% block html_head %}
+    {% load_vue_libs %}
+    <script src="{% static 'dev_vue/example-custom-uu-list/CustomList.iife.js' %}"></script>
+    <link href="{% static 'dev_vue/example-custom-uu-list/style.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+    {% vue CustomList :config=uu_list_config %}
+{% endblock %}

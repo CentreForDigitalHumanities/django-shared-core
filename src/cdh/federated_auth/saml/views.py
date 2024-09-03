@@ -1,7 +1,7 @@
 from typing import Optional, Tuple
 
 from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.contrib.auth.views import SuccessURLAllowedHostsMixin
+from django.contrib.auth.views import RedirectURLMixin
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, resolve_url
@@ -106,7 +106,7 @@ def login_error(request, exception=None, status=403, **kwargs):
     )
 
 
-class LogoutInitView(SuccessURLAllowedHostsMixin, TemplateResponseMixin,
+class LogoutInitView(RedirectURLMixin, TemplateResponseMixin,
                      ContextMixin, DjangoSaml2LogoutInitView):
     """Custom LogoutInitView to handle logout requests for non-SAML users.
     Basically merges Django's LogoutView with DjangoSaml2's LogoutInitView
