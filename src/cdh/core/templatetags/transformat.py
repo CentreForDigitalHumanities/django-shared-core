@@ -1,5 +1,6 @@
 from django.template import Library, Node, TemplateSyntaxError, Variable, VariableDoesNotExist
 from django.template.base import  render_value_in_context
+from django.utils.html import escape, format_html
 from django.utils.safestring import SafeData, mark_safe
 
 register = Library()
@@ -27,20 +28,28 @@ class FormattedTranslateNode(Node):
         value = render_value_in_context(output, context)
         # Restore percent signs. Percent signs in template text are doubled
         # so they are not interpreted as string format flags.
-        is_safe = isinstance(value, SafeData)
         value = value.replace('%%', '%')
 
         formatvalues = []
         for formatvalue in self.formatvalues:
+            variable_value = None
             try:
+                # Try to see if this value is actually a variable reference
                 variable = Variable(formatvalue)
-                formatvalues.append(variable.resolve(context))
+
+                variable_value = variable.resolve(context)
             except VariableDoesNotExist:
-                formatvalues.append(formatvalue)
+                # If not, it's just a plain value specified directly
+                variable_value = formatvalue
+
+            # Check if the string isn't marked as safe, in which case, escape.
+            if not isinstance(variable_value, SafeData):
+                variable_value = escape(variable_value)
+
+            formatvalues.append(variable_value)
 
         value = value.format(*formatvalues)
 
-        value = mark_safe(value) if is_safe else value
         if self.asvar:
             context[self.asvar] = value
             return ''
