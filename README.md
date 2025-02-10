@@ -11,6 +11,7 @@ Documentation provided here: https://centrefordigitalhumanities.github.io/django
 - Python 3.11
 - Django 4.2
 - Django 5.0
+- Django 5.1
 
 Tests are run using these versions; Some apps have lower requirements, but are 
 not tested against these lower versions. check the app collection below for
