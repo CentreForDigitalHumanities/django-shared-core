@@ -259,6 +259,13 @@ class TelephoneInput(forms.TextInput):
 
     input_type = "tel"
 
+class EuroInput(forms.NumberInput):
+    """
+    Input for currency with automatic spaces and denominator
+    """
+
+    template_name = "cdh.core/forms/widgets/euro_input.html"
+
 
 class TelephoneField(forms.CharField):
     """Override of Django's version to use the right HTML5 input"""
