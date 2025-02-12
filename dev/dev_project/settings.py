@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     'django_extensions',
 
     # django-simple-menu
-    'menu',
+    'simple_menu',
 
     # DRF
     'rest_framework',
