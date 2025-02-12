@@ -630,6 +630,12 @@ class BootstrapMonthField(forms.DateField):
         raise ValidationError(self.error_messages["invalid"], code="invalid")
 
 
+class BootstrapCurrencyField(forms.CharField):
+
+    pass
+
+
+
 class TinyMCEWidget(forms.Widget):
     """A TinyMCE widget for HTML editting"""
 

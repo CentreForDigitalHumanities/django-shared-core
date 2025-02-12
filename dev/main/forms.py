@@ -4,7 +4,9 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from cdh.core import fields as core_fields
-from cdh.core.forms import SplitMonthInput, TemplatedForm, TemplatedModelForm
+from cdh.core.forms import (
+    SplitMonthInput, TemplatedForm, TemplatedModelForm, BootstrapCurrencyField,
+)
 from cdh.core.mail import EmailContentEditWidget
 from cdh.files.forms import FileField, TrackedFileField
 from main.emails import ExampleCustomTemplateEmail
@@ -137,6 +139,10 @@ class CustomTemplateFormStylesForm(TemplatedForm):
 
     supervisor = forms.CharField(
         label="Eindverantwoordelijke",
+    )
+
+    budget = BootstrapCurrencyField(
+        label="Budget",
     )
 
     date_header = core_fields.TemplatedFormTextField(
