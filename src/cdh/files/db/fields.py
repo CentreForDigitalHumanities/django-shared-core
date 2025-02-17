@@ -726,7 +726,7 @@ class TrackedFileField(ManyToManyField):
         return name, path, args, kwargs
 
     def contribute_to_class(self, cls, name, **kwargs):
-        if self.remote_field.is_hidden():
+        if self.remote_field.hidden:
             # If the backwards relation is disabled, replace the original
             # related_name with one generated from the m2m field name. Django
             # still uses backwards relations internally and we need to avoid
