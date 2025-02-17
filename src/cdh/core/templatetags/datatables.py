@@ -13,7 +13,7 @@ class TranslateInfoNode(Node):
         if get_language() == 'nl':
             link = 'cdh.core/js/datatables/lang/dutch.json'
 
-        link = '{ &quot;url&quot;: &quot;%s&quot; }' % static(link).replace('/', '\/')
+        link = '{ &quot;url&quot;: &quot;%s&quot; }' % static(link).replace('/', r'\/')
 
         return mark_safe(link)
 
