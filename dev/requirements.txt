@@ -16,8 +16,6 @@ bpython==0.25
     # via cdh-django-core
 build==1.2.2.post1
     # via pip-tools
-cdh-django-core[all,core,dev,docs,federated-auth,files,mail,recommended,rest,vue] @ file:///home/michael/cdh/Grant%20Tool/saml-deploy/grant/src/cdh-django-core
-    # via file:///home/michael/cdh/grant%20tool/saml-deploy/grant/src/cdh-django-core
 certifi==2025.1.31
     # via requests
 cffi==1.17.1
