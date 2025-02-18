@@ -259,12 +259,16 @@ class TelephoneInput(forms.TextInput):
 
     input_type = "tel"
 
-class EuroInput(forms.NumberInput):
+class CurrencyInput(forms.NumberInput):
     """
     Input for currency with automatic spaces and denominator
     """
+    class Media:
+        js = [
+            'cdh.core/js/currency-field.js',
+        ]
 
-    template_name = "cdh.core/forms/widgets/euro_input.html"
+    template_name = "cdh.core/forms/widgets/currency_input.html"
 
 
 class TelephoneField(forms.CharField):
