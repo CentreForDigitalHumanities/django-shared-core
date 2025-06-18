@@ -15,7 +15,7 @@
                 {% endwith %}
             >
                 <div class="uu-form-field">
-                    <label for="{{ field.id_for_label }}" class="form-label d-block">
+                    <label {% if field.id_for_label %}for="{{ field.id_for_label }}"{% endif %} class="form-label d-block">
                         {{ field.label }}
                     </label>
                     {{ field }}
