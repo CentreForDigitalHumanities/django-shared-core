@@ -9,7 +9,6 @@ class ApiError(Exception):
         super(ApiError, self).__init__(*args)
         self.status_code = status_code
         self.message = message
-        logger.error(f"Status {status_code}: {message}")
 
 
     def __str__(self):
