@@ -128,9 +128,9 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
-"uu-bootstrap@git+ssh://git@github.com/DH-IT-Portal-Development/bootstrap-theme.git#1.5.0-alpha.1":
+"uu-bootstrap@git+ssh://git@github.com/UtrechtUniversity/UU-Bootstrap.git#1.5.0-alpha.1":
   version "1.5.0-alpha.1"
-  resolved "git+ssh://git@github.com/DH-IT-Portal-Development/bootstrap-theme.git#0d3d52fc6abdfbefa802368b728f556916be53fb"
+  resolved "git+ssh://git@github.com/UtrechtUniversity/UU-Bootstrap.git#0d3d52fc6abdfbefa802368b728f556916be53fb"
   dependencies:
     bootstrap "5.3.1"
 
