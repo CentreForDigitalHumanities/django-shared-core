@@ -19,7 +19,7 @@ concurrency:
 
 jobs:
   build-and-deploy-docs:
-    name: Build and gh-pages
+    name: Build docs, deploy to gh-pages
     runs-on: ubuntu-latest
     steps:
       # https://github.com/marketplace/actions/checkout
