@@ -1,0 +1,7 @@
+cdh.systemmessages.models module
+================================
+
+.. automodule:: cdh.systemmessages.models
+   :members:
+   :show-inheritance:
+   :undoc-members:

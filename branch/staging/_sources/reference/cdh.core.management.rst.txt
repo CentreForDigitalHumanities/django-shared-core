@@ -1,0 +1,15 @@
+cdh.core.management package
+===========================
+
+.. automodule:: cdh.core.management
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.core.management.commands

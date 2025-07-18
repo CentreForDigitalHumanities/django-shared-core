@@ -1,0 +1,20 @@
+cdh.rest.server package
+=======================
+
+.. automodule:: cdh.rest.server
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.rest.server.authenticators
+   cdh.rest.server.permissions
+   cdh.rest.server.serializers
+   cdh.rest.server.settings
+   cdh.rest.server.token
+   cdh.rest.server.token_algorithms

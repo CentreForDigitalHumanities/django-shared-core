@@ -1,0 +1,15 @@
+cdh.core.middleware package
+===========================
+
+.. automodule:: cdh.core.middleware
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.core.middleware.local_thread_middleware

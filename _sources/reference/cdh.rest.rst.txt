@@ -1,0 +1,27 @@
+cdh.rest package
+================
+
+.. automodule:: cdh.rest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.rest.client
+   cdh.rest.server
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.rest.apps
+   cdh.rest.exceptions
+   cdh.rest.logging
+   cdh.rest.mixins

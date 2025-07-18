@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.core.mail.utils &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../../_static/theme.css" type="text/css"/>
+        <script src="../../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+                    <script src="../../../../_static/doctools.js"></script>
+                    <script src="../../../../_static/sphinx_highlight.js"></script>
+            <script src="../../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.core.mail.utils</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.core.mail.utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.core.mail</span> <span class="kn">import</span> <span class="n">get_connection</span>
+
+<span class="kn">from</span> <span class="nn">cdh.core.mail</span> <span class="kn">import</span> <span class="n">TemplateEmail</span>
+
+
+<div class="viewcode-block" id="send_template_email"><a class="viewcode-back" href="../../../../reference/cdh.core.mail.utils.html#cdh.core.mail.utils.send_template_email">[docs]</a><span class="k">def</span> <span class="nf">send_template_email</span><span class="p">(</span>
+        <span class="n">recipient_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">subject</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">template_context</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="n">html_template</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">plain_template</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">from_email</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">plain_context</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">html_context</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;nl&#39;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Light wrapper for :class:`.TemplateEmail`.</span>
+
+<span class="sd">    You need to provide at least one of the template variants (HTML or plain).</span>
+<span class="sd">    Or both, if you want.</span>
+
+<span class="sd">    :param recipient_list: list of recipients</span>
+<span class="sd">    :type recipient_list: list of str</span>
+<span class="sd">    :param str subject: Email subject</span>
+<span class="sd">    :param str from_email: the FROM: value. Uses settings.FROM_EMAIL if omitted</span>
+<span class="sd">    :param str html_template: the HTML template to render</span>
+<span class="sd">    :param str plain_template: the plain template to render</span>
+<span class="sd">    :param dict template_context: any context data needed for rendering the</span>
+<span class="sd">                                  templates</span>
+<span class="sd">    :param dict html_context: additional context data for the HTML template</span>
+<span class="sd">    :param dict plain_context: additional context data for the plain template</span>
+<span class="sd">    :param str language: the langauge code used during rendering</span>
+<span class="sd">    :returns: the number of emails send</span>
+<span class="sd">    :rtype: int</span>
+<span class="sd">    :raises ValueError: if no template at all was supplied</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">html_template</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">plain_template</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No template(s) specified&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">plain_context</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">plain_context</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">html_context</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">html_context</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">email</span> <span class="o">=</span> <span class="n">TemplateEmail</span><span class="p">(</span>
+        <span class="n">to</span><span class="o">=</span><span class="n">recipient_list</span><span class="p">,</span>
+        <span class="n">subject</span><span class="o">=</span><span class="n">subject</span><span class="p">,</span>
+        <span class="n">from_email</span><span class="o">=</span><span class="n">from_email</span><span class="p">,</span>
+        <span class="n">html_template</span><span class="o">=</span><span class="n">html_template</span><span class="p">,</span>
+        <span class="n">plain_template</span><span class="o">=</span><span class="n">plain_template</span><span class="p">,</span>
+        <span class="n">context</span><span class="o">=</span><span class="n">template_context</span><span class="p">,</span>
+        <span class="n">plain_context</span><span class="o">=</span><span class="n">plain_context</span><span class="p">,</span>
+        <span class="n">html_context</span><span class="o">=</span><span class="n">html_context</span><span class="p">,</span>
+        <span class="n">language</span><span class="o">=</span><span class="n">language</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">email</span><span class="o">.</span><span class="n">send</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="send_mass_personalised_mass_mail"><a class="viewcode-back" href="../../../../reference/cdh.core.mail.utils.html#cdh.core.mail.utils.send_mass_personalised_mass_mail">[docs]</a><span class="k">def</span> <span class="nf">send_mass_personalised_mass_mail</span><span class="p">(</span>
+        <span class="n">datatuple</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]],</span>
+        <span class="n">template_context</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="n">html_template</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">plain_template</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">from_email</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">plain_context</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">html_context</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;nl&#39;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Given a datatuple of (subject, personal_context, recipient_list),</span>
+<span class="sd">    send each message to each recipient list.</span>
+
+<span class="sd">    personal_context and template_context will be merged together to create</span>
+<span class="sd">    a personalised email.</span>
+
+<span class="sd">    html_context and plain_context can be used to override something in the</span>
+<span class="sd">    regular template_context for either the html version of the plain text</span>
+<span class="sd">    version. (Note: you can also add a key that does not exist in</span>
+<span class="sd">    template_context)</span>
+
+<span class="sd">    :param datatuple: A tuple of tuples: (subject, personal_context, recipient_list)</span>
+<span class="sd">    :type datatuple: tuple[str, dict, list[str]]</span>
+<span class="sd">    :param str from_email: the FROM: value. Uses settings.FROM_EMAIL if omitted</span>
+<span class="sd">    :param str html_template: the HTML template to render</span>
+<span class="sd">    :param str plain_template: the plain template to render</span>
+<span class="sd">    :param dict template_context: any context data needed for rendering the</span>
+<span class="sd">                                  templates</span>
+<span class="sd">    :param dict html_context: additional context data for the HTML template</span>
+<span class="sd">    :param dict plain_context: additional context data for the plain template</span>
+<span class="sd">    :param str language: the langauge code used during rendering</span>
+<span class="sd">    :returns: the number of emails send</span>
+<span class="sd">    :rtype: int</span>
+<span class="sd">    :raises ValueError: if no template at all was supplied</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">html_template</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">plain_template</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No template(s) specified&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">plain_context</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">plain_context</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">html_context</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">html_context</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">sent</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">from_email</span> <span class="o">=</span> <span class="n">from_email</span> <span class="ow">or</span> <span class="n">settings</span><span class="o">.</span><span class="n">FROM_EMAIL</span>
+    <span class="n">connection</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
+
+    <span class="c1"># We reuse the same object to improve rendering speed</span>
+    <span class="c1"># e.g. to make sure we don&#39;t recreate templates constantly</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">TemplateEmail</span><span class="p">(</span>
+        <span class="n">to</span><span class="o">=</span><span class="p">[],</span>
+        <span class="n">subject</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">from_email</span><span class="o">=</span><span class="n">from_email</span><span class="p">,</span>
+        <span class="n">html_template</span><span class="o">=</span><span class="n">html_template</span><span class="p">,</span>
+        <span class="n">plain_template</span><span class="o">=</span><span class="n">plain_template</span><span class="p">,</span>
+        <span class="n">context</span><span class="o">=</span><span class="n">template_context</span><span class="p">,</span>
+        <span class="n">plain_context</span><span class="o">=</span><span class="n">plain_context</span><span class="p">,</span>
+        <span class="n">html_context</span><span class="o">=</span><span class="n">html_context</span><span class="p">,</span>
+        <span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">,</span>
+        <span class="n">language</span><span class="o">=</span><span class="n">language</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">subject</span><span class="p">,</span> <span class="n">personal_context</span><span class="p">,</span> <span class="n">recipient_list</span> <span class="ow">in</span> <span class="n">datatuple</span><span class="p">:</span>
+        <span class="c1"># Copy the personal context and extend it with the generic context</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">personal_context</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">template_context</span><span class="p">)</span>
+
+        <span class="c1"># Copy our newly made context, and extend it with the plain_context</span>
+        <span class="n">plain_text_context</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">plain_text_context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">plain_context</span><span class="p">)</span>
+
+        <span class="c1"># And now the same for the HTML version</span>
+        <span class="n">html_text_context</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">html_text_context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">html_context</span><span class="p">)</span>
+
+        <span class="n">email</span><span class="o">.</span><span class="n">to</span> <span class="o">=</span> <span class="n">recipient_list</span>
+        <span class="n">email</span><span class="o">.</span><span class="n">subject</span> <span class="o">=</span> <span class="n">subject</span>
+        <span class="n">email</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span>
+        <span class="n">email</span><span class="o">.</span><span class="n">html_context</span> <span class="o">=</span> <span class="n">html_text_context</span>
+        <span class="n">email</span><span class="o">.</span><span class="n">plain_context</span> <span class="o">=</span> <span class="n">plain_text_context</span>
+
+        <span class="n">sent</span> <span class="o">+=</span> <span class="n">email</span><span class="o">.</span><span class="n">send</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">sent</span></div>
+
+
+<div class="viewcode-block" id="send_mass_personalised_custom_mail"><a class="viewcode-back" href="../../../../reference/cdh.core.mail.utils.html#cdh.core.mail.utils.send_mass_personalised_custom_mail">[docs]</a><span class="k">def</span> <span class="nf">send_mass_personalised_custom_mail</span><span class="p">(</span>
+        <span class="n">datatuple</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]],</span>
+        <span class="n">email_class</span><span class="p">,</span>
+        <span class="n">template_context</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="n">contents</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">sender</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">banner</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">footer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">from_email</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">plain_context</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">html_context</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;nl&#39;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Given a datatuple of (subject, personal_context, recipient_list),</span>
+<span class="sd">    send each message to each recipient list.</span>
+
+<span class="sd">    This method takes advantage of :class:`.BaseCustomTemplateEmail` caching</span>
+<span class="sd">    to make sure the custom templates are only built once, speeding up</span>
+<span class="sd">    rendering.</span>
+
+<span class="sd">    personal_context and template_context will be merged together to create</span>
+<span class="sd">    a personalised email.</span>
+
+<span class="sd">    html_context and plain_context can be used to override something in the</span>
+<span class="sd">    regular template_context for either the html version of the plain text</span>
+<span class="sd">    version. (Note: you can also add a key that does not exist in</span>
+<span class="sd">    template_context)</span>
+
+<span class="sd">    :param datatuple: A tuple of tuples: (subject, personal_context, recipient_list)</span>
+<span class="sd">    :type datatuple: tuple[str, dict, list[str]]</span>
+<span class="sd">    :param str from_email: the FROM: value. Uses settings.FROM_EMAIL if omitted</span>
+<span class="sd">    :param email_class: the custom email class to use</span>
+<span class="sd">    :type email_class: extension of :class:`.BaseCustomTemplateEmail`</span>
+<span class="sd">    :param str contents: the template code for the contents block</span>
+<span class="sd">    :param sender: the template code for the sender block</span>
+<span class="sd">    :type sender: str or None</span>
+<span class="sd">    :param banner: the template code for the banner block</span>
+<span class="sd">    :type banner: str or None</span>
+<span class="sd">    :param footer: the template code for the footer block</span>
+<span class="sd">    :type footer: str or None</span>
+<span class="sd">    :param dict template_context: any context data needed for rendering the</span>
+<span class="sd">                                  templates</span>
+<span class="sd">    :param dict html_context: additional context data for the HTML template</span>
+<span class="sd">    :param dict plain_context: additional context data for the plain template</span>
+<span class="sd">    :param str language: the langauge code used during rendering</span>
+<span class="sd">    :returns: the number of emails send</span>
+<span class="sd">    :rtype: int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">plain_context</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">plain_context</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">html_context</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">html_context</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">sent</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">from_email</span> <span class="o">=</span> <span class="n">from_email</span> <span class="ow">or</span> <span class="n">settings</span><span class="o">.</span><span class="n">FROM_EMAIL</span>
+    <span class="n">connection</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
+
+    <span class="c1"># We reuse the same object to improve rendering speed</span>
+    <span class="c1"># e.g. to make sure we don&#39;t recreate templates constantly</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">email_class</span><span class="p">(</span>
+        <span class="n">to</span><span class="o">=</span><span class="p">[],</span>
+        <span class="n">subject</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">from_email</span><span class="o">=</span><span class="n">from_email</span><span class="p">,</span>
+        <span class="n">contents</span><span class="o">=</span><span class="n">contents</span><span class="p">,</span>
+        <span class="n">sender</span><span class="o">=</span><span class="n">sender</span><span class="p">,</span>
+        <span class="n">banner</span><span class="o">=</span><span class="n">banner</span><span class="p">,</span>
+        <span class="n">footer</span><span class="o">=</span><span class="n">footer</span><span class="p">,</span>
+        <span class="n">context</span><span class="o">=</span><span class="n">template_context</span><span class="p">,</span>
+        <span class="n">plain_context</span><span class="o">=</span><span class="n">plain_context</span><span class="p">,</span>
+        <span class="n">html_context</span><span class="o">=</span><span class="n">html_context</span><span class="p">,</span>
+        <span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">,</span>
+        <span class="n">language</span><span class="o">=</span><span class="n">language</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">subject</span><span class="p">,</span> <span class="n">personal_context</span><span class="p">,</span> <span class="n">recipient_list</span> <span class="ow">in</span> <span class="n">datatuple</span><span class="p">:</span>
+        <span class="c1"># Copy the personal context and extend it with the generic context</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">personal_context</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">template_context</span><span class="p">)</span>
+
+        <span class="c1"># Copy our newly made context, and extend it with the plain_context</span>
+        <span class="n">plain_text_context</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">plain_text_context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">plain_context</span><span class="p">)</span>
+
+        <span class="c1"># And now the same for the HTML version</span>
+        <span class="n">html_text_context</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">html_text_context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">html_context</span><span class="p">)</span>
+
+        <span class="n">email</span><span class="o">.</span><span class="n">to</span> <span class="o">=</span> <span class="n">recipient_list</span>
+        <span class="n">email</span><span class="o">.</span><span class="n">subject</span> <span class="o">=</span> <span class="n">subject</span>
+        <span class="n">email</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span>
+        <span class="n">email</span><span class="o">.</span><span class="n">html_context</span> <span class="o">=</span> <span class="n">html_text_context</span>
+        <span class="n">email</span><span class="o">.</span><span class="n">plain_context</span> <span class="o">=</span> <span class="n">plain_text_context</span>
+
+        <span class="n">sent</span> <span class="o">+=</span> <span class="n">email</span><span class="o">.</span><span class="n">send</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">sent</span></div>
+
+
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+cdh.core.admin module
+=====================
+
+.. automodule:: cdh.core.admin
+   :members:
+   :show-inheritance:
+   :undoc-members:

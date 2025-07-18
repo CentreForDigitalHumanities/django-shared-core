@@ -1,0 +1,15 @@
+cdh.core.js\_urls.conf package
+==============================
+
+.. automodule:: cdh.core.js_urls.conf
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.core.js_urls.conf.settings

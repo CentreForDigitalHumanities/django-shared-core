@@ -1,0 +1,7 @@
+cdh.core.urls module
+====================
+
+.. automodule:: cdh.core.urls
+   :members:
+   :undoc-members:
+   :show-inheritance:

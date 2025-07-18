@@ -1,0 +1,7 @@
+cdh.core.templatetags.get\_field\_name module
+=============================================
+
+.. automodule:: cdh.core.templatetags.get_field_name
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+cdh.rest.client.clients.collections module
+==========================================
+
+.. automodule:: cdh.rest.client.clients.collections
+   :members:
+   :undoc-members:
+   :show-inheritance:

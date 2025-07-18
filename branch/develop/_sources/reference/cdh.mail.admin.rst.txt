@@ -1,0 +1,7 @@
+cdh.mail.admin module
+=====================
+
+.. automodule:: cdh.mail.admin
+   :members:
+   :undoc-members:
+   :show-inheritance:

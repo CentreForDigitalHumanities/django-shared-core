@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.core.forms module &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../_static/theme.css" type="text/css"/>
+        <script src="../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../_static/doctools.js?v=9a2dae69"></script>
+                    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../genindex.html"/>
+            <link rel="search" title="Search" href="../search.html"/>
+            <link rel="next" title="cdh.core.hashers module" href="cdh.core.hashers.html"/>
+            <link rel="prev" title="cdh.core.file_loading module" href="cdh.core.file_loading.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="index.html"
+           >
+           cdh
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.html"
+           >
+           cdh package
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.core.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           cdh.core package
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.core.forms module</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <section id="module-cdh.core.forms">
+<span id="cdh-core-forms-module"></span><h1>cdh.core.forms module<a class="headerlink" href="#module-cdh.core.forms" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapCheckboxInput">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">BootstrapCheckboxInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_test</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#BootstrapCheckboxInput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.BootstrapCheckboxInput" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/widgets/#django.forms.CheckboxInput" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">CheckboxInput</span></code></a></p>
+<p>Override of Django’s version to use the right Bootstrap classes</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapCheckboxInput.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#cdh.core.forms.BootstrapCheckboxInput.media" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapCheckboxInput.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cdh.core/forms/widgets/bootstrap_checkbox.html'</span></em><a class="headerlink" href="#cdh.core.forms.BootstrapCheckboxInput.template_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapCheckboxSelectMultiple">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">BootstrapCheckboxSelectMultiple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#BootstrapCheckboxSelectMultiple"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.BootstrapCheckboxSelectMultiple" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/widgets/#django.forms.CheckboxSelectMultiple" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">CheckboxSelectMultiple</span></code></a></p>
+<p>Override of Django’s version to use the right Bootstrap classes</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapCheckboxSelectMultiple.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#cdh.core.forms.BootstrapCheckboxSelectMultiple.media" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapCheckboxSelectMultiple.option_template_name">
+<span class="sig-name descname"><span class="pre">option_template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cdh.core/forms/widgets/bootstrap_radio_option.html'</span></em><a class="headerlink" href="#cdh.core.forms.BootstrapCheckboxSelectMultiple.option_template_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapCheckboxSelectMultiple.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cdh.core/forms/widgets/bootstrap_radio.html'</span></em><a class="headerlink" href="#cdh.core.forms.BootstrapCheckboxSelectMultiple.template_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapDateInput">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">BootstrapDateInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#BootstrapDateInput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.BootstrapDateInput" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/widgets/#django.forms.DateInput" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DateInput</span></code></a></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapDateInput.Media">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Media</span></span><a class="reference internal" href="../_modules/cdh/core/forms.html#BootstrapDateInput.Media"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.BootstrapDateInput.Media" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapDateInput.Media.css">
+<span class="sig-name descname"><span class="pre">css</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'all':</span> <span class="pre">['cdh.core/css/vanillajs-datepicker.css']}</span></em><a class="headerlink" href="#cdh.core.forms.BootstrapDateInput.Media.css" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapDateInput.Media.js">
+<span class="sig-name descname"><span class="pre">js</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['cdh.core/js/datepicker-full.js',</span> <span class="pre">'cdh.core/js/widget/datepicker.js']</span></em><a class="headerlink" href="#cdh.core.forms.BootstrapDateInput.Media.js" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapDateInput.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#BootstrapDateInput.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.BootstrapDateInput.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapDateInput.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#cdh.core.forms.BootstrapDateInput.media" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapDateInput.value_from_datadict">
+<span class="sig-name descname"><span class="pre">value_from_datadict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#BootstrapDateInput.value_from_datadict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.BootstrapDateInput.value_from_datadict" title="Link to this definition">¶</a></dt>
+<dd><p>Given a dictionary of data and this widget’s name, return the value
+of this widget or None if it’s not provided.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapMonthField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">BootstrapMonthField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">year_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1970</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9999</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#BootstrapMonthField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.BootstrapMonthField" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/fields/#django.forms.DateField" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DateField</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapMonthField.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">year_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1970</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9999</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#BootstrapMonthField.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.BootstrapMonthField.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapMonthField.to_python">
+<span class="sig-name descname"><span class="pre">to_python</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#BootstrapMonthField.to_python"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.BootstrapMonthField.to_python" title="Link to this definition">¶</a></dt>
+<dd><p>Validate that the input can be converted to a date. Return a Python
+datetime.date object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapMonthField.widget">
+<span class="sig-name descname"><span class="pre">widget</span></span><a class="headerlink" href="#cdh.core.forms.BootstrapMonthField.widget" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#cdh.core.forms.MonthInput" title="cdh.core.forms.MonthInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">MonthInput</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapMultiWidget">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">BootstrapMultiWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widgets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#BootstrapMultiWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.BootstrapMultiWidget" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.core.forms.BootstrapMultiWidgetMixin" title="cdh.core.forms.BootstrapMultiWidgetMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">BootstrapMultiWidgetMixin</span></code></a>, <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/widgets/#django.forms.MultiWidget" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiWidget</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapMultiWidget.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#cdh.core.forms.BootstrapMultiWidget.media" title="Link to this definition">¶</a></dt>
+<dd><p>Media for a multiwidget is the combination of all media of the
+subwidgets.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapMultiWidgetMixin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">BootstrapMultiWidgetMixin</span></span><a class="reference internal" href="../_modules/cdh/core/forms.html#BootstrapMultiWidgetMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.BootstrapMultiWidgetMixin" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapMultiWidgetMixin.get_context">
+<span class="sig-name descname"><span class="pre">get_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#BootstrapMultiWidgetMixin.get_context"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.BootstrapMultiWidgetMixin.get_context" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapMultiWidgetMixin.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cdh.core/forms/widgets/bootstrap_multiwidget.html'</span></em><a class="headerlink" href="#cdh.core.forms.BootstrapMultiWidgetMixin.template_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapRadioSelect">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">BootstrapRadioSelect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#BootstrapRadioSelect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.BootstrapRadioSelect" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/widgets/#django.forms.RadioSelect" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RadioSelect</span></code></a></p>
+<p>Override of Django’s version to use the right Bootstrap classes</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapRadioSelect.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#cdh.core.forms.BootstrapRadioSelect.media" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapRadioSelect.option_template_name">
+<span class="sig-name descname"><span class="pre">option_template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cdh.core/forms/widgets/bootstrap_radio_option.html'</span></em><a class="headerlink" href="#cdh.core.forms.BootstrapRadioSelect.option_template_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapRadioSelect.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cdh.core/forms/widgets/bootstrap_radio.html'</span></em><a class="headerlink" href="#cdh.core.forms.BootstrapRadioSelect.template_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapSelect">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">BootstrapSelect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#BootstrapSelect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.BootstrapSelect" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/widgets/#django.forms.Select" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a></p>
+<p>Override of Django’s version to use the right Bootstrap classes</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapSelect.get_context">
+<span class="sig-name descname"><span class="pre">get_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#BootstrapSelect.get_context"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.BootstrapSelect.get_context" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapSelect.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#cdh.core.forms.BootstrapSelect.media" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapSplitDateInput">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">BootstrapSplitDateInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#BootstrapSplitDateInput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.BootstrapSplitDateInput" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.core.forms.BootstrapMultiWidget" title="cdh.core.forms.BootstrapMultiWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">BootstrapMultiWidget</span></code></a></p>
+<p>A widget for a date input, split into three fields</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapSplitDateInput.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#BootstrapSplitDateInput.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.BootstrapSplitDateInput.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapSplitDateInput.decompress">
+<span class="sig-name descname"><span class="pre">decompress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#BootstrapSplitDateInput.decompress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.BootstrapSplitDateInput.decompress" title="Link to this definition">¶</a></dt>
+<dd><p>Return a list of decompressed values for the given compressed value.
+The given value can be assumed to be valid, but not necessarily
+non-empty.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapSplitDateInput.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#cdh.core.forms.BootstrapSplitDateInput.media" title="Link to this definition">¶</a></dt>
+<dd><p>Media for a multiwidget is the combination of all media of the
+subwidgets.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapSplitDateInput.value_from_datadict">
+<span class="sig-name descname"><span class="pre">value_from_datadict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#BootstrapSplitDateInput.value_from_datadict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.BootstrapSplitDateInput.value_from_datadict" title="Link to this definition">¶</a></dt>
+<dd><p>Given a dictionary of data and this widget’s name, return the value
+of this widget or None if it’s not provided.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapSplitDateTimeField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">BootstrapSplitDateTimeField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_date_formats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_time_formats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#BootstrapSplitDateTimeField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.BootstrapSplitDateTimeField" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/fields/#django.forms.SplitDateTimeField" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">SplitDateTimeField</span></code></a></p>
+<p>Override of Django SplitDateTimeField to use bootstrap multiwidget</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapSplitDateTimeField.widget">
+<span class="sig-name descname"><span class="pre">widget</span></span><a class="headerlink" href="#cdh.core.forms.BootstrapSplitDateTimeField.widget" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#cdh.core.forms.BootstrapSplitDateTimeWidget" title="cdh.core.forms.BootstrapSplitDateTimeWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">BootstrapSplitDateTimeWidget</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapSplitDateTimeWidget">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">BootstrapSplitDateTimeWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#BootstrapSplitDateTimeWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.BootstrapSplitDateTimeWidget" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.core.forms.BootstrapMultiWidgetMixin" title="cdh.core.forms.BootstrapMultiWidgetMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">BootstrapMultiWidgetMixin</span></code></a>, <a class="reference internal" href="#cdh.core.forms.SplitDateTimeWidget" title="cdh.core.forms.SplitDateTimeWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">SplitDateTimeWidget</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.core.forms.BootstrapSplitDateTimeWidget.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#cdh.core.forms.BootstrapSplitDateTimeWidget.media" title="Link to this definition">¶</a></dt>
+<dd><p>Media for a multiwidget is the combination of all media of the
+subwidgets.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.ColorField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">ColorField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strip</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#ColorField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.ColorField" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/fields/#django.forms.CharField" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">CharField</span></code></a></p>
+<p>Override of Django’s version to use the right HTML5 input</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.ColorField.widget">
+<span class="sig-name descname"><span class="pre">widget</span></span><a class="headerlink" href="#cdh.core.forms.ColorField.widget" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#cdh.core.forms.ColorInput" title="cdh.core.forms.ColorInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorInput</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.ColorInput">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">ColorInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#ColorInput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.ColorInput" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/widgets/#django.forms.TextInput" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextInput</span></code></a></p>
+<p>Override of Django’s version to use the right HTML5 input</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.ColorInput.input_type">
+<span class="sig-name descname"><span class="pre">input_type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'color'</span></em><a class="headerlink" href="#cdh.core.forms.ColorInput.input_type" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.core.forms.ColorInput.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#cdh.core.forms.ColorInput.media" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.DateField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">DateField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_formats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#DateField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.DateField" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/fields/#django.forms.DateField" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DateField</span></code></a></p>
+<p>Override of Django’s version to use the right HTML5 input</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.DateField.widget">
+<span class="sig-name descname"><span class="pre">widget</span></span><a class="headerlink" href="#cdh.core.forms.DateField.widget" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#cdh.core.forms.DateInput" title="cdh.core.forms.DateInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">DateInput</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.DateInput">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">DateInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#DateInput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.DateInput" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/widgets/#django.forms.DateInput" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DateInput</span></code></a></p>
+<p>Override of Django’s version to use the right HTML5 input</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.DateInput.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#DateInput.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.DateInput.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.DateInput.input_type">
+<span class="sig-name descname"><span class="pre">input_type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'date'</span></em><a class="headerlink" href="#cdh.core.forms.DateInput.input_type" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.core.forms.DateInput.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#cdh.core.forms.DateInput.media" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.DateTimeField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">DateTimeField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_formats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#DateTimeField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.DateTimeField" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/fields/#django.forms.DateTimeField" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DateTimeField</span></code></a></p>
+<p>Override of Django’s version to use the right HTML5 input</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.DateTimeField.widget">
+<span class="sig-name descname"><span class="pre">widget</span></span><a class="headerlink" href="#cdh.core.forms.DateTimeField.widget" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#cdh.core.forms.DateTimeInput" title="cdh.core.forms.DateTimeInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">DateTimeInput</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.DateTimeInput">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">DateTimeInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#DateTimeInput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.DateTimeInput" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/widgets/#django.forms.DateTimeInput" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DateTimeInput</span></code></a></p>
+<p>Override of Django’s version to use the right HTML5 input</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.DateTimeInput.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#DateTimeInput.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.DateTimeInput.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.DateTimeInput.input_type">
+<span class="sig-name descname"><span class="pre">input_type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'datetime-local'</span></em><a class="headerlink" href="#cdh.core.forms.DateTimeInput.input_type" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.core.forms.DateTimeInput.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#cdh.core.forms.DateTimeInput.media" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.MonthInput">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">MonthInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#MonthInput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.MonthInput" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/widgets/#django.forms.TextInput" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextInput</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.MonthInput.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#MonthInput.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.MonthInput.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.MonthInput.format_value">
+<span class="sig-name descname"><span class="pre">format_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#MonthInput.format_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.MonthInput.format_value" title="Link to this definition">¶</a></dt>
+<dd><p>Return a value as it should appear when rendered in a template.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.MonthInput.input_type">
+<span class="sig-name descname"><span class="pre">input_type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'month'</span></em><a class="headerlink" href="#cdh.core.forms.MonthInput.input_type" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.core.forms.MonthInput.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#cdh.core.forms.MonthInput.media" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.PasswordField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">PasswordField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strip</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#PasswordField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.PasswordField" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/fields/#django.forms.CharField" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">CharField</span></code></a></p>
+<p>Override of Django’s version to use the right HTML5 input</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.PasswordField.widget">
+<span class="sig-name descname"><span class="pre">widget</span></span><a class="headerlink" href="#cdh.core.forms.PasswordField.widget" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/widgets/#django.forms.PasswordInput" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PasswordInput</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.SearchableSelectWidget">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">SearchableSelectWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#SearchableSelectWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.SearchableSelectWidget" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.core.forms.BootstrapSelect" title="cdh.core.forms.BootstrapSelect"><code class="xref py py-class docutils literal notranslate"><span class="pre">BootstrapSelect</span></code></a></p>
+<p>A JS-baced widget for a searchable select. Currently using Select2 as
+the backend.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.SearchableSelectWidget.Media">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Media</span></span><a class="reference internal" href="../_modules/cdh/core/forms.html#SearchableSelectWidget.Media"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.SearchableSelectWidget.Media" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.SearchableSelectWidget.Media.js">
+<span class="sig-name descname"><span class="pre">js</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['cdh.core/js/widget/searchable-select.js']</span></em><a class="headerlink" href="#cdh.core.forms.SearchableSelectWidget.Media.js" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.SearchableSelectWidget.get_context">
+<span class="sig-name descname"><span class="pre">get_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#SearchableSelectWidget.get_context"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.SearchableSelectWidget.get_context" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.core.forms.SearchableSelectWidget.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#cdh.core.forms.SearchableSelectWidget.media" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.SplitDateTimeField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">SplitDateTimeField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_date_formats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_time_formats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#SplitDateTimeField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.SplitDateTimeField" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/fields/#django.forms.SplitDateTimeField" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">SplitDateTimeField</span></code></a></p>
+<p>Override of Django SplitDateTimeField to use HTML5 fields</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.SplitDateTimeField.widget">
+<span class="sig-name descname"><span class="pre">widget</span></span><a class="headerlink" href="#cdh.core.forms.SplitDateTimeField.widget" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#cdh.core.forms.SplitDateTimeWidget" title="cdh.core.forms.SplitDateTimeWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">SplitDateTimeWidget</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.SplitDateTimeWidget">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">SplitDateTimeWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#SplitDateTimeWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.SplitDateTimeWidget" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/widgets/#django.forms.SplitDateTimeWidget" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">SplitDateTimeWidget</span></code></a></p>
+<p>Override of Django SplitDateTimeWidget to use HTML5 fields</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.SplitDateTimeWidget.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#SplitDateTimeWidget.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.SplitDateTimeWidget.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.core.forms.SplitDateTimeWidget.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#cdh.core.forms.SplitDateTimeWidget.media" title="Link to this definition">¶</a></dt>
+<dd><p>Media for a multiwidget is the combination of all media of the
+subwidgets.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.SplitMonthInput">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">SplitMonthInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#SplitMonthInput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.SplitMonthInput" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.core.forms.BootstrapMultiWidget" title="cdh.core.forms.BootstrapMultiWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">BootstrapMultiWidget</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.SplitMonthInput.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#SplitMonthInput.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.SplitMonthInput.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.SplitMonthInput.decompress">
+<span class="sig-name descname"><span class="pre">decompress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#SplitMonthInput.decompress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.SplitMonthInput.decompress" title="Link to this definition">¶</a></dt>
+<dd><p>Return a list of decompressed values for the given compressed value.
+The given value can be assumed to be valid, but not necessarily
+non-empty.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.core.forms.SplitMonthInput.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#cdh.core.forms.SplitMonthInput.media" title="Link to this definition">¶</a></dt>
+<dd><p>Media for a multiwidget is the combination of all media of the
+subwidgets.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.TelephoneField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">TelephoneField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strip</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#TelephoneField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.TelephoneField" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/fields/#django.forms.CharField" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">CharField</span></code></a></p>
+<p>Override of Django’s version to use the right HTML5 input</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.TelephoneField.widget">
+<span class="sig-name descname"><span class="pre">widget</span></span><a class="headerlink" href="#cdh.core.forms.TelephoneField.widget" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#cdh.core.forms.TelephoneInput" title="cdh.core.forms.TelephoneInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">TelephoneInput</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.TelephoneInput">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">TelephoneInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#TelephoneInput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.TelephoneInput" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/widgets/#django.forms.TextInput" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextInput</span></code></a></p>
+<p>Override of Django’s version to use the right HTML5 input</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.TelephoneInput.input_type">
+<span class="sig-name descname"><span class="pre">input_type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'tel'</span></em><a class="headerlink" href="#cdh.core.forms.TelephoneInput.input_type" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.core.forms.TelephoneInput.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#cdh.core.forms.TelephoneInput.media" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.TemplatedForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">TemplatedForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_order=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#TemplatedForm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.TemplatedForm" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.core.forms.TemplatedFormMixin" title="cdh.core.forms.TemplatedFormMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">TemplatedFormMixin</span></code></a>, <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/api/#django.forms.Form" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Form</span></code></a></p>
+<p>Extension of the default Form to enable the UU-Form styling</p>
+<p>Uses <a class="reference internal" href="#cdh.core.forms.TemplatedFormMixin" title="cdh.core.forms.TemplatedFormMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">TemplatedFormMixin</span></code></a></p>
+<p><strong>Form fields:</strong></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.core.forms.TemplatedForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#cdh.core.forms.TemplatedForm.media" title="Link to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.TemplatedFormMixin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">TemplatedFormMixin</span></span><a class="reference internal" href="../_modules/cdh/core/forms.html#TemplatedFormMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.TemplatedFormMixin" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Mixin for Django Form to enable the UU-Form styling</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>form_template</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the form_template to use</p></li>
+<li><p><strong>show_help_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – if False, the help column will be removed on
+every field</p></li>
+<li><p><strong>always_show_help_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – if False, the help column will be
+removed on fields that don’t have help
+texts</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.TemplatedFormMixin.always_show_help_column">
+<span class="sig-name descname"><span class="pre">always_show_help_column</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#cdh.core.forms.TemplatedFormMixin.always_show_help_column" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.TemplatedFormMixin.get_context">
+<span class="sig-name descname"><span class="pre">get_context</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#TemplatedFormMixin.get_context"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.TemplatedFormMixin.get_context" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.TemplatedFormMixin.show_help_column">
+<span class="sig-name descname"><span class="pre">show_help_column</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#cdh.core.forms.TemplatedFormMixin.show_help_column" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.TemplatedFormMixin.show_valid_fields">
+<span class="sig-name descname"><span class="pre">show_valid_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#cdh.core.forms.TemplatedFormMixin.show_valid_fields" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.TemplatedFormMixin.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cdh.core/form_template.html'</span></em><a class="headerlink" href="#cdh.core.forms.TemplatedFormMixin.template_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.TemplatedFormTextField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">TemplatedFormTextField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">caption</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header_element</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'h3'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'pt-4'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template_context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#TemplatedFormTextField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.TemplatedFormTextField" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/fields/#django.forms.Field" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.TemplatedFormTextField.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">caption</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header_element</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'h3'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'pt-4'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template_context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#TemplatedFormTextField.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.TemplatedFormTextField.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>A fake field that just displays a header/some other text.</p>
+<p>Either use the default header with optional caption, or provide your
+own template to render.</p>
+<p>Note: use Form.field_order to place this field where you want when
+using model forms.</p>
+<p>Note 2: as always, make sure any used variables are safe as
+they will be marked safe automatically.
+Please escape any user-supplied content before it’s passed to this
+field.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> – The header text. Ignored if template is specified</p></li>
+<li><p><strong>caption</strong> – (optional) a caption text. Ignored if template is specified</p></li>
+<li><p><strong>classes</strong> – Any CSS classes to add to the containing element.
+Defaults to ‘pt-4’</p></li>
+<li><p><strong>template</strong> – A template to render</p></li>
+<li><p><strong>template_context</strong> – Either a dict, or a callable returning a
+dict, with template context.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.TemplatedFormTextField.form_text">
+<span class="sig-name descname"><span class="pre">form_text</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#cdh.core.forms.TemplatedFormTextField.form_text" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.TemplatedFormTextField.prepare_value">
+<span class="sig-name descname"><span class="pre">prepare_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#TemplatedFormTextField.prepare_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.TemplatedFormTextField.prepare_value" title="Link to this definition">¶</a></dt>
+<dd><p>We use the value to generate the content; it’s a hack, but due to
+limitations of Django forms it’s the cleanest way to pass it to the
+widget.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.TemplatedFormTextField.run_validators">
+<span class="sig-name descname"><span class="pre">run_validators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#TemplatedFormTextField.run_validators"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.TemplatedFormTextField.run_validators" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.TemplatedFormTextField.to_python">
+<span class="sig-name descname"><span class="pre">to_python</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#TemplatedFormTextField.to_python"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.TemplatedFormTextField.to_python" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.TemplatedFormTextField.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#TemplatedFormTextField.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.TemplatedFormTextField.validate" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.TemplatedFormTextField.widget">
+<span class="sig-name descname"><span class="pre">widget</span></span><a class="headerlink" href="#cdh.core.forms.TemplatedFormTextField.widget" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#cdh.core.forms.TemplatedFormTextWidget" title="cdh.core.forms.TemplatedFormTextWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">TemplatedFormTextWidget</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.TemplatedFormTextWidget">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">TemplatedFormTextWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#TemplatedFormTextWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.TemplatedFormTextWidget" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/widgets/#django.forms.Widget" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.TemplatedFormTextWidget.get_context">
+<span class="sig-name descname"><span class="pre">get_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#TemplatedFormTextWidget.get_context"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.TemplatedFormTextWidget.get_context" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.core.forms.TemplatedFormTextWidget.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#cdh.core.forms.TemplatedFormTextWidget.media" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.TemplatedFormTextWidget.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cdh.core/forms/widgets/text.html'</span></em><a class="headerlink" href="#cdh.core.forms.TemplatedFormTextWidget.template_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.TemplatedModelForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">TemplatedModelForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#TemplatedModelForm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.TemplatedModelForm" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.core.forms.TemplatedFormMixin" title="cdh.core.forms.TemplatedFormMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">TemplatedFormMixin</span></code></a>, <a class="reference external" href="https://docs.djangoproject.com/en/stable/topics/forms/modelforms/#django.forms.ModelForm" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelForm</span></code></a></p>
+<p>Extension of the default Form to enable the UU-Form styling</p>
+<p>Uses <a class="reference internal" href="#cdh.core.forms.TemplatedFormMixin" title="cdh.core.forms.TemplatedFormMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">TemplatedFormMixin</span></code></a></p>
+<p><strong>Form fields:</strong></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.core.forms.TemplatedModelForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#cdh.core.forms.TemplatedModelForm.media" title="Link to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.TimeField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">TimeField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_formats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#TimeField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.TimeField" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/fields/#django.forms.TimeField" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TimeField</span></code></a></p>
+<p>Override of Django’s version to use the right HTML5 input</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.TimeField.widget">
+<span class="sig-name descname"><span class="pre">widget</span></span><a class="headerlink" href="#cdh.core.forms.TimeField.widget" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#cdh.core.forms.TimeInput" title="cdh.core.forms.TimeInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">TimeInput</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.TimeInput">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">TimeInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#TimeInput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.TimeInput" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/widgets/#django.forms.TimeInput" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TimeInput</span></code></a></p>
+<p>Override of Django’s version to use the right HTML5 input</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.TimeInput.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#TimeInput.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.TimeInput.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.TimeInput.input_type">
+<span class="sig-name descname"><span class="pre">input_type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'time'</span></em><a class="headerlink" href="#cdh.core.forms.TimeInput.input_type" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.core.forms.TimeInput.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#cdh.core.forms.TimeInput.media" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.TinyMCEWidget">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.core.forms.</span></span><span class="sig-name descname"><span class="pre">TinyMCEWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">menubar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plugins</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toolbar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'undo</span> <span class="pre">redo</span> <span class="pre">casechange</span> <span class="pre">blocks</span> <span class="pre">bold</span> <span class="pre">italic</span> <span class="pre">underline</span> <span class="pre">link</span> <span class="pre">bullist</span> <span class="pre">numlist</span> <span class="pre">|</span> <span class="pre">code'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#TinyMCEWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.TinyMCEWidget" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/forms/widgets/#django.forms.Widget" title="(in Django v5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code></a></p>
+<p>A TinyMCE widget for HTML editting</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.core.forms.TinyMCEWidget.Media">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Media</span></span><a class="reference internal" href="../_modules/cdh/core/forms.html#TinyMCEWidget.Media"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.TinyMCEWidget.Media" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.TinyMCEWidget.Media.js">
+<span class="sig-name descname"><span class="pre">js</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['cdh.core/js/tinymce/tinymce.min.js',</span> <span class="pre">'cdh.core/js/tinymce/tinymce-jquery.min.js',</span> <span class="pre">'cdh.core/js/tinymce/shim.js']</span></em><a class="headerlink" href="#cdh.core.forms.TinyMCEWidget.Media.js" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.TinyMCEWidget.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">menubar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plugins</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toolbar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'undo</span> <span class="pre">redo</span> <span class="pre">casechange</span> <span class="pre">blocks</span> <span class="pre">bold</span> <span class="pre">italic</span> <span class="pre">underline</span> <span class="pre">link</span> <span class="pre">bullist</span> <span class="pre">numlist</span> <span class="pre">|</span> <span class="pre">code'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#TinyMCEWidget.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.TinyMCEWidget.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>All parameters should have sensible defaults.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>menubar</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – if the TinyMCE menubar needs to be shown.
+Probably not</p></li>
+<li><p><strong>plugins</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – a list of TinyMCE plugins to load</p></li>
+<li><p><strong>plugins</strong> – a TinyMCE toolbar definition</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.core.forms.TinyMCEWidget.get_context">
+<span class="sig-name descname"><span class="pre">get_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/core/forms.html#TinyMCEWidget.get_context"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.core.forms.TinyMCEWidget.get_context" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.core.forms.TinyMCEWidget.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#cdh.core.forms.TinyMCEWidget.media" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.core.forms.TinyMCEWidget.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cdh.core/forms/widgets/tinymce.html'</span></em><a class="headerlink" href="#cdh.core.forms.TinyMCEWidget.template_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

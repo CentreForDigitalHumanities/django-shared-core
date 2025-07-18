@@ -1,0 +1,7 @@
+cdh.mail.apps module
+====================
+
+.. automodule:: cdh.mail.apps
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.files.db.descriptors &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../../_static/theme.css" type="text/css"/>
+        <script src="../../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../../../../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+                    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.files.db.descriptors</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.files.db.descriptors</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django.core.files</span> <span class="kn">import</span> <span class="n">File</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">router</span>
+<span class="kn">from</span> <span class="nn">django.db.models</span> <span class="kn">import</span> <span class="n">ObjectDoesNotExist</span>
+<span class="kn">from</span> <span class="nn">django.db.models.fields.related_descriptors</span> <span class="kn">import</span> \
+    <span class="n">ForeignKeyDeferredAttribute</span><span class="p">,</span> <span class="n">ForwardManyToOneDescriptor</span><span class="p">,</span> \
+    <span class="n">ReverseManyToOneDescriptor</span>
+<span class="kn">from</span> <span class="nn">django.utils.functional</span> <span class="kn">import</span> <span class="n">cached_property</span>
+
+<span class="kn">from</span> <span class="nn">cdh.files.db.manager</span> <span class="kn">import</span> <span class="n">create_tracked_file_manager</span>
+<span class="kn">from</span> <span class="nn">cdh.files.db.wrappers</span> <span class="kn">import</span> <span class="n">FileWrapper</span><span class="p">,</span> <span class="n">TrackedFileWrapper</span>
+
+
+<div class="viewcode-block" id="FileDescriptor">
+<a class="viewcode-back" href="../../../../reference/cdh.files.db.descriptors.html#cdh.files.db.descriptors.FileDescriptor">[docs]</a>
+<span class="k">class</span> <span class="nc">FileDescriptor</span><span class="p">(</span><span class="n">ForeignKeyDeferredAttribute</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;FileDescriptor handles the {field_name}_id field of a FileField&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__set__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="c1"># Override of default implementation that does not clear the cache</span>
+        <span class="c1"># when given None. This is needed as ForwardFileDescriptor handles None</span>
+        <span class="c1"># in it&#39;s own way</span>
+        <span class="n">instance</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">attname</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
+
+
+
+<div class="viewcode-block" id="ForwardFileDescriptor">
+<a class="viewcode-back" href="../../../../reference/cdh.files.db.descriptors.html#cdh.files.db.descriptors.ForwardFileDescriptor">[docs]</a>
+<span class="k">class</span> <span class="nc">ForwardFileDescriptor</span><span class="p">(</span><span class="n">ForwardManyToOneDescriptor</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;FileDescriptor handles the {field_name}_ field of a FileField on the</span>
+<span class="sd">    child (aka the model that has the field definition, parent would be the</span>
+<span class="sd">    File model).&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_create_file_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_obj</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FileWrapper</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Helper that creates a FileWrapper given a parent and a child</span>
+<span class="sd">        instance        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">file_obj</span><span class="o">.</span><span class="n">get_file_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_create_file_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a brand-spanking new File instance (or the configured</span>
+<span class="sd">        subclass)&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">remote_field</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+
+<div class="viewcode-block" id="ForwardFileDescriptor.get_object">
+<a class="viewcode-back" href="../../../../reference/cdh.files.db.descriptors.html#cdh.files.db.descriptors.ForwardFileDescriptor.get_object">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Override get_object in order to handle non-existing File objects</span>
+
+<span class="sd">        The default implementation does not need to worry about it, but we do</span>
+<span class="sd">        (as we are hiding the fact that this is a ForeignKey relation)&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">qs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_queryset</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="n">instance</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">qs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">get_reverse_related_filter</span><span class="p">(</span><span class="n">instance</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">ObjectDoesNotExist</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve the File object from cache, failing that from DB,</span>
+<span class="sd">        and wrap it neatly in a FileWrapper&quot;&quot;&quot;</span>
+        <span class="c1"># If we aren&#39;t given an instance, someone is calling it Class.field,</span>
+        <span class="c1"># thus, we need to return the descriptor</span>
+        <span class="k">if</span> <span class="n">instance</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># See if we have it in cache, raises KeyError if not</span>
+            <span class="n">file_wrapper</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">get_cached_value</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+
+            <span class="c1"># Act like we don&#39;t have this object if it is marked as removed</span>
+            <span class="c1"># We actually keep it in cache, as we need it&#39;s metadata when saving</span>
+            <span class="c1"># the child model. (Otherwise, we can&#39;t remove the File object from</span>
+            <span class="c1"># the DB or the file from the disk when saving the new state).</span>
+            <span class="c1"># The cache will be cleared once the file has been properly</span>
+            <span class="c1"># disposed of</span>
+            <span class="k">if</span> <span class="n">file_wrapper</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">file_wrapper</span><span class="o">.</span><span class="n">_removed</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+            <span class="k">return</span> <span class="n">file_wrapper</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="c1"># Try to fetch it from the DB instead</span>
+            <span class="n">file_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+
+        <span class="c1"># From this point on we are dealing with a fresh non-cached File object</span>
+
+        <span class="k">if</span> <span class="n">file_obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">null</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">RelatedObjectDoesNotExist</span><span class="p">(</span>
+                    <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> has no </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># Create our wrapper</span>
+        <span class="n">file_wrapper</span> <span class="o">=</span> <span class="n">file_obj</span><span class="o">.</span><span class="n">get_file_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+        <span class="c1"># And cache it, saves some DB calls later!</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">set_cached_value</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">file_wrapper</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">file_wrapper</span>
+
+    <span class="k">def</span> <span class="fm">__set__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the value on the model instance from a variety of different</span>
+<span class="sd">        input types</span>
+
+<span class="sd">        1) Tuple - from our file widget.</span>
+<span class="sd">        2) File instance - or any subclasses</span>
+<span class="sd">        3) FileWrapper</span>
+<span class="sd">        4) A Django File (derived) object</span>
+<span class="sd">        5) None</span>
+
+<span class="sd">        In all cases it will result in saving a FileWrapper, with &#39;None&#39; being</span>
+<span class="sd">        a special case that _can_ result in saving None, but not always.</span>
+
+<span class="sd">        Please see the helper methods for detailed info on how they are handled</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">return_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_from_tuple</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span>
+               <span class="n">value</span><span class="p">,</span>
+               <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">remote_field</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">concrete_model</span>  <span class="c1"># NoQA</span>
+           <span class="p">):</span>
+            <span class="n">return_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_from_db_instance</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">attr_class</span><span class="p">):</span>
+            <span class="n">return_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_from_file_wrapper</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">File</span><span class="p">):</span>
+            <span class="n">return_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_from_file_like_object</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">return_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_from_none</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># We can&#39;t be completely inclusive :o</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s1">&#39;Cannot assign &quot;</span><span class="si">%r</span><span class="s1">&quot;: &quot;</span><span class="si">%s</span><span class="s1">.</span><span class="si">%s</span><span class="s1">&quot; must be either a &quot;</span><span class="si">%s</span><span class="s1">&quot; instance, &#39;</span>
+                <span class="s1">&#39;a FileWrapper instance or a FileWidget tuple.&#39;</span>
+                <span class="o">%</span> <span class="p">(</span>
+                    <span class="n">value</span><span class="p">,</span>
+                    <span class="n">instance</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">object_name</span><span class="p">,</span>  <span class="c1"># NoQA</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">remote_field</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">object_name</span><span class="p">,</span>  <span class="c1"># NoQA</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">set_cached_value</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">return_value</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">return_value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">return_value</span><span class="o">.</span><span class="n">_removed</span><span class="p">:</span>
+            <span class="c1"># If we got returned None, or a FileWrapper marked for deletion, we</span>
+            <span class="c1"># need to clear the fields that the ORM uses to link objects.</span>
+            <span class="c1"># (In other words, the {field_name}_id field)</span>
+            <span class="c1"># If we don&#39;t, the ORM will get VERY confused and raise</span>
+            <span class="c1"># IntegrityError(s)</span>
+            <span class="k">for</span> <span class="n">lh_field</span><span class="p">,</span> <span class="n">rh_field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">related_fields</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">lh_field</span><span class="o">.</span><span class="n">attname</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_setup_db_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets some fields the ORM needs for DB operations. Taken verbatim</span>
+<span class="sd">        from the base implementation.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">instance</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">db</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NoQA</span>
+                <span class="n">instance</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">router</span><span class="o">.</span><span class="n">db_for_write</span><span class="p">(</span>  <span class="c1"># NoQA</span>
+                    <span class="n">instance</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span>
+                    <span class="n">instance</span><span class="o">=</span><span class="n">value</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">db</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NoQA</span>
+                <span class="n">value</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">router</span><span class="o">.</span><span class="n">db_for_write</span><span class="p">(</span>  <span class="c1"># NoQA</span>
+                    <span class="n">value</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span>
+                    <span class="n">instance</span><span class="o">=</span><span class="n">instance</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">router</span><span class="o">.</span><span class="n">allow_relation</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s1">&#39;Cannot assign &quot;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">&quot;: the current database router &#39;</span>
+                    <span class="sa">f</span><span class="s1">&#39;prevents this relation.&#39;</span>
+                <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">lh_field</span><span class="p">,</span> <span class="n">rh_field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">related_fields</span><span class="p">:</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">lh_field</span><span class="o">.</span><span class="n">attname</span><span class="p">,</span>
+                    <span class="nb">getattr</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">rh_field</span><span class="o">.</span><span class="n">attname</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">_set_from_db_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Handles setting the value from a File object (or a subclass)</span>
+
+<span class="sd">        It mostly just creates or updates a FileWrapper around it.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_setup_db_state</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="n">file_wrapper</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">get_file_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+        <span class="c1"># If the FileWrapper was previously marked for termination, we need</span>
+        <span class="c1"># to save it now that we have assigned it again</span>
+        <span class="n">file_wrapper</span><span class="o">.</span><span class="n">_removed</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="n">file_wrapper</span>
+
+    <span class="k">def</span> <span class="nf">_set_from_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Handles setting from the tuple returned from the Widget.</span>
+<span class="sd">        The tuple has to have three values:</span>
+
+<span class="sd">        file - None|File-like object - (almost always InMemoryUploadedFile)</span>
+<span class="sd">        uuid - None|str|UUID - The UUID of the File. None indicates no File</span>
+<span class="sd">               object exists yet</span>
+<span class="sd">        changed - Boolean - True if the widget recorded indicates something</span>
+<span class="sd">                  changed, may it be a clear or a (new) file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">file</span><span class="p">,</span> <span class="n">uuid</span><span class="p">,</span> <span class="n">changed</span> <span class="o">=</span> <span class="n">value</span>
+
+        <span class="c1"># If changed == False, return what we already have saved (if anything)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">changed</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__get__</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+
+        <span class="c1"># Mark this field for termination if we weren&#39;t given a file but it was</span>
+        <span class="c1"># marked as changed, as that must mean the user wanted to clear the</span>
+        <span class="c1"># field</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">file</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_from_none</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+
+        <span class="c1"># If there is an existing File, mark it to be removed</span>
+        <span class="c1"># NOTE: it will only be marked as a candidate. The File object has final</span>
+        <span class="c1"># say in whether it&#39;s actually deleted. (It might be referenced by a</span>
+        <span class="c1"># different FileField).</span>
+        <span class="k">if</span> <span class="n">uuid</span><span class="p">:</span>
+            <span class="n">old_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">remote_field</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uuid</span><span class="o">=</span><span class="n">uuid</span><span class="p">)</span>
+            <span class="n">old_file_wrapper</span> <span class="o">=</span> <span class="n">old_obj</span><span class="o">.</span><span class="n">get_file_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+            <span class="n">old_file_wrapper</span><span class="o">.</span><span class="n">_removed</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="c1"># Cache it, so the field can remove it later on save</span>
+            <span class="c1"># The new FW will be set later in the chain, so this cached value</span>
+            <span class="c1"># will not be seen as &#39;current&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">set_cached_value</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">old_file_wrapper</span><span class="p">)</span>
+
+        <span class="c1"># Create a new metadata object for the received file</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_file_instance</span><span class="p">()</span>
+
+        <span class="c1"># Make sure we setup the DB side of things</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setup_db_state</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+
+        <span class="n">file_wrapper</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">get_file_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">obj</span><span class="o">.</span><span class="n">original_filename</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">file_wrapper</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">file</span>
+        <span class="n">file_wrapper</span><span class="o">.</span><span class="n">_committed</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># Mark the wrapper as need-to-save</span>
+        <span class="n">file_wrapper</span><span class="o">.</span><span class="n">_removed</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># Just to be safe. There _should_ be</span>
+        <span class="c1"># no way this is not False...</span>
+
+        <span class="k">return</span> <span class="n">file_wrapper</span>
+
+    <span class="k">def</span> <span class="nf">_set_from_file_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set this field&#39;s value from an existing FileWrapper</span>
+
+<span class="sd">        The given file wrapper will override any existing in cache, but the</span>
+<span class="sd">        cached wrapper will supplement any missing fields in the given wrapper</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get the current value, if there is any</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">current_fw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__get__</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+        <span class="k">except</span> <span class="bp">self</span><span class="o">.</span><span class="n">RelatedObjectDoesNotExist</span><span class="p">:</span>
+            <span class="n">current_fw</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># See if we own this wrapper</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">in_cache</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+            <span class="c1"># If it isn&#39;t the &#39;current&#39; value, mark the current value to be</span>
+            <span class="c1"># removed. (It&#39;s going to be overriden by an older version</span>
+            <span class="c1"># apparently)</span>
+            <span class="k">if</span> <span class="n">current_fw</span> <span class="o">!=</span> <span class="n">value</span><span class="p">:</span>
+                <span class="n">current_fw</span><span class="o">.</span><span class="n">_removed</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="c1"># Make sure we won&#39;t remove it</span>
+            <span class="n">value</span><span class="o">.</span><span class="n">_removed</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="c1"># We don&#39;t need to do anything more; __set__ will ensure it&#39;s going</span>
+            <span class="c1"># to be the current value</span>
+            <span class="k">return</span> <span class="n">value</span>
+
+        <span class="c1"># If we have a current FileWrapper, we need to mark it as deleted as</span>
+        <span class="c1"># we are replacing it. We don&#39;t need to cache it, as __get__ would</span>
+        <span class="c1"># have done that for us</span>
+        <span class="k">if</span> <span class="n">current_fw</span> <span class="ow">and</span> <span class="n">current_fw</span> <span class="o">!=</span> <span class="n">value</span><span class="p">:</span>
+            <span class="n">current_fw</span><span class="o">.</span><span class="n">_removed</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">current_fw</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
+            <span class="n">value</span><span class="o">.</span><span class="n">_removed</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># Create a file instance if one isn&#39;t present</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">value</span><span class="o">.</span><span class="n">file_instance</span><span class="p">:</span>
+            <span class="n">value</span><span class="o">.</span><span class="n">file_instance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_file_instance</span><span class="p">()</span>
+            <span class="c1"># Make sure our new file_instance knows of this wrapper :)</span>
+            <span class="n">value</span><span class="o">.</span><span class="n">file_instance</span><span class="o">.</span><span class="n">set_file_wrapper</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+            <span class="c1"># It&#39;s a manually created FileWrapper as far as we know, so we</span>
+            <span class="c1"># need to safe it at some point;</span>
+            <span class="n">value</span><span class="o">.</span><span class="n">_committed</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="c1"># Also make sure we won&#39;t delete this</span>
+            <span class="n">value</span><span class="o">.</span><span class="n">_removed</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="c1"># If we got handed a FileWrapper that is attached to a different field</span>
+        <span class="c1"># we need to make a new wrapper for this field</span>
+        <span class="c1"># This really shouldn&#39;t happen if this FW has a file_instance,</span>
+        <span class="c1"># as you should get a FW from that file_instance (in other words,</span>
+        <span class="c1"># the only reason you don&#39;t receive a FW with a file_instance is if a</span>
+        <span class="c1"># programmer created an empty (non field-attached) FileWrapper)</span>
+        <span class="k">elif</span> <span class="n">value</span><span class="o">.</span><span class="n">field</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">:</span>
+            <span class="n">file</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">file</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">file_instance</span><span class="o">.</span><span class="n">get_file_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="n">value</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">file</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setup_db_state</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">file_instance</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">_set_from_file_like_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets from a Django File object.&quot;&quot;&quot;</span>
+        <span class="c1"># If we have something in cache, mark it as obsolete</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">is_cached</span><span class="p">(</span><span class="n">instance</span><span class="p">):</span>
+            <span class="n">old_file_wrapper</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">get_cached_value</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+            <span class="n">old_file_wrapper</span><span class="o">.</span><span class="n">_removed</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">current_fw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__get__</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">current_fw</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">current_fw</span><span class="o">.</span><span class="n">_removed</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">except</span> <span class="bp">self</span><span class="o">.</span><span class="n">RelatedObjectDoesNotExist</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+        <span class="n">db_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_file_instance</span><span class="p">()</span>
+        <span class="n">file_wrapper</span> <span class="o">=</span> <span class="n">db_obj</span><span class="o">.</span><span class="n">get_file_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setup_db_state</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">db_obj</span><span class="p">)</span>
+        <span class="c1"># Create a new wrapper and set the file</span>
+        <span class="n">file_wrapper</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">file_wrapper</span><span class="o">.</span><span class="n">original_filename</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">file_wrapper</span><span class="o">.</span><span class="n">_committed</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="n">file_wrapper</span>
+
+    <span class="k">def</span> <span class="nf">_set_from_none</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Handles removing the current value by setting it to None.&quot;&quot;&quot;</span>
+        <span class="c1"># First, see if we have a value</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__get__</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+            <span class="c1"># If we got a result, mark it as to be removed</span>
+            <span class="k">if</span> <span class="n">obj</span><span class="p">:</span>
+                <span class="n">obj</span><span class="o">.</span><span class="n">_removed</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="bp">self</span><span class="o">.</span><span class="n">RelatedObjectDoesNotExist</span><span class="p">:</span>
+            <span class="c1"># If we get this exception, we are not allowed to set None because</span>
+            <span class="c1"># the field does not allow it</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot set null if null=False&quot;</span><span class="p">)</span>
+
+        <span class="c1"># If there is no value, actually return None</span>
+        <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># If we have an object, mark it as &#39;removed&#39; and return it</span>
+        <span class="c1"># We don&#39;t actually remove the wrapper, as we need it&#39;s metadata to</span>
+        <span class="c1"># properly remove everything when the model is saved. We can&#39;t delete</span>
+        <span class="c1"># it now for two reasons:</span>
+        <span class="c1"># 1) When trying to delete the File before dereferencing it in the</span>
+        <span class="c1">#    child, the FileWrapper will refuse to delete. If we set</span>
+        <span class="c1">#    _removed=True, FileField will automagically clean up for us</span>
+        <span class="c1"># 2) It&#39;s against normal Django behaviour to alter ANY data before</span>
+        <span class="c1">#    calling .save() (or .remove() for that matter). Thus, we need to</span>
+        <span class="c1">#    wait till the programmer expects things to change.</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">_removed</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">obj</span></div>
+
+
+
+<div class="viewcode-block" id="TrackedFileDescriptor">
+<a class="viewcode-back" href="../../../../reference/cdh.files.db.descriptors.html#cdh.files.db.descriptors.TrackedFileDescriptor">[docs]</a>
+<span class="k">class</span> <span class="nc">TrackedFileDescriptor</span><span class="p">(</span><span class="n">ReverseManyToOneDescriptor</span><span class="p">):</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">through</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># through is provided so that you have easy access to the through</span>
+        <span class="c1"># model (Book.authors.through) for inlines, etc. This is done as</span>
+        <span class="c1"># a property to ensure that the fully resolved value is returned.</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rel</span><span class="o">.</span><span class="n">through</span>
+
+    <span class="k">def</span> <span class="fm">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">instance</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">is_cached</span><span class="p">(</span><span class="n">instance</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">get_cached_value</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+
+        <span class="n">wrapper</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_wrapper</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">set_cached_value</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">wrapper</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">wrapper</span>
+
+    <span class="k">def</span> <span class="nf">_create_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TrackedFileWrapper</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">attr_class</span><span class="p">(</span>
+            <span class="n">manager</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">related_manager_cls</span><span class="p">(</span><span class="n">instance</span><span class="p">),</span>
+            <span class="n">instance</span><span class="o">=</span><span class="n">instance</span><span class="p">,</span>
+            <span class="n">field</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">related_manager_cls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">related_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rel</span><span class="o">.</span><span class="n">model</span>
+
+        <span class="k">return</span> <span class="n">create_tracked_file_manager</span><span class="p">(</span>
+            <span class="n">related_model</span><span class="o">.</span><span class="n">_default_manager</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span>  <span class="c1"># NoQA</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rel</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_set_deprecation_msg_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="s1">&#39;tracked file field&#39;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

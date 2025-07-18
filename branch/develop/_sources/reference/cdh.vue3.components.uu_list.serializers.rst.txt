@@ -1,0 +1,7 @@
+cdh.vue3.components.uu\_list.serializers module
+===============================================
+
+.. automodule:: cdh.vue3.components.uu_list.serializers
+   :members:
+   :undoc-members:
+   :show-inheritance:

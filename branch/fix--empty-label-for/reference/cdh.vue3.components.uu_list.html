@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.vue3.components.uu_list package &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../_static/theme.css" type="text/css"/>
+        <script src="../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../_static/doctools.js?v=9a2dae69"></script>
+                    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../genindex.html"/>
+            <link rel="search" title="Search" href="../search.html"/>
+            <link rel="next" title="cdh.vue3.components.uu_list.columns module" href="cdh.vue3.components.uu_list.columns.html"/>
+            <link rel="prev" title="cdh.vue3.components package" href="cdh.vue3.components.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="index.html"
+           >
+           cdh
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.html"
+           >
+           cdh package
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.vue3.html"
+           >
+           cdh.vue3 package
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.vue3.components.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           cdh.vue3.components package
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.vue3.components.uu_list package</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <section id="module-cdh.vue3.components.uu_list">
+<span id="cdh-vue3-components-uu-list-package"></span><h1>cdh.vue3.components.uu_list package<a class="headerlink" href="#module-cdh.vue3.components.uu_list" title="Link to this heading">¶</a></h1>
+<p>UU-List is a Vue component implementing a UU-designed list view
+with filtering, searching, ordering and pagination support.</p>
+<p>The base UU-List component (from cdh-vue-lib) is UI only, requiring
+any user to implement data fetching on their own.</p>
+<p>In addition, the UU-List does not, by default, have any way of
+visualizing the data. Instead, this is left to a ‘Visualizer’
+component. It does, however, provide the Data-Defined Visualizer
+(DDV) as a pre-written visualizer that can be used.</p>
+<p>This package provides a pre-compiled implementation of UU-List using
+the DDV, already setup to fetch and process data from Django.
+It also provides the necessary backend code to easily provide the
+required views for this pre-compiled version of UU-List.</p>
+<p>Any implementer should be able to use both to quickly set up a page
+using UU-List, without any custom JS required. An example of a complete
+setup can be found in the DSC dev project.
+The source code of this pre-compiled version can be found in assets/vue/uu-list.</p>
+<p>However, the DDV is limited in its configurability. If you need to
+implement more advanced visualisation, you will need to compile
+your own version of UU-List. The assets dir in the DSC project
+provides an example to get you started. This example already
+contains all the hooks needed to tap into the provided backend classes,
+you will only eed to write a custom visualizer.</p>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cdh.vue3.components.uu_list.columns.html">cdh.vue3.components.uu_list.columns module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVActions"><code class="docutils literal notranslate"><span class="pre">DDVActions</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVActions.type"><code class="docutils literal notranslate"><span class="pre">DDVActions.type</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVButton"><code class="docutils literal notranslate"><span class="pre">DDVButton</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVButton.__init__"><code class="docutils literal notranslate"><span class="pre">DDVButton.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVButton.get_config"><code class="docutils literal notranslate"><span class="pre">DDVButton.get_config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVButton.type"><code class="docutils literal notranslate"><span class="pre">DDVButton.type</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVDate"><code class="docutils literal notranslate"><span class="pre">DDVDate</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVDate.__init__"><code class="docutils literal notranslate"><span class="pre">DDVDate.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVDate.get_config"><code class="docutils literal notranslate"><span class="pre">DDVDate.get_config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVDate.type"><code class="docutils literal notranslate"><span class="pre">DDVDate.type</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVHtml"><code class="docutils literal notranslate"><span class="pre">DDVHtml</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVHtml.type"><code class="docutils literal notranslate"><span class="pre">DDVHtml.type</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVLink"><code class="docutils literal notranslate"><span class="pre">DDVLink</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVLink.type"><code class="docutils literal notranslate"><span class="pre">DDVLink.type</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVString"><code class="docutils literal notranslate"><span class="pre">DDVString</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVString.type"><code class="docutils literal notranslate"><span class="pre">DDVString.type</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cdh.vue3.components.uu_list.paginator.html">cdh.vue3.components.uu_list.paginator module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cdh.vue3.components.uu_list.paginator.html#cdh.vue3.components.uu_list.paginator.StandardResultsSetPagination"><code class="docutils literal notranslate"><span class="pre">StandardResultsSetPagination</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.paginator.html#cdh.vue3.components.uu_list.paginator.StandardResultsSetPagination.get_paginated_response"><code class="docutils literal notranslate"><span class="pre">StandardResultsSetPagination.get_paginated_response()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.paginator.html#cdh.vue3.components.uu_list.paginator.StandardResultsSetPagination.get_paginated_response_schema"><code class="docutils literal notranslate"><span class="pre">StandardResultsSetPagination.get_paginated_response_schema()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.paginator.html#cdh.vue3.components.uu_list.paginator.StandardResultsSetPagination.max_page_size"><code class="docutils literal notranslate"><span class="pre">StandardResultsSetPagination.max_page_size</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.paginator.html#cdh.vue3.components.uu_list.paginator.StandardResultsSetPagination.page_size"><code class="docutils literal notranslate"><span class="pre">StandardResultsSetPagination.page_size</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.paginator.html#cdh.vue3.components.uu_list.paginator.StandardResultsSetPagination.page_size_query_param"><code class="docutils literal notranslate"><span class="pre">StandardResultsSetPagination.page_size_query_param</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cdh.vue3.components.uu_list.serializers.html">cdh.vue3.components.uu_list.serializers module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cdh.vue3.components.uu_list.serializers.html#cdh.vue3.components.uu_list.serializers.DDVActionDividerField"><code class="docutils literal notranslate"><span class="pre">DDVActionDividerField</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.serializers.html#cdh.vue3.components.uu_list.serializers.DDVActionDividerField.__init__"><code class="docutils literal notranslate"><span class="pre">DDVActionDividerField.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.serializers.html#cdh.vue3.components.uu_list.serializers.DDVActionDividerField.to_representation"><code class="docutils literal notranslate"><span class="pre">DDVActionDividerField.to_representation()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cdh.vue3.components.uu_list.serializers.html#cdh.vue3.components.uu_list.serializers.DDVActionsField"><code class="docutils literal notranslate"><span class="pre">DDVActionsField</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.serializers.html#cdh.vue3.components.uu_list.serializers.DDVActionsField.__init__"><code class="docutils literal notranslate"><span class="pre">DDVActionsField.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.serializers.html#cdh.vue3.components.uu_list.serializers.DDVActionsField.bind"><code class="docutils literal notranslate"><span class="pre">DDVActionsField.bind()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.serializers.html#cdh.vue3.components.uu_list.serializers.DDVActionsField.to_representation"><code class="docutils literal notranslate"><span class="pre">DDVActionsField.to_representation()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cdh.vue3.components.uu_list.serializers.html#cdh.vue3.components.uu_list.serializers.DDVLinkField"><code class="docutils literal notranslate"><span class="pre">DDVLinkField</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.serializers.html#cdh.vue3.components.uu_list.serializers.DDVLinkField.__init__"><code class="docutils literal notranslate"><span class="pre">DDVLinkField.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.serializers.html#cdh.vue3.components.uu_list.serializers.DDVLinkField.to_representation"><code class="docutils literal notranslate"><span class="pre">DDVLinkField.to_representation()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html">cdh.vue3.components.uu_list.views module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.DDVListView"><code class="docutils literal notranslate"><span class="pre">DDVListView</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.DDVListView.__init__"><code class="docutils literal notranslate"><span class="pre">DDVListView.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.DDVListView.columns"><code class="docutils literal notranslate"><span class="pre">DDVListView.columns</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.DDVListView.get_columns"><code class="docutils literal notranslate"><span class="pre">DDVListView.get_columns()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.DDVListView.get_columns_config"><code class="docutils literal notranslate"><span class="pre">DDVListView.get_columns_config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.DDVListView.get_context_data"><code class="docutils literal notranslate"><span class="pre">DDVListView.get_context_data()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListAPIView"><code class="docutils literal notranslate"><span class="pre">UUListAPIView</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListAPIView.filter_backends"><code class="docutils literal notranslate"><span class="pre">UUListAPIView.filter_backends</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListAPIView.filterset_class"><code class="docutils literal notranslate"><span class="pre">UUListAPIView.filterset_class</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListAPIView.get_paginated_response"><code class="docutils literal notranslate"><span class="pre">UUListAPIView.get_paginated_response()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListAPIView.ordering"><code class="docutils literal notranslate"><span class="pre">UUListAPIView.ordering</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListAPIView.pagination_class"><code class="docutils literal notranslate"><span class="pre">UUListAPIView.pagination_class</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView"><code class="docutils literal notranslate"><span class="pre">UUListView</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.__init__"><code class="docutils literal notranslate"><span class="pre">UUListView.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.container"><code class="docutils literal notranslate"><span class="pre">UUListView.container</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.context_config_var"><code class="docutils literal notranslate"><span class="pre">UUListView.context_config_var</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.data_uri"><code class="docutils literal notranslate"><span class="pre">UUListView.data_uri</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.data_view"><code class="docutils literal notranslate"><span class="pre">UUListView.data_view</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_container"><code class="docutils literal notranslate"><span class="pre">UUListView.get_container()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_context_data"><code class="docutils literal notranslate"><span class="pre">UUListView.get_context_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_data_uri"><code class="docutils literal notranslate"><span class="pre">UUListView.get_data_uri()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_data_view"><code class="docutils literal notranslate"><span class="pre">UUListView.get_data_view()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_filters"><code class="docutils literal notranslate"><span class="pre">UUListView.get_filters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_filters_enabled"><code class="docutils literal notranslate"><span class="pre">UUListView.get_filters_enabled()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_initial_filter_values"><code class="docutils literal notranslate"><span class="pre">UUListView.get_initial_filter_values()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_locale"><code class="docutils literal notranslate"><span class="pre">UUListView.get_locale()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_model"><code class="docutils literal notranslate"><span class="pre">UUListView.get_model()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_page_size"><code class="docutils literal notranslate"><span class="pre">UUListView.get_page_size()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_page_size_options"><code class="docutils literal notranslate"><span class="pre">UUListView.get_page_size_options()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_search_enabled"><code class="docutils literal notranslate"><span class="pre">UUListView.get_search_enabled()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_sort_enabled"><code class="docutils literal notranslate"><span class="pre">UUListView.get_sort_enabled()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_sort_options"><code class="docutils literal notranslate"><span class="pre">UUListView.get_sort_options()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.initial_filter_values"><code class="docutils literal notranslate"><span class="pre">UUListView.initial_filter_values</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.model"><code class="docutils literal notranslate"><span class="pre">UUListView.model</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.page_size_options"><code class="docutils literal notranslate"><span class="pre">UUListView.page_size_options</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

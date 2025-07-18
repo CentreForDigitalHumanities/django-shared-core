@@ -1,0 +1,7 @@
+cdh.core.management.commands.test\_mail module
+==============================================
+
+.. automodule:: cdh.core.management.commands.test_mail
+   :members:
+   :undoc-members:
+   :show-inheritance:

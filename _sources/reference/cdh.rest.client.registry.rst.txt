@@ -1,0 +1,7 @@
+cdh.rest.client.registry module
+===============================
+
+.. automodule:: cdh.rest.client.registry
+   :members:
+   :undoc-members:
+   :show-inheritance:

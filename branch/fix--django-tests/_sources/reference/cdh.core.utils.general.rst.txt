@@ -1,0 +1,7 @@
+cdh.core.utils.general module
+=============================
+
+.. automodule:: cdh.core.utils.general
+   :members:
+   :show-inheritance:
+   :undoc-members:

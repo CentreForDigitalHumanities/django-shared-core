@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.vue3.components.uu_list.views &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../../../_static/theme.css" type="text/css"/>
+        <script src="../../../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../../../../../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../../../../../_static/doctools.js?v=9a2dae69"></script>
+                    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../../../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.vue3.components.uu_list.views</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.vue3.components.uu_list.views</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django.core.exceptions</span> <span class="kn">import</span> <span class="n">ImproperlyConfigured</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="kn">import</span> <span class="n">get_language</span>
+<span class="kn">from</span> <span class="nn">django.views</span> <span class="kn">import</span> <span class="n">generic</span>
+<span class="kn">from</span> <span class="nn">django_filters</span> <span class="kn">import</span> <span class="n">rest_framework</span> <span class="k">as</span> <span class="n">filters</span>
+<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">generics</span>
+<span class="kn">from</span> <span class="nn">rest_framework.filters</span> <span class="kn">import</span> <span class="n">SearchFilter</span><span class="p">,</span> <span class="n">OrderingFilter</span>
+<span class="kn">from</span> <span class="nn">rest_framework.response</span> <span class="kn">import</span> <span class="n">Response</span>
+
+<span class="kn">from</span> <span class="nn">.paginator</span> <span class="kn">import</span> <span class="n">StandardResultsSetPagination</span>
+
+
+<div class="viewcode-block" id="UUListAPIView">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListAPIView">[docs]</a>
+<span class="k">class</span> <span class="nc">UUListAPIView</span><span class="p">(</span><span class="n">generics</span><span class="o">.</span><span class="n">ListAPIView</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This is the API view, used by UU-List to retrieve its data</span>
+
+<span class="sd">    This class can be used by both the default DDV UU-List, and a custom UU-List</span>
+<span class="sd">    implementation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># These filter backends determine what functionality is available</span>
+    <span class="c1"># The DDVListView and UUListView classes will automagically enable the</span>
+    <span class="c1"># frontend features depending on what filter types are enabled.</span>
+    <span class="c1"># There three are the only ones supported, but any (or all) may be omitted</span>
+    <span class="c1"># Note: there are two similarly named mechanisms at play here; In the docs</span>
+    <span class="c1"># we mostly use &#39;filters&#39; to refer to django-filters; but this var refers</span>
+    <span class="c1"># to DRF&#39;s filter system. (And we enable django-filters here)</span>
+    <span class="c1"># OrderingFilter: enables sorting support</span>
+    <span class="c1"># SearchFilter: Enables the search bar</span>
+    <span class="c1"># filters.DjangoFilterBackend: enables advanced filters using django-filters</span>
+    <span class="n">filter_backends</span> <span class="o">=</span> <span class="p">[</span><span class="n">OrderingFilter</span><span class="p">,</span> <span class="n">SearchFilter</span><span class="p">,</span> <span class="n">filters</span><span class="o">.</span><span class="n">DjangoFilterBackend</span><span class="p">]</span>
+    <span class="c1"># The Django-filters filterset class to use. Can be left None if</span>
+    <span class="c1"># django-filters is not enabled</span>
+    <span class="n">filterset_class</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># The fields on the QS that can be used to sort</span>
+    <span class="c1"># Labels will be taken from the fields verbose_name, unless overriden in</span>
+    <span class="c1"># UUListView/DDVListView</span>
+    <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+    <span class="c1"># Leave this alone unless you know what to do with it</span>
+    <span class="c1"># This overrides to pagination class to one that produces the format</span>
+    <span class="c1"># expected by UU-List</span>
+    <span class="n">pagination_class</span> <span class="o">=</span> <span class="n">StandardResultsSetPagination</span>
+
+<div class="viewcode-block" id="UUListAPIView.get_paginated_response">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListAPIView.get_paginated_response">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_paginated_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_paginated_response</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ordering&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">query_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ordering&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ordering</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="UUListView">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView">[docs]</a>
+<span class="k">class</span> <span class="nc">UUListView</span><span class="p">(</span><span class="n">generic</span><span class="o">.</span><span class="n">TemplateView</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A base class for _custom_ UU-List pages.</span>
+
+<span class="sd">    This custom view generates the initial configuration used by all UU-List</span>
+<span class="sd">    implementations.</span>
+
+<span class="sd">    Your template can then initiate the component in the template using:</span>
+<span class="sd">    {% vue UUList :config=uu_list_config %}</span>
+
+<span class="sd">    Is extended by DDVListView, thus the variables here also apply to that</span>
+<span class="sd">    class.</span>
+
+<span class="sd">    This class has multiple methods that may be overriden to modify the</span>
+<span class="sd">    automagical config generation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Page size options, should contain 25</span>
+    <span class="n">page_size_options</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
+    <span class="c1"># The model viewed, should be exactly the same one as used in</span>
+    <span class="c1"># UUListApiView&#39;s serializer</span>
+    <span class="c1"># May also be set by overriding the get_model method</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># The URL of the UUListApiView to retrieve actual data from</span>
+    <span class="c1"># Note: you should use reverse_lazy!</span>
+    <span class="c1"># May also be set by overriding the get_data_uri method</span>
+    <span class="n">data_uri</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># Should be a direct reference to the class that handles the url</span>
+    <span class="c1"># set in `data_uri`. This is used to probe what capabilities that</span>
+    <span class="c1"># class has enabled</span>
+    <span class="n">data_view</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># The name of the template context variable used to store the initial config</span>
+    <span class="c1"># If you change this, make sure to modify your template accordingly</span>
+    <span class="n">context_config_var</span> <span class="o">=</span> <span class="s2">&quot;uu_list_config&quot;</span>
+    <span class="c1"># Determines the visual layout used; default is the newer design.</span>
+    <span class="c1"># Alternatively, use &#39;sidebar&#39; to use a UU-Sidebar based design.</span>
+    <span class="c1"># Note: sidebar only makes sense if the django-filters backend and/or search</span>
+    <span class="c1"># is enabled.</span>
+    <span class="n">container</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span>
+    <span class="c1"># This will set the initial value for any filter. Key should be the &#39;field&#39;</span>
+    <span class="c1"># name.</span>
+    <span class="c1"># Multiple-choice filters need the value to be in list-form, others a plain</span>
+    <span class="c1"># value</span>
+    <span class="c1"># Single-choice filters without a defined initial value will use the</span>
+    <span class="c1"># first option available.</span>
+    <span class="n">initial_filter_values</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="UUListView.__init__">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_model</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ImproperlyConfigured</span><span class="p">(</span>
+                <span class="s2">&quot;UUListView classes must define the (root) model as &quot;</span>
+                <span class="s2">&quot;&lt;class&gt;.model or override &lt;class&gt;.get_model()&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_uri</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ImproperlyConfigured</span><span class="p">(</span>
+                <span class="s2">&quot;UUListView classes must define the uri of the API view as &quot;</span>
+                <span class="s2">&quot;&lt;class&gt;.data_uri. (Preferably using reverse_lazy) &quot;</span>
+                <span class="s2">&quot;Alternatively, override &lt;class&gt;.get_data_uri().&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_view</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ImproperlyConfigured</span><span class="p">(</span>
+                <span class="s2">&quot;UUListView classes must define the used API view as &quot;</span>
+                <span class="s2">&quot;&lt;class&gt;.data_view. &quot;</span>
+            <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UUListView.get_context_data">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_context_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">context</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">context_config_var</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;dataUri&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_uri</span><span class="p">(),</span>
+            <span class="s2">&quot;filtersEnabled&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_filters_enabled</span><span class="p">(),</span>
+            <span class="s2">&quot;filters&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_filters</span><span class="p">(),</span>
+            <span class="s2">&quot;pageSize&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_page_size</span><span class="p">(),</span>
+            <span class="s2">&quot;pageSizeOptions&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_page_size_options</span><span class="p">(),</span>
+            <span class="s2">&quot;sortEnabled&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_sort_enabled</span><span class="p">(),</span>
+            <span class="s2">&quot;sortOptions&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_sort_options</span><span class="p">(),</span>
+            <span class="s2">&quot;searchEnabled&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_search_enabled</span><span class="p">(),</span>
+            <span class="s2">&quot;locale&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_locale</span><span class="p">(),</span>
+            <span class="s2">&quot;container&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_container</span><span class="p">(),</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">context</span></div>
+
+
+<div class="viewcode-block" id="UUListView.get_locale">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_locale">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_locale</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Modify this method to return &#39;en&#39;|&#39;nl&#39; if your app does not use</span>
+<span class="sd">        those labels for the languages. (In other words, if your app uses</span>
+<span class="sd">        &#39;en-US&#39; instead of &#39;en&#39;, etc).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">get_language</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="UUListView.get_model">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_model">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span></div>
+
+
+<div class="viewcode-block" id="UUListView.get_data_view">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_data_view">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_data_view</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_view</span></div>
+
+
+<div class="viewcode-block" id="UUListView.get_data_uri">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_data_uri">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_data_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Cast to string, as it&#39;s probably a lazy value and the vue tag</span>
+        <span class="c1"># DOES NOT like lazy values.... Ugh</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_uri</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UUListView.get_page_size">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_page_size">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_page_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_view</span><span class="p">()</span><span class="o">.</span><span class="n">pagination_class</span><span class="o">.</span><span class="n">page_size</span></div>
+
+
+<div class="viewcode-block" id="UUListView.get_page_size_options">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_page_size_options">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_page_size_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">page_size_options</span></div>
+
+
+<div class="viewcode-block" id="UUListView.get_search_enabled">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_search_enabled">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_search_enabled</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">SearchFilter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_view</span><span class="p">()</span><span class="o">.</span><span class="n">filter_backends</span></div>
+
+
+<div class="viewcode-block" id="UUListView.get_sort_enabled">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_sort_enabled">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_sort_enabled</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">OrderingFilter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_view</span><span class="p">()</span><span class="o">.</span><span class="n">filter_backends</span></div>
+
+
+<div class="viewcode-block" id="UUListView.get_filters_enabled">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_filters_enabled">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_filters_enabled</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">filters</span><span class="o">.</span><span class="n">DjangoFilterBackend</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_view</span><span class="p">()</span><span class="o">.</span><span class="n">filter_backends</span></div>
+
+
+<div class="viewcode-block" id="UUListView.get_initial_filter_values">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_initial_filter_values">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_initial_filter_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_filter_values</span></div>
+
+
+<div class="viewcode-block" id="UUListView.get_filters">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_filters">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_filters_enabled</span><span class="p">():</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="kn">from</span> <span class="nn">django_filters.rest_framework</span> <span class="kn">import</span> <span class="p">(</span>
+            <span class="n">ChoiceFilter</span><span class="p">,</span>
+            <span class="n">MultipleChoiceFilter</span><span class="p">,</span>
+            <span class="n">DateFilter</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">initial_filter_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_initial_filter_values</span><span class="p">()</span>
+
+        <span class="n">filter_map</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">ChoiceFilter</span><span class="p">:</span> <span class="s2">&quot;radio&quot;</span><span class="p">,</span>
+            <span class="n">MultipleChoiceFilter</span><span class="p">:</span> <span class="s2">&quot;checkbox&quot;</span><span class="p">,</span>
+            <span class="n">DateFilter</span><span class="p">:</span> <span class="s2">&quot;date&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">filter_defs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">dataview_filters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_view</span><span class="p">()</span><span class="o">.</span><span class="n">filterset_class</span><span class="o">.</span><span class="n">get_filters</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">field</span><span class="p">,</span> <span class="n">filter_object</span> <span class="ow">in</span> <span class="n">dataview_filters</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">filter_object</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">filter_map</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">filter_def</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="n">field</span><span class="p">,</span>
+                <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="n">filter_object</span><span class="o">.</span><span class="n">label</span><span class="p">,</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">filter_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">filter_object</span><span class="p">)),</span>
+            <span class="p">}</span>
+
+            <span class="k">if</span> <span class="n">filter_def</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;checkbox&quot;</span><span class="p">,</span> <span class="s2">&quot;radio&quot;</span><span class="p">]:</span>
+                <span class="n">filter_def</span><span class="p">[</span><span class="s2">&quot;options&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filter_object</span><span class="o">.</span><span class="n">extra</span><span class="p">[</span><span class="s2">&quot;choices&quot;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">initial_filter_values</span><span class="p">:</span>
+                <span class="n">filter_def</span><span class="p">[</span><span class="s2">&quot;initial&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">initial_filter_values</span><span class="p">[</span><span class="n">field</span><span class="p">]</span>
+
+            <span class="n">filter_defs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">filter_def</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">filter_defs</span></div>
+
+
+<div class="viewcode-block" id="UUListView.get_sort_options">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_sort_options">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_sort_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Override this method if you want to customize the labels used for</span>
+<span class="sd">        the sorting options.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_sort_enabled</span><span class="p">():</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="k">def</span> <span class="nf">get_field_name</span><span class="p">(</span><span class="n">field</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_model</span><span class="p">()</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">get_field</span><span class="p">(</span><span class="n">field</span><span class="p">)</span><span class="o">.</span><span class="n">verbose_name</span>
+
+        <span class="n">options</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_view</span><span class="p">()</span><span class="o">.</span><span class="n">ordering_fields</span><span class="p">:</span>
+            <span class="n">options</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="n">field</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">get_field_name</span><span class="p">(</span><span class="n">field</span><span class="p">)</span><span class="si">}</span><span class="s2"> ↑&quot;</span><span class="p">})</span>
+            <span class="n">options</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">{</span><span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;-</span><span class="si">{</span><span class="n">field</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">get_field_name</span><span class="p">(</span><span class="n">field</span><span class="p">)</span><span class="si">}</span><span class="s2"> ↓&quot;</span><span class="p">}</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">options</span></div>
+
+
+<div class="viewcode-block" id="UUListView.get_container">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.UUListView.get_container">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_container</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">container</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="DDVListView">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.DDVListView">[docs]</a>
+<span class="k">class</span> <span class="nc">DDVListView</span><span class="p">(</span><span class="n">UUListView</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extension of UUListView which will also add DDV configuration.</span>
+
+<span class="sd">    The DDV, or Data-Defined Visualizer variant of UU-List is the default</span>
+<span class="sd">    UU-List implementation of DSC, and allows for fully-backend defined usage</span>
+<span class="sd">    of UU-List. (Read: no custom JS required).</span>
+
+<span class="sd">    It uses a preset defined list of &#39;columns&#39; to build a table. The order</span>
+<span class="sd">    of &#39;self.columns&#39; will also be the order of the columns in the table.</span>
+
+<span class="sd">    See ./columns.py for information on what columns are available.</span>
+
+<span class="sd">    Some columns need a custom serializer field to be used, which is documented</span>
+<span class="sd">    on the relevant column classes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">columns</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="DDVListView.__init__">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.DDVListView.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_columns</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ImproperlyConfigured</span><span class="p">(</span>
+                <span class="s2">&quot;UUListView classes must define columns as &quot;</span>
+                <span class="s2">&quot;&lt;class&gt;.columns or override &lt;class&gt;.get_columns&quot;</span>
+            <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DDVListView.get_columns">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.DDVListView.get_columns">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span></div>
+
+
+<div class="viewcode-block" id="DDVListView.get_columns_config">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.DDVListView.get_columns_config">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_columns_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">column</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span> <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_columns</span><span class="p">()]</span></div>
+
+
+<div class="viewcode-block" id="DDVListView.get_context_data">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.views.html#cdh.vue3.components.uu_list.views.DDVListView.get_context_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">context</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">context_config_var</span><span class="p">][</span><span class="s2">&quot;columns&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_columns_config</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">context</span></div>
+</div>
+
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

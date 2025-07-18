@@ -1,0 +1,7 @@
+cdh.core.templatetags.file\_loading module
+==========================================
+
+.. automodule:: cdh.core.templatetags.file_loading
+   :members:
+   :undoc-members:
+   :show-inheritance:

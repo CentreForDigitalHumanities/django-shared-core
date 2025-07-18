@@ -1,0 +1,16 @@
+cdh.core.views package
+======================
+
+.. automodule:: cdh.core.views
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.core.views.base
+   cdh.core.views.mixins

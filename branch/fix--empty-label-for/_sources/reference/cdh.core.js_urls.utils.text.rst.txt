@@ -1,0 +1,7 @@
+cdh.core.js\_urls.utils.text module
+===================================
+
+.. automodule:: cdh.core.js_urls.utils.text
+   :members:
+   :undoc-members:
+   :show-inheritance:

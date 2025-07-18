@@ -1,0 +1,7 @@
+cdh.files.signals module
+========================
+
+.. automodule:: cdh.files.signals
+   :members:
+   :show-inheritance:
+   :undoc-members:

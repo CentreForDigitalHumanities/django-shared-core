@@ -1,0 +1,7 @@
+cdh.core.fields.month\_fields module
+====================================
+
+.. automodule:: cdh.core.fields.month_fields
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+cdh.core.templatetags.messages module
+=====================================
+
+.. automodule:: cdh.core.templatetags.messages
+   :members:
+   :undoc-members:
+   :show-inheritance:

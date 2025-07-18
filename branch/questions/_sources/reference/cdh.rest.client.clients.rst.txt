@@ -1,0 +1,16 @@
+cdh.rest.client.clients package
+===============================
+
+.. automodule:: cdh.rest.client.clients
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.rest.client.clients.collections
+   cdh.rest.client.clients.resources

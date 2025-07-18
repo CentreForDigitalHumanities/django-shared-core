@@ -1,0 +1,7 @@
+cdh.questions.admin module
+==========================
+
+.. automodule:: cdh.questions.admin
+   :members:
+   :undoc-members:
+   :show-inheritance:

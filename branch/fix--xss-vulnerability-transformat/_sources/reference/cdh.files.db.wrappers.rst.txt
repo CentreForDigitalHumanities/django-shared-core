@@ -1,0 +1,7 @@
+cdh.files.db.wrappers module
+============================
+
+.. automodule:: cdh.files.db.wrappers
+   :members:
+   :undoc-members:
+   :show-inheritance:

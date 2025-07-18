@@ -1,0 +1,7 @@
+cdh.core.fields.encrypted\_fields module
+========================================
+
+.. automodule:: cdh.core.fields.encrypted_fields
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+cdh.dev\_tools.debug\_toolbar.panels module
+===========================================
+
+.. automodule:: cdh.dev_tools.debug_toolbar.panels
+   :members:
+   :undoc-members:
+   :show-inheritance:

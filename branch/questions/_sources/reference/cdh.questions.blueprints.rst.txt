@@ -1,0 +1,7 @@
+cdh.questions.blueprints module
+===============================
+
+.. automodule:: cdh.questions.blueprints
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+cdh.core.views.mixins module
+============================
+
+.. automodule:: cdh.core.views.mixins
+   :members:
+   :show-inheritance:
+   :undoc-members:

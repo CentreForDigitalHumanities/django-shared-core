@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.dev_tools.debug_toolbar.panels module &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../_static/theme.css" type="text/css"/>
+        <script src="../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+                    <script src="../_static/doctools.js"></script>
+                    <script src="../_static/sphinx_highlight.js"></script>
+            <script src="../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../genindex.html"/>
+            <link rel="search" title="Search" href="../search.html"/>
+            <link rel="next" title="cdh.dev_tools.shell package" href="cdh.dev_tools.shell.html"/>
+            <link rel="prev" title="cdh.dev_tools.debug_toolbar package" href="cdh.dev_tools.debug_toolbar.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="index.html"
+           >
+           cdh
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.html"
+           >
+           cdh package
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.dev_tools.html"
+           >
+           cdh.dev_tools package
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.dev_tools.debug_toolbar.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           cdh.dev_tools.debug_toolbar package
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.dev_tools.debug_toolbar.panels module</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <section id="module-cdh.dev_tools.debug_toolbar.panels">
+<span id="cdh-dev-tools-debug-toolbar-panels-module"></span><h1>cdh.dev_tools.debug_toolbar.panels module<a class="headerlink" href="#module-cdh.dev_tools.debug_toolbar.panels" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.BaseData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.dev_tools.debug_toolbar.panels.</span></span><span class="sig-name descname"><span class="pre">BaseData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/debug_toolbar/panels.html#BaseData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.BaseData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.BaseData.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/debug_toolbar/panels.html#BaseData.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.BaseData.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.BaseData.has_client">
+<span class="sig-name descname"><span class="pre">has_client</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/debug_toolbar/panels.html#BaseData.has_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.BaseData.has_client" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.BaseData.log_deserialization">
+<span class="sig-name descname"><span class="pre">log_deserialization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/debug_toolbar/panels.html#BaseData.log_deserialization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.BaseData.log_deserialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.BaseData.log_request">
+<span class="sig-name descname"><span class="pre">log_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/debug_toolbar/panels.html#BaseData.log_request"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.BaseData.log_request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.BaseData.log_serialization">
+<span class="sig-name descname"><span class="pre">log_serialization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/debug_toolbar/panels.html#BaseData.log_serialization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.BaseData.log_serialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.BaseData.name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/debug_toolbar/panels.html#BaseData.name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.BaseData.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.CollectionData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.dev_tools.debug_toolbar.panels.</span></span><span class="sig-name descname"><span class="pre">CollectionData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/debug_toolbar/panels.html#CollectionData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.CollectionData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.dev_tools.debug_toolbar.panels.BaseData" title="cdh.dev_tools.debug_toolbar.panels.BaseData"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseData</span></code></a></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.DebugHttpClientWrapper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.dev_tools.debug_toolbar.panels.</span></span><span class="sig-name descname"><span class="pre">DebugHttpClientWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">original_client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/debug_toolbar/panels.html#DebugHttpClientWrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.DebugHttpClientWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.DebugHttpClientWrapper.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">original_client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/debug_toolbar/panels.html#DebugHttpClientWrapper.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.DebugHttpClientWrapper.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.DebugHttpClientWrapper.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/debug_toolbar/panels.html#DebugHttpClientWrapper.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.DebugHttpClientWrapper.delete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.DebugHttpClientWrapper.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/debug_toolbar/panels.html#DebugHttpClientWrapper.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.DebugHttpClientWrapper.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.DebugHttpClientWrapper.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/debug_toolbar/panels.html#DebugHttpClientWrapper.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.DebugHttpClientWrapper.post" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.DebugHttpClientWrapper.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/debug_toolbar/panels.html#DebugHttpClientWrapper.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.DebugHttpClientWrapper.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.ResourceData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.dev_tools.debug_toolbar.panels.</span></span><span class="sig-name descname"><span class="pre">ResourceData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/debug_toolbar/panels.html#ResourceData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.ResourceData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.dev_tools.debug_toolbar.panels.BaseData" title="cdh.dev_tools.debug_toolbar.panels.BaseData"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseData</span></code></a></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.RestClientPanel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.dev_tools.debug_toolbar.panels.</span></span><span class="sig-name descname"><span class="pre">RestClientPanel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/debug_toolbar/panels.html#RestClientPanel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.RestClientPanel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Panel</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.RestClientPanel.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/debug_toolbar/panels.html#RestClientPanel.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.RestClientPanel.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.RestClientPanel.enable_instrumentation">
+<span class="sig-name descname"><span class="pre">enable_instrumentation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/debug_toolbar/panels.html#RestClientPanel.enable_instrumentation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.RestClientPanel.enable_instrumentation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable instrumentation to gather data for this panel.</p>
+<p>This usually means monkey-patching (!) or registering signal
+receivers. Any instrumentation with a non-negligible effect on
+performance should be installed by this method rather than at import
+time.</p>
+<p>Unless the toolbar or this panel is disabled, this method will be
+called early in <code class="docutils literal notranslate"><span class="pre">DebugToolbarMiddleware</span></code>. It should be idempotent.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.RestClientPanel.generate_stats">
+<span class="sig-name descname"><span class="pre">generate_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/debug_toolbar/panels.html#RestClientPanel.generate_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.RestClientPanel.generate_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main panel view.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.RestClientPanel.has_content">
+<span class="sig-name descname"><span class="pre">has_content</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.RestClientPanel.has_content" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.RestClientPanel.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'REST</span> <span class="pre">Client'</span></em><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.RestClientPanel.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.RestClientPanel.nav_subtitle">
+<span class="sig-name descname"><span class="pre">nav_subtitle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/debug_toolbar/panels.html#RestClientPanel.nav_subtitle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.RestClientPanel.nav_subtitle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subtitle shown in the side bar. Defaults to the empty string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.RestClientPanel.nav_title">
+<span class="sig-name descname"><span class="pre">nav_title</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/debug_toolbar/panels.html#RestClientPanel.nav_title"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.RestClientPanel.nav_title" title="Permalink to this definition">¶</a></dt>
+<dd><p>Title shown in the side bar. Defaults to <a class="reference internal" href="#cdh.dev_tools.debug_toolbar.panels.RestClientPanel.title" title="cdh.dev_tools.debug_toolbar.panels.RestClientPanel.title"><code class="xref py py-attr docutils literal notranslate"><span class="pre">title</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.RestClientPanel.scripts">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scripts</span></span><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.RestClientPanel.scripts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scripts used by the HTML content of the panel when it’s displayed.</p>
+<p>When a panel is rendered on the frontend, the <code class="docutils literal notranslate"><span class="pre">djdt.panel.render</span></code>
+JavaScript event will be dispatched. The scripts can listen for
+this event to support dynamic functionality.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.RestClientPanel.template">
+<span class="sig-name descname"><span class="pre">template</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'dev_tools/panels/resources.html'</span></em><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.RestClientPanel.template" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.RestClientPanel.title">
+<span class="sig-name descname"><span class="pre">title</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/debug_toolbar/panels.html#RestClientPanel.title"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.RestClientPanel.title" title="Permalink to this definition">¶</a></dt>
+<dd><p>Title shown in the panel when it’s displayed in full screen.</p>
+<p>Mandatory, unless the panel sets <a class="reference internal" href="#cdh.dev_tools.debug_toolbar.panels.RestClientPanel.has_content" title="cdh.dev_tools.debug_toolbar.panels.RestClientPanel.has_content"><code class="xref py py-attr docutils literal notranslate"><span class="pre">has_content</span></code></a> to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.get_from_api_wrapper">
+<span class="sig-prename descclassname"><span class="pre">cdh.dev_tools.debug_toolbar.panels.</span></span><span class="sig-name descname"><span class="pre">get_from_api_wrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_api_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/debug_toolbar/panels.html#get_from_api_wrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.get_from_api_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cdh.dev_tools.debug_toolbar.panels.get_to_api_wrapper">
+<span class="sig-prename descclassname"><span class="pre">cdh.dev_tools.debug_toolbar.panels.</span></span><span class="sig-name descname"><span class="pre">get_to_api_wrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to_api_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/debug_toolbar/panels.html#get_to_api_wrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.debug_toolbar.panels.get_to_api_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

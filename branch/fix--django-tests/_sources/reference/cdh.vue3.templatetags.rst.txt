@@ -1,0 +1,15 @@
+cdh.vue3.templatetags package
+=============================
+
+.. automodule:: cdh.vue3.templatetags
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.vue3.templatetags.vue3

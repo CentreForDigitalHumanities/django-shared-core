@@ -1,0 +1,7 @@
+cdh.core.mail.views module
+==========================
+
+.. automodule:: cdh.core.mail.views
+   :members:
+   :undoc-members:
+   :show-inheritance:

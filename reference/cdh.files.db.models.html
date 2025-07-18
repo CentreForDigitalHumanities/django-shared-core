@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cdh.files.db.models module &mdash; Django Shared Core 3.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="cdh.files.db.wrappers module" href="cdh.files.db.wrappers.html" />
+    <link rel="prev" title="cdh.files.db.manager module" href="cdh.files.db.manager.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Django Shared Core
+          </a>
+              <div class="version">
+                3.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">cdh</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="cdh.html">cdh package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="cdh.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="cdh.core.html">cdh.core package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="cdh.files.html">cdh.files package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.integration_platform.html">cdh.integration_platform package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.rest.html">cdh.rest package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.systemmessages.html">cdh.systemmessages package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cdh.vue.html">cdh.vue package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Django Shared Core</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">cdh</a> &raquo;</li>
+          <li><a href="cdh.html">cdh package</a> &raquo;</li>
+          <li><a href="cdh.files.html">cdh.files package</a> &raquo;</li>
+          <li><a href="cdh.files.db.html">cdh.files.db package</a> &raquo;</li>
+      <li>cdh.files.db.models module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/reference/cdh.files.db.models.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-cdh.files.db.models">
+<span id="cdh-files-db-models-module"></span><h1>cdh.files.db.models module<a class="headerlink" href="#module-cdh.files.db.models" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.files.db.models.BaseFile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.files.db.models.</span></span><span class="sig-name descname"><span class="pre">BaseFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/models.html#BaseFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.models.BaseFile" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/instances/#django.db.models.Model" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uuid</strong> (<a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.UUIDField" title="(in Django v4.1)"><em>UUIDField</em></a>) – Universally Unique IDentifier</p></li>
+<li><p><strong>original_filename</strong> (<a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.CharField" title="(in Django v4.1)"><em>CharField</em></a>) – Original filename</p></li>
+<li><p><strong>content_type</strong> (<a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.CharField" title="(in Django v4.1)"><em>CharField</em></a>) – Content type</p></li>
+<li><p><strong>created_on</strong> (<a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.DateTimeField" title="(in Django v4.1)"><em>DateTimeField</em></a>) – Created on</p></li>
+<li><p><strong>modified_on</strong> (<a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.DateTimeField" title="(in Django v4.1)"><em>DateTimeField</em></a>) – Modified on</p></li>
+</ul>
+</dd>
+</dl>
+<p>Relationship fields:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>created_by</strong> (<a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.ForeignKey" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a> to <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/contrib/auth/#django.contrib.auth.models.User" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></a>) – Created by</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.models.BaseFile.clear_file_wrapper">
+<span class="sig-name descname"><span class="pre">clear_file_wrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/models.html#BaseFile.clear_file_wrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.models.BaseFile.clear_file_wrapper" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.models.BaseFile.clear_file_wrappers">
+<span class="sig-name descname"><span class="pre">clear_file_wrappers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/models.html#BaseFile.clear_file_wrappers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.models.BaseFile.clear_file_wrappers" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.models.BaseFile.content_type">
+<span class="sig-name descname"><span class="pre">content_type</span></span><a class="headerlink" href="#cdh.files.db.models.BaseFile.content_type" title="Permalink to this definition"></a></dt>
+<dd><p>Type: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.CharField" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">CharField</span></code></a></p>
+<p>Content type</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.models.BaseFile.created_by">
+<span class="sig-name descname"><span class="pre">created_by</span></span><a class="headerlink" href="#cdh.files.db.models.BaseFile.created_by" title="Permalink to this definition"></a></dt>
+<dd><p>Type: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.ForeignKey" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a> to <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/contrib/auth/#django.contrib.auth.models.User" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></a></p>
+<p>Created by</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.models.BaseFile.created_by_id">
+<span class="sig-name descname"><span class="pre">created_by_id</span></span><a class="headerlink" href="#cdh.files.db.models.BaseFile.created_by_id" title="Permalink to this definition"></a></dt>
+<dd><p>Internal field, use <a class="reference internal" href="#cdh.files.db.models.BaseFile.created_by" title="cdh.files.db.models.BaseFile.created_by"><code class="xref py py-class docutils literal notranslate"><span class="pre">created_by</span></code></a> instead.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.models.BaseFile.created_on">
+<span class="sig-name descname"><span class="pre">created_on</span></span><a class="headerlink" href="#cdh.files.db.models.BaseFile.created_on" title="Permalink to this definition"></a></dt>
+<dd><p>Type: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.DateTimeField" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DateTimeField</span></code></a></p>
+<p>Created on</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.models.BaseFile.get_file_wrapper">
+<span class="sig-name descname"><span class="pre">get_file_wrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_existing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/models.html#BaseFile.get_file_wrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.models.BaseFile.get_file_wrapper" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.models.BaseFile.get_next_by_created_on">
+<span class="sig-name descname"><span class="pre">get_next_by_created_on</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.DateTimeField:</span> <span class="pre">created_on&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cdh.files.db.models.BaseFile.get_next_by_created_on" title="Permalink to this definition"></a></dt>
+<dd><p>Finds next instance based on <a class="reference internal" href="#cdh.files.db.models.BaseFile.created_on" title="cdh.files.db.models.BaseFile.created_on"><code class="xref py py-attr docutils literal notranslate"><span class="pre">created_on</span></code></a>. See <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/instances/#django.db.models.Model.get_next_by_FOO" title="(in Django v4.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_next_by_FOO()</span></code></a> for more information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.models.BaseFile.get_next_by_modified_on">
+<span class="sig-name descname"><span class="pre">get_next_by_modified_on</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.DateTimeField:</span> <span class="pre">modified_on&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cdh.files.db.models.BaseFile.get_next_by_modified_on" title="Permalink to this definition"></a></dt>
+<dd><p>Finds next instance based on <a class="reference internal" href="#cdh.files.db.models.BaseFile.modified_on" title="cdh.files.db.models.BaseFile.modified_on"><code class="xref py py-attr docutils literal notranslate"><span class="pre">modified_on</span></code></a>. See <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/instances/#django.db.models.Model.get_next_by_FOO" title="(in Django v4.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_next_by_FOO()</span></code></a> for more information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.models.BaseFile.get_previous_by_created_on">
+<span class="sig-name descname"><span class="pre">get_previous_by_created_on</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.DateTimeField:</span> <span class="pre">created_on&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cdh.files.db.models.BaseFile.get_previous_by_created_on" title="Permalink to this definition"></a></dt>
+<dd><p>Finds previous instance based on <a class="reference internal" href="#cdh.files.db.models.BaseFile.created_on" title="cdh.files.db.models.BaseFile.created_on"><code class="xref py py-attr docutils literal notranslate"><span class="pre">created_on</span></code></a>. See <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/instances/#django.db.models.Model.get_previous_by_FOO" title="(in Django v4.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_previous_by_FOO()</span></code></a> for more information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.models.BaseFile.get_previous_by_modified_on">
+<span class="sig-name descname"><span class="pre">get_previous_by_modified_on</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.DateTimeField:</span> <span class="pre">modified_on&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cdh.files.db.models.BaseFile.get_previous_by_modified_on" title="Permalink to this definition"></a></dt>
+<dd><p>Finds previous instance based on <a class="reference internal" href="#cdh.files.db.models.BaseFile.modified_on" title="cdh.files.db.models.BaseFile.modified_on"><code class="xref py py-attr docutils literal notranslate"><span class="pre">modified_on</span></code></a>. See <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/instances/#django.db.models.Model.get_previous_by_FOO" title="(in Django v4.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_previous_by_FOO()</span></code></a> for more information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.models.BaseFile.has_file_wrapper">
+<span class="sig-name descname"><span class="pre">has_file_wrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/models.html#BaseFile.has_file_wrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.models.BaseFile.has_file_wrapper" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.models.BaseFile.modified_on">
+<span class="sig-name descname"><span class="pre">modified_on</span></span><a class="headerlink" href="#cdh.files.db.models.BaseFile.modified_on" title="Permalink to this definition"></a></dt>
+<dd><p>Type: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.DateTimeField" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DateTimeField</span></code></a></p>
+<p>Modified on</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.models.BaseFile.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;cdh.files.db.manager.FileManager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#cdh.files.db.models.BaseFile.objects" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.models.BaseFile.original_filename">
+<span class="sig-name descname"><span class="pre">original_filename</span></span><a class="headerlink" href="#cdh.files.db.models.BaseFile.original_filename" title="Permalink to this definition"></a></dt>
+<dd><p>Type: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.CharField" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">CharField</span></code></a></p>
+<p>Original filename</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.models.BaseFile.set_file_wrapper">
+<span class="sig-name descname"><span class="pre">set_file_wrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/models.html#BaseFile.set_file_wrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.models.BaseFile.set_file_wrapper" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.models.BaseFile.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#cdh.files.db.models.BaseFile.uuid" title="Permalink to this definition"></a></dt>
+<dd><p>Type: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.UUIDField" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">UUIDField</span></code></a></p>
+<p>Universally Unique IDentifier</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.files.db.models.File">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.files.db.models.</span></span><span class="sig-name descname"><span class="pre">File</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_by</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_on</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modified_on</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/files/db/models.html#File"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.files.db.models.File" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdh.files.db.models.BaseFile" title="cdh.files.db.models.BaseFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseFile</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.BigAutoField" title="(in Django v4.1)"><em>BigAutoField</em></a>) – Primary key: ID</p></li>
+<li><p><strong>uuid</strong> (<a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.UUIDField" title="(in Django v4.1)"><em>UUIDField</em></a>) – Universally Unique IDentifier</p></li>
+<li><p><strong>original_filename</strong> (<a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.CharField" title="(in Django v4.1)"><em>CharField</em></a>) – Original filename</p></li>
+<li><p><strong>content_type</strong> (<a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.CharField" title="(in Django v4.1)"><em>CharField</em></a>) – Content type</p></li>
+<li><p><strong>created_on</strong> (<a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.DateTimeField" title="(in Django v4.1)"><em>DateTimeField</em></a>) – Created on</p></li>
+<li><p><strong>modified_on</strong> (<a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.DateTimeField" title="(in Django v4.1)"><em>DateTimeField</em></a>) – Modified on</p></li>
+</ul>
+</dd>
+</dl>
+<p>Relationship fields:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>created_by</strong> (<a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.ForeignKey" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a> to <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/contrib/auth/#django.contrib.auth.models.User" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></a>) – Created by (related name: <code class="xref py py-attr docutils literal notranslate"><span class="pre">file</span></code>)</p>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="cdh.files.db.models.File.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#cdh.files.db.models.File.DoesNotExist" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/exceptions/#django.core.exceptions.ObjectDoesNotExist" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></a></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="cdh.files.db.models.File.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#cdh.files.db.models.File.MultipleObjectsReturned" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/exceptions/#django.core.exceptions.MultipleObjectsReturned" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.models.File.content_type">
+<span class="sig-name descname"><span class="pre">content_type</span></span><a class="headerlink" href="#cdh.files.db.models.File.content_type" title="Permalink to this definition"></a></dt>
+<dd><p>Type: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.CharField" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">CharField</span></code></a></p>
+<p>Content type</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.models.File.created_by">
+<span class="sig-name descname"><span class="pre">created_by</span></span><a class="headerlink" href="#cdh.files.db.models.File.created_by" title="Permalink to this definition"></a></dt>
+<dd><p>Type: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.ForeignKey" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a> to <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/contrib/auth/#django.contrib.auth.models.User" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></a></p>
+<p>Created by (related name: <code class="xref py py-attr docutils literal notranslate"><span class="pre">file</span></code>)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.models.File.created_by_id">
+<span class="sig-name descname"><span class="pre">created_by_id</span></span><a class="headerlink" href="#cdh.files.db.models.File.created_by_id" title="Permalink to this definition"></a></dt>
+<dd><p>Internal field, use <a class="reference internal" href="#cdh.files.db.models.File.created_by" title="cdh.files.db.models.File.created_by"><code class="xref py py-class docutils literal notranslate"><span class="pre">created_by</span></code></a> instead.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.models.File.created_on">
+<span class="sig-name descname"><span class="pre">created_on</span></span><a class="headerlink" href="#cdh.files.db.models.File.created_on" title="Permalink to this definition"></a></dt>
+<dd><p>Type: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.DateTimeField" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DateTimeField</span></code></a></p>
+<p>Created on</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.models.File.get_next_by_created_on">
+<span class="sig-name descname"><span class="pre">get_next_by_created_on</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.DateTimeField:</span> <span class="pre">created_on&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cdh.files.db.models.File.get_next_by_created_on" title="Permalink to this definition"></a></dt>
+<dd><p>Finds next instance based on <a class="reference internal" href="#cdh.files.db.models.File.created_on" title="cdh.files.db.models.File.created_on"><code class="xref py py-attr docutils literal notranslate"><span class="pre">created_on</span></code></a>. See <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/instances/#django.db.models.Model.get_next_by_FOO" title="(in Django v4.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_next_by_FOO()</span></code></a> for more information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.models.File.get_next_by_modified_on">
+<span class="sig-name descname"><span class="pre">get_next_by_modified_on</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.DateTimeField:</span> <span class="pre">modified_on&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cdh.files.db.models.File.get_next_by_modified_on" title="Permalink to this definition"></a></dt>
+<dd><p>Finds next instance based on <a class="reference internal" href="#cdh.files.db.models.File.modified_on" title="cdh.files.db.models.File.modified_on"><code class="xref py py-attr docutils literal notranslate"><span class="pre">modified_on</span></code></a>. See <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/instances/#django.db.models.Model.get_next_by_FOO" title="(in Django v4.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_next_by_FOO()</span></code></a> for more information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.models.File.get_previous_by_created_on">
+<span class="sig-name descname"><span class="pre">get_previous_by_created_on</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.DateTimeField:</span> <span class="pre">created_on&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cdh.files.db.models.File.get_previous_by_created_on" title="Permalink to this definition"></a></dt>
+<dd><p>Finds previous instance based on <a class="reference internal" href="#cdh.files.db.models.File.created_on" title="cdh.files.db.models.File.created_on"><code class="xref py py-attr docutils literal notranslate"><span class="pre">created_on</span></code></a>. See <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/instances/#django.db.models.Model.get_previous_by_FOO" title="(in Django v4.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_previous_by_FOO()</span></code></a> for more information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.files.db.models.File.get_previous_by_modified_on">
+<span class="sig-name descname"><span class="pre">get_previous_by_modified_on</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.DateTimeField:</span> <span class="pre">modified_on&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cdh.files.db.models.File.get_previous_by_modified_on" title="Permalink to this definition"></a></dt>
+<dd><p>Finds previous instance based on <a class="reference internal" href="#cdh.files.db.models.File.modified_on" title="cdh.files.db.models.File.modified_on"><code class="xref py py-attr docutils literal notranslate"><span class="pre">modified_on</span></code></a>. See <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/instances/#django.db.models.Model.get_previous_by_FOO" title="(in Django v4.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_previous_by_FOO()</span></code></a> for more information.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.models.File.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#cdh.files.db.models.File.id" title="Permalink to this definition"></a></dt>
+<dd><p>Type: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.BigAutoField" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BigAutoField</span></code></a></p>
+<p>Primary key: ID</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.models.File.modified_on">
+<span class="sig-name descname"><span class="pre">modified_on</span></span><a class="headerlink" href="#cdh.files.db.models.File.modified_on" title="Permalink to this definition"></a></dt>
+<dd><p>Type: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.DateTimeField" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DateTimeField</span></code></a></p>
+<p>Modified on</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.models.File.original_filename">
+<span class="sig-name descname"><span class="pre">original_filename</span></span><a class="headerlink" href="#cdh.files.db.models.File.original_filename" title="Permalink to this definition"></a></dt>
+<dd><p>Type: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.CharField" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">CharField</span></code></a></p>
+<p>Original filename</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.files.db.models.File.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#cdh.files.db.models.File.uuid" title="Permalink to this definition"></a></dt>
+<dd><p>Type: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.UUIDField" title="(in Django v4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">UUIDField</span></code></a></p>
+<p>Universally Unique IDentifier</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cdh.files.db.manager.html" class="btn btn-neutral float-left" title="cdh.files.db.manager module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cdh.files.db.wrappers.html" class="btn btn-neutral float-right" title="cdh.files.db.wrappers module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

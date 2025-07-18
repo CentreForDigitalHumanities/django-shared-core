@@ -1,0 +1,7 @@
+cdh.rest.exceptions module
+==========================
+
+.. automodule:: cdh.rest.exceptions
+   :members:
+   :show-inheritance:
+   :undoc-members:

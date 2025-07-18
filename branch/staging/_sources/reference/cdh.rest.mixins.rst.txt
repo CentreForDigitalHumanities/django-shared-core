@@ -1,0 +1,7 @@
+cdh.rest.mixins module
+======================
+
+.. automodule:: cdh.rest.mixins
+   :members:
+   :undoc-members:
+   :show-inheritance:

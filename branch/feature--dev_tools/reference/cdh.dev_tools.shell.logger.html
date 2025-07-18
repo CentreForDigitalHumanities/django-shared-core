@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.dev_tools.shell.logger module &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../_static/theme.css" type="text/css"/>
+        <script src="../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+                    <script src="../_static/doctools.js"></script>
+                    <script src="../_static/sphinx_highlight.js"></script>
+            <script src="../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../genindex.html"/>
+            <link rel="search" title="Search" href="../search.html"/>
+            <link rel="next" title="cdh.dev_tools.apps module" href="cdh.dev_tools.apps.html"/>
+            <link rel="prev" title="cdh.dev_tools.shell package" href="cdh.dev_tools.shell.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="index.html"
+           >
+           cdh
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.html"
+           >
+           cdh package
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.dev_tools.html"
+           >
+           cdh.dev_tools package
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="cdh.dev_tools.shell.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           cdh.dev_tools.shell package
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.dev_tools.shell.logger module</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <section id="module-cdh.dev_tools.shell.logger">
+<span id="cdh-dev-tools-shell-logger-module"></span><h1>cdh.dev_tools.shell.logger module<a class="headerlink" href="#module-cdh.dev_tools.shell.logger" title="Permalink to this heading">¶</a></h1>
+<p>Helper functions to attach loggers to a Django shell.</p>
+<p>It’s not hard to do, but a pain to type in.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cdh.dev_tools.shell.logger.CustomFormatter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdh.dev_tools.shell.logger.</span></span><span class="sig-name descname"><span class="pre">CustomFormatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/shell/logger.html#CustomFormatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.shell.logger.CustomFormatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/logging.html#logging.Formatter" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Formatter</span></code></a></p>
+<p>Custom formatter to log with colors</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.dev_tools.shell.logger.CustomFormatter.FORMATS">
+<span class="sig-name descname"><span class="pre">FORMATS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{10:</span> <span class="pre">'\x1b[37;20m[%(asctime)s]</span> <span class="pre">|%(name)s|</span> <span class="pre">%(levelname)-8s</span> <span class="pre">%(message)s</span> <span class="pre">-</span> <span class="pre">{%(filename)s:%(lineno)d}\x1b[0m',</span> <span class="pre">20:</span> <span class="pre">'\x1b[37;20m[%(asctime)s]</span> <span class="pre">|%(name)s|</span> <span class="pre">%(levelname)-8s</span> <span class="pre">%(message)s</span> <span class="pre">-</span> <span class="pre">{%(filename)s:%(lineno)d}\x1b[0m',</span> <span class="pre">30:</span> <span class="pre">'\x1b[33;20m[%(asctime)s]</span> <span class="pre">|%(name)s|</span> <span class="pre">%(levelname)-8s</span> <span class="pre">%(message)s</span> <span class="pre">-</span> <span class="pre">{%(filename)s:%(lineno)d}\x1b[0m',</span> <span class="pre">40:</span> <span class="pre">'\x1b[31;20m[%(asctime)s]</span> <span class="pre">|%(name)s|</span> <span class="pre">%(levelname)-8s</span> <span class="pre">%(message)s</span> <span class="pre">-</span> <span class="pre">{%(filename)s:%(lineno)d}\x1b[0m',</span> <span class="pre">50:</span> <span class="pre">'\x1b[31;1m[%(asctime)s]</span> <span class="pre">|%(name)s|</span> <span class="pre">%(levelname)-8s</span> <span class="pre">%(message)s</span> <span class="pre">-</span> <span class="pre">{%(filename)s:%(lineno)d}\x1b[0m'}</span></em><a class="headerlink" href="#cdh.dev_tools.shell.logger.CustomFormatter.FORMATS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.dev_tools.shell.logger.CustomFormatter.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/shell/logger.html#CustomFormatter.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.shell.logger.CustomFormatter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize the formatter with specified format strings.</p>
+<p>Initialize the formatter either with the specified format string, or a
+default as described above. Allow for specialized date formatting with
+the optional datefmt argument. If datefmt is omitted, you get an
+ISO8601-like (or RFC 3339-like) format.</p>
+<p>Use a style parameter of ‘%’, ‘{’ or ‘$’ to specify that you want to
+use one of %-formatting, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str.format" title="(in Python v3.11)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">str.format()</span></code></a> (<code class="docutils literal notranslate"><span class="pre">{}</span></code>) formatting or
+<a class="reference external" href="https://docs.python.org/3/library/string.html#string.Template" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">string.Template</span></code></a> formatting in your format string.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.2: </span>Added the <code class="docutils literal notranslate"><span class="pre">style</span></code> parameter.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.dev_tools.shell.logger.CustomFormatter.bold_red">
+<span class="sig-name descname"><span class="pre">bold_red</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[31;1m'</span></em><a class="headerlink" href="#cdh.dev_tools.shell.logger.CustomFormatter.bold_red" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdh.dev_tools.shell.logger.CustomFormatter.format">
+<span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/shell/logger.html#CustomFormatter.format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.shell.logger.CustomFormatter.format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Format the specified record as text.</p>
+<p>The record’s attribute dictionary is used as the operand to a
+string formatting operation which yields the returned string.
+Before formatting the dictionary, a couple of preparatory steps
+are carried out. The message attribute of the record is computed
+using LogRecord.getMessage(). If the formatting string uses the
+time (as determined by a call to usesTime(), formatTime() is
+called to format the event time. If there is exception information,
+it is formatted using formatException() and appended to the message.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.dev_tools.shell.logger.CustomFormatter.gray">
+<span class="sig-name descname"><span class="pre">gray</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[37;20m'</span></em><a class="headerlink" href="#cdh.dev_tools.shell.logger.CustomFormatter.gray" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.dev_tools.shell.logger.CustomFormatter.red">
+<span class="sig-name descname"><span class="pre">red</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[31;20m'</span></em><a class="headerlink" href="#cdh.dev_tools.shell.logger.CustomFormatter.red" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.dev_tools.shell.logger.CustomFormatter.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[0m'</span></em><a class="headerlink" href="#cdh.dev_tools.shell.logger.CustomFormatter.reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdh.dev_tools.shell.logger.CustomFormatter.yellow">
+<span class="sig-name descname"><span class="pre">yellow</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[33;20m'</span></em><a class="headerlink" href="#cdh.dev_tools.shell.logger.CustomFormatter.yellow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cdh.dev_tools.shell.logger.attach_logger_to_shell">
+<span class="sig-prename descclassname"><span class="pre">cdh.dev_tools.shell.logger.</span></span><span class="sig-name descname"><span class="pre">attach_logger_to_shell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_format:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'DEBUG'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream=&lt;_io.TextIOWrapper</span> <span class="pre">name='&lt;stdout&gt;'</span> <span class="pre">mode='w'</span> <span class="pre">encoding='utf-8'&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/shell/logger.html#attach_logger_to_shell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.shell.logger.attach_logger_to_shell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attaches a given logger to the shell, by default using stdout and logger
+level DEBUG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – The name of the logger to attach. None to get all (NOT</p>
+</dd>
+</dl>
+<p>RECOMMENDED)
+:param log_format: (Optional) a custom log format if the default is not
+nice enough
+:param level: (Optional) minimum logging level to log. Defaults to DEBUG
+:param stream: (Optional) the output to log to. Must be an IO stream.
+Defaults to stdout
+:return: The created handler (can be used to detach it specifically later)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cdh.dev_tools.shell.logger.detach_handler">
+<span class="sig-prename descclassname"><span class="pre">cdh.dev_tools.shell.logger.</span></span><span class="sig-name descname"><span class="pre">detach_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">handler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/shell/logger.html#detach_handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.shell.logger.detach_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detaches a given handler for a given logger. Will not remove handlers
+that weren’t added by attach_logger_to_shell</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cdh.dev_tools.shell.logger.detach_logger">
+<span class="sig-prename descclassname"><span class="pre">cdh.dev_tools.shell.logger.</span></span><span class="sig-name descname"><span class="pre">detach_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cdh/dev_tools/shell/logger.html#detach_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cdh.dev_tools.shell.logger.detach_logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detaches all handlers for a given logger. Will not remove handlers
+that weren’t added by attach_logger_to_shell</p>
+</dd></dl>
+
+</section>
+
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

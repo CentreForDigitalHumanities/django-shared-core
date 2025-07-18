@@ -1,0 +1,7 @@
+cdh.files.admin module
+======================
+
+.. automodule:: cdh.files.admin
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -1,0 +1,40 @@
+cdh.core package
+================
+
+.. automodule:: cdh.core
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.core.fields
+   cdh.core.js_urls
+   cdh.core.mail
+   cdh.core.management
+   cdh.core.middleware
+   cdh.core.templatetags
+   cdh.core.utils
+   cdh.core.views
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.core.admin
+   cdh.core.apps
+   cdh.core.collections
+   cdh.core.context_processors
+   cdh.core.file_loading
+   cdh.core.forms
+   cdh.core.hashers
+   cdh.core.models
+   cdh.core.settings
+   cdh.core.tests
+   cdh.core.urls

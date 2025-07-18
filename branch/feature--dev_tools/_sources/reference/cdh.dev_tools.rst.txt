@@ -1,0 +1,26 @@
+cdh.dev\_tools package
+======================
+
+.. automodule:: cdh.dev_tools
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.dev_tools.debug_toolbar
+   cdh.dev_tools.shell
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.dev_tools.apps
+   cdh.dev_tools.settings
+   cdh.dev_tools.urls

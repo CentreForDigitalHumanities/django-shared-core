@@ -1,0 +1,7 @@
+cdh.dev\_tools.urls module
+==========================
+
+.. automodule:: cdh.dev_tools.urls
+   :members:
+   :undoc-members:
+   :show-inheritance:

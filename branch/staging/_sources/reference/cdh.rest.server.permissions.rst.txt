@@ -1,0 +1,7 @@
+cdh.rest.server.permissions module
+==================================
+
+.. automodule:: cdh.rest.server.permissions
+   :members:
+   :undoc-members:
+   :show-inheritance:

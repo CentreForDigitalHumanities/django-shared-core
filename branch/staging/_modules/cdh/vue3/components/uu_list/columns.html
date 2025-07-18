@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>cdh.vue3.components.uu_list.columns &mdash; Django Shared Core 3.1.0 documentation</title>
+            <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css"/>
+            <link rel="stylesheet" href="../../../../../_static/theme.css" type="text/css"/>
+        <script src="../../../../../_static/bootstrap.bundle.min.js"></script>
+            
+                    <script src="../../../../../_static/documentation_options.js?v=dd1205ac"></script>
+                    <script src="../../../../../_static/doctools.js?v=9a2dae69"></script>
+                    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+            <script src="../../../../../_static/js/theme.js"></script>
+            <link rel="index" title="Index" href="../../../../../genindex.html"/>
+            <link rel="search" title="Search" href="../../../../../search.html"/> 
+    <style>
+        .navbar .caption {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="uu-root-container">
+    <div class="uu-header">
+        <div class="uu-header-row">
+            <div class="uu-logo">
+                <img src="../../../../../_static/logo-header-en.svg">
+            </div>
+            <div class="fs-3 ms-5 text-black">
+                Django Shared Core 3.1.0 documentation
+            </div>
+            <div class="border-left ms-auto">
+                <div role="search" class="ms-auto">
+                  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+                    <input type="text" class="form-control" name="q" placeholder="Search docs" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <nav class="navbar uu-navbar">
+            <div class="uu-navbar-container">
+                <a href="https://www.uu.nl" class="navbar-brand">
+                    <img src="../../../../../_static/logo-header-en.svg">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+                <div id="navbar-content" class="collapse navbar-collapse">
+                        <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../migrating/index.html">Migrating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../reference/index.html">cdh</a></li>
+</ul>
+
+                </div>
+            </div>
+        </nav>
+    <div class="uu-content">
+        <div class="uu-hero"><ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item">
+        <a href="../../../../../index.html">
+            Django Shared Core
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="../../../../index.html"
+           
+               accesskey="U"
+               class="active"
+           >
+           Module code
+        </a>
+    </li>
+    <li class="breadcrumb-item active">cdh.vue3.components.uu_list.columns</li>
+</ol></div> 
+                <div class="uu-container">
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                            <div itemprop="articleBody">
+                                
+  <h1>Source code for cdh.vue3.components.uu_list.columns</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;A collection of column definition classes used by the Data-Defined</span>
+<span class="sd">Visualizer variant of the UU-List.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="kn">import</span> <span class="n">get_language</span>
+
+
+<span class="k">class</span> <span class="nc">_DDVColumn</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for all DDV columns, should not be used directly&quot;&quot;&quot;</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">css_classes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param field: The key of the field used in the serializer to pull</span>
+<span class="sd">                      data from.If you are unsure, view the output of your</span>
+<span class="sd">                      API view and copy the key.</span>
+<span class="sd">        :param label: The text shown as the table header for this column</span>
+<span class="sd">        :param css_classes: Any CSS classes to add to the item in the table cell</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="n">field</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes</span> <span class="o">=</span> <span class="n">css_classes</span>
+
+    <span class="k">def</span> <span class="nf">get_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span>
+            <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">,</span>
+            <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">,</span>
+            <span class="s2">&quot;classes&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">,</span>
+        <span class="p">}</span>
+
+
+<div class="viewcode-block" id="DDVString">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVString">[docs]</a>
+<span class="k">class</span> <span class="nc">DDVString</span><span class="p">(</span><span class="n">_DDVColumn</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Will simply display the contents of the given field as a string.</span>
+
+<span class="sd">    Note: HTML will be escaped! If you really want HTML, use DDVHtml.</span>
+<span class="sd">    Or, you know, use a custom UU-List implementation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;string&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="DDVHtml">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVHtml">[docs]</a>
+<span class="k">class</span> <span class="nc">DDVHtml</span><span class="p">(</span><span class="n">_DDVColumn</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Will display the contents of the given field without escaping HTML</span>
+
+<span class="sd">    NOTE: THIS IS POTENTIALLY UNSAFE! ALWAYS SANITIZE USER INPUT YOURSELF</span>
+<span class="sd">    Note 2: If you end up using this column a lot, it&#39;s probably better to</span>
+<span class="sd">    create a custom UU-List implementation over using the default DDV</span>
+<span class="sd">    implementation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;html&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="DDVDate">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVDate">[docs]</a>
+<span class="k">class</span> <span class="nc">DDVDate</span><span class="p">(</span><span class="n">_DDVColumn</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Will format a ISO 8601 formatted date(time) into a localized date(time).</span>
+
+<span class="sd">    Use DRF&#39;s Date(Time)Field in your serializer. (THis will be automatically</span>
+<span class="sd">    be the case if you use a ModelSerializer with the `fields` option)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;date&quot;</span>
+
+<div class="viewcode-block" id="DDVDate.__init__">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVDate.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">label</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">css_classes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="nb">format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="c1"># Default to NL, even for EN languages to be consistent in format</span>
+        <span class="n">language</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;nl&quot;</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">css_classes</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">format</span> <span class="o">=</span> <span class="nb">format</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">language</span> <span class="o">=</span> <span class="n">language</span></div>
+
+
+<div class="viewcode-block" id="DDVDate.get_config">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVDate.get_config">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span>
+        <span class="n">config</span><span class="p">[</span><span class="s2">&quot;format&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">format</span>
+
+        <span class="c1"># if locale is none, retrieve the current activated language</span>
+        <span class="n">language</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">language</span> <span class="ow">or</span> <span class="n">get_language</span><span class="p">()</span>
+
+        <span class="n">config</span><span class="p">[</span><span class="s2">&quot;language&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">language</span>
+        <span class="k">return</span> <span class="n">config</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="DDVLink">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVLink">[docs]</a>
+<span class="k">class</span> <span class="nc">DDVLink</span><span class="p">(</span><span class="n">_DDVColumn</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Will display a simple link in the table.</span>
+
+<span class="sd">    Use DDVLinkField in your serializer to populate the field that will be used</span>
+
+<span class="sd">    Note: this will display only a link. If you need a link inside a larger</span>
+<span class="sd">    text, use DDVHtml or create a custom UU-List implementation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;link&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="DDVActions">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVActions">[docs]</a>
+<span class="k">class</span> <span class="nc">DDVActions</span><span class="p">(</span><span class="n">_DDVColumn</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Will display a list of actions inside a dropdown</span>
+
+<span class="sd">    Use DDVActionsField in your serializer to populate the field that will be used</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;actions&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="DDVButton">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVButton">[docs]</a>
+<span class="k">class</span> <span class="nc">DDVButton</span><span class="p">(</span><span class="n">_DDVColumn</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Will display a button in the table.</span>
+
+<span class="sd">    Use DDVLinkField in your serializer to populate the field that will be used</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;button&quot;</span>
+
+<div class="viewcode-block" id="DDVButton.__init__">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVButton.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">label</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">variant</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        :param field: The key of the field used in the serializer to pull</span>
+<span class="sd">                      data from.If you are unsure, view the output of your</span>
+<span class="sd">                      API view and copy the key.</span>
+<span class="sd">        :param label: The text shown as the table header for this column</span>
+<span class="sd">        :param variant: The BS button variant to use. See UU-Bootstrap for</span>
+<span class="sd">                        info on the options. Defaults to &#39;primary&#39;.</span>
+<span class="sd">        :param size: small, normal or large. Defaults to &#39;normal&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variant</span> <span class="o">=</span> <span class="n">variant</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">size</span></div>
+
+
+<div class="viewcode-block" id="DDVButton.get_config">
+<a class="viewcode-back" href="../../../../../reference/cdh.vue3.components.uu_list.columns.html#cdh.vue3.components.uu_list.columns.DDVButton.get_config">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span>
+            <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">,</span>
+            <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">variant</span><span class="p">:</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;variant&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">variant</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
+
+        <span class="k">return</span> <span class="n">config</span></div>
+</div>
+
+</pre></div>
+
+                            </div>
+                            </div>
+                </div>
+    </div>
+
+    <footer class="uu-footer">
+
+  <div role="contentinfo">
+    <p>&#169; Copyright DH-IT Portal development.</p>
+  </div> 
+
+</footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+cdh.rest.client.fields module
+=============================
+
+.. automodule:: cdh.rest.client.fields
+   :members:
+   :undoc-members:
+   :show-inheritance:

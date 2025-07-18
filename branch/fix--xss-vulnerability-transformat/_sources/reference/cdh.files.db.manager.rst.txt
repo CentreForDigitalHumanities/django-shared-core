@@ -1,0 +1,7 @@
+cdh.files.db.manager module
+===========================
+
+.. automodule:: cdh.files.db.manager
+   :members:
+   :undoc-members:
+   :show-inheritance:

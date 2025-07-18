@@ -1,0 +1,24 @@
+cdh.federated\_auth.saml package
+================================
+
+.. automodule:: cdh.federated_auth.saml
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.federated_auth.saml.attribute-maps
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.federated_auth.saml.settings
+   cdh.federated_auth.saml.views

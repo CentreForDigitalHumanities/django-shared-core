@@ -1,0 +1,7 @@
+cdh.core.fields.crypter module
+==============================
+
+.. automodule:: cdh.core.fields.crypter
+   :members:
+   :undoc-members:
+   :show-inheritance:

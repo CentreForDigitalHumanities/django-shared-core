@@ -1,0 +1,7 @@
+cdh.federated\_auth.apps module
+===============================
+
+.. automodule:: cdh.federated_auth.apps
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,21 @@
+cdh.core.templatetags package
+=============================
+
+.. automodule:: cdh.core.templatetags
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cdh.core.templatetags.cdh_filters
+   cdh.core.templatetags.datatables
+   cdh.core.templatetags.file_loading
+   cdh.core.templatetags.get_field_name
+   cdh.core.templatetags.include_if_exists
+   cdh.core.templatetags.messages
+   cdh.core.templatetags.transformat
