@@ -246,6 +246,10 @@ try:
     INSTALLED_APPS += SAML_APPS
     MIDDLEWARE += SAML_MIDDLEWARE
 
+    if not SESSION_COOKIE_SECURE:
+        # Needed on dev
+        SAML_SESSION_COOKIE_SAMESITE = 'Lax'
+
     SAML_CONFIG = create_saml_config(
         base_url='http://localhost:8000/',
         name='Federated Django sample SP',
@@ -253,7 +257,6 @@ try:
         cert_file=path.join(BASE_DIR, 'dev_project/public.cert'),
         idp_metadata='http://localhost:7000/saml/idp/metadata/',
         debug=True,
-        allow_unsolicited=True,
     )
 except:
     print('something went wrong loading SAML')
