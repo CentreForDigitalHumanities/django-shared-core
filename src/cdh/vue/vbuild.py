@@ -86,7 +86,7 @@ class _VueJs:
     this module is a dependency of the other, making it necessary to load it
     earlier. If so, sorted() will place this before the other module!
     """
-    IMPORT_RE = r"^import (\w+) from \S+$(?m)"
+    IMPORT_RE = r"^import (\w+) from \S+$"
 
     def __init__(self, name, template_id, code):
         self.name = name
@@ -102,7 +102,7 @@ class _VueJs:
             else:
                 raise Exception("Can't find valid content inside '{' and '}'")
 
-        self.dependencies = set(re.findall(_VueJs.IMPORT_RE, code))
+        self.dependencies = set(re.findall(_VueJs.IMPORT_RE, code, re.MULTILINE))
 
     def __repr__(self):
         return "<_VueJS: {}: {}>".format(self.name, self.dependencies)
