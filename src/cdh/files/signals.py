@@ -2,7 +2,7 @@ from django.apps import apps
 from django.db.models.signals import pre_delete
 
 from cdh.files.db import BaseFile
-
+from cdh.files.logger import logger
 
 def delete_file_on_delete(sender, instance, **kwargs):
     """Deletes the file on disk when the corresponding File is deleted"""
@@ -11,6 +11,7 @@ def delete_file_on_delete(sender, instance, **kwargs):
     # want to delete it prematurely)
     # force=True means we will ALWAYS delete the file, even if the ORM still
     # sees some references to it
+    logger.debug(f"Signals: pre_delete called for {sender.__name__}; deleting file for {instance}")
     instance.get_file_wrapper().delete(save=False, force=True)
 
 

@@ -8,7 +8,19 @@ from django.utils.functional import cached_property
 
 from cdh.files.db.manager import create_tracked_file_manager
 from cdh.files.db.wrappers import FileWrapper, TrackedFileWrapper
+from cdh.files.logger import logger
 
+def _debug(message: str):
+    """Helper function to log debug messages with a consistent format"""
+    logger.debug(f"FileDescriptor: {message}")
+    
+def _warning(message: str):
+    """Helper function to log warning messages with a consistent format"""
+    logger.warning(f"FileDescriptor: {message}")
+    
+def _error(message: str):
+    """Helper function to log error messages with a consistent format"""
+    logger.error(f"FileDescriptor: {message}")
 
 class FileDescriptor(ForeignKeyDeferredAttribute):
     """FileDescriptor handles the {field_name}_id field of a FileField"""
@@ -53,6 +65,8 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
         if instance is None:
             return self
 
+        _debug(f"Getting {self.field.name} for {instance}")
+
         try:
             # See if we have it in cache, raises KeyError if not
             file_wrapper = self.field.get_cached_value(instance)
@@ -66,8 +80,11 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
             if file_wrapper is None or file_wrapper._removed:
                 return None
 
+            _debug(f"Found {self.field.name} in cache; returning it")
+
             return file_wrapper
         except KeyError:
+            _debug(f"No cached value for {self.field.name}; fetching from DB")
             # Try to fetch it from the DB instead
             file_obj = self.get_object(instance)
 
@@ -103,20 +120,27 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
 
         Please see the helper methods for detailed info on how they are handled
         """
+        _debug(f"Setting {self.field.name} for {instance}")
         if isinstance(value, tuple):
+            _debug(f"Got tuple (from widget); processing")
             return_value = self._set_from_tuple(instance, value)
         elif isinstance(
                value,
                self.field.remote_field.model._meta.concrete_model  # NoQA
            ):
+            _debug(f"Got File instance; processing")
             return_value = self._set_from_db_instance(instance, value)
         elif isinstance(value, self.field.attr_class):
+            _debug(f"Got FileWrapper; processing")
             return_value = self._set_from_file_wrapper(instance, value)
         elif isinstance(value, File):
+            _debug(f"Got Django/Python-native File; processing")
             return_value = self._set_from_file_like_object(instance, value)
         elif value is None:
+            _debug(f"Got None; processing")
             return_value = self._set_from_none(instance)
         else:
+            _error(f"Got unknown type {type(value)}; aborting")
             # We can't be completely inclusive :o
             raise ValueError(
                 'Cannot assign "%r": "%s.%s" must be either a "%s" instance, '
@@ -129,9 +153,11 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
                 )
             )
 
+        _debug(f"Setting {self.field.name} for {instance} to {return_value}")
         self.field.set_cached_value(instance, return_value)
 
         if return_value is None or return_value._removed:
+            _debug(f"After processing, file is to be deleted. Removing ORM links")
             # If we got returned None, or a FileWrapper marked for deletion, we
             # need to clear the fields that the ORM uses to link objects.
             # (In other words, the {field_name}_id field)
@@ -205,6 +231,7 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
         # say in whether it's actually deleted. (It might be referenced by a
         # different FileField).
         if uuid:
+            _debug(f"Marking existing FileWrapper for potential deletion: {uuid}")
             old_obj = self.field.remote_field.model.objects.get(uuid=uuid)
             old_file_wrapper = old_obj.get_file_wrapper(self.field)
             old_file_wrapper._removed = True
@@ -247,6 +274,7 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
             # removed. (It's going to be overriden by an older version
             # apparently)
             if current_fw != value:
+                _debug(f"Marking existing FileWrapper for potential deletion: {current_fw.uuid}")
                 current_fw._removed = True
             # Make sure we won't remove it
             value._removed = False
@@ -258,12 +286,15 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
         # we are replacing it. We don't need to cache it, as __get__ would
         # have done that for us
         if current_fw and current_fw != value:
+            _debug(f"Marking existing FileWrapper for potential deletion: {current_fw.uuid}")
             current_fw._removed = True
         elif current_fw == value:
+            _debug(f"We were given the same FileWrapper as before, removing any potential deletion marker")
             value._removed = False
 
         # Create a file instance if one isn't present
         if not value.file_instance:
+            _debug(f"Creating new file instance for FileWrapper {value.uuid}")
             value.file_instance = self._create_file_instance()
             # Make sure our new file_instance knows of this wrapper :)
             value.file_instance.set_file_wrapper(value, self.field)
@@ -279,6 +310,7 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
         # the only reason you don't receive a FW with a file_instance is if a
         # programmer created an empty (non field-attached) FileWrapper)
         elif value.field != self.field:
+            _warning(f"We were given a FileWrapper for a different field ({value.field.name}); this is programmer error. Fixing by creating a new FileWrapper for this field.")
             file = value.file
             value = value.file_instance.get_file_wrapper(self.field, False)
             value.file = file
@@ -297,6 +329,7 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
             try:
                 current_fw = self.__get__(instance)
                 if current_fw is not None:
+                    _debug(f"Marking existing FileWrapper for potential deletion: {current_fw.uuid}")
                     current_fw._removed = True
             except self.RelatedObjectDoesNotExist:
                 pass
@@ -316,9 +349,6 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
         # First, see if we have a value
         try:
             obj = self.__get__(instance)
-            # If we got a result, mark it as to be removed
-            if obj:
-                obj._removed = True
         except self.RelatedObjectDoesNotExist:
             # If we get this exception, we are not allowed to set None because
             # the field does not allow it
@@ -338,6 +368,7 @@ class ForwardFileDescriptor(ForwardManyToOneDescriptor):
         # 2) It's against normal Django behaviour to alter ANY data before
         #    calling .save() (or .remove() for that matter). Thus, we need to
         #    wait till the programmer expects things to change.
+        _debug(f"Marking existing FileWrapper for potential deletion: {obj.uuid}")
         obj._removed = True
         return obj
 

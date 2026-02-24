@@ -9,11 +9,29 @@ from django.urls import reverse_lazy
 from .. import settings
 from ..mime_names import get_name_from_mime
 from ..utils import get_storage
-
+from ..logger import logger
 
 if TYPE_CHECKING:
     from . import TrackedFileField
     from .models import BaseFile
+
+
+def _debug(message: str):
+    """Helper function to log debug messages with a consistent format"""
+    logger.debug(f"FileWrapper: {message}")
+
+
+def _info(message: str):
+    """Helper function to log warning messages with a consistent format"""
+    logger.info(f"FileWrapper: {message}")
+
+def _warning(message: str):
+    """Helper function to log warning messages with a consistent format"""
+    logger.warning(f"FileWrapper: {message}")
+
+def _error(message: str):
+    """Helper function to log error messages with a consistent format"""
+    logger.error(f"FileWrapper: {message}")
 
 
 class FileWrapper(File):
@@ -114,6 +132,7 @@ class FileWrapper(File):
             if getattr(self, '_file', None) is None:
                 self._file = self.storage.open(self.name_on_disk, 'rb')
         except FileNotFoundError:
+            _debug(f"File {self.name_on_disk} not found on disk")
             self._file = None
         return self._file
 
@@ -174,7 +193,9 @@ class FileWrapper(File):
         # If we overwrite the file this instance represents, we need to first
         # delete the old one, as otherwise we would lose the new file
         if self.storage.exists(self.name_on_disk):
+            _info(f"Removing {self.name_on_disk} before saving new file")
             self.storage.delete(self.name_on_disk)
+        _info(f"Saving {self.name_on_disk}")
         self.storage.save(
             self.name_on_disk,
             content,
@@ -186,6 +207,7 @@ class FileWrapper(File):
         # I just liked saying 'use MAGIC'
         with self.open() as file:
             mime = magic.from_buffer(file.read(2048), mime=True)
+        _debug(f"Detected MIME type {mime} for file {self.name_on_disk}")
         self.file_instance.content_type = mime
 
         if original_filename:
@@ -216,7 +238,10 @@ class FileWrapper(File):
         :param force: Whether to force a deletion if multiple DB objects still
                       refer to it, defaults to False
         """
+        _debug(f"Deleting FileWrapper {self.uuid} (save={save}, force={force})")
+
         if not self.storage.exists(self.name_on_disk):
+            _warning(f"File {self.name_on_disk} does not exist on disk, skipping deletion")
             return
 
         # By default, only delete if there are no references in the DB anymore
@@ -227,27 +252,35 @@ class FileWrapper(File):
         if save and self.file_instance:
             model = self.file_instance.__class__
             if model.objects.filter(pk=self.file_instance.pk).exists():
+                _debug(f"File object for FileWrapper {self.uuid} still exists, allowing deletion with 1 reference")
                 deletion_threshold += 1
+
+        logger.debug(f"Deletion threshold for FileWrapper {self.uuid}: {deletion_threshold}")
+        logger.debug(f"FileWrapper {self.uuid} has {self.file_instance._num_child_instances} references")
 
         # Check if we only have the allowed amount number of references or fewer
         # If we have more, and we're not forcing a deletion, stop right here!
         if self.file_instance and \
            self.file_instance._num_child_instances > deletion_threshold and \
            not force:
+            _warning(f"FileWrapper {self.uuid} still has more references than allowed ({deletion_threshold}), skipping deletion!")
             return
 
         # First, delete our metadata model. The check above _should_ make sure
         # we don't get integrity errors, but it's better to have this fail
         # because of those errors before we have actually deleted the file
         if save:
+            _debug(f"Deleting FileWrapper {self.uuid} from DB")
             self.file_instance.delete()
 
         # Only close the file if it's already open, which we know by the
         # presence of self._file
         if hasattr(self, '_file'):
+            _debug(f"Closing file handle for FileWrapper {self.uuid}")
             self.close()
             del self.file
 
+        _debug(f"Deleting file {self.name_on_disk} from disk")
         self.storage.delete(self.name_on_disk)
 
         self.original_filename = None
