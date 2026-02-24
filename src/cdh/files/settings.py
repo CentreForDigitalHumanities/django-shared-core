@@ -24,6 +24,12 @@ FILE_UPLOAD_DIRECTORY_PERMISSIONS = getattr(
     settings.FILE_UPLOAD_DIRECTORY_PERMISSIONS,
 )
 
+FILE_BLOCK_DELETION = getattr(
+    settings,
+    'CDH_FILES_FILE_BLOCK_DELETION',
+    False,
+)
+
 _tlum_loaded = 'cdh.core.middleware.ThreadLocalUserMiddleware' in \
                settings.MIDDLEWARE
 
