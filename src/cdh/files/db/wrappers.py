@@ -4,6 +4,7 @@ from typing import Optional, Union, TYPE_CHECKING
 from django.core.files import File
 import magic
 from django.db.models import Manager, Q
+from django.db import transaction
 from django.urls import reverse_lazy
 
 from .. import settings
@@ -33,6 +34,26 @@ def _error(message: str):
     """Helper function to log error messages with a consistent format"""
     logger.error(f"FileWrapper: {message}")
 
+
+def _save_file(storage, name_on_disk, content, max_length):
+    """Does the actual saving of the file to disk. This method is called by
+    FileWrapper.save() and should not be called directly.
+
+    This is a separate function to allow it to run as a post-transaction
+    hook. (This is needed, doing it during a transaction may result in dataloss
+    when a transaction is rolled back)
+    """
+    # If we overwrite the file this instance represents, we need to first
+    # delete the old one, as otherwise we would lose the new file
+    if storage.exists(name_on_disk):
+        _info(f"Removing {name_on_disk} before saving new file")
+        storage.delete(name_on_disk)
+    _info(f"Saving {name_on_disk}")
+    storage.save(
+        name_on_disk,
+        content,
+        max_length=max_length
+    )
 
 class FileWrapper(File):
     """
@@ -190,17 +211,11 @@ class FileWrapper(File):
         if original_filename is None and hasattr(content, 'name'):
             original_filename = content.name
 
-        # If we overwrite the file this instance represents, we need to first
-        # delete the old one, as otherwise we would lose the new file
-        if self.storage.exists(self.name_on_disk):
-            _info(f"Removing {self.name_on_disk} before saving new file")
-            self.storage.delete(self.name_on_disk)
-        _info(f"Saving {self.name_on_disk}")
-        self.storage.save(
+        transaction.on_commit(lambda: _save_file(
+            self.storage,
             self.name_on_disk,
-            content,
-            max_length=self.field.max_length
-        )
+            content, self.field.max_length
+        ))
         self._committed = True
 
         # Use magic to determine the mime type. It's pretty obvious, I know
@@ -274,7 +289,9 @@ class FileWrapper(File):
             del self.file
 
         _debug(f"Deleting file {self.name_on_disk} from disk")
-        self.storage.delete(self.name_on_disk)
+        # Run this as part of a post-transaction hook to make sure we only
+        # delete the file once the related database changes have been committed.
+        transaction.on_commit(lambda: self.storage.delete(self.name_on_disk))
 
         self.original_filename = None
         self._committed = False
