@@ -24,6 +24,13 @@ FILE_UPLOAD_DIRECTORY_PERMISSIONS = getattr(
     settings.FILE_UPLOAD_DIRECTORY_PERMISSIONS,
 )
 
+# This is a hard-kill switch on any file deletion. It works by making the
+# remove call on the storage backend a no-op. (So it will delete DB references,
+# but not the actual file).
+# This is intended for when you think the files-app is eating your files.
+# It should be safe to enable; HOWEVER! If your code manipulates the underlying
+# `FileWrapper` objects directly, you may encounter issues.
+# (You should refrain from doing that, but be warned)
 FILE_BLOCK_DELETION = getattr(
     settings,
     'CDH_FILES_FILE_BLOCK_DELETION',
