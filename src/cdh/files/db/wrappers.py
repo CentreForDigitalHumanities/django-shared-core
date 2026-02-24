@@ -3,7 +3,7 @@ from typing import Optional, Union, TYPE_CHECKING
 
 from django.core.files import File
 import magic
-from django.db.models import Manager
+from django.db.models import Manager, Q
 from django.urls import reverse_lazy
 
 from .. import settings
@@ -254,6 +254,17 @@ class FileWrapper(File):
         if save:
             _debug(f"Deleting FileWrapper {self.uuid} from DB")
             self.file_instance.delete()
+
+        # This is a sanity check; at this point we should have no references to
+        # this file anymore, so we should be able to safely delete it from disk
+        # However, if for some reason this method was called with save=False,
+        # with a still existing file_instance, some code messed up.
+        # This catches that situation.
+        if self.file_instance:
+            model = self.file_instance._meta.model
+            if model.objects.filter(Q(pk=self.file_instance.pk) | Q(uuid=self.uuid)).exists():
+                _error(f"FileWrapper {self.uuid} still has references in DB, this should not happen!")
+                return
 
         # Only close the file if it's already open, which we know by the
         # presence of self._file
