@@ -227,7 +227,7 @@ class FileWrapper(File):
 
     save.alters_data = True
 
-    def delete(self, save=True, force=False):
+    def delete(self, save=True):
         """Deletes the file on disk. If save = True, the metadata object will
         also be deleted. Note: only delete the metadata object if no other DB
         object is referencing it, otherwise you'll get nasty Integrity
@@ -235,35 +235,17 @@ class FileWrapper(File):
 
         :param save: Whether to also delete the metadata in the DB, defaults
                      to True
-        :param force: Whether to force a deletion if multiple DB objects still
-                      refer to it, defaults to False
         """
-        _debug(f"Deleting FileWrapper {self.uuid} (save={save}, force={force})")
+        _debug(f"Deleting FileWrapper {self.uuid} (save={save})")
 
         if not self.storage.exists(self.name_on_disk):
             _warning(f"File {self.name_on_disk} does not exist on disk, skipping deletion")
             return
 
-        # By default, only delete if there are no references in the DB anymore
-        deletion_threshold = 0
-
-        # If we are instructed to also destroy our file_instance and we still
-        # have a reference, we allow deletion with 1 more reference
-        if save and self.file_instance:
-            model = self.file_instance.__class__
-            if model.objects.filter(pk=self.file_instance.pk).exists():
-                _debug(f"File object for FileWrapper {self.uuid} still exists, allowing deletion with 1 reference")
-                deletion_threshold += 1
-
-        logger.debug(f"Deletion threshold for FileWrapper {self.uuid}: {deletion_threshold}")
-        logger.debug(f"FileWrapper {self.uuid} has {self.file_instance._num_child_instances} references")
-
         # Check if we only have the allowed amount number of references or fewer
         # If we have more, and we're not forcing a deletion, stop right here!
-        if self.file_instance and \
-           self.file_instance._num_child_instances > deletion_threshold and \
-           not force:
-            _warning(f"FileWrapper {self.uuid} still has more references than allowed ({deletion_threshold}), skipping deletion!")
+        if self.file_instance and self.file_instance._num_child_instances > 0:
+            _warning(f"FileWrapper {self.uuid} still has references, skipping deletion!")
             return
 
         # First, delete our metadata model. The check above _should_ make sure
