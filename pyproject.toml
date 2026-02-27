@@ -54,7 +54,7 @@ mail = [
     "Django >=4.2,<5.2",
 ]
 federated-auth = [
-    "djangosaml2",
+    "djangosaml2 >=1.11"
 ]
 files = [
     "python-magic",
