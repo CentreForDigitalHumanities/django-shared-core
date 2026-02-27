@@ -16,8 +16,6 @@ bpython==0.25
     # via cdh-django-core
 build==1.2.2.post1
     # via pip-tools
-cdh-django-core[all,core,dev,docs,federated-auth,files,mail,recommended,rest,vue] @ file:///home/ty/projects/web/django-shared-core
-    # via -r requirements.in
 certifi==2025.7.14
     # via requests
 cffi==1.17.1
