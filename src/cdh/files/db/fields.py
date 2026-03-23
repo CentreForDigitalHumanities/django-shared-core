@@ -21,17 +21,10 @@ from ..forms import fields
 from .models import BaseFile, File
 from .wrappers import FileWrapper, TrackedFileWrapper
 
-from cdh.files.logger import logger
+import logging
+logger = logging.getLogger(__name__)
 
 NOT_PROVIDED = object()
-
-def _debug(message: str):
-    """Helper function to log debug messages with a consistent format"""
-    logger.debug(f"DB Field: {message}")
-
-def _info(message: str):
-    """Helper function to log debug messages with a consistent format"""
-    logger.info(f"DB Field: {message}")
 
 
 class FileFieldCacheMixin:
@@ -431,12 +424,12 @@ class FileField(FileFieldCacheMixin, ForeignObject):
         """Make sure we save our file when saving the model this field is
         attached to"""
         ret = super().pre_save(model_instance, add)
-        _debug(f"pre_save called for FileField {self.full_name}")
+        logger.debug(f"pre_save called for FileField {self.full_name}")
 
         file = getattr(model_instance, self.name, None)
         # If we have a file and it's marked as not-saved (committed)
         if file is not None and not file._committed:
-            _debug(f"File not saved yet, committing it now: {file}")
+            logger.debug(f"File not saved yet, committing it now: {file}")
             # Commit the file to storage prior to saving the model
             # This will also save the File instance
             file.save()
@@ -445,10 +438,10 @@ class FileField(FileFieldCacheMixin, ForeignObject):
 
     def post_save(self, sender, instance, created, **kwargs):
         """Handle deletion of a file"""
-        _debug(f"post_save called for FileField {self.full_name}")
+        logger.debug(f"post_save called for FileField {self.full_name}")
         # If we have something in cache
         if self.is_cached(instance):
-            _debug(f"FileField {self.full_name} is cached, checking for any to-delete files")
+            logger.debug(f"FileField {self.full_name} is cached, checking for any to-delete files")
             # Get all values
             # The cache can contain multiple values, in which case all but
             # the last of them should be marked for deletion
@@ -459,7 +452,7 @@ class FileField(FileFieldCacheMixin, ForeignObject):
                 # referenced by a different FileField, in which case
                 # value.delete() will simple stop execution
                 if value is not None and value._removed:
-                    _info(f"File marked for deletion, starting delete for {value}")
+                    logger.info(f"File marked for deletion, starting delete for {value}")
                     # Terminate this file
                     value.delete()
             # And clear our cached value
@@ -474,19 +467,19 @@ class FileField(FileFieldCacheMixin, ForeignObject):
         # we simply force our file into the cache if it exists so we can delete
         # it after the instance is deleted.
         getattr(instance, self.name, None)
-        _debug(f"pre_delete called for FileField {self.full_name}; prepopulating cache")
+        logger.debug(f"pre_delete called for FileField {self.full_name}; prepopulating cache")
 
     def post_delete(self, sender, instance, **kwargs):
         # When our model was deleted, we should see if our cache contains files
         # that need to be deleted
-        _debug(f"post_delete called for FileField {self.full_name}; checking for any to-delete files")
+        logger.debug(f"post_delete called for FileField {self.full_name}; checking for any to-delete files")
         if self.is_cached(instance):
-            _debug(f"FileField {self.name} is cached, continue checking for any to-delete files")
+            logger.debug(f"FileField {self.name} is cached, continue checking for any to-delete files")
             value = self.get_cached_value(instance, None)
             num_references = value.file_instance._num_child_instances
             # Delete the File if no other object is referencing it
             if value is not None and num_references == 0:
-                _info(f"FileField {self.full_name} has no more references, starting delete for {value}")
+                logger.info(f"FileField {self.full_name} has no more references, starting delete for {value}")
                 value.delete()
 
     def contribute_to_class(self, *args, **kwargs):
@@ -494,7 +487,7 @@ class FileField(FileFieldCacheMixin, ForeignObject):
         # Connect ourselves to some signals;
         # Fields really ought to have these methods themselves Django,
         # you already provide the pre_save method!
-        _debug(f"Connecting signals for FileField {self.full_name}")
+        logger.debug(f"Connecting signals for FileField {self.full_name}")
         post_save.connect(self.post_save, sender=self.model)
         pre_delete.connect(self.pre_delete, sender=self.model)
         post_delete.connect(self.post_delete, sender=self.model)

@@ -2,7 +2,10 @@ from django.apps import apps
 from django.db.models.signals import pre_delete, post_delete
 
 from cdh.files.db import BaseFile
-from cdh.files.logger import logger
+
+import logging
+logger = logging.getLogger(__name__)
+
 
 def delete_file_on_delete(sender, instance, **kwargs):
     """Deletes the file on disk when the corresponding File is deleted"""

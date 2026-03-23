@@ -10,29 +10,13 @@ from django.urls import reverse_lazy
 from .. import settings
 from ..mime_names import get_name_from_mime
 from ..utils import get_storage
-from ..logger import logger
+
+import logging
+logger = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
     from . import TrackedFileField
     from .models import BaseFile
-
-
-def _debug(message: str):
-    """Helper function to log debug messages with a consistent format"""
-    logger.debug(f"FileWrapper: {message}")
-
-
-def _info(message: str):
-    """Helper function to log warning messages with a consistent format"""
-    logger.info(f"FileWrapper: {message}")
-
-def _warning(message: str):
-    """Helper function to log warning messages with a consistent format"""
-    logger.warning(f"FileWrapper: {message}")
-
-def _error(message: str):
-    """Helper function to log error messages with a consistent format"""
-    logger.error(f"FileWrapper: {message}")
 
 
 def _save_file(storage, name_on_disk, content, max_length):
@@ -46,9 +30,9 @@ def _save_file(storage, name_on_disk, content, max_length):
     # If we overwrite the file this instance represents, we need to first
     # delete the old one, as otherwise we would lose the new file
     if storage.exists(name_on_disk):
-        _info(f"Removing {name_on_disk} before saving new file")
+        logger.info(f"Removing {name_on_disk} before saving new file")
         storage.delete(name_on_disk)
-    _info(f"Saving {name_on_disk}")
+    logger.info(f"Saving {name_on_disk}")
     storage.save(
         name_on_disk,
         content,
@@ -153,7 +137,7 @@ class FileWrapper(File):
             if getattr(self, '_file', None) is None:
                 self._file = self.storage.open(self.name_on_disk, 'rb')
         except FileNotFoundError:
-            _debug(f"File {self.name_on_disk} not found on disk")
+            logger.debug(f"File {self.name_on_disk} not found on disk")
             self._file = None
         return self._file
 
@@ -222,7 +206,7 @@ class FileWrapper(File):
         # I just liked saying 'use MAGIC'
         with self.open() as file:
             mime = magic.from_buffer(file.read(2048), mime=True)
-        _debug(f"Detected MIME type {mime} for file {self.name_on_disk}")
+        logger.debug(f"Detected MIME type {mime} for file {self.name_on_disk}")
         self.file_instance.content_type = mime
 
         if original_filename:
@@ -251,23 +235,23 @@ class FileWrapper(File):
         :param save: Whether to also delete the metadata in the DB, defaults
                      to True
         """
-        _debug(f"Deleting FileWrapper {self.uuid} (save={save})")
+        logger.debug(f"Deleting FileWrapper {self.uuid} (save={save})")
 
         if not self.storage.exists(self.name_on_disk):
-            _warning(f"File {self.name_on_disk} does not exist on disk, skipping deletion")
+            logger.warning(f"File {self.name_on_disk} does not exist on disk, skipping deletion")
             return
 
         # Check if we only have the allowed amount number of references or fewer
         # If we have more, and we're not forcing a deletion, stop right here!
         if self.file_instance and self.file_instance._num_child_instances > 0:
-            _warning(f"FileWrapper {self.uuid} still has references, skipping deletion!")
+            logger.warning(f"FileWrapper {self.uuid} still has references, skipping deletion!")
             return
 
         # First, delete our metadata model. The check above _should_ make sure
         # we don't get integrity errors, but it's better to have this fail
         # because of those errors before we have actually deleted the file
         if save:
-            _debug(f"Deleting FileWrapper {self.uuid} from DB")
+            logger.debug(f"Deleting FileWrapper {self.uuid} from DB")
             self.file_instance.delete()
 
         # This is a sanity check; at this point we should have no references to
@@ -278,17 +262,17 @@ class FileWrapper(File):
         if self.file_instance:
             model = self.file_instance._meta.model
             if model.objects.filter(Q(pk=self.file_instance.pk) | Q(uuid=self.uuid)).exists():
-                _error(f"FileWrapper {self.uuid} still has references in DB, this should not happen!")
+                logger.error(f"FileWrapper {self.uuid} still has references in DB, this should not happen!")
                 return
 
         # Only close the file if it's already open, which we know by the
         # presence of self._file
         if hasattr(self, '_file'):
-            _debug(f"Closing file handle for FileWrapper {self.uuid}")
+            logger.debug(f"Closing file handle for FileWrapper {self.uuid}")
             self.close()
             del self.file
 
-        _debug(f"Deleting file {self.name_on_disk} from disk")
+        logger.debug(f"Deleting file {self.name_on_disk} from disk")
         # Run this as part of a post-transaction hook to make sure we only
         # delete the file once the related database changes have been committed.
         transaction.on_commit(lambda: self.storage.delete(self.name_on_disk))
