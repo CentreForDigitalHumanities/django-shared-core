@@ -16,8 +16,10 @@ from django.utils import translation
 from django.utils.functional import keep_lazy_text
 from django.utils.html import _strip_once
 
-from .logger import logger
 from .settings import CDH_EMAIL_THEME_SETTINGS, CDH_EMAIL_PLAIN_FALLBACK_TEMPLATE, CDH_EMAIL_HTML_FALLBACK_TEMPLATE, CDH_EMAIL_FAIL_SILENTLY
+
+import logging
+logger = logging.getLogger(__name__)
 
 
 @keep_lazy_text
