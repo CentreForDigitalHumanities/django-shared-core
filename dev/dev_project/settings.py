@@ -180,6 +180,7 @@ PASSWORD_HASHERS = [
 # Logging
 #
 
+DJANGO_LOG_LEVEL = os.getenv('DJANGO_LOG_LEVEL', 'INFO')
 
 LOGGING = {
     'version': 1,
@@ -187,23 +188,18 @@ LOGGING = {
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
+            'formatter': 'default',
         },
+    },
+    'formatters': {
+        'default': {
+            'format': '{levelname} {name} {message}',
+            'style': '{',
+        }
     },
     'root': {
         'handlers': ['console'],
-        'level': 'DEBUG',
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
-            'propagate': False,
-        },
-        'cdh.files': {
-            'handlers': ['console'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
-            'propagate': False,
-        },
+        'level': DJANGO_LOG_LEVEL,
     },
 }
 
