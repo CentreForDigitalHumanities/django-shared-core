@@ -1,4 +1,4 @@
-django > 5, < 5.2
+django >= 4.2, < 5.2
 ../.[dev]
 django-braces
 django-modeltranslation
