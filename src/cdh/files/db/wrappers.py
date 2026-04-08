@@ -86,6 +86,9 @@ class FileWrapper(File):
         lambda self, value: setattr(self.file_instance, 'pk', value),
         lambda self: delattr(self.file_instance, 'pk')
     )
+    _is_pk_set = property(
+        lambda self: self.file_instance._is_pk_set,
+    )
 
     # For easier access
     uuid = property(lambda self: self.file_instance.uuid)
