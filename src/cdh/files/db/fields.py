@@ -685,6 +685,8 @@ class TrackedFileField(ManyToManyField):
         if file_kwargs is None:
             file_kwargs = {}
 
+        logger.warning("TrackedFileField is semi-deprecated; behavior is no longer tested")
+
         self.url_pattern = url_pattern
         file_kwargs['url_pattern'] = url_pattern
 

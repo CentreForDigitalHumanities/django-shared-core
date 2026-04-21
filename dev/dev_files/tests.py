@@ -185,276 +185,276 @@ class FileTests(TestCase):
 
         get_storage().clear()
 
-    def test_tracked_save_delete(self):
-        MetadataModel = self.tracked_cls.files.field.related_model
-        storage = get_storage()
+    # def test_tracked_save_delete(self):
+    #     MetadataModel = self.tracked_cls.files.field.related_model
+    #     storage = get_storage()
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj = self.tracked_cls()
+    #         obj.save()
+    #         obj.files.add(File(open(self.file_cat, mode='rb')))
+    #
+    #     self.assertTrue(
+    #         storage.exists(obj.files.current_file.name_on_disk)
+    #     )
+    #     self.assertEqual(
+    #         MetadataModel.objects.count(),
+    #         1
+    #     )
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj.delete()
+    #
+    #     self.assertFalse(
+    #         storage.exists(obj.files.current_file.name_on_disk)
+    #     )
+    #     self.assertEqual(
+    #         MetadataModel.objects.count(),
+    #         0
+    #     )
+    #     self.assertEqual(
+    #         0,
+    #         storage.num_files(),
+    #         "Storage is not empty"
+    #     )
+    #
+    #     get_storage().clear()
 
-        with self.captureOnCommitCallbacks(execute=True):
-            obj = self.tracked_cls()
-            obj.save()
-            obj.files.add(File(open(self.file_cat, mode='rb')))
+    # def test_tracked_multiple_files(self):
+    #     MetadataModel = self.tracked_cls.files.field.related_model
+    #     storage = get_storage()
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj = self.tracked_cls()
+    #         obj.save()
+    #         obj.files.add(File(open(self.file_cat, mode='rb')))
+    #         cat_uuid = obj.files.current_file.uuid
+    #         obj.files.add(File(open(self.file_dog, mode='rb')))
+    #         dog_uuid = obj.files.current_file.uuid
+    #
+    #     self.assertNotEqual(cat_uuid, dog_uuid)
+    #
+    #     self.assertTrue(
+    #         storage.exists(obj.files.current_file.name_on_disk)
+    #     )
+    #     self.assertEqual(
+    #         obj.files.current_file.name,
+    #         self.file_dog
+    #     )
+    #     self.assertEqual(
+    #         MetadataModel.objects.count(),
+    #         2
+    #     )
+    #     self.assertEqual(
+    #         len(list(obj.files.all)),
+    #         2
+    #     )
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj.files.delete(obj.files.current_file)
+    #
+    #     # Current file should now be none
+    #     self.assertIsNone(
+    #         obj.files.current_file
+    #     )
+    #
+    #     self.assertFalse(
+    #         storage.exists(dog_uuid)
+    #     )
+    #     self.assertTrue(
+    #         storage.exists(cat_uuid)
+    #     )
+    #     self.assertEqual(
+    #         MetadataModel.objects.count(),
+    #         1
+    #     )
+    #     self.assertEqual(
+    #         storage.num_files(),
+    #         1
+    #     )
+    #     self.assertEqual(
+    #         len(list(obj.files.all)),
+    #         1
+    #     )
+    #
+    #     # Try to set the old cat file as current
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj.files.set_as_current(cat_uuid)
+    #
+    #     self.assertIsNotNone(
+    #         obj.files.current_file
+    #     )
+    #
+    #     self.assertEqual(
+    #         obj.files.current_file.name,
+    #         self.file_cat
+    #     )
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj.delete()
+    #
+    #     self.assertFalse(
+    #         storage.exists(obj.files.current_file.name_on_disk)
+    #     )
+    #     self.assertEqual(
+    #         MetadataModel.objects.count(),
+    #         0
+    #     )
+    #     self.assertEqual(
+    #         self.tracked_cls.objects.count(),
+    #         0
+    #     )
+    #     self.assertEqual(
+    #         0,
+    #         storage.num_files(),
+    #         "Storage is not empty"
+    #     )
+    #     get_storage().clear()
 
-        self.assertTrue(
-            storage.exists(obj.files.current_file.name_on_disk)
-        )
-        self.assertEqual(
-            MetadataModel.objects.count(),
-            1
-        )
+    # def test_tracked_delete_all(self):
+    #     MetadataModel = self.tracked_cls.files.field.related_model
+    #     storage = get_storage()
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj = self.tracked_cls()
+    #         obj.save()
+    #         obj.files.add(File(open(self.file_cat, mode='rb')))
+    #         cat_uuid = obj.files.current_file.uuid
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj.files.add(File(open(self.file_dog, mode='rb')))
+    #         dog_uuid = obj.files.current_file.uuid
+    #
+    #     self.assertTrue(
+    #         storage.exists(cat_uuid)
+    #     )
+    #     self.assertTrue(
+    #         storage.exists(dog_uuid)
+    #     )
+    #     self.assertEqual(
+    #         MetadataModel.objects.count(),
+    #         2
+    #     )
+    #     self.assertEqual(
+    #         self.tracked_cls.objects.count(),
+    #         1
+    #     )
+    #     self.assertEqual(
+    #         storage.num_files(),
+    #         2
+    #     )
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj.files.delete_all()
+    #
+    #     self.assertFalse(
+    #         storage.exists(cat_uuid)
+    #     )
+    #     self.assertFalse(
+    #         storage.exists(dog_uuid)
+    #     )
+    #     self.assertEqual(
+    #         MetadataModel.objects.count(),
+    #         0
+    #     )
+    #     self.assertEqual(
+    #         self.tracked_cls.objects.count(),
+    #         1
+    #     )
+    #     self.assertEqual(
+    #         storage.num_files(),
+    #         0
+    #     )
+    #     get_storage().clear()
 
-        with self.captureOnCommitCallbacks(execute=True):
-            obj.delete()
+    # def test_tracked_auto_delete(self):
+    #     MetadataModel = self.tracked_cls.files.field.related_model
+    #     storage = get_storage()
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj = self.tracked_cls()
+    #         obj.save()
+    #         obj.files.add(File(open(self.file_cat, mode='rb')))
+    #         cat_uuid = obj.files.current_file.uuid
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj.files.add(File(open(self.file_dog, mode='rb')))
+    #         dog_uuid = obj.files.current_file.uuid
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj.delete()
+    #
+    #     self.assertFalse(
+    #         storage.exists(cat_uuid)
+    #     )
+    #     self.assertFalse(
+    #         storage.exists(dog_uuid)
+    #     )
+    #     self.assertEqual(
+    #         MetadataModel.objects.count(),
+    #         0
+    #     )
+    #     self.assertEqual(
+    #         self.tracked_cls.objects.count(),
+    #         0
+    #     )
+    #     self.assertEqual(
+    #         storage.num_files(),
+    #         0
+    #     )
+    #     get_storage().clear()
 
-        self.assertFalse(
-            storage.exists(obj.files.current_file.name_on_disk)
-        )
-        self.assertEqual(
-            MetadataModel.objects.count(),
-            0
-        )
-        self.assertEqual(
-            0,
-            storage.num_files(),
-            "Storage is not empty"
-        )
-
-        get_storage().clear()
-
-    def test_tracked_multiple_files(self):
-        MetadataModel = self.tracked_cls.files.field.related_model
-        storage = get_storage()
-
-        with self.captureOnCommitCallbacks(execute=True):
-            obj = self.tracked_cls()
-            obj.save()
-            obj.files.add(File(open(self.file_cat, mode='rb')))
-            cat_uuid = obj.files.current_file.uuid
-            obj.files.add(File(open(self.file_dog, mode='rb')))
-            dog_uuid = obj.files.current_file.uuid
-
-        self.assertNotEqual(cat_uuid, dog_uuid)
-
-        self.assertTrue(
-            storage.exists(obj.files.current_file.name_on_disk)
-        )
-        self.assertEqual(
-            obj.files.current_file.name,
-            self.file_dog
-        )
-        self.assertEqual(
-            MetadataModel.objects.count(),
-            2
-        )
-        self.assertEqual(
-            len(list(obj.files.all)),
-            2
-        )
-
-        with self.captureOnCommitCallbacks(execute=True):
-            obj.files.delete(obj.files.current_file)
-
-        # Current file should now be none
-        self.assertIsNone(
-            obj.files.current_file
-        )
-
-        self.assertFalse(
-            storage.exists(dog_uuid)
-        )
-        self.assertTrue(
-            storage.exists(cat_uuid)
-        )
-        self.assertEqual(
-            MetadataModel.objects.count(),
-            1
-        )
-        self.assertEqual(
-            storage.num_files(),
-            1
-        )
-        self.assertEqual(
-            len(list(obj.files.all)),
-            1
-        )
-
-        # Try to set the old cat file as current
-        with self.captureOnCommitCallbacks(execute=True):
-            obj.files.set_as_current(cat_uuid)
-
-        self.assertIsNotNone(
-            obj.files.current_file
-        )
-
-        self.assertEqual(
-            obj.files.current_file.name,
-            self.file_cat
-        )
-
-        with self.captureOnCommitCallbacks(execute=True):
-            obj.delete()
-
-        self.assertFalse(
-            storage.exists(obj.files.current_file.name_on_disk)
-        )
-        self.assertEqual(
-            MetadataModel.objects.count(),
-            0
-        )
-        self.assertEqual(
-            self.tracked_cls.objects.count(),
-            0
-        )
-        self.assertEqual(
-            0,
-            storage.num_files(),
-            "Storage is not empty"
-        )
-        get_storage().clear()
-
-    def test_tracked_delete_all(self):
-        MetadataModel = self.tracked_cls.files.field.related_model
-        storage = get_storage()
-
-        with self.captureOnCommitCallbacks(execute=True):
-            obj = self.tracked_cls()
-            obj.save()
-            obj.files.add(File(open(self.file_cat, mode='rb')))
-            cat_uuid = obj.files.current_file.uuid
-
-        with self.captureOnCommitCallbacks(execute=True):
-            obj.files.add(File(open(self.file_dog, mode='rb')))
-            dog_uuid = obj.files.current_file.uuid
-
-        self.assertTrue(
-            storage.exists(cat_uuid)
-        )
-        self.assertTrue(
-            storage.exists(dog_uuid)
-        )
-        self.assertEqual(
-            MetadataModel.objects.count(),
-            2
-        )
-        self.assertEqual(
-            self.tracked_cls.objects.count(),
-            1
-        )
-        self.assertEqual(
-            storage.num_files(),
-            2
-        )
-
-        with self.captureOnCommitCallbacks(execute=True):
-            obj.files.delete_all()
-
-        self.assertFalse(
-            storage.exists(cat_uuid)
-        )
-        self.assertFalse(
-            storage.exists(dog_uuid)
-        )
-        self.assertEqual(
-            MetadataModel.objects.count(),
-            0
-        )
-        self.assertEqual(
-            self.tracked_cls.objects.count(),
-            1
-        )
-        self.assertEqual(
-            storage.num_files(),
-            0
-        )
-        get_storage().clear()
-
-    def test_tracked_auto_delete(self):
-        MetadataModel = self.tracked_cls.files.field.related_model
-        storage = get_storage()
-
-        with self.captureOnCommitCallbacks(execute=True):
-            obj = self.tracked_cls()
-            obj.save()
-            obj.files.add(File(open(self.file_cat, mode='rb')))
-            cat_uuid = obj.files.current_file.uuid
-
-        with self.captureOnCommitCallbacks(execute=True):
-            obj.files.add(File(open(self.file_dog, mode='rb')))
-            dog_uuid = obj.files.current_file.uuid
-
-        with self.captureOnCommitCallbacks(execute=True):
-            obj.delete()
-
-        self.assertFalse(
-            storage.exists(cat_uuid)
-        )
-        self.assertFalse(
-            storage.exists(dog_uuid)
-        )
-        self.assertEqual(
-            MetadataModel.objects.count(),
-            0
-        )
-        self.assertEqual(
-            self.tracked_cls.objects.count(),
-            0
-        )
-        self.assertEqual(
-            storage.num_files(),
-            0
-        )
-        get_storage().clear()
-
-    def test_tracked_set_current(self):
-        storage = get_storage()
-
-        with self.captureOnCommitCallbacks(execute=True):
-            obj = self.tracked_cls()
-            obj.save()
-            obj.files.add(File(open(self.file_cat, mode='rb')))
-            cat_uuid = obj.files.current_file.uuid
-            cat_wrapper = obj.files.current_file
-
-        with self.captureOnCommitCallbacks(execute=True):
-            obj.files.add(File(open(self.file_dog, mode='rb')))
-            dog_uuid = obj.files.current_file.uuid
-
-        self.assertEqual(
-            self.file_dog,
-            obj.files.current_file.name,
-        )
-        self.assertEqual(
-            dog_uuid,
-            obj.files.current_file.uuid,
-        )
-        self.assertEqual(
-            2,
-            storage.num_files(),
-        )
-
-        with self.captureOnCommitCallbacks(execute=True):
-            obj.files.set_as_current(cat_wrapper)
-
-        self.assertEqual(
-            self.file_cat,
-            obj.files.current_file.name,
-        )
-        self.assertEqual(
-            cat_uuid,
-            obj.files.current_file.uuid,
-        )
-        self.assertEqual(
-            2,
-            storage.num_files(),
-        )
-        self.assertEqual(
-            len(list(obj.files.all)),
-            2
-        )
-
-        with self.captureOnCommitCallbacks(execute=True):
-            obj.delete()
-
-        get_storage().clear()
+    # def test_tracked_set_current(self):
+    #     storage = get_storage()
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj = self.tracked_cls()
+    #         obj.save()
+    #         obj.files.add(File(open(self.file_cat, mode='rb')))
+    #         cat_uuid = obj.files.current_file.uuid
+    #         cat_wrapper = obj.files.current_file
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj.files.add(File(open(self.file_dog, mode='rb')))
+    #         dog_uuid = obj.files.current_file.uuid
+    #
+    #     self.assertEqual(
+    #         self.file_dog,
+    #         obj.files.current_file.name,
+    #     )
+    #     self.assertEqual(
+    #         dog_uuid,
+    #         obj.files.current_file.uuid,
+    #     )
+    #     self.assertEqual(
+    #         2,
+    #         storage.num_files(),
+    #     )
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj.files.set_as_current(cat_wrapper)
+    #
+    #     self.assertEqual(
+    #         self.file_cat,
+    #         obj.files.current_file.name,
+    #     )
+    #     self.assertEqual(
+    #         cat_uuid,
+    #         obj.files.current_file.uuid,
+    #     )
+    #     self.assertEqual(
+    #         2,
+    #         storage.num_files(),
+    #     )
+    #     self.assertEqual(
+    #         len(list(obj.files.all)),
+    #         2
+    #     )
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj.delete()
+    #
+    #     get_storage().clear()
 
     def test_single_set_from_django_file(self):
         storage = get_storage()
@@ -650,141 +650,141 @@ class FileTests(TestCase):
 
         get_storage().clear()
 
-    def test_tracked_set_from_metadata_model(self):
-        storage = get_storage()
+    # def test_tracked_set_from_metadata_model(self):
+    #     storage = get_storage()
+    #
+    #     MetadataModel = self.single_cls.required_file.field.related_model
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj_1 = self.single_cls()
+    #         obj_1.required_file = File(open(self.file_cat, mode='rb'))
+    #         obj_1.save()
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj_2 = self.tracked_cls()
+    #         obj_2.save()
+    #         obj_2.files.current_file = obj_1.required_file.file_instance
+    #
+    #     self.assertTrue(
+    #         storage.exists(obj_2.files.current_file.name_on_disk)
+    #     )
+    #     self.assertEqual(
+    #         MetadataModel.objects.count(),
+    #         1
+    #     )
+    #     self.assertEqual(
+    #         storage.num_files(),
+    #         1
+    #     )
+    #     self.assertEqual(
+    #         obj_1.required_file.file_instance,
+    #         obj_2.files.current_file.file_instance,
+    #     )
+    #     self.assertEqual(
+    #         self.file_cat,
+    #         obj_2.files.current_file.name
+    #     )
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj_1.delete()
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj_2.delete()
+    #
+    #     get_storage().clear()
 
-        MetadataModel = self.single_cls.required_file.field.related_model
+    # def test_tracked_set_from_file_wrapper(self):
+    #     storage = get_storage()
+    #
+    #     MetadataModel = self.single_cls.required_file.field.related_model
+    #     data = (File(open(self.file_cat, mode='rb')), None, True)
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj_1 = self.single_cls()
+    #         obj_1.required_file = data
+    #         obj_1.save()
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj_2 = self.tracked_cls()
+    #         obj_2.save()
+    #         obj_2.files.current_file = obj_1.required_file
+    #
+    #     self.assertTrue(
+    #         storage.exists(obj_2.files.current_file.name_on_disk)
+    #     )
+    #     self.assertEqual(
+    #         MetadataModel.objects.count(),
+    #         1
+    #     )
+    #     self.assertEqual(
+    #         storage.num_files(),
+    #         1
+    #     )
+    #     self.assertEqual(
+    #         obj_1.required_file.file_instance,
+    #         obj_2.files.current_file.file_instance,
+    #     )
+    #     self.assertEqual(
+    #         self.file_cat,
+    #         obj_2.files.current_file.name
+    #     )
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj_1.delete()
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj_2.delete()
+    #
+    #     get_storage().clear()
 
-        with self.captureOnCommitCallbacks(execute=True):
-            obj_1 = self.single_cls()
-            obj_1.required_file = File(open(self.file_cat, mode='rb'))
-            obj_1.save()
-
-        with self.captureOnCommitCallbacks(execute=True):
-            obj_2 = self.tracked_cls()
-            obj_2.save()
-            obj_2.files.current_file = obj_1.required_file.file_instance
-
-        self.assertTrue(
-            storage.exists(obj_2.files.current_file.name_on_disk)
-        )
-        self.assertEqual(
-            MetadataModel.objects.count(),
-            1
-        )
-        self.assertEqual(
-            storage.num_files(),
-            1
-        )
-        self.assertEqual(
-            obj_1.required_file.file_instance,
-            obj_2.files.current_file.file_instance,
-        )
-        self.assertEqual(
-            self.file_cat,
-            obj_2.files.current_file.name
-        )
-
-        with self.captureOnCommitCallbacks(execute=True):
-            obj_1.delete()
-
-        with self.captureOnCommitCallbacks(execute=True):
-            obj_2.delete()
-
-        get_storage().clear()
-
-    def test_tracked_set_from_file_wrapper(self):
-        storage = get_storage()
-
-        MetadataModel = self.single_cls.required_file.field.related_model
-        data = (File(open(self.file_cat, mode='rb')), None, True)
-
-        with self.captureOnCommitCallbacks(execute=True):
-            obj_1 = self.single_cls()
-            obj_1.required_file = data
-            obj_1.save()
-
-        with self.captureOnCommitCallbacks(execute=True):
-            obj_2 = self.tracked_cls()
-            obj_2.save()
-            obj_2.files.current_file = obj_1.required_file
-
-        self.assertTrue(
-            storage.exists(obj_2.files.current_file.name_on_disk)
-        )
-        self.assertEqual(
-            MetadataModel.objects.count(),
-            1
-        )
-        self.assertEqual(
-            storage.num_files(),
-            1
-        )
-        self.assertEqual(
-            obj_1.required_file.file_instance,
-            obj_2.files.current_file.file_instance,
-        )
-        self.assertEqual(
-            self.file_cat,
-            obj_2.files.current_file.name
-        )
-
-        with self.captureOnCommitCallbacks(execute=True):
-            obj_1.delete()
-        with self.captureOnCommitCallbacks(execute=True):
-            obj_2.delete()
-
-        get_storage().clear()
-
-    def test_tracked_set_from_None(self):
-        storage = get_storage()
-
-        MetadataModel = self.single_cls.required_file.field.related_model
-
-        with self.captureOnCommitCallbacks(execute=True):
-            obj = self.tracked_cls()
-            obj.save()
-            obj.files.current_file = File(open(self.file_cat, mode='rb'))
-
-        self.assertTrue(
-            storage.exists(obj.files.current_file.name_on_disk)
-        )
-        self.assertEqual(
-            MetadataModel.objects.count(),
-            1
-        )
-        self.assertEqual(
-            storage.num_files(),
-            1
-        )
-        self.assertEqual(
-            self.file_cat,
-            obj.files.current_file.name
-        )
-
-        with self.captureOnCommitCallbacks(execute=True):
-            obj.files.current_file = None
-
-        self.assertIsNone(
-            obj.files.current_file
-        )
-        self.assertEqual(
-            MetadataModel.objects.count(),
-            0
-        )
-        self.assertEqual(
-            storage.num_files(),
-            0
-        )
-        self.assertEqual(
-            len(list(obj.files.all)),
-            0
-        )
-
-        with self.captureOnCommitCallbacks(execute=True):
-            obj.delete()
-
-        get_storage().clear()
+    # def test_tracked_set_from_None(self):
+    #     storage = get_storage()
+    #
+    #     MetadataModel = self.single_cls.required_file.field.related_model
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj = self.tracked_cls()
+    #         obj.save()
+    #         obj.files.current_file = File(open(self.file_cat, mode='rb'))
+    #
+    #     self.assertTrue(
+    #         storage.exists(obj.files.current_file.name_on_disk)
+    #     )
+    #     self.assertEqual(
+    #         MetadataModel.objects.count(),
+    #         1
+    #     )
+    #     self.assertEqual(
+    #         storage.num_files(),
+    #         1
+    #     )
+    #     self.assertEqual(
+    #         self.file_cat,
+    #         obj.files.current_file.name
+    #     )
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj.files.current_file = None
+    #
+    #     self.assertIsNone(
+    #         obj.files.current_file
+    #     )
+    #     self.assertEqual(
+    #         MetadataModel.objects.count(),
+    #         0
+    #     )
+    #     self.assertEqual(
+    #         storage.num_files(),
+    #         0
+    #     )
+    #     self.assertEqual(
+    #         len(list(obj.files.all)),
+    #         0
+    #     )
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj.delete()
+    #
+    #     get_storage().clear()
 
     def test_filename_generator(self):
         static_name = "I love cats"
@@ -850,28 +850,28 @@ class FileTests(TestCase):
 
         get_storage().clear()
 
-    def test_tracked_url_generation(self):
-        with self.captureOnCommitCallbacks(execute=True):
-            obj = self.tracked_cls()
-            obj.save()
-            obj.files.add(File(open(self.file_cat, mode='rb')))
-
-        self.assertEqual(
-            reverse(self.url_pattern_tracked, args=[
-                obj.files.current_file.uuid
-            ]),
-            obj.files.current_file.url,
-        )
-
-        with self.captureOnCommitCallbacks(execute=True):
-            obj.delete()
-        # We do not test the None case, as changing it at runtime isn't actually
-        # supported. The single case works (although also not supported), so we
-        # can actually test it there. If it works there, it should work here.
-        # This test case should only test if setting url_pattern will actually
-        # propagate it to the linking model.
-
-        get_storage().clear()
+    # def test_tracked_url_generation(self):
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj = self.tracked_cls()
+    #         obj.save()
+    #         obj.files.add(File(open(self.file_cat, mode='rb')))
+    #
+    #     self.assertEqual(
+    #         reverse(self.url_pattern_tracked, args=[
+    #             obj.files.current_file.uuid
+    #         ]),
+    #         obj.files.current_file.url,
+    #     )
+    #
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj.delete()
+    #     # We do not test the None case, as changing it at runtime isn't actually
+    #     # supported. The single case works (although also not supported), so we
+    #     # can actually test it there. If it works there, it should work here.
+    #     # This test case should only test if setting url_pattern will actually
+    #     # propagate it to the linking model.
+    #
+    #     get_storage().clear()
 
 
 class CustomFileTests(FileTests):
