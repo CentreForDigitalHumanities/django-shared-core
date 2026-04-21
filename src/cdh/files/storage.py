@@ -32,6 +32,13 @@ class CDHFileStorage(FileSystemStorage):
     def directory_permissions_mode(self):
         return settings.FILE_UPLOAD_DIRECTORY_PERMISSIONS
 
+    def delete(self, name):
+        # Don't delete files if block deletion is enabled
+        if settings.FILE_BLOCK_DELETION:
+            return
+
+        super().delete(name)
+
 
 class DefaultStorage(LazyObject):
     def _setup(self):

@@ -3,18 +3,41 @@ from typing import Optional, Union, TYPE_CHECKING
 
 from django.core.files import File
 import magic
-from django.db.models import Manager
+from django.db.models import Manager, Q
+from django.db import transaction
 from django.urls import reverse_lazy
 
 from .. import settings
 from ..mime_names import get_name_from_mime
 from ..utils import get_storage
 
+import logging
+logger = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
     from . import TrackedFileField
     from .models import BaseFile
 
+
+def _save_file(storage, name_on_disk, content, max_length):
+    """Does the actual saving of the file to disk. This method is called by
+    FileWrapper.save() and should not be called directly.
+
+    This is a separate function to allow it to run as a post-transaction
+    hook. (This is needed, doing it during a transaction may result in dataloss
+    when a transaction is rolled back)
+    """
+    # If we overwrite the file this instance represents, we need to first
+    # delete the old one, as otherwise we would lose the new file
+    if storage.exists(name_on_disk):
+        logger.info(f"Removing {name_on_disk} before saving new file")
+        storage.delete(name_on_disk)
+    logger.info(f"Saving {name_on_disk}")
+    storage.save(
+        name_on_disk,
+        content,
+        max_length=max_length
+    )
 
 class FileWrapper(File):
     """
@@ -114,6 +137,7 @@ class FileWrapper(File):
             if getattr(self, '_file', None) is None:
                 self._file = self.storage.open(self.name_on_disk, 'rb')
         except FileNotFoundError:
+            logger.debug(f"File {self.name_on_disk} not found on disk")
             self._file = None
         return self._file
 
@@ -171,21 +195,18 @@ class FileWrapper(File):
         if original_filename is None and hasattr(content, 'name'):
             original_filename = content.name
 
-        # If we overwrite the file this instance represents, we need to first
-        # delete the old one, as otherwise we would lose the new file
-        if self.storage.exists(self.name_on_disk):
-            self.storage.delete(self.name_on_disk)
-        self.storage.save(
+        transaction.on_commit(lambda: _save_file(
+            self.storage,
             self.name_on_disk,
-            content,
-            max_length=self.field.max_length
-        )
+            content, self.field.max_length
+        ))
         self._committed = True
 
         # Use magic to determine the mime type. It's pretty obvious, I know
         # I just liked saying 'use MAGIC'
         with self.open() as file:
             mime = magic.from_buffer(file.read(2048), mime=True)
+        logger.debug(f"Detected MIME type {mime} for file {self.name_on_disk}")
         self.file_instance.content_type = mime
 
         if original_filename:
@@ -205,7 +226,7 @@ class FileWrapper(File):
 
     save.alters_data = True
 
-    def delete(self, save=True, force=False):
+    def delete(self, save=True):
         """Deletes the file on disk. If save = True, the metadata object will
         also be deleted. Note: only delete the metadata object if no other DB
         object is referencing it, otherwise you'll get nasty Integrity
@@ -213,42 +234,48 @@ class FileWrapper(File):
 
         :param save: Whether to also delete the metadata in the DB, defaults
                      to True
-        :param force: Whether to force a deletion if multiple DB objects still
-                      refer to it, defaults to False
         """
+        logger.debug(f"Deleting FileWrapper {self.uuid} (save={save})")
+
         if not self.storage.exists(self.name_on_disk):
+            logger.warning(f"File {self.name_on_disk} does not exist on disk, skipping deletion")
             return
-
-        # By default, only delete if there are no references in the DB anymore
-        deletion_threshold = 0
-
-        # If we are instructed to also destroy our file_instance and we still
-        # have a reference, we allow deletion with 1 more reference
-        if save and self.file_instance:
-            model = self.file_instance.__class__
-            if model.objects.filter(pk=self.file_instance.pk).exists():
-                deletion_threshold += 1
 
         # Check if we only have the allowed amount number of references or fewer
         # If we have more, and we're not forcing a deletion, stop right here!
-        if self.file_instance and \
-           self.file_instance._num_child_instances > deletion_threshold and \
-           not force:
+        if self.file_instance and self.file_instance._num_child_instances > 0:
+            logger.warning(f"FileWrapper {self.uuid} still has references, skipping deletion!")
             return
 
         # First, delete our metadata model. The check above _should_ make sure
         # we don't get integrity errors, but it's better to have this fail
         # because of those errors before we have actually deleted the file
         if save:
+            logger.debug(f"Deleting FileWrapper {self.uuid} from DB")
             self.file_instance.delete()
+
+        # This is a sanity check; at this point we should have no references to
+        # this file anymore, so we should be able to safely delete it from disk
+        # However, if for some reason this method was called with save=False,
+        # with a still existing file_instance, some code messed up.
+        # This catches that situation.
+        if self.file_instance:
+            model = self.file_instance._meta.model
+            if model.objects.filter(Q(pk=self.file_instance.pk) | Q(uuid=self.uuid)).exists():
+                logger.error(f"FileWrapper {self.uuid} still has references in DB, this should not happen!")
+                return
 
         # Only close the file if it's already open, which we know by the
         # presence of self._file
         if hasattr(self, '_file'):
+            logger.debug(f"Closing file handle for FileWrapper {self.uuid}")
             self.close()
             del self.file
 
-        self.storage.delete(self.name_on_disk)
+        logger.debug(f"Deleting file {self.name_on_disk} from disk")
+        # Run this as part of a post-transaction hook to make sure we only
+        # delete the file once the related database changes have been committed.
+        transaction.on_commit(lambda: self.storage.delete(self.name_on_disk))
 
         self.original_filename = None
         self._committed = False
