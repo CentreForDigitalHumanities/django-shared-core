@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from csp.constants import NONE, SELF, NONCE, UNSAFE_INLINE
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
@@ -50,6 +51,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Django-CSP
+    'csp',
 
     # Django extensions
     'django_extensions',
@@ -156,21 +160,21 @@ LOGIN_REDIRECT_URL = reverse_lazy('main:home')
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.federated_auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.federated_auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.federated_auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.federated_auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
 PASSWORD_HASHERS = [
-    'django.contrib.federated_auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
 ]
 
 
@@ -213,16 +217,17 @@ SESSION_COOKIE_AGE = 60 * 60 * 12  # 12 hours
 
 # Django CSP
 # http://django-csp.readthedocs.io/en/latest/index.html
-CSP_REPORT_ONLY = True
-CSP_UPGRADE_INSECURE_REQUESTS = not DEBUG
-CSP_INCLUDE_NONCE_IN = ['script-src']
-
-CSP_DEFAULT_SRC = ["'self'", ]
-CSP_SCRIPT_SRC = ["'self'", ]
-CSP_FONT_SRC = ["'self'", 'data:', ]
-CSP_STYLE_SRC = ["'self'", "'unsafe-inline'"]
-CSP_IMG_SRC = ["'self'", 'data:', "*"]  # Remove the last one if you
-# want to be really secure
+CONTENT_SECURITY_POLICY = {
+    'DIRECTIVES': {
+        'default-src': [SELF],
+        'font-src': [SELF, 'data:'],
+        'img-src': [SELF, 'data:', '*'],  # Remove the last one if you
+                                          # want to be really secure
+        'script-src': [SELF, NONCE],
+        'style-src': [SELF, UNSAFE_INLINE],
+        'upgrade-insecure-requests': not DEBUG,
+    }
+}
 
 # Django Simple Menu
 # https://django-simple-menu.readthedocs.io/en/latest/index.html
@@ -240,6 +245,10 @@ try:
 
     INSTALLED_APPS += SAML_APPS
     MIDDLEWARE += SAML_MIDDLEWARE
+
+    if not SESSION_COOKIE_SECURE:
+        # Needed on dev
+        SAML_SESSION_COOKIE_SAMESITE = 'Lax'
 
     SAML_CONFIG = create_saml_config(
         base_url='http://localhost:8000/',

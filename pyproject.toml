@@ -8,7 +8,7 @@ include-package-data = true
 [project]
 name = "cdh-django-core"
 description = "A Django apps library for CDH projects"
-version = "3.2.0"
+version = "3.3.0"
 readme = "README.md"
 authors = [
     {name = "DH-IT Portal Development", email = "portaldev.gw@uu.nl"},
@@ -23,7 +23,7 @@ classifiers = [
     "Operating System :: Linux",
 ]
 dependencies = [
-    "Django >=4.2,<5.1",
+    "Django >=4.2,<5.2",
     "Deprecated",
 ]
 
@@ -48,35 +48,35 @@ core = [
     "djangorestframework",
     "django-csp",
     "cryptography",
-    "Django >=4.2,<5.1",
+    "Django >=4.2,<5.2",
 ]
 mail = [
-    "Django >=4.2,<5.1",
+    "Django >=4.2,<5.2",
 ]
 federated-auth = [
-    "djangosaml2",
+    "djangosaml2 >=1.11"
 ]
 files = [
     "python-magic",
-    "Django >=4.2,<5.1",
+    "Django >=4.2,<5.2",
 ]
 integration_platform = [
     "cdh-django-core[rest]",
-    "Django >=4.2,<5.1",
+    "Django >=4.2,<5.2",
 ]
 rest = [
     "requests",
     "PyJWT",
     "djangorestframework",
     "django-filter",
-    "Django >=4.2,<5.1",
+    "Django >=4.2,<5.2",
 ]
 vue = [
     "pyscss",
     "lesscpy",
     "closure",
     "vbuild",
-    "Django >=4.2,<5.1",
+    "Django >=4.2,<5.2",
 ]
 docs = [
     "sphinx",
