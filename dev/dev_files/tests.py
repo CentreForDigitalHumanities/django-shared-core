@@ -1,5 +1,5 @@
 from django.core.files import File
-from django.test import TestCase
+from django.test import TestCase, TransactionTestCase
 from django.urls import reverse
 
 from cdh.files import settings
@@ -65,9 +65,10 @@ class FileTests(TestCase):
         MetadataModel = self.single_cls.required_file.field.related_model
         storage = get_storage()
 
-        obj = self.single_cls()
-        obj.required_file = File(open(self.file_cat, mode='rb'))
-        obj.save()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj = self.single_cls()
+            obj.required_file = File(open(self.file_cat, mode='rb'))
+            obj.save()
 
         self.assertTrue(
             storage.exists(obj.required_file.name_on_disk)
@@ -77,7 +78,8 @@ class FileTests(TestCase):
             1
         )
 
-        obj.delete()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj.delete()
 
         self.assertFalse(
             storage.exists(obj.required_file.name_on_disk)
@@ -92,13 +94,16 @@ class FileTests(TestCase):
             "Storage is not empty"
         )
 
+        get_storage().clear()
+
     def test_single_multiple_use(self):
         MetadataModel = self.single_cls.required_file.field.related_model
         storage = get_storage()
 
-        obj_1 = self.single_cls()
-        obj_1.required_file = File(open(self.file_cat, mode='rb'))
-        obj_1.save()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj_1 = self.single_cls()
+            obj_1.required_file = File(open(self.file_cat, mode='rb'))
+            obj_1.save()
 
         self.assertTrue(
             storage.exists(obj_1.required_file.name_on_disk)
@@ -108,9 +113,10 @@ class FileTests(TestCase):
             1
         )
 
-        obj_2 = self.single_cls()
-        obj_2.required_file = obj_1.required_file
-        obj_2.save()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj_2 = self.single_cls()
+            obj_2.required_file = obj_1.required_file
+            obj_2.save()
 
         self.assertTrue(
             storage.exists(obj_1.required_file.name_on_disk)
@@ -134,7 +140,8 @@ class FileTests(TestCase):
             "Second object was not created"
         )
 
-        obj_1.delete()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj_1.delete()
 
         self.assertTrue(
             storage.exists(obj_2.required_file.name_on_disk),
@@ -152,7 +159,8 @@ class FileTests(TestCase):
             "Somehow the object referencing the File was not deleted?"
         )
 
-        obj_2.delete()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj_2.delete()
 
         self.assertFalse(
             storage.exists(obj_2.required_file.name_on_disk),
@@ -175,13 +183,16 @@ class FileTests(TestCase):
             "Storage is not empty"
         )
 
+        get_storage().clear()
+
     def test_tracked_save_delete(self):
         MetadataModel = self.tracked_cls.files.field.related_model
         storage = get_storage()
 
-        obj = self.tracked_cls()
-        obj.save()
-        obj.files.add(File(open(self.file_cat, mode='rb')))
+        with self.captureOnCommitCallbacks(execute=True):
+            obj = self.tracked_cls()
+            obj.save()
+            obj.files.add(File(open(self.file_cat, mode='rb')))
 
         self.assertTrue(
             storage.exists(obj.files.current_file.name_on_disk)
@@ -191,7 +202,8 @@ class FileTests(TestCase):
             1
         )
 
-        obj.delete()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj.delete()
 
         self.assertFalse(
             storage.exists(obj.files.current_file.name_on_disk)
@@ -206,16 +218,19 @@ class FileTests(TestCase):
             "Storage is not empty"
         )
 
+        get_storage().clear()
+
     def test_tracked_multiple_files(self):
         MetadataModel = self.tracked_cls.files.field.related_model
         storage = get_storage()
 
-        obj = self.tracked_cls()
-        obj.save()
-        obj.files.add(File(open(self.file_cat, mode='rb')))
-        cat_uuid = obj.files.current_file.uuid
-        obj.files.add(File(open(self.file_dog, mode='rb')))
-        dog_uuid = obj.files.current_file.uuid
+        with self.captureOnCommitCallbacks(execute=True):
+            obj = self.tracked_cls()
+            obj.save()
+            obj.files.add(File(open(self.file_cat, mode='rb')))
+            cat_uuid = obj.files.current_file.uuid
+            obj.files.add(File(open(self.file_dog, mode='rb')))
+            dog_uuid = obj.files.current_file.uuid
 
         self.assertNotEqual(cat_uuid, dog_uuid)
 
@@ -235,7 +250,8 @@ class FileTests(TestCase):
             2
         )
 
-        obj.files.delete(obj.files.current_file)
+        with self.captureOnCommitCallbacks(execute=True):
+            obj.files.delete(obj.files.current_file)
 
         # Current file should now be none
         self.assertIsNone(
@@ -262,7 +278,9 @@ class FileTests(TestCase):
         )
 
         # Try to set the old cat file as current
-        obj.files.set_as_current(cat_uuid)
+        with self.captureOnCommitCallbacks(execute=True):
+            obj.files.set_as_current(cat_uuid)
+
         self.assertIsNotNone(
             obj.files.current_file
         )
@@ -272,7 +290,8 @@ class FileTests(TestCase):
             self.file_cat
         )
 
-        obj.delete()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj.delete()
 
         self.assertFalse(
             storage.exists(obj.files.current_file.name_on_disk)
@@ -290,17 +309,21 @@ class FileTests(TestCase):
             storage.num_files(),
             "Storage is not empty"
         )
+        get_storage().clear()
 
     def test_tracked_delete_all(self):
         MetadataModel = self.tracked_cls.files.field.related_model
         storage = get_storage()
 
-        obj = self.tracked_cls()
-        obj.save()
-        obj.files.add(File(open(self.file_cat, mode='rb')))
-        cat_uuid = obj.files.current_file.uuid
-        obj.files.add(File(open(self.file_dog, mode='rb')))
-        dog_uuid = obj.files.current_file.uuid
+        with self.captureOnCommitCallbacks(execute=True):
+            obj = self.tracked_cls()
+            obj.save()
+            obj.files.add(File(open(self.file_cat, mode='rb')))
+            cat_uuid = obj.files.current_file.uuid
+
+        with self.captureOnCommitCallbacks(execute=True):
+            obj.files.add(File(open(self.file_dog, mode='rb')))
+            dog_uuid = obj.files.current_file.uuid
 
         self.assertTrue(
             storage.exists(cat_uuid)
@@ -321,7 +344,8 @@ class FileTests(TestCase):
             2
         )
 
-        obj.files.delete_all()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj.files.delete_all()
 
         self.assertFalse(
             storage.exists(cat_uuid)
@@ -341,19 +365,24 @@ class FileTests(TestCase):
             storage.num_files(),
             0
         )
+        get_storage().clear()
 
     def test_tracked_auto_delete(self):
         MetadataModel = self.tracked_cls.files.field.related_model
         storage = get_storage()
 
-        obj = self.tracked_cls()
-        obj.save()
-        obj.files.add(File(open(self.file_cat, mode='rb')))
-        cat_uuid = obj.files.current_file.uuid
-        obj.files.add(File(open(self.file_dog, mode='rb')))
-        dog_uuid = obj.files.current_file.uuid
+        with self.captureOnCommitCallbacks(execute=True):
+            obj = self.tracked_cls()
+            obj.save()
+            obj.files.add(File(open(self.file_cat, mode='rb')))
+            cat_uuid = obj.files.current_file.uuid
 
-        obj.delete()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj.files.add(File(open(self.file_dog, mode='rb')))
+            dog_uuid = obj.files.current_file.uuid
+
+        with self.captureOnCommitCallbacks(execute=True):
+            obj.delete()
 
         self.assertFalse(
             storage.exists(cat_uuid)
@@ -373,17 +402,21 @@ class FileTests(TestCase):
             storage.num_files(),
             0
         )
+        get_storage().clear()
 
     def test_tracked_set_current(self):
         storage = get_storage()
 
-        obj = self.tracked_cls()
-        obj.save()
-        obj.files.add(File(open(self.file_cat, mode='rb')))
-        cat_uuid = obj.files.current_file.uuid
-        cat_wrapper = obj.files.current_file
-        obj.files.add(File(open(self.file_dog, mode='rb')))
-        dog_uuid = obj.files.current_file.uuid
+        with self.captureOnCommitCallbacks(execute=True):
+            obj = self.tracked_cls()
+            obj.save()
+            obj.files.add(File(open(self.file_cat, mode='rb')))
+            cat_uuid = obj.files.current_file.uuid
+            cat_wrapper = obj.files.current_file
+
+        with self.captureOnCommitCallbacks(execute=True):
+            obj.files.add(File(open(self.file_dog, mode='rb')))
+            dog_uuid = obj.files.current_file.uuid
 
         self.assertEqual(
             self.file_dog,
@@ -398,7 +431,8 @@ class FileTests(TestCase):
             storage.num_files(),
         )
 
-        obj.files.set_as_current(cat_wrapper)
+        with self.captureOnCommitCallbacks(execute=True):
+            obj.files.set_as_current(cat_wrapper)
 
         self.assertEqual(
             self.file_cat,
@@ -417,7 +451,10 @@ class FileTests(TestCase):
             2
         )
 
-        obj.delete()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj.delete()
+
+        get_storage().clear()
 
     def test_single_set_from_django_file(self):
         storage = get_storage()
@@ -425,9 +462,10 @@ class FileTests(TestCase):
         MetadataModel = self.single_cls.required_file.field.related_model
         data = File(open(self.file_cat, mode='rb'))
 
-        obj = self.single_cls()
-        obj.required_file = data
-        obj.save()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj = self.single_cls()
+            obj.required_file = data
+            obj.save()
 
         self.assertTrue(
             storage.exists(obj.required_file.name_on_disk)
@@ -441,7 +479,10 @@ class FileTests(TestCase):
             obj.required_file.name
         )
 
-        obj.delete()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj.delete()
+
+        get_storage().clear()
 
     def test_single_set_from_tuple(self):
         storage = get_storage()
@@ -449,9 +490,10 @@ class FileTests(TestCase):
         MetadataModel = self.single_cls.required_file.field.related_model
         data = (File(open(self.file_cat, mode='rb')), None, True)
 
-        obj = self.single_cls()
-        obj.required_file = data
-        obj.save()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj = self.single_cls()
+            obj.required_file = data
+            obj.save()
 
         self.assertTrue(
             storage.exists(obj.required_file.name_on_disk)
@@ -465,20 +507,25 @@ class FileTests(TestCase):
             obj.required_file.name
         )
 
-        obj.delete()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj.delete()
+
+        get_storage().clear()
 
     def test_single_set_from_metadata_model(self):
         storage = get_storage()
 
         MetadataModel = self.single_cls.required_file.field.related_model
 
-        obj_1 = self.single_cls()
-        obj_1.required_file = File(open(self.file_cat, mode='rb'))
-        obj_1.save()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj_1 = self.single_cls()
+            obj_1.required_file = File(open(self.file_cat, mode='rb'))
+            obj_1.save()
 
-        obj_2 = self.single_cls()
-        obj_2.required_file = obj_1.required_file.file_instance
-        obj_2.save()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj_2 = self.single_cls()
+            obj_2.required_file = obj_1.required_file.file_instance
+            obj_2.save()
 
         self.assertTrue(
             storage.exists(obj_2.required_file.name_on_disk)
@@ -500,8 +547,13 @@ class FileTests(TestCase):
             obj_2.required_file.name
         )
 
-        obj_1.delete()
-        obj_2.delete()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj_1.delete()
+
+        with self.captureOnCommitCallbacks(execute=True):
+            obj_2.delete()
+
+        get_storage().clear()
 
     def test_single_set_from_file_wrapper(self):
         storage = get_storage()
@@ -509,13 +561,15 @@ class FileTests(TestCase):
         MetadataModel = self.single_cls.required_file.field.related_model
         data = (File(open(self.file_cat, mode='rb')), None, True)
 
-        obj_1 = self.single_cls()
-        obj_1.required_file = data
-        obj_1.save()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj_1 = self.single_cls()
+            obj_1.required_file = data
+            obj_1.save()
 
-        obj_2 = self.single_cls()
-        obj_2.required_file = obj_1.required_file
-        obj_2.save()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj_2 = self.single_cls()
+            obj_2.required_file = obj_1.required_file
+            obj_2.save()
 
         self.assertTrue(
             storage.exists(obj_2.required_file.name_on_disk)
@@ -537,18 +591,23 @@ class FileTests(TestCase):
             obj_2.required_file.name
         )
 
-        obj_1.delete()
-        obj_2.delete()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj_1.delete()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj_2.delete()
+
+        get_storage().clear()
 
     def test_single_set_from_None(self):
         storage = get_storage()
 
         MetadataModel = self.single_cls.required_file.field.related_model
 
-        obj = self.single_cls()
-        obj.required_file = File(open(self.file_cat, mode='rb'))
-        obj.nullable_file = File(open(self.file_dog, mode='rb'))
-        obj.save()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj = self.single_cls()
+            obj.required_file = File(open(self.file_cat, mode='rb'))
+            obj.nullable_file = File(open(self.file_dog, mode='rb'))
+            obj.save()
         nullable_uuid = obj.nullable_file.name_on_disk
 
         self.assertTrue(
@@ -567,8 +626,9 @@ class FileTests(TestCase):
             obj.nullable_file.name
         )
 
-        obj.nullable_file = None
-        obj.save()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj.nullable_file = None
+            obj.save()
 
         self.assertFalse(
             storage.exists(nullable_uuid)
@@ -585,20 +645,25 @@ class FileTests(TestCase):
             obj.nullable_file
         )
 
-        obj.delete()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj.delete()
+
+        get_storage().clear()
 
     def test_tracked_set_from_metadata_model(self):
         storage = get_storage()
 
         MetadataModel = self.single_cls.required_file.field.related_model
 
-        obj_1 = self.single_cls()
-        obj_1.required_file = File(open(self.file_cat, mode='rb'))
-        obj_1.save()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj_1 = self.single_cls()
+            obj_1.required_file = File(open(self.file_cat, mode='rb'))
+            obj_1.save()
 
-        obj_2 = self.tracked_cls()
-        obj_2.save()
-        obj_2.files.current_file = obj_1.required_file.file_instance
+        with self.captureOnCommitCallbacks(execute=True):
+            obj_2 = self.tracked_cls()
+            obj_2.save()
+            obj_2.files.current_file = obj_1.required_file.file_instance
 
         self.assertTrue(
             storage.exists(obj_2.files.current_file.name_on_disk)
@@ -620,8 +685,13 @@ class FileTests(TestCase):
             obj_2.files.current_file.name
         )
 
-        obj_1.delete()
-        obj_2.delete()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj_1.delete()
+
+        with self.captureOnCommitCallbacks(execute=True):
+            obj_2.delete()
+
+        get_storage().clear()
 
     def test_tracked_set_from_file_wrapper(self):
         storage = get_storage()
@@ -629,13 +699,15 @@ class FileTests(TestCase):
         MetadataModel = self.single_cls.required_file.field.related_model
         data = (File(open(self.file_cat, mode='rb')), None, True)
 
-        obj_1 = self.single_cls()
-        obj_1.required_file = data
-        obj_1.save()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj_1 = self.single_cls()
+            obj_1.required_file = data
+            obj_1.save()
 
-        obj_2 = self.tracked_cls()
-        obj_2.save()
-        obj_2.files.current_file = obj_1.required_file
+        with self.captureOnCommitCallbacks(execute=True):
+            obj_2 = self.tracked_cls()
+            obj_2.save()
+            obj_2.files.current_file = obj_1.required_file
 
         self.assertTrue(
             storage.exists(obj_2.files.current_file.name_on_disk)
@@ -657,17 +729,22 @@ class FileTests(TestCase):
             obj_2.files.current_file.name
         )
 
-        obj_1.delete()
-        obj_2.delete()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj_1.delete()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj_2.delete()
+
+        get_storage().clear()
 
     def test_tracked_set_from_None(self):
         storage = get_storage()
 
         MetadataModel = self.single_cls.required_file.field.related_model
 
-        obj = self.tracked_cls()
-        obj.save()
-        obj.files.current_file = File(open(self.file_cat, mode='rb'))
+        with self.captureOnCommitCallbacks(execute=True):
+            obj = self.tracked_cls()
+            obj.save()
+            obj.files.current_file = File(open(self.file_cat, mode='rb'))
 
         self.assertTrue(
             storage.exists(obj.files.current_file.name_on_disk)
@@ -685,7 +762,8 @@ class FileTests(TestCase):
             obj.files.current_file.name
         )
 
-        obj.files.current_file = None
+        with self.captureOnCommitCallbacks(execute=True):
+            obj.files.current_file = None
 
         self.assertIsNone(
             obj.files.current_file
@@ -703,7 +781,10 @@ class FileTests(TestCase):
             0
         )
 
-        obj.delete()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj.delete()
+
+        get_storage().clear()
 
     def test_filename_generator(self):
         static_name = "I love cats"
@@ -713,9 +794,10 @@ class FileTests(TestCase):
         self.single_cls._meta.get_field('required_file').filename_generator = \
             _static_generator
 
-        obj = self.single_cls()
-        obj.required_file = File(open(self.file_cat, mode='rb'))
-        obj.save()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj = self.single_cls()
+            obj.required_file = File(open(self.file_cat, mode='rb'))
+            obj.save()
 
         self.assertEqual(
             static_name,
@@ -733,36 +815,46 @@ class FileTests(TestCase):
             obj.required_file.name
         )
 
-        obj.delete()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj.delete()
 
         self.single_cls._meta.get_field('required_file').filename_generator = \
             _default_filename_generator
 
+        get_storage().clear()
+
     def test_single_url_generation(self):
-        obj = self.single_cls()
-        obj.required_file = File(open(self.file_cat, mode='rb'))
-        obj.save()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj = self.single_cls()
+            obj.required_file = File(open(self.file_cat, mode='rb'))
+            obj.save()
 
         self.assertEqual(
             reverse(self.url_pattern_single, args=[obj.required_file.uuid]),
             obj.required_file.url,
         )
 
-        obj._meta.get_field('required_file').url_pattern = None
+        with self.captureOnCommitCallbacks(execute=True):
+            obj._meta.get_field('required_file').url_pattern = None
 
         self.assertEqual(
             None,
             obj.required_file.url,
         )
 
-        obj._meta.get_field('required_file').url_pattern = self.url_pattern_single
+        with self.captureOnCommitCallbacks(execute=True):
+            obj._meta.get_field('required_file').url_pattern = self.url_pattern_single
 
-        obj.delete()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj.delete()
+
+        get_storage().clear()
 
     def test_tracked_url_generation(self):
-        obj = self.tracked_cls()
-        obj.save()
-        obj.files.add(File(open(self.file_cat, mode='rb')))
+        with self.captureOnCommitCallbacks(execute=True):
+            obj = self.tracked_cls()
+            obj.save()
+            obj.files.add(File(open(self.file_cat, mode='rb')))
 
         self.assertEqual(
             reverse(self.url_pattern_tracked, args=[
@@ -771,12 +863,15 @@ class FileTests(TestCase):
             obj.files.current_file.url,
         )
 
-        obj.delete()
+        with self.captureOnCommitCallbacks(execute=True):
+            obj.delete()
         # We do not test the None case, as changing it at runtime isn't actually
         # supported. The single case works (although also not supported), so we
         # can actually test it there. If it works there, it should work here.
         # This test case should only test if setting url_pattern will actually
         # propagate it to the linking model.
+
+        get_storage().clear()
 
 
 class CustomFileTests(FileTests):
