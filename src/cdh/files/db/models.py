@@ -9,6 +9,7 @@ from cdh.files.db import manager
 from cdh.files.db.wrappers import FileWrapper
 
 
+USE_CHAR32_UUIDS = getattr(settings, "USE_CHAR32_UUIDS", False,)
 logger = logging.getLogger('cdh.files')
 
 
@@ -29,6 +30,35 @@ class _FileWrapperDict:
         instance._file_wrapper_cache = value
 
 
+class MySQLSafeUUIDField(models.UUIDField,):
+    """
+    Workaround class.
+
+    Django 5.0 switched from DB column type for UUID's on MySQL/MariaDB.
+    The standard UUIDField is not aware of this change, and will fail to
+    insert UUID's into the char(32) columns. For applications that run into
+    this problem, this UUID field is provided which respects the setting
+    USE_CHAR32_UUIDS in settings.py to support older fields.
+
+    Details: https://docs.djangoproject.com/en/6.0/releases/5.0/#migrating-existing-uuidfield-on-mariadb-10-7
+    """
+
+    def __init__(self, *args, **kwargs):
+        self.use_char32_uuids = USE_CHAR32_UUIDS
+        super().__init__(*args, **kwargs)
+
+    def db_type(self, connection):
+        if self.use_char32_uuids:
+            return "char(32)"
+        return super().db_type(connection)
+
+    def get_db_prep_value(self, value, connection, prepared=False):
+        value = super().get_db_prep_value(value, connection, prepared)
+        if self.use_char32_uuids and value is not None:
+            value = value.hex
+        return value
+
+
 class BaseFile(models.Model):
     class Meta:
         abstract = True
@@ -36,7 +66,7 @@ class BaseFile(models.Model):
     objects = manager.FileManager()
 
     # Human-facing PK; Also acts as the filename on disk
-    uuid = models.UUIDField(
+    uuid = MySQLSafeUUIDField(
         "Universally Unique IDentifier",
         unique=True,
         default=uuid.uuid4,

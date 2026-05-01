@@ -141,6 +141,9 @@ DATABASES = {
     }
 }
 
+# Set to true if migrating to Django 5 from MariaDB/MySQL
+USE_CHAR32_UUIDS = False
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
