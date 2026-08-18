@@ -54,7 +54,8 @@ class MySQLSafeUUIDField(models.UUIDField,):
 
     def get_db_prep_value(self, value, connection, prepared=False):
         value = super().get_db_prep_value(value, connection, prepared)
-        if self.use_char32_uuids and value is not None:
+        if self.use_char32_uuids and type(value) is bytes:
+            # A char32 UUID takes a good 'ol string, not bytes
             value = value.hex
         return value
 
