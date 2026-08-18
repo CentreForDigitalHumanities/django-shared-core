@@ -39,6 +39,13 @@ def _save_file(storage, name_on_disk, content, max_length):
         max_length=max_length
     )
 
+def _save_and_close(storage, name_on_disk, content, max_length):
+    """
+    Same as above but finishes by closing the content FD passed to it.
+    """
+    _save_file(storage, name_on_disk, content, max_length)
+    content.close()
+
 class FileWrapper(File):
     """
     """
@@ -195,17 +202,24 @@ class FileWrapper(File):
         if original_filename is None and hasattr(content, 'name'):
             original_filename = content.name
 
-        transaction.on_commit(lambda: _save_file(
+        transaction.on_commit(lambda: _save_and_close(
             self.storage,
             self.name_on_disk,
             content, self.field.max_length
         ))
         self._committed = True
 
+        if content.closed:
+            # We open the file without a context manager, because closing the
+            # file before the transaction has completed can result in an I/O
+            # error depending on request lifecycle.
+            open_file = content.open()
+        else:
+            open_file = content
         # Use magic to determine the mime type. It's pretty obvious, I know
         # I just liked saying 'use MAGIC'
-        with self.open() as file:
-            mime = magic.from_buffer(file.read(2048), mime=True)
+        mime = magic.from_buffer(open_file.read(2048), mime=True)
+        open_file.seek(0) # Always rewind your cassettes before putting them away
         logger.debug(f"Detected MIME type {mime} for file {self.name_on_disk}")
         self.file_instance.content_type = mime
 
