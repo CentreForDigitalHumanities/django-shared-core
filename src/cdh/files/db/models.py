@@ -7,6 +7,7 @@ from django.utils.functional import cached_property
 
 from cdh.files.db import manager
 from cdh.files.db.wrappers import FileWrapper
+from uuid import UUID
 
 
 USE_CHAR32_UUIDS = getattr(settings, "USE_CHAR32_UUIDS", False,)
@@ -54,8 +55,8 @@ class MySQLSafeUUIDField(models.UUIDField,):
 
     def get_db_prep_value(self, value, connection, prepared=False):
         value = super().get_db_prep_value(value, connection, prepared)
-        if self.use_char32_uuids and type(value) is bytes:
-            # A char32 UUID takes a good 'ol string, not bytes
+        if self.use_char32_uuids and type(value) is UUID:
+            # A char32 UUID takes a good 'ol string
             value = value.hex
         return value
 
