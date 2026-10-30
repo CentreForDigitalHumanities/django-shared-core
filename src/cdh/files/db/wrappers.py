@@ -198,17 +198,10 @@ class FileWrapper(File):
         if original_filename is None and hasattr(content, 'name'):
             original_filename = content.name
 
+        closed_initially = False
         if content.closed:
-            # We open the file without a context manager, because closing the
-            # file before the transaction has completed can result in an I/O
-            # error depending on request lifecycle.
+            closed_initially = True
             content = content.open()
-            # If you give us a closed FD, we will close it after we're done.
-            save_func = _save_and_close_file
-        else:
-            # If we receive an open FD in the first place, we will leave it
-            # open in case the caller wasn't done with it yet.
-            save_func = _save_file
 
         transaction.on_commit(lambda: _save_and_close_file(
             self.storage,
@@ -238,6 +231,11 @@ class FileWrapper(File):
                 self.file_instance.created_by = get_current_user()
 
         self.file_instance.save()
+        # We only close the file if it was closed initially. If it was open initially,
+        # it is probably an in-memory file upload that shouldn't be closed until the
+        # current transaction gets committed.
+        if closed_initially:
+            content.close()
 
     save.alters_data = True
 
