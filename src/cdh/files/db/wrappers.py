@@ -211,9 +211,9 @@ class FileWrapper(File):
         self._committed = True
 
         # Use magic to determine content type
-        start = content.tell()
+        current_position = content.tell()
         mime = magic.from_buffer(content.read(2048), mime=True)
-        content.seek(start)
+        content.seek(current_position)
         logger.debug(f"Detected MIME type {mime} for file {self.name_on_disk}")
         self.file_instance.content_type = mime
 
