@@ -33,7 +33,7 @@ def _save_and_close_file(storage, name_on_disk, content, max_length):
     # delete the old one, as otherwise we would lose the new file
     if storage.exists(name_on_disk):
         logger.info(f"Removing {name_on_disk} before saving new file")
-        storage.delete(name_on_disk)    
+        storage.delete(name_on_disk)
     logger.info(f"Saving {name_on_disk}")
     storage.save(
         name_on_disk,
