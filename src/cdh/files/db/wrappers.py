@@ -19,7 +19,7 @@ if TYPE_CHECKING:
     from .models import BaseFile
 
 
-def _save_file(storage, name_on_disk, content, max_length):
+def _save_and_close_file(storage, name_on_disk, content, max_length):
     """Does the actual saving of the file to disk. This method is called by
     FileWrapper.save() and should not be called directly.
 
@@ -27,6 +27,8 @@ def _save_file(storage, name_on_disk, content, max_length):
     hook. (This is needed, doing it during a transaction may result in dataloss
     when a transaction is rolled back)
     """
+    if content.closed:
+        content.open()
     # If we overwrite the file this instance represents, we need to first
     # delete the old one, as otherwise we would lose the new file
     if storage.exists(name_on_disk):
@@ -38,6 +40,7 @@ def _save_file(storage, name_on_disk, content, max_length):
         content,
         max_length=max_length
     )
+    content.close()
 
 class FileWrapper(File):
     """
@@ -195,17 +198,22 @@ class FileWrapper(File):
         if original_filename is None and hasattr(content, 'name'):
             original_filename = content.name
 
-        transaction.on_commit(lambda: _save_file(
+        closed_initially = False
+        if content.closed:
+            closed_initially = True
+            content = content.open()
+
+        transaction.on_commit(lambda: _save_and_close_file(
             self.storage,
             self.name_on_disk,
             content, self.field.max_length
         ))
         self._committed = True
 
-        # Use magic to determine the mime type. It's pretty obvious, I know
-        # I just liked saying 'use MAGIC'
-        with self.open() as file:
-            mime = magic.from_buffer(file.read(2048), mime=True)
+        # Use magic to determine content type
+        current_position = content.tell()
+        mime = magic.from_buffer(content.read(2048), mime=True)
+        content.seek(current_position)
         logger.debug(f"Detected MIME type {mime} for file {self.name_on_disk}")
         self.file_instance.content_type = mime
 
@@ -223,6 +231,11 @@ class FileWrapper(File):
                 self.file_instance.created_by = get_current_user()
 
         self.file_instance.save()
+        # We only close the file if it was closed initially. If it was open initially,
+        # it is probably an in-memory file upload that shouldn't be closed until the
+        # current transaction gets committed.
+        if closed_initially:
+            content.close()
 
     save.alters_data = True
 
