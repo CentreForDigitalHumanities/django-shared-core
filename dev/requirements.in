@@ -20,3 +20,4 @@ requests
 PyJWT
 djangorestframework
 python-magic
+pdbpp
